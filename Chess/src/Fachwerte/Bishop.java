@@ -1,12 +1,12 @@
 package Fachwerte;
 
-public class Bishop extends Figur {
+public class Bishop extends Piece {
 
-	public Bishop(boolean farbe, byte coordinate) {
-		super(farbe, coordinate);
+	public Bishop(byte coordinate) {
+		super(coordinate);
 	}
 
-	public int[] getMovement() {
-		return new int[] { -7, 9, 7, -9 };
-	}
+//	public int[] getMovement() {
+//		return new int[] { -7, 9, 7, -9 };
+//	}
 }

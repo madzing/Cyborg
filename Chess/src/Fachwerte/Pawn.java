@@ -1,16 +1,16 @@
 package Fachwerte;
 
-public class Pawn extends Figur {
-	public Pawn(boolean farbe, byte coordinate) {
-		super(farbe, coordinate);
+public class Pawn extends Piece {
+	public Pawn(byte coordinate) {
+		super(coordinate);
 	}
 
-	@Override
-	public int[] getMovement() {
-		if (getColor()) {
-			return new int[] { -8 };
-		} else {
-			return new int[] { 8 };
-		}
-	}
+//	@Override
+//	public int[] getMovement() {
+//		if (getColor()) {
+//			return new int[] { -8 };
+//		} else {
+//			return new int[] { 8 };
+//		}
+//	}
 }

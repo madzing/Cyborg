@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Fachwerte.Bishop;
-import Fachwerte.Figur;
+import Fachwerte.Piece;
 import Fachwerte.Knight;
 import Fachwerte.Pawn;
 import Fachwerte.Queen;
@@ -23,7 +23,7 @@ public class PositionCalc
         List<Position> legalFollowingPositions = new ArrayList<Position>();
         for (int i = 0; i < 64; i++)
         {
-            Figur figur = currentPosition.getPosition()[i];
+            Piece figur = currentPosition.getPosition()[i];
             if (figur != null)
             {
                 if (figur instanceof Pawn)

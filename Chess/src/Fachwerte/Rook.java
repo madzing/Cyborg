@@ -1,9 +1,9 @@
 package Fachwerte;
 
-public class Rook extends Figur {
+public class Rook extends Piece {
 
-	public Rook(boolean farbe, byte coordinate) {
-		super(farbe, coordinate);
+	public Rook(byte coordinate) {
+		super(coordinate);
 	}
 
 	public int[] getMovement() {
