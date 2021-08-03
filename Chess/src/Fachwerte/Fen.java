@@ -4,13 +4,17 @@ package Fachwerte;
 
 public class Fen
 {
-    String _stringFen;
-    String _stringList[];
+    private String _stringFen;
+    private String _stringList[];
 
-    public Fen(String stringFen)
+    private Fen(String stringFen)
     {
         _stringFen = stringFen;
         _stringList = _stringFen.split(" ");
+    }
+    
+    public static Fen select(String stringFen) {
+    	return new Fen(stringFen);
     }
 
     public String getString()
