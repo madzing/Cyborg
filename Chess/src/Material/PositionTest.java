@@ -42,16 +42,24 @@ public class PositionTest {
 	@Test
 	public void testGetWhiteFiguren() {
 		List<Piece> white = new ArrayList<Piece>();
-		white.add(new Rook((byte)0));
-		white.add(new Knight((byte)1));
-		white.add(new Bishop((byte)2));
-		white.add(new Queen((byte)3));
-		white.add(new King((byte)4));
-		white.add(new Bishop((byte)5));
-		white.add(new Knight((byte)6));
-		white.add(new Rook((byte)7));
-		white.add(new Pawn((byte)8));
-		assertEquals(white.get(0),_startPosition.getWhiteFiguren().get(0));
+		white.add(new Pawn((byte)48));
+		white.add(new Pawn((byte)49));
+		white.add(new Pawn((byte)50));
+		white.add(new Pawn((byte)51));
+		white.add(new Pawn((byte)52));
+		white.add(new Pawn((byte)53));
+		white.add(new Pawn((byte)54));
+		white.add(new Pawn((byte)55));
+		white.add(new Rook((byte)56));
+		white.add(new Knight((byte)57));
+		white.add(new Bishop((byte)58));
+		white.add(new Queen((byte)59));
+		white.add(new King((byte)60));
+		white.add(new Bishop((byte)61));
+		white.add(new Knight((byte)62));
+		white.add(new Rook((byte)63));
+
+		assertEquals(white.get(0).getClass(),_startPosition.getWhiteFiguren().get(0).getClass());
 	}
 
 	@Test
@@ -66,7 +74,7 @@ public class PositionTest {
 		black.add(new Knight((byte)6));
 		black.add(new Rook((byte)7));
 		black.add(new Pawn((byte)8));
-		assertEquals(black.get(0),_startPosition.getWhiteFiguren().get(0));
+		assertEquals(black.get(0).getClass(),_startPosition.getBlackFiguren().get(0).getClass());
 	}
 
 
