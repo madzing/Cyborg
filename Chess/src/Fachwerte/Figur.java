@@ -1,17 +1,34 @@
 package Fachwerte;
 
-public interface Figur
-{
+public abstract class Figur {
+	private boolean _color;
+	private byte _value;
+	private byte _coordinate;
 
-    public byte getValue();
+	public Figur (boolean farbe, byte coordinate) {
+		setColor(farbe);
+		setCoordinate(coordinate);
+	}
+	
+	public byte getValue() {
+		return _value;
+	}
 
-    public int[] getMovement(); 
-    
-    
-    public boolean getColor();
+	public boolean getColor() {
+		return _color;
+	}
 
-    public byte getCoordinate();
+	public byte getCoordinate() {
+		return _coordinate;
+	}
 
-    public void setCoordinate(byte coordinate);
+	public abstract int[] getMovement();
 
+	public void setColor(boolean c) {
+		_color = c;
+	}
+
+	public void setCoordinate(byte coordinate) {
+		_coordinate = coordinate;
+	}
 }
