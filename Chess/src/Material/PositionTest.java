@@ -18,7 +18,10 @@ public class PositionTest {
 	Position _startPosition = new Position(_startFen);
 	
 	
-
+	@Test
+	public void testMakeMove() {
+		fail("Not testing");
+	}
 
 	@Test
 	public void testGetFen() {
