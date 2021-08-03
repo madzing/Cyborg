@@ -1,5 +1,6 @@
 package Material;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Fachwerte.Bishop;
@@ -13,8 +14,8 @@ import Fachwerte.Rook;
 
 public class Position
 {
-    private List<Figur> _whiteFiguren;
-    private List<Figur> _blackFiguren;
+    private List<Figur> _whiteFiguren = new ArrayList<Figur>();
+    private List<Figur> _blackFiguren = new ArrayList<Figur>();
     private boolean _zugrecht;
     private boolean _whiteCanCastle[] = {true, true};
     private boolean _blackCanCastle[] = {true, true};
@@ -46,6 +47,7 @@ public class Position
         fenToZuegeKleiner50(fenPosition);
         fenToEnPassant(fenPosition);
         fenToCanCastle(fenPosition);
+        fenToZuegeGesamt(fenPosition);
     }
 
     //TODO alles
@@ -271,7 +273,12 @@ public class Position
             _blackCanCastle[1] = true;
         }
     }
+    
+    private void fenToZuegeGesamt(Fen fenPosition)
+    {
+        _zuegeGesamt = Byte.parseByte(fenPosition.getZuegeGesamt());
 
+    }
     // Getter
 
     // TODO alles
