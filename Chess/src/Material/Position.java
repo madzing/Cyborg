@@ -3,19 +3,13 @@ package Material;
 import java.util.ArrayList;
 import java.util.List;
 
-import Fachwerte.Bishop;
 import Fachwerte.Fen;
-import Fachwerte.Figur;
-import Fachwerte.King;
-import Fachwerte.Knight;
-import Fachwerte.Pawn;
-import Fachwerte.Queen;
-import Fachwerte.Rook;
 
 public class Position
 {
-    private List<Figur> _whiteFiguren = new ArrayList<Figur>();
-    private List<Figur> _blackFiguren = new ArrayList<Figur>();
+    private List<Piece> _whiteFiguren;
+    private List<Piece> _blackFiguren;
+
     private boolean _zugrecht;
     private boolean _whiteCanCastle[] = {true, true};
     private boolean _blackCanCastle[] = {true, true};
@@ -55,14 +49,14 @@ public class Position
     {
         if (_zugrecht)
         {
-            for (Figur figur : _whiteFiguren)
+            for (Piece figur : _whiteFiguren)
             {
                 if (figur.getCoordinate() == alteFigurPosition)
                 {
                     figur.setCoordinate(neueFigurPosition);
                 }
             }
-            for (Figur figur : _blackFiguren)
+            for (Piece figur : _blackFiguren)
             {
                 if (figur.getCoordinate() == neueFigurPosition)
                 {
@@ -72,14 +66,14 @@ public class Position
         }
         else
         {
-            for (Figur figur : _blackFiguren)
+            for (Piece figur : _blackFiguren)
             {
                 if (figur.getCoordinate() == alteFigurPosition)
                 {
                     figur.setCoordinate(neueFigurPosition);
                 }
             }
-            for (Figur figur : _whiteFiguren)
+            for (Piece figur : _whiteFiguren)
             {
                 if (figur.getCoordinate() == neueFigurPosition)
                 {
@@ -102,62 +96,62 @@ public class Position
             {
 
             case 'p':
-                _blackFiguren.add(new Pawn(false, counter));
+                _blackFiguren.add(new Pawn(counter));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'P':
-                _whiteFiguren.add(new Pawn(true, counter));
+                _whiteFiguren.add(new Pawn(counter));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'n':
-                _blackFiguren.add(new Knight(false, counter));
+                _blackFiguren.add(new Knight(counter));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'N':
-                _whiteFiguren.add(new Knight(true, counter));
+                _whiteFiguren.add(new Knight(counter));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'b':
-                _blackFiguren.add(new Bishop(false, counter));
+                _blackFiguren.add(new Bishop(counter));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'B':
-                _whiteFiguren.add(new Bishop(true, counter));
+                _whiteFiguren.add(new Bishop(counter));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'r':
-                _blackFiguren.add(new Rook(false, counter));
+                _blackFiguren.add(new Rook(counter));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'R':
-                _whiteFiguren.add(new Rook(true, counter));
+                _whiteFiguren.add(new Rook(counter));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'q':
-                _blackFiguren.add(new Queen(false, counter));
+                _blackFiguren.add(new Queen(counter));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'Q':
-                _whiteFiguren.add(new Queen(true, counter));
+                _whiteFiguren.add(new Queen(counter));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'k':
-                _blackFiguren.add(new King(false, counter));
+                _blackFiguren.add(new King(counter));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'K':
-                _whiteFiguren.add(new King(true, counter));
+                _whiteFiguren.add(new King(counter));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
@@ -287,12 +281,12 @@ public class Position
         return "bla";
     }
 
-    public List<Figur> getWhiteFiguren()
+    public List<Piece> getWhiteFiguren()
     {
         return _whiteFiguren;
     }
 
-    public List<Figur> getBlackFiguren()
+    public List<Piece> getBlackFiguren()
     {
         return _blackFiguren;
     }

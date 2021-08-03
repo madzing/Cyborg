@@ -3,13 +3,13 @@ package Services;
 import java.util.ArrayList;
 import java.util.List;
 
-import Fachwerte.Bishop;
-import Fachwerte.Figur;
-import Fachwerte.Knight;
-import Fachwerte.Pawn;
-import Fachwerte.Queen;
-import Fachwerte.Rook;
+import Material.Bishop;
+import Material.Knight;
+import Material.Pawn;
+import Material.Piece;
 import Material.Position;
+import Material.Queen;
+import Material.Rook;
 
 public class PositionCalc
 {
@@ -23,18 +23,18 @@ public class PositionCalc
         List<Position> legalFollowingPositions = new ArrayList<Position>();
         for (int i = 0; i < 64; i++)
         {
-            Figur figur = currentPosition.getPosition()[i];
-            if (figur != null)
+            Piece piece = currentPosition.getPosition()[i];
+            if (piece != null)
             {
-                if (figur instanceof Pawn)
+                if (piece instanceof Pawn)
                 {
 
                 }
-                else if (figur instanceof Knight)
+                else if (piece instanceof Knight)
                 {
-                    for (int a : figur.getMovement())
+                    for (int a : piece.getMovement())
                     {
-                        if (i + a >= 0 && i + a <= 63) // TODO hinzufügen, dass gleichfarbige Figuren nicht geschlagen werden können sollen
+                        if (i + a >= 0 && i + a <= 63) // TODO hinzufügen, dass gleichfarbige pieceen nicht geschlagen werden können sollen
                         {
                             Position neuePosition = new Position(
                                     currentPosition);
@@ -43,15 +43,15 @@ public class PositionCalc
                         }
                     }
                 }
-                else if (figur instanceof Bishop)
+                else if (piece instanceof Bishop)
                 {
 
                 }
-                else if (figur instanceof Rook)
+                else if (piece instanceof Rook)
                 {
 
                 }
-                else if (figur instanceof Queen)
+                else if (piece instanceof Queen)
                 {
 
                 }

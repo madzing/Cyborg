@@ -1,6 +1,6 @@
 package Services;
 
-import Fachwerte.Figur;
+import Material.Piece;
 import Material.Position;
 
 public class Eval
@@ -14,11 +14,11 @@ public class Eval
     {
         short whitePoints = 0;
         short blackPoints = 0;
-        for (Figur figur : position.getWhiteFiguren())
+        for (Piece figur : position.getWhiteFiguren())
         {
             whitePoints = (short) (whitePoints + figur.getValue());
         }
-        for (Figur figur : position.getBlackFiguren())
+        for (Piece figur : position.getBlackFiguren())
         {
             blackPoints = (short) (blackPoints + figur.getValue());
         }
