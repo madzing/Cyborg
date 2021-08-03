@@ -14,7 +14,7 @@ import Fachwerte.Fen;
 public class PositionTest {
 	
 	
-	Fen _startFen= new Fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+	Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 	Position _startPosition = new Position(_startFen);
 	
 	
