@@ -8,11 +8,8 @@ import java.util.List;
 import org.junit.Test;
 
 
-
-
-
 import Fachwerte.Fen;
-import Fachwerte.Figur;
+
 
 public class PositionTest {
 	
@@ -24,7 +21,7 @@ public class PositionTest {
 	
 	@Test
 	public void testPositionFen() {
-		//assertTrue();
+		fail("Not yet implemented");
 	}
 
 	@Test
@@ -44,13 +41,13 @@ public class PositionTest {
 
 	@Test
 	public void testGetWhiteFiguren() {
-		List<Figur> white = new ArrayList<Figur>();
+		List<Piece> white = new ArrayList<Piece>();
 		white = _startPosition.getWhiteFiguren();
 	}
 
 	@Test
 	public void testGetBlackFiguren() {
-		List<Figur> black = new ArrayList<Figur>();
+		List<Piece> black = new ArrayList<Piece>();
 		black = _startPosition.getBlackFiguren();
 	}
 

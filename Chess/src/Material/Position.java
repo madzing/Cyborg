@@ -7,8 +7,8 @@ import Fachwerte.Fen;
 
 public class Position
 {
-    private List<Piece> _whiteFiguren;
-    private List<Piece> _blackFiguren;
+    private List<Piece> _whiteFiguren = new ArrayList<Piece>();
+    private List<Piece> _blackFiguren= new ArrayList<Piece>();
 
     private boolean _zugrecht;
     private boolean _whiteCanCastle[] = {true, true};
