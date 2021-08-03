@@ -175,7 +175,7 @@ public class Position
 
     private void fenToZugrecht(Fen fenPosition)
     {
-        if (fenPosition.getZugrecht() == "w")
+        if (fenPosition.getZugrecht().equals("w"))
         {
             _zugrecht = true;
         }
