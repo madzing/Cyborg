@@ -1,4 +1,4 @@
-package Fachwerte;
+package Material;
 
 public class Bishop extends Piece {
 

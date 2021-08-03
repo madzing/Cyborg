@@ -1,4 +1,4 @@
-package Fachwerte;
+package Material;
 
 public class Queen extends Piece {
 

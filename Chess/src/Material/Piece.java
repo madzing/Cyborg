@@ -1,9 +1,12 @@
-package Fachwerte;
+package Material;
+
+import Fachwerte.Coordinate;
+import Fachwerte.PieceValue;
 
 public abstract class Piece {
 	//private boolean _color;
 	private PieceValue _value;
-	private byte _coordinate;
+	private Coordinate _coordinate;
 
 	public Piece (byte coordinate) {
 		setCoordinate(coordinate);
@@ -14,12 +17,12 @@ public abstract class Piece {
 	}
 
 	public byte getCoordinate() {
-		return _coordinate;
+		return _coordinate.getCoordinate();
 	}
 
 	//public abstract int[] getMovement();
 
 	public void setCoordinate(byte coordinate) {
-		_coordinate = coordinate;
+		_coordinate = Coordinate.select(coordinate);
 	}
 }

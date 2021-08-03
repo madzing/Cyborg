@@ -1,4 +1,4 @@
-package Fachwerte;
+package Material;
 
 public class Pawn extends Piece {
 	public Pawn(byte coordinate) {

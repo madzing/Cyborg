@@ -2,14 +2,7 @@ package Material;
 
 import java.util.List;
 
-import Fachwerte.Bishop;
 import Fachwerte.Fen;
-import Fachwerte.Piece;
-import Fachwerte.King;
-import Fachwerte.Knight;
-import Fachwerte.Pawn;
-import Fachwerte.Queen;
-import Fachwerte.Rook;
 
 public class Position
 {

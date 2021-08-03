@@ -3,13 +3,13 @@ package Services;
 import java.util.ArrayList;
 import java.util.List;
 
-import Fachwerte.Bishop;
-import Fachwerte.Piece;
-import Fachwerte.Knight;
-import Fachwerte.Pawn;
-import Fachwerte.Queen;
-import Fachwerte.Rook;
+import Material.Bishop;
+import Material.Knight;
+import Material.Pawn;
+import Material.Piece;
 import Material.Position;
+import Material.Queen;
+import Material.Rook;
 
 public class PositionCalc
 {

@@ -1,4 +1,4 @@
-package Fachwerte;
+package Material;
 
 public class Knight extends Piece {
 	public Knight(byte coordinate) {
