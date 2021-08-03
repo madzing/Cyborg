@@ -1,9 +1,13 @@
 package Fachwerte;
 
+import java.util.HashMap;
+import java.util.Map;
+
 // "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 public class Fen
 {
+    private static Map<String, Fen> _fenMap = new HashMap<String, Fen>();
     private String _stringFen;
     private String _stringList[];
 
@@ -14,7 +18,10 @@ public class Fen
     }
     
     public static Fen select(String stringFen) {
-    	return new Fen(stringFen);
+    	if (!_fenMap.containsKey(stringFen)) {
+    		_fenMap.put(stringFen, new Fen(stringFen));
+    	}
+        	return _fenMap.get(stringFen);
     }
 
     public String getString()
@@ -51,5 +58,6 @@ public class Fen
     {
         return _stringList[5];
     }
+    
 
 }
