@@ -18,21 +18,7 @@ public class PositionTest {
 	Position _startPosition = new Position(_startFen);
 	
 	
-	
-	@Test
-	public void testPositionFen() {
-		fail("Not yet implemented");
-	}
 
-	@Test
-	public void testPositionPosition() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testMakeMove() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testGetFen() {
