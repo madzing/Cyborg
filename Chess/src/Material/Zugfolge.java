@@ -10,7 +10,6 @@ public class Zugfolge
         _zug = zug;
 
     }
-    
 
     public void addZugfolge(Zugfolge[] folgezuege)
     {
