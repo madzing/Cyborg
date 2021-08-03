@@ -7,7 +7,6 @@ public interface Figur
 
     public int[] getMovement(); 
     
-    
     public boolean getColor();
 
     public byte getCoordinate();
