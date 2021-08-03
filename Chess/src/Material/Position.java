@@ -1,5 +1,6 @@
 package Material;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Fachwerte.Fen;
@@ -8,6 +9,7 @@ public class Position
 {
     private List<Piece> _whiteFiguren;
     private List<Piece> _blackFiguren;
+
     private boolean _zugrecht;
     private boolean _whiteCanCastle[] = {true, true};
     private boolean _blackCanCastle[] = {true, true};
@@ -39,6 +41,7 @@ public class Position
         fenToZuegeKleiner50(fenPosition);
         fenToEnPassant(fenPosition);
         fenToCanCastle(fenPosition);
+        fenToZuegeGesamt(fenPosition);
     }
 
     //TODO alles
@@ -166,7 +169,7 @@ public class Position
 
     private void fenToZugrecht(Fen fenPosition)
     {
-        if (fenPosition.getZugrecht() == "w")
+        if (fenPosition.getZugrecht().equals("w"))
         {
             _zugrecht = true;
         }
@@ -264,7 +267,12 @@ public class Position
             _blackCanCastle[1] = true;
         }
     }
+    
+    private void fenToZuegeGesamt(Fen fenPosition)
+    {
+        _zuegeGesamt = Byte.parseByte(fenPosition.getZuegeGesamt());
 
+    }
     // Getter
 
     // TODO alles
