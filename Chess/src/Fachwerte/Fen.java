@@ -8,8 +8,8 @@ import java.util.Map;
 public class Fen
 {
     private static Map<String, Fen> _fenMap = new HashMap<String, Fen>();
-    private String _stringFen;
-    private String _stringList[];
+    private final String _stringFen;
+    private final String _stringList[];
 
     private Fen(String stringFen)
     {
