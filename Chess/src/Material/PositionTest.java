@@ -42,14 +42,33 @@ public class PositionTest {
 	@Test
 	public void testGetWhiteFiguren() {
 		List<Piece> white = new ArrayList<Piece>();
-		white = _startPosition.getWhiteFiguren();
+		white.add(new Rook((byte)0));
+		white.add(new Knight((byte)1));
+		white.add(new Bishop((byte)2));
+		white.add(new Queen((byte)3));
+		white.add(new King((byte)4));
+		white.add(new Bishop((byte)5));
+		white.add(new Knight((byte)6));
+		white.add(new Rook((byte)7));
+		white.add(new Pawn((byte)8));
+		assertEquals(white.get(0),_startPosition.getWhiteFiguren().get(0));
 	}
 
 	@Test
 	public void testGetBlackFiguren() {
 		List<Piece> black = new ArrayList<Piece>();
-		black = _startPosition.getBlackFiguren();
+		black.add(new Rook((byte)0));
+		black.add(new Knight((byte)1));
+		black.add(new Bishop((byte)2));
+		black.add(new Queen((byte)3));
+		black.add(new King((byte)4));
+		black.add(new Bishop((byte)5));
+		black.add(new Knight((byte)6));
+		black.add(new Rook((byte)7));
+		black.add(new Pawn((byte)8));
+		assertEquals(black.get(0),_startPosition.getWhiteFiguren().get(0));
 	}
+
 
 	@Test
 	public void testGetZugrecht() {
