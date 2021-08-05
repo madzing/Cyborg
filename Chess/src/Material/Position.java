@@ -417,8 +417,86 @@ public class Position
     // Getter
 
     // TODO alles
+    // "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
     public String getFen()
     {
+    	String placement = "0000000000000000000000000000000000000000000000000000000000000000";
+    	char[] array = placement.toCharArray();
+    	for (Piece whitePiece :_whiteFiguren)
+    	{
+    		byte platz = whitePiece.getCoordinate();
+    		
+    		if(whitePiece instanceof Pawn) {
+    		 array[platz]='P';
+    		}
+    		else if(whitePiece instanceof Knight)
+    		{
+    			array[platz]='N';
+    		}
+    		else if(whitePiece instanceof Bishop)
+    		{
+    			array[platz]='B';
+    		}
+    		else if(whitePiece instanceof Rook)
+    		{
+    			array[platz]='R';
+    		}
+    		else if(whitePiece instanceof Queen)
+    		{
+    			array[platz]='Q';
+    		}
+    		else {
+    			array[platz]='K';
+    		}
+    		
+    	}
+    	for (Piece blackPiece :_blackFiguren)
+    	{
+    		byte platz = blackPiece.getCoordinate();
+    		
+    		if(blackPiece instanceof Pawn) {
+    		 array[platz]='p';
+    		}
+    		else if(blackPiece instanceof Knight)
+    		{
+    			array[platz]='n';
+    		}
+    		else if(blackPiece instanceof Bishop)
+    		{
+    			array[platz]='b';
+    		}
+    		else if(blackPiece instanceof Rook)
+    		{
+    			array[platz]='r';
+    		}
+    		else if(blackPiece instanceof Queen)
+    		{
+    			array[platz]='q';
+    		}
+    		else {
+    			array[platz]='k';
+    		}
+    	}
+
+    	placement = array.toString();
+    	String slashes = placement.substring(0, 7)+"/";
+    	slashes = slashes + placement.substring(8, 15)+"/";
+    	slashes = slashes + placement.substring(16, 23)+"/";
+    	slashes = slashes + placement.substring(24, 31)+"/";
+    	slashes = slashes + placement.substring(32, 19)+"/";
+    	slashes = slashes + placement.substring(40, 47)+"/";
+    	slashes = slashes + placement.substring(48, 55)+"/";
+    	slashes = slashes + placement.substring(56, 63);
+    	slashes.replace("00000000", "8");
+    	slashes.replace("0000000", "7");
+    	slashes.replace("000000", "6");
+    	slashes.replace("00000", "5");
+    	slashes.replace("0000", "4");
+    	slashes.replace("000", "3");
+    	slashes.replace("00", "2");
+    	slashes.replace("0", "1");
+    	placement = slashes;
+    	
     	String zugrecht = "";
     	if (getZugrecht())
     	{
@@ -512,7 +590,7 @@ public class Position
     	String fullmoves = "" + _zuegeGesamt;
     		
     	
-        return /*placement + */ " " + zugrecht + " " + castling + " " + enPassant + " " + halfmoves + " " + fullmoves;
+        return placement +  " " + zugrecht + " " + castling + " " + enPassant + " " + halfmoves + " " + fullmoves;
     }
 
     public List<Piece> getWhiteFiguren()
