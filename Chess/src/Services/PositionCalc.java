@@ -26,16 +26,21 @@ public class PositionCalc
 	private static List<Piece> _figurenDesGegners;
 	
 	// Liste aller möglichen "folgePositionen"
-	private static List<Position> _folgePositionen = new ArrayList<Position>();
+	private static List<Position> _folgePositionen;
 	
 	// besondere Daten bezüglich King safety
-	private boolean _kinginCheck;
-	private static Map<String,Piece> _attackingPieces = new HashMap<String,Piece>();
-	private static Map<String,Piece> _pinnedPieces = new HashMap<String,Piece>();
+	private static boolean _kinginCheck;
+	private static Map<String,Piece> _attackingPieces;
+	private static Map<String,Piece> _pinnedPieces;
 	
 	
 	public static List<Position> getLegalPositions(Position currentPosition)
 	{
+		_folgePositionen = new ArrayList<Position>();
+		_attackingPieces = new HashMap<String,Piece>();
+		_pinnedPieces = new HashMap<String,Piece>();
+		_kinginCheck = false;
+		
 		if(currentPosition.getZugrecht())
 		{
 			_figurenAmZug = currentPosition.getWhiteFiguren();
