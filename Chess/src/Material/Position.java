@@ -48,8 +48,10 @@ public class Position
     //TODO alles
     public void makeMove(byte alteFigurPosition, byte neueFigurPosition)
     { 
+    	byte enPassant = _enpassant;
     	_enpassant = -1;
     	_zuegeKleiner50++;
+    	byte neuePos = neueFigurPosition;
         if (_zugrecht)
         {
             for (Piece figur : _whiteFiguren)
@@ -64,6 +66,11 @@ public class Position
                     	{
                     	_enpassant = (byte) (alteFigurPosition +((neueFigurPosition-alteFigurPosition) /2));
                     	}
+                    	else if(neuePos == enPassant)
+                    	{
+                    		neuePos = (byte) (neuePos +8);
+                    	}
+	
                     }
                     if(figur instanceof King)
                     {
@@ -109,7 +116,7 @@ public class Position
 
             for(Iterator<Piece> figur = _blackFiguren.iterator(); figur.hasNext();)
             {
-            	if (figur.next().getCoordinate() == neueFigurPosition)
+            	if (figur.next().getCoordinate() == neuePos)
                   {
                       figur.remove();
                       _zuegeKleiner50 = 0;
@@ -139,9 +146,15 @@ public class Position
                 {
                     if(figur instanceof Pawn) {
                     	_zuegeKleiner50 = 0;
-                    	if(Math.abs(alteFigurPosition-neueFigurPosition)==16) {
+                    	if(Math.abs(alteFigurPosition-neueFigurPosition)==16) 
+                    	{
                     	_enpassant = (byte) (alteFigurPosition +((neueFigurPosition-alteFigurPosition) /2));
                     	}
+                    	else if(neuePos == enPassant)
+                    	{
+                    		neuePos = (byte) (neuePos -8);
+                    	}
+                    	
                     }
                     if(figur instanceof King)
                     {
@@ -188,7 +201,7 @@ public class Position
             
             for(Iterator<Piece> figur = _whiteFiguren.iterator(); figur.hasNext();)
             {
-            	if (figur.next().getCoordinate() == neueFigurPosition)
+            	if (figur.next().getCoordinate() == neuePos)
                   {
                       figur.remove();
                       _zuegeKleiner50 = 0;
