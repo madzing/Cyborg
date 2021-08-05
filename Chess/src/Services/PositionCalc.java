@@ -22,8 +22,8 @@ import Material.King;
 public class PositionCalc 
 {
 
-	private static List<Piece> _figurenAmZug;
-	private static List<Piece> _figurenDesGegners;
+	private static List<Piece> _figurenAmZug;  // Wahrscheinlich besser in einer map zu speichern ---> "how to loop a map in java" anschauen auf google
+	private static List<Piece> _figurenDesGegners; // Wahrscheinlich besser in einer map zu speichern
 	
 	// Liste aller möglichen "folgePositionen"
 	private static List<Position> _folgePositionen;
@@ -36,6 +36,7 @@ public class PositionCalc
 	
 	public static List<Position> getLegalPositions(Position currentPosition)
 	{
+		
 		_folgePositionen = new ArrayList<Position>();
 		_attackingPieces = new HashMap<String,Piece>();
 		_pinnedPieces = new HashMap<String,Piece>();
@@ -51,43 +52,66 @@ public class PositionCalc
 			_figurenAmZug = currentPosition.getBlackFiguren();
 			_figurenDesGegners = currentPosition.getWhiteFiguren();	
 		}
+		kingInCheck();
+		attackingPieces();
 		pinnedPieces();
-		insertLegalPawnMoves();
-		insertLegalKnightMoves();
-		insertLegalBishopMoves();
-		insertLegalRookMoves();
-		insertLegalQueenMoves();
-		insertLegalKingMoves();
+		for(Piece figur : _figurenAmZug)
+		{
+			if(figur instanceof Pawn)
+			{
+				insertLegalPawnMoves(figur);
+			}
+			else if(figur instanceof Knight)
+			{
+				insertLegalKnightMoves(figur);
+			}
+			else if(figur instanceof Bishop)
+			{
+				insertLegalBishopMoves(figur);
+			}
+			else if(figur instanceof Rook)
+			{
+				insertLegalRookMoves(figur);
+			}
+			else if(figur instanceof Queen)
+			{
+				insertLegalQueenMoves(figur);
+			}
+			else
+			{
+				insertLegalKingMoves(figur);
+			}
+		}
 
 		return _folgePositionen;
 	}
 	
-	private static void insertLegalPawnMoves()
+	private static void insertLegalPawnMoves(Piece figur)
 	{
 			
 	}
 	
-	private static void insertLegalKnightMoves()
+	private static void insertLegalKnightMoves(Piece figur)
 	{
 		
 	}
 	
-	private static void insertLegalBishopMoves()
+	private static void insertLegalBishopMoves(Piece figur)
 	{
 		
 	}
 	
-	private static void insertLegalRookMoves()
+	private static void insertLegalRookMoves(Piece figur)
 	{
 		
 	}
 	
-	private static void insertLegalQueenMoves()
+	private static void insertLegalQueenMoves(Piece figur)
 	{
 		
 	}
 	
-	private static void insertLegalKingMoves()
+	private static void insertLegalKingMoves(Piece figur)
 	{
 		
 	}
