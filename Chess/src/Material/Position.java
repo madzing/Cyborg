@@ -1,7 +1,7 @@
 package Material;
 
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.List;
 
 import Fachwerte.Fen;
@@ -49,6 +49,7 @@ public class Position
     public void makeMove(byte alteFigurPosition, byte neueFigurPosition)
     { 
     	_enpassant = -1;
+    	_zuegeKleiner50++;
         if (_zugrecht)
         {
             for (Piece figur : _whiteFiguren)
@@ -105,25 +106,26 @@ public class Position
                     _zugrecht = false;
                 }
             }
-            for (Piece figur : _blackFiguren)
+
+            for(Iterator<Piece> figur = _blackFiguren.iterator(); figur.hasNext();)
             {
-                if (figur.getCoordinate() == neueFigurPosition)
-                {
-                    _blackFiguren.remove(figur);
-                    _zuegeKleiner50 = 0;
-                
-                    if(figur instanceof Rook)
-                    {
-                    	if (alteFigurPosition == 0)
-                    	{
-                    		_blackCanCastle[1] = false;
-                    	}
-                    	if (alteFigurPosition == 7)
-                    	{
-                    		_blackCanCastle[0] = false;
-                    	}
-                    }
-                }
+            	if (figur.next().getCoordinate() == neueFigurPosition)
+                  {
+                      figur.remove();
+                      _zuegeKleiner50 = 0;
+                  
+                      if(figur instanceof Rook)
+                  	{
+                  		if (alteFigurPosition == 0)
+                  		{
+                  			_blackCanCastle[1] = false;
+                  		}
+                  		if (alteFigurPosition == 7)
+                  		{
+                  			_blackCanCastle[0] = false;
+                  		}
+                  	}
+                  }
             }
            
             
@@ -184,26 +186,28 @@ public class Position
                 _zugrecht = true;
             }
             
-            for (Piece figur : _whiteFiguren)
+            for(Iterator<Piece> figur = _whiteFiguren.iterator(); figur.hasNext();)
             {
-                if (figur.getCoordinate() == neueFigurPosition)
-                {
-                    _whiteFiguren.remove(figur);
-                    _zuegeKleiner50 = 0;
-                
-                    if(figur instanceof Rook)
-                	{
-                		if (alteFigurPosition == 56)
-                		{
-                			_whiteCanCastle[1] = false;
-                		}
-                		if (alteFigurPosition == 63)
-                		{
-                			_whiteCanCastle[0] = false;
-                		}
-                	}
-                }
+            	if (figur.next().getCoordinate() == neueFigurPosition)
+                  {
+                      figur.remove();
+                      _zuegeKleiner50 = 0;
+                  
+                      if(figur instanceof Rook)
+                  	{
+                  		if (alteFigurPosition == 56)
+                  		{
+                  			_whiteCanCastle[1] = false;
+                  		}
+                  		if (alteFigurPosition == 63)
+                  		{
+                  			_whiteCanCastle[0] = false;
+                  		}
+                  	}
+                  }
             }
+            
+            
         }
 
     }

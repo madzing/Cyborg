@@ -36,6 +36,31 @@ public class PositionTest {
 		Fen schrittVierFen= Fen.select("rnbqkbnr/p1pppppp/8/8/p7/8/1PPPPPPP/RNBQKBNR w KQkq - 0 3");
 		_startPositionFuerMove.makeMove((byte)25, (byte)32); //Schwarzer Bauer schlaegt von b5 auf a4
 		assertEquals(schrittVierFen.getString(), _startPositionFuerMove.getFen());
+		
+		//Test Castle
+		Fen testCastle = Fen.select("r1bqkbnr/ppp2ppp/2np4/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 4");
+		Position testCastlePosition = new Position(testCastle);
+		testCastlePosition.makeMove((byte)60, (byte)62);
+		assertEquals("r1bqkbnr/ppp2ppp/2np4/1B2p3/4P3/5N2/PPPP1PPP/RNBQ1RK1 b kq - 1 4", testCastlePosition.getFen());
+		
+		//Test enPassant schlagen
+		Fen testEnPassantSchlagen = Fen.select("r2qkbnr/pppb1pp1/2np4/1B2p1Pp/4P3/5N2/PPPP1P1P/RNBQK2R w KQkq h6 0 6");
+		Position testEnPassantSchlagenPosition = new Position(testEnPassantSchlagen);
+		testEnPassantSchlagenPosition.makeMove((byte) 30, (byte) 23);
+		assertEquals("r2qkbnr/pppb1pp1/2np3P/1B2p3/4P3/5N2/PPPP1P1P/RNBQK2R b KQkq - 0 6", testEnPassantSchlagenPosition.getFen());
+		
+		//Test moveRook --> Castle rights
+		Fen testMoveRook = Fen.select("r1bqkbnr/ppp2ppp/2np4/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 4");
+		Position testMoveRookPosition = new Position(testMoveRook);
+		testMoveRookPosition.makeMove((byte) 63,(byte) 61);
+		assertEquals("r1bqkbnr/ppp2ppp/2np4/1B2p3/4P3/5N2/PPPP1PPP/RNBQKR2 b Qkq - 1 4", testMoveRookPosition.getFen());
+		
+	}
+	
+	@Test
+	public void testPromotion()
+	{
+		
 	}
 
 	@Test
