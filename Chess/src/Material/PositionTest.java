@@ -21,29 +21,33 @@ public class PositionTest {
 	
 	@Test
 	public void testMakeMove() {
-		Fen schrittEinsFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 2");
+		Fen schrittEinsFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1");
 		_startPositionFuerMove.makeMove((byte)48, (byte)40); //Weisser Bauer von a2 auf a3 !Kein En Passant!
-		assertEquals(schrittEinsFen,_startPositionFuerMove.getFen());
+		assertEquals(schrittEinsFen.getString(),_startPositionFuerMove.getFen());
 		
-		Fen schrittZweiFen= Fen.select("rnbqkbnr/p1pppppp/8/1p6/8/P7/1PPPPPPP/RNBQKBNR w KQkq b6 0 3");
+		Fen schrittZweiFen= Fen.select("rnbqkbnr/p1pppppp/8/1p6/8/P7/1PPPPPPP/RNBQKBNR w KQkq b6 0 2");
 		_startPositionFuerMove.makeMove((byte)9, (byte)25); //Schwarzer Bauer von b7 auf b5 !En Passant auf b6!
-		assertEquals(schrittZweiFen, _startPositionFuerMove.getFen());
+		assertEquals(schrittZweiFen.getString(), _startPositionFuerMove.getFen());
 		
-		Fen schrittDreiFen= Fen.select("rnbqkbnr/p1pppppp/8/1p6/P7/8/1PPPPPPP/RNBQKBNR b KQkq - 0 4");
+		Fen schrittDreiFen= Fen.select("rnbqkbnr/p1pppppp/8/1p6/P7/8/1PPPPPPP/RNBQKBNR b KQkq - 0 2");
 		_startPositionFuerMove.makeMove((byte)40, (byte)32); //Weisser Bauern von a3 auf a4
-		assertEquals(schrittDreiFen, _startPositionFuerMove.getFen());
+		assertEquals(schrittDreiFen.getString(), _startPositionFuerMove.getFen());
 		
-		Fen schrittVierFen= Fen.select("rnbqkbnr/p1pppppp/8/8/p7/8/1PPPPPPP/RNBQKBNR w KQkq - 0 5");
+		Fen schrittVierFen= Fen.select("rnbqkbnr/p1pppppp/8/8/p7/8/1PPPPPPP/RNBQKBNR w KQkq - 0 3");
 		_startPositionFuerMove.makeMove((byte)25, (byte)32); //Schwarzer Bauer schlaegt von b5 auf a4
-		assertEquals(schrittVierFen, _startPositionFuerMove.getFen());
+		assertEquals(schrittVierFen.getString(), _startPositionFuerMove.getFen());
 	}
 
 	@Test
 	public void testGetFen() {
-		Fen zweiKoenigeFen = Fen.select("8/8/8/2k5/8/4K3/8/8 w - -1 5 56");
-		Position zweiKoenigeTest = new Position(zweiKoenigeFen);
-		assertEquals("8/8/8/2k5/8/4K3/8/8 w - -1 5 56", zweiKoenigeTest.getFen());
 		assertEquals("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" , _startPosition.getFen());
+		Fen zweiKoenigeFen = Fen.select("8/8/8/2k5/8/4K3/8/8 w - - 5 56");
+		Position zweiKoenigeTest = new Position(zweiKoenigeFen);
+		assertEquals("8/8/8/2k5/8/4K3/8/8 w - - 5 56", zweiKoenigeTest.getFen());
+		Fen enpassantfen = Fen.select("8/8/8/2k5/8/4K3/8/8 w - b6 5 56");
+		Position enPassantPosition = new Position(enpassantfen);
+		assertEquals("8/8/8/2k5/8/4K3/8/8 w - b6 5 56", enPassantPosition.getFen());
+		
 	}
 
 	@Test

@@ -1,6 +1,7 @@
 package Material;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import Fachwerte.Fen;
@@ -11,8 +12,8 @@ public class Position
     private List<Piece> _blackFiguren= new ArrayList<Piece>();
 
     private boolean _zugrecht;
-    private boolean _whiteCanCastle[] = {true, true};
-    private boolean _blackCanCastle[] = {true, true};
+    private boolean _whiteCanCastle[] = {false, false};
+    private boolean _blackCanCastle[] = {false, false};
     private byte _enpassant;
     private byte _zuegeKleiner50;
     private short _zuegeGesamt;
@@ -46,7 +47,8 @@ public class Position
 
     //TODO alles
     public void makeMove(byte alteFigurPosition, byte neueFigurPosition)
-    {
+    { 
+    	_enpassant = -1;
         if (_zugrecht)
         {
             for (Piece figur : _whiteFiguren)
@@ -54,11 +56,14 @@ public class Position
                 if (figur.getCoordinate() == alteFigurPosition)
                 {
                     
-                    if(figur instanceof Pawn) {
+                    if(figur instanceof Pawn) 
+                    {
                     	_zuegeKleiner50 = 0;
-                    	if(Math.abs(alteFigurPosition-neueFigurPosition)==16) {
-                    	_enpassant = (byte) (alteFigurPosition +(neueFigurPosition-alteFigurPosition /2));
+                    	if(Math.abs(alteFigurPosition-neueFigurPosition)==16) 
+                    	{
+                    	_enpassant = (byte) (alteFigurPosition +((neueFigurPosition-alteFigurPosition) /2));
                     	}
+                    }
                     if(figur instanceof King)
                     {
                     	_whiteCanCastle[0] = false;
@@ -95,7 +100,7 @@ public class Position
                     		_whiteCanCastle[0] = false;
                     	}
                     }
-                    }
+
                     figur.setCoordinate(neueFigurPosition);
                     _zugrecht = false;
                 }
@@ -106,17 +111,18 @@ public class Position
                 {
                     _blackFiguren.remove(figur);
                     _zuegeKleiner50 = 0;
-                }
-                if(figur instanceof Rook)
-                {
-                	if (alteFigurPosition == 0)
-                	{
-                		_blackCanCastle[1] = false;
-                	}
-                	if (alteFigurPosition == 7)
-                	{
-                		_blackCanCastle[0] = false;
-                	}
+                
+                    if(figur instanceof Rook)
+                    {
+                    	if (alteFigurPosition == 0)
+                    	{
+                    		_blackCanCastle[1] = false;
+                    	}
+                    	if (alteFigurPosition == 7)
+                    	{
+                    		_blackCanCastle[0] = false;
+                    	}
+                    }
                 }
             }
            
@@ -132,8 +138,9 @@ public class Position
                     if(figur instanceof Pawn) {
                     	_zuegeKleiner50 = 0;
                     	if(Math.abs(alteFigurPosition-neueFigurPosition)==16) {
-                    	_enpassant = (byte) (alteFigurPosition +(neueFigurPosition-alteFigurPosition /2));
+                    	_enpassant = (byte) (alteFigurPosition +((neueFigurPosition-alteFigurPosition) /2));
                     	}
+                    }
                     if(figur instanceof King)
                     {
                     	_blackCanCastle[0] = false;
@@ -170,9 +177,10 @@ public class Position
                     		_blackCanCastle[0] = false;
                     	}
                     }
-                    }
+                    
+                    figur.setCoordinate(neueFigurPosition);
                 }
-                figur.setCoordinate(neueFigurPosition);
+                
                 _zugrecht = true;
             }
             
@@ -182,7 +190,7 @@ public class Position
                 {
                     _whiteFiguren.remove(figur);
                     _zuegeKleiner50 = 0;
-                }
+                
                 if(figur instanceof Rook)
                 {
                 	if (alteFigurPosition == 56)
@@ -193,6 +201,7 @@ public class Position
                 	{
                 		_whiteCanCastle[0] = false;
                 	}
+                }
                 }
             }
         }
@@ -417,8 +426,87 @@ public class Position
     // Getter
 
     // TODO alles
+    // "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
     public String getFen()
     {
+    	String placement = "0000000000000000000000000000000000000000000000000000000000000000";
+    	char[] array = placement.toCharArray();
+    	for (Piece whitePiece :_whiteFiguren)
+    	{
+    		byte platz = whitePiece.getCoordinate();
+    		
+    		if(whitePiece instanceof Pawn) {
+    		 array[platz]='P';
+    		}
+    		else if(whitePiece instanceof Knight)
+    		{
+    			array[platz]='N';
+    		}
+    		else if(whitePiece instanceof Bishop)
+    		{
+    			array[platz]='B';
+    		}
+    		else if(whitePiece instanceof Rook)
+    		{
+    			array[platz]='R';
+    		}
+    		else if(whitePiece instanceof Queen)
+    		{
+    			array[platz]='Q';
+    		}
+    		else {
+    			array[platz]='K';
+    		}
+    		
+    	}
+    	for (Piece blackPiece :_blackFiguren)
+    	{
+    		byte platz = blackPiece.getCoordinate();
+    		
+    		if(blackPiece instanceof Pawn) {
+    		 array[platz]='p';
+    		}
+    		else if(blackPiece instanceof Knight)
+    		{
+    			array[platz]='n';
+    		}
+    		else if(blackPiece instanceof Bishop)
+    		{
+    			array[platz]='b';
+    		}
+    		else if(blackPiece instanceof Rook)
+    		{
+    			array[platz]='r';
+    		}
+    		else if(blackPiece instanceof Queen)
+    		{
+    			array[platz]='q';
+    		}
+    		else {
+    			array[platz]='k';
+    		}
+    	}
+
+    	placement = new String (array);
+    	
+    	String slashes = placement.substring(0, 8)+"/";
+    	slashes = slashes + placement.substring(8, 16)+"/";
+    	slashes = slashes + placement.substring(16, 24)+"/";
+    	slashes = slashes + placement.substring(24, 32)+"/";
+    	slashes = slashes + placement.substring(32, 40)+"/";
+    	slashes = slashes + placement.substring(40, 48)+"/";
+    	slashes = slashes + placement.substring(48, 56)+"/";
+    	slashes = slashes + placement.substring(56, 64);
+    	slashes = slashes.replace( "00000000","8");
+    	slashes = slashes.replace("0000000", "7");
+    	slashes = slashes.replace("000000", "6");
+    	slashes = slashes.replace("00000", "5");
+    	slashes = slashes.replace("0000", "4");
+    	slashes = slashes.replace("000", "3");
+    	slashes = slashes.replace("00", "2");
+    	slashes = slashes.replace("0", "1");
+    	placement = slashes;
+    	
     	String zugrecht = "";
     	if (getZugrecht())
     	{
@@ -446,7 +534,7 @@ public class Position
     	{
     		castling = castling +  "q";
     	}
-    	else 
+    	if  (castling.equals(""))
     	{
     		castling = "-";
     	}
@@ -512,7 +600,7 @@ public class Position
     	String fullmoves = "" + _zuegeGesamt;
     		
     	
-        return /*placement + */ " " + zugrecht + " " + castling + " " + enPassant + " " + halfmoves + " " + fullmoves;
+        return placement +  " " + zugrecht + " " + castling + " " + enPassant + " " + halfmoves + " " + fullmoves;
     }
 
     public List<Piece> getWhiteFiguren()
