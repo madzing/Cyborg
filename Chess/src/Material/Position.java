@@ -278,7 +278,100 @@ public class Position
     // TODO alles
     public String getFen()
     {
-        return "bla";
+    	String zugrecht = "";
+    	if (getZugrecht())
+    	{
+    		zugrecht = "w";
+    	}
+    	else 
+    	{
+    		zugrecht = "b";
+    	}
+    	
+    	String castling = "";
+    	if (getWhiteCastleRights()[0])
+    	{
+    		castling = castling +  "K";
+    	}
+    	if (getWhiteCastleRights()[1])
+    	{
+    		castling = castling +  "Q";
+    	}
+    	if (getBlackCastleRights()[0])
+    	{
+    		castling = castling +  "k";
+    	}
+    	if (getBlackCastleRights()[1])
+    	{
+    		castling = castling +  "q";
+    	}
+    	else 
+    	{
+    		castling = "-";
+    	}
+    	
+    	String enPassant = "";
+    	switch (_enpassant)
+        {
+        case 40:
+            enPassant = "a3";
+            break;
+        case 41:
+        	enPassant = "b3";
+            break;
+        case 42:
+        	enPassant = "c3";
+            break;
+        case 43:
+        	enPassant = "d3";
+            break;
+        case 44:
+        	enPassant = "e3";
+            break;
+        case 45:
+        	enPassant = "f3";
+            break;
+        case 46:
+        	enPassant = "g3";
+            break;
+        case 47:
+        	enPassant = "h3";
+            break;
+        case 16:
+        	enPassant = "a6";
+            break;
+        case 17:
+        	enPassant = "b6";
+            break;
+        case 18:
+        	enPassant = "c6";
+            break;
+        case 19:
+        	enPassant = "d6";
+            break;
+        case 20:
+        	enPassant = "e6";
+            break;
+        case 21:
+        	enPassant = "f6";
+            break;
+        case 22:
+        	enPassant = "g6";
+            break;
+        case 23:
+        	enPassant = "h6";
+            break;
+        default:
+        	enPassant = "-";
+            break;
+        }
+    	
+    	String halfmoves = "" + _zuegeKleiner50;
+    	
+    	String fullmoves = "" + _zuegeGesamt;
+    		
+    	
+        return /*placement + */ " " + zugrecht + " " + castling + " " + enPassant + " " + halfmoves + " " + fullmoves;
     }
 
     public List<Piece> getWhiteFiguren()
