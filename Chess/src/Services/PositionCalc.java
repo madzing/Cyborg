@@ -19,12 +19,18 @@ import Material.King;
 
 
 
-public  class PositionCalc 
+public class PositionCalc 
 {
 
 	private static List<Piece> _figurenAmZug;
 	private static List<Piece> _figurenDesGegners;
+	
+	// Liste aller möglichen "folgePositionen"
 	private static List<Position> _folgePositionen = new ArrayList<Position>();
+	
+	// besondere Daten bezüglich King safety
+	private boolean _kinginCheck;
+	private static Map<String,Piece> _attackingPieces = new HashMap<String,Piece>();
 	private static Map<String,Piece> _pinnedPieces = new HashMap<String,Piece>();
 	
 	
@@ -77,6 +83,18 @@ public  class PositionCalc
 	}
 	
 	private static void insertLegalKingMoves()
+	{
+		
+	}
+	
+	// Ist der König im Schach?
+	private static void kingInCheck()
+	{
+		
+	}
+	
+	// Welche gegnerischen Figuren haben meinen König "in Sichtweite"?
+	private static void attackingPieces()
 	{
 		
 	}
