@@ -53,7 +53,7 @@ public class Position
             {
                 if (figur.getCoordinate() == alteFigurPosition)
                 {
-                    figur.setCoordinate(neueFigurPosition);
+                    
                     if(figur instanceof Pawn) {
                     	_zuegeKleiner50 = 0;
                     	if(Math.abs(alteFigurPosition-neueFigurPosition)==16) {
@@ -63,6 +63,26 @@ public class Position
                     {
                     	_whiteCanCastle[0] = false;
                     	_whiteCanCastle[1] = false;
+                    	if(alteFigurPosition == 60 && neueFigurPosition == 62)
+                    	{
+                    		for (Piece piece : _whiteFiguren)
+                            {
+                                if (piece.getCoordinate() == 63)
+                                {
+                                	piece.setCoordinate((byte)61);
+                                }
+                            }
+                    	}
+                    	if(alteFigurPosition == 60 && neueFigurPosition == 58)
+                    	{
+                    		for (Piece piece : _whiteFiguren)
+                            {
+                                if (piece.getCoordinate() == 56)
+                                {
+                                	piece.setCoordinate((byte)59);
+                                }
+                            }
+                    	}
                     }
                     if(figur instanceof Rook)
                     {
@@ -76,6 +96,7 @@ public class Position
                     	}
                     }
                     }
+                    figur.setCoordinate(neueFigurPosition);
                 }
             }
             for (Piece figur : _blackFiguren)
@@ -83,6 +104,7 @@ public class Position
                 if (figur.getCoordinate() == neueFigurPosition)
                 {
                     _blackFiguren.remove(figur);
+                    _zuegeKleiner50 = 0;
                 }
                 if(figur instanceof Rook)
                 {
@@ -101,18 +123,74 @@ public class Position
         }
         else
         {
+        	_zuegeGesamt++;
             for (Piece figur : _blackFiguren)
             {
                 if (figur.getCoordinate() == alteFigurPosition)
                 {
-                    figur.setCoordinate(neueFigurPosition);
+                    if(figur instanceof Pawn) {
+                    	_zuegeKleiner50 = 0;
+                    	if(Math.abs(alteFigurPosition-neueFigurPosition)==16) {
+                    	_enpassant = (byte) (alteFigurPosition +(neueFigurPosition-alteFigurPosition /2));
+                    	}
+                    if(figur instanceof King)
+                    {
+                    	_blackCanCastle[0] = false;
+                    	_blackCanCastle[1] = false;
+                    	if(alteFigurPosition == 4 && neueFigurPosition == 6)
+                    	{
+                    		for (Piece piece : _whiteFiguren)
+                            {
+                                if (piece.getCoordinate() == 7)
+                                {
+                                	piece.setCoordinate((byte)5);
+                                }
+                            }
+                    	}
+                    	if(alteFigurPosition == 4 && neueFigurPosition == 2)
+                    	{
+                    		for (Piece piece : _whiteFiguren)
+                            {
+                                if (piece.getCoordinate() == 0)
+                                {
+                                	piece.setCoordinate((byte)3);
+                                }
+                            }
+                    	}
+                    }
+                    if(figur instanceof Rook)
+                    {
+                    	if (alteFigurPosition == 0)
+                    	{
+                    		_blackCanCastle[1] = false;
+                    	}
+                    	if (alteFigurPosition == 7)
+                    	{
+                    		_blackCanCastle[0] = false;
+                    	}
+                    }
+                    }
                 }
+                figur.setCoordinate(neueFigurPosition);
             }
+            
             for (Piece figur : _whiteFiguren)
             {
                 if (figur.getCoordinate() == neueFigurPosition)
                 {
                     _whiteFiguren.remove(figur);
+                    _zuegeKleiner50 = 0;
+                }
+                if(figur instanceof Rook)
+                {
+                	if (alteFigurPosition == 56)
+                	{
+                		_whiteCanCastle[1] = false;
+                	}
+                	if (alteFigurPosition == 63)
+                	{
+                		_whiteCanCastle[0] = false;
+                	}
                 }
             }
         }
