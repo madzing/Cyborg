@@ -54,6 +54,28 @@ public class Position
                 if (figur.getCoordinate() == alteFigurPosition)
                 {
                     figur.setCoordinate(neueFigurPosition);
+                    if(figur instanceof Pawn) {
+                    	_zuegeKleiner50 = 0;
+                    	if(Math.abs(alteFigurPosition-neueFigurPosition)==16) {
+                    	_enpassant = (byte) (alteFigurPosition +(neueFigurPosition-alteFigurPosition /2));
+                    	}
+                    if(figur instanceof King)
+                    {
+                    	_whiteCanCastle[0] = false;
+                    	_whiteCanCastle[1] = false;
+                    }
+                    if(figur instanceof Rook)
+                    {
+                    	if (alteFigurPosition == 56)
+                    	{
+                    		_whiteCanCastle[1] = false;
+                    	}
+                    	if (alteFigurPosition == 63)
+                    	{
+                    		_whiteCanCastle[0] = false;
+                    	}
+                    }
+                    }
                 }
             }
             for (Piece figur : _blackFiguren)
@@ -62,7 +84,20 @@ public class Position
                 {
                     _blackFiguren.remove(figur);
                 }
+                if(figur instanceof Rook)
+                {
+                	if (alteFigurPosition == 0)
+                	{
+                		_blackCanCastle[1] = false;
+                	}
+                	if (alteFigurPosition == 7)
+                	{
+                		_blackCanCastle[0] = false;
+                	}
+                }
             }
+           
+            
         }
         else
         {
