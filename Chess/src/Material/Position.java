@@ -191,17 +191,17 @@ public class Position
                     _whiteFiguren.remove(figur);
                     _zuegeKleiner50 = 0;
                 
-                if(figur instanceof Rook)
-                {
-                	if (alteFigurPosition == 56)
+                    if(figur instanceof Rook)
                 	{
-                		_whiteCanCastle[1] = false;
+                		if (alteFigurPosition == 56)
+                		{
+                			_whiteCanCastle[1] = false;
+                		}
+                		if (alteFigurPosition == 63)
+                		{
+                			_whiteCanCastle[0] = false;
+                		}
                 	}
-                	if (alteFigurPosition == 63)
-                	{
-                		_whiteCanCastle[0] = false;
-                	}
-                }
                 }
             }
         }
