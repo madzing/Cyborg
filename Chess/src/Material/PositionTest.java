@@ -61,12 +61,12 @@ public class PositionTest {
 	public void testPromotion()	{
 		Fen promotionFen = Fen.select("8/4P3/8/2k5/8/4K3/2p5/8 w - - 5 56");
 		Position promotionTest = new Position(promotionFen);
-		Fen promotedFen = Fen.select("4Q3/8/8/2k5/8/4K3/8/2R5 w - - 5 56");
+		Fen promotedFen = Fen.select("4Q3/8/8/2k5/8/4K3/8/2r5 w - - 0 57");
 		promotionTest.makeMove((byte)12, (byte)4);
 		promotionTest.promotion(new Queen((byte)4)); //weiﬂer Bauer auf e8 wird zur Queen
 		promotionTest.makeMove((byte)50, (byte)58);
 		promotionTest.promotion(new Rook((byte)58)); //schwarzer Bauer auf c1 wird zu Rook
-		assertEquals(promotedFen, promotionTest.getFen());
+		assertEquals(promotedFen.getString(), promotionTest.getFen());
 		
 	}
 
