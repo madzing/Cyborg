@@ -97,7 +97,7 @@ public class Position
                     }
                     }
                     figur.setCoordinate(neueFigurPosition);
-                    _zugrecht = true;
+                    _zugrecht = false;
                 }
             }
             for (Piece figur : _blackFiguren)
