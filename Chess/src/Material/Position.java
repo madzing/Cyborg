@@ -235,19 +235,20 @@ public class Position
     			{
     				figur.remove();
     			}
-				_whiteFiguren.add(promotedFigur);
-    		}
+	 		}
+    		_whiteFiguren.add(promotedFigur);
     	}
     	else
     	{
-    		for (Piece figur : _blackFiguren)
+    		for (Iterator<Piece> figur = _blackFiguren.iterator(); figur.hasNext();)
     		{
-    			if (figur.getCoordinate() == feld)
+    			if (figur.next().getCoordinate() == promotedFigur.getCoordinate())
     			{
-    				_blackFiguren.add(_blackFiguren.indexOf(figur) + 1, promotedFigur);
-    				_blackFiguren.remove(figur);
+    				figur.remove();
     			}
+    			
     		}
+    		_blackFiguren.add(promotedFigur);
     	}
     }
     
