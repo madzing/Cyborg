@@ -25,6 +25,9 @@ public class PositionTest {
 
 	@Test
 	public void testGetFen() {
+		Fen zweiKoenigeFen = Fen.select("8/8/8/2k5/8/4K3/8/8 w - -1 5 56");
+		Position zweiKoenigeTest = new Position(zweiKoenigeFen);
+		assertEquals("8/8/8/2k5/8/4K3/8/8 w - -1 5 56", zweiKoenigeTest.getFen());
 		assertEquals("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" , _startPosition.getFen());
 	}
 
