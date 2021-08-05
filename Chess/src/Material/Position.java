@@ -97,6 +97,7 @@ public class Position
                     }
                     }
                     figur.setCoordinate(neueFigurPosition);
+                    _zugrecht = true;
                 }
             }
             for (Piece figur : _blackFiguren)
@@ -172,6 +173,7 @@ public class Position
                     }
                 }
                 figur.setCoordinate(neueFigurPosition);
+                _zugrecht = true;
             }
             
             for (Piece figur : _whiteFiguren)
