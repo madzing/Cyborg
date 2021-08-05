@@ -225,17 +225,17 @@ public class Position
 
     }
 
-    public void promotion(byte feld, Piece promotedFigur)
+    public void promotion( Piece promotedFigur)
     {
     	if(!_zugrecht)
     	{
-    		for (Piece figur : _whiteFiguren)
+    		for (Iterator<Piece> figur = _whiteFiguren.iterator(); figur.hasNext();)
     		{
-    			if (figur.getCoordinate() == feld)
+    			if (figur.next().getCoordinate() == promotedFigur.getCoordinate())
     			{
-    				_whiteFiguren.add(_whiteFiguren.indexOf(figur) + 1, promotedFigur);
-    				_whiteFiguren.remove(figur);
+    				figur.remove();
     			}
+				_whiteFiguren.add(promotedFigur);
     		}
     	}
     	else
