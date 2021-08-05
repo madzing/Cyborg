@@ -16,7 +16,6 @@ public class PositionTest {
 	
 	Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 	Position _startPosition = new Position(_startFen);
-	Fen _startFenFuerMove= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 	Position _startPositionFuerMove = new Position(_startFen);
 	
 	

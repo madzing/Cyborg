@@ -119,6 +119,32 @@ public class Position
 
     }
 
+    public void promotion(byte feld, Piece promotedFigur)
+    {
+    	if(!_zugrecht)
+    	{
+    		for (Piece figur : _whiteFiguren)
+    		{
+    			if (figur.getCoordinate() == feld)
+    			{
+    				_whiteFiguren.add(_whiteFiguren.indexOf(figur) + 1, promotedFigur);
+    				_whiteFiguren.remove(figur);
+    			}
+    		}
+    	}
+    	else
+    	{
+    		for (Piece figur : _blackFiguren)
+    		{
+    			if (figur.getCoordinate() == feld)
+    			{
+    				_blackFiguren.add(_blackFiguren.indexOf(figur) + 1, promotedFigur);
+    				_blackFiguren.remove(figur);
+    			}
+    		}
+    	}
+    }
+    
     // Alle fenTo Methoden
     private void fenToFiguren(Fen fenPosition)
     {
