@@ -16,11 +16,27 @@ public class PositionTest {
 	
 	Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 	Position _startPosition = new Position(_startFen);
+	Fen _startFenFuerMove= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+	Position _startPositionFuerMove = new Position(_startFen);
 	
 	
 	@Test
 	public void testMakeMove() {
-		fail("Not testing");
+		Fen schrittEinsFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 2");
+		_startPositionFuerMove.makeMove((byte)48, (byte)40); //Weisser Bauer von a2 auf a3 !Kein En Passant!
+		assertEquals(schrittEinsFen,_startPositionFuerMove.getFen());
+		
+		Fen schrittZweiFen= Fen.select("rnbqkbnr/p1pppppp/8/1p6/8/P7/1PPPPPPP/RNBQKBNR w KQkq b6 0 3");
+		_startPositionFuerMove.makeMove((byte)9, (byte)25); //Schwarzer Bauer von b7 auf b5 !En Passant auf b6!
+		assertEquals(schrittZweiFen, _startPositionFuerMove.getFen());
+		
+		Fen schrittDreiFen= Fen.select("rnbqkbnr/p1pppppp/8/1p6/P7/8/1PPPPPPP/RNBQKBNR b KQkq - 0 4");
+		_startPositionFuerMove.makeMove((byte)40, (byte)32); //Weisser Bauern von a3 auf a4
+		assertEquals(schrittDreiFen, _startPositionFuerMove.getFen());
+		
+		Fen schrittVierFen= Fen.select("rnbqkbnr/p1pppppp/8/8/p7/8/1PPPPPPP/RNBQKBNR w KQkq - 0 5");
+		_startPositionFuerMove.makeMove((byte)25, (byte)32); //Schwarzer Bauer schlaegt von b5 auf a4
+		assertEquals(schrittVierFen, _startPositionFuerMove.getFen());
 	}
 
 	@Test
