@@ -1,19 +1,24 @@
 package Services;
 
-import Material.Bishop;
-import Material.Knight;
-import Material.Pawn;
-import Material.Piece;
 import Material.Position;
-import Material.Queen;
+import Material.Piece;
+import Material.Pawn;
+import Material.Knight;
+import Material.Bishop;
 import Material.Rook;
+import Material.Queen;
+import Material.King;
 
-public class PositionCalc {
+
+
+
+public  class PositionCalc {
 	
-	public PositionCalc()
-    {
-
-    }
+	public static void getlegalPositions(Position currentPosition)
+	{
+		
+	}
+	
 
 
 }
