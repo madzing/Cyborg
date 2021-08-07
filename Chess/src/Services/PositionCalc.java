@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import Fachwerte.Coordinate;
 import Material.Bishop;
@@ -22,24 +23,26 @@ import Material.King;
 public class PositionCalc 
 {
 
-	private static List<Piece> _figurenAmZug;  // Wahrscheinlich besser in einer map zu speichern ---> "how to loop a map in java" anschauen auf google
-	private static List<Piece> _figurenDesGegners; // Wahrscheinlich besser in einer map zu speichern
+	private static Map<Integer,Piece> _figurenAmZug;  // Wahrscheinlich besser in einer map zu speichern ---> "how to loop a map in java" anschauen auf google
+	private static Map<Integer,Piece> _figurenDesGegners; // Wahrscheinlich besser in einer map zu speichern
 	
 	// Liste aller möglichen "folgePositionen"
 	private static List<Position> _folgePositionen;
 	
 	// besondere Daten bezüglich King safety
 	private static boolean _kinginCheck;
-	private static Map<String,Piece> _attackingPieces;
-	private static Map<String,Piece> _pinnedPieces;
+	private static Map<Integer,Piece> _attackingPieces;
+	private static Map<Integer,Piece> _pinnedPieces;
 	
 	
 	public static List<Position> getLegalPositions(Position currentPosition)
 	{
 		
 		_folgePositionen = new ArrayList<Position>();
-		_attackingPieces = new HashMap<String,Piece>();
-		_pinnedPieces = new HashMap<String,Piece>();
+		_attackingPieces = new HashMap<Integer,Piece>();
+		
+		
+		_pinnedPieces = new HashMap<Integer,Piece>();
 		_kinginCheck = false;
 		
 		if(currentPosition.getZugrecht())
@@ -55,63 +58,65 @@ public class PositionCalc
 		kingInCheck();
 		attackingPieces();
 		pinnedPieces();
-		for(Piece figur : _figurenAmZug)
+		//Map.Entry<String, String> entry : map.entrySet()
+		for(Map.Entry<Integer, Piece> entry : _figurenAmZug.entrySet())
 		{
-			if(figur instanceof Pawn)
+			if(entry.getValue() instanceof Pawn)
 			{
-				insertLegalPawnMoves(figur);
+				insertLegalPawnMoves(entry);
 			}
-			else if(figur instanceof Knight)
+			else if(entry.getValue() instanceof Knight)
 			{
-				insertLegalKnightMoves(figur);
+				insertLegalKnightMoves(entry);
 			}
-			else if(figur instanceof Bishop)
+			else if(entry.getValue() instanceof Bishop)
 			{
-				insertLegalBishopMoves(figur);
+				insertLegalBishopMoves(entry);
 			}
-			else if(figur instanceof Rook)
+			else if(entry.getValue() instanceof Rook)
 			{
-				insertLegalRookMoves(figur);
+				insertLegalRookMoves(entry);
 			}
-			else if(figur instanceof Queen)
+			else if(entry.getValue() instanceof Queen)
 			{
-				insertLegalQueenMoves(figur);
+				insertLegalQueenMoves(entry);
 			}
 			else
 			{
-				insertLegalKingMoves(figur);
+				insertLegalKingMoves(entry);
 			}
 		}
 
 		return _folgePositionen;
 	}
 	
-	private static void insertLegalPawnMoves(Piece figur)
+	
+	private static void insertLegalPawnMoves(Entry<Integer, Piece> entry)
 	{
 			
 	}
 	
-	private static void insertLegalKnightMoves(Piece figur)
+	private static void insertLegalKnightMoves(Entry<Integer, Piece> entry)
 	{
 		
 	}
 	
-	private static void insertLegalBishopMoves(Piece figur)
+	private static void insertLegalBishopMoves(Entry<Integer, Piece> entry)
 	{
 		
 	}
 	
-	private static void insertLegalRookMoves(Piece figur)
+	private static void insertLegalRookMoves(Entry<Integer, Piece> entry)
 	{
 		
 	}
 	
-	private static void insertLegalQueenMoves(Piece figur)
+	private static void insertLegalQueenMoves(Entry<Integer, Piece> entry)
 	{
 		
 	}
 	
-	private static void insertLegalKingMoves(Piece figur)
+	private static void insertLegalKingMoves(Entry<Integer, Piece> entry)
 	{
 		
 	}
