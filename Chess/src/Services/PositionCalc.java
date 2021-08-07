@@ -23,26 +23,26 @@ import Material.King;
 public class PositionCalc 
 {
 
-	private static Map<Integer,Piece> _figurenAmZug;  // Wahrscheinlich besser in einer map zu speichern ---> "how to loop a map in java" anschauen auf google
-	private static Map<Integer,Piece> _figurenDesGegners; // Wahrscheinlich besser in einer map zu speichern
+	private static Map<Byte,Piece> _figurenAmZug;  
+	private static Map<Byte,Piece> _figurenDesGegners; 
 	
 	// Liste aller möglichen "folgePositionen"
 	private static List<Position> _folgePositionen;
 	
 	// besondere Daten bezüglich King safety
 	private static boolean _kinginCheck;
-	private static Map<Integer,Piece> _attackingPieces;
-	private static Map<Integer,Piece> _pinnedPieces;
+	private static Map<Byte,Piece> _attackingPieces;
+	private static Map<Byte,Piece> _pinnedPieces;
 	
 	
 	public static List<Position> getLegalPositions(Position currentPosition)
 	{
 		
 		_folgePositionen = new ArrayList<Position>();
-		_attackingPieces = new HashMap<Integer,Piece>();
+		_attackingPieces = new HashMap<Byte,Piece>();
 		
 		
-		_pinnedPieces = new HashMap<Integer,Piece>();
+		_pinnedPieces = new HashMap<Byte,Piece>();
 		_kinginCheck = false;
 		
 		if(currentPosition.getZugrecht())
@@ -59,7 +59,7 @@ public class PositionCalc
 		attackingPieces();
 		pinnedPieces();
 		//Map.Entry<String, String> entry : map.entrySet()
-		for(Map.Entry<Integer, Piece> entry : _figurenAmZug.entrySet())
+		for(Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet())
 		{
 			if(entry.getValue() instanceof Pawn)
 			{
@@ -91,32 +91,32 @@ public class PositionCalc
 	}
 	
 	
-	private static void insertLegalPawnMoves(Entry<Integer, Piece> entry)
+	private static void insertLegalPawnMoves(Entry<Byte, Piece> entry)
 	{
 			
 	}
 	
-	private static void insertLegalKnightMoves(Entry<Integer, Piece> entry)
+	private static void insertLegalKnightMoves(Entry<Byte, Piece> entry)
 	{
 		
 	}
 	
-	private static void insertLegalBishopMoves(Entry<Integer, Piece> entry)
+	private static void insertLegalBishopMoves(Entry<Byte, Piece> entry)
 	{
 		
 	}
 	
-	private static void insertLegalRookMoves(Entry<Integer, Piece> entry)
+	private static void insertLegalRookMoves(Entry<Byte, Piece> entry)
 	{
 		
 	}
 	
-	private static void insertLegalQueenMoves(Entry<Integer, Piece> entry)
+	private static void insertLegalQueenMoves(Entry<Byte, Piece> entry)
 	{
 		
 	}
 	
-	private static void insertLegalKingMoves(Entry<Integer, Piece> entry)
+	private static void insertLegalKingMoves(Entry<Byte, Piece> entry)
 	{
 		
 	}
