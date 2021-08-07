@@ -56,8 +56,8 @@ public class PositionCalc
 			_figurenAmZug = convertListToMap(currentPosition.getBlackFiguren());
 			_figurenDesGegners = convertListToMap(currentPosition.getWhiteFiguren());	
 		}
-		kingInCheck();
 		attackingPieces();
+		kingInCheck();
 		pinnedPieces();
 		//Map.Entry<String, String> entry : map.entrySet()
 		for(Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet())
@@ -92,7 +92,7 @@ public class PositionCalc
 	}
 	
 	 public static Map<Byte, Piece> convertListToMap(List<Piece> list) {
-		   	Map<Byte,Piece> map = new HashMap<>();
+		   	Map<Byte,Piece> map = new HashMap<>(64);
 		   	for (Piece piece:list) {
 		   		map.put(piece.getCoordinate(), piece);
 		   	}
@@ -139,7 +139,45 @@ public class PositionCalc
 	// Welche gegnerischen Figuren haben meinen König "in Sichtweite"?
 	private static void attackingPieces()
 	{
+		for(Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet())
+		{
+			if(entry.getValue() instanceof King)
+				{
+					byte kingPosition = entry.getValue().getCoordinate();
+					int pawnFelder[] = null;
+					int bishopFelder[]=new int[14];
+					int rookFelder[] = null;
+					int knightFelder[] = {kingPosition -15,kingPosition -6,kingPosition +10, kingPosition +17, kingPosition +15, kingPosition +6, kingPosition -10,kingPosition -17};
+					
+					for(int i = 1 ; i <= 7; i++)
+					{
+						bishopFelder[i-1] = -7*i;
+						bishopFelder[i-1] = -7*i;
+					}
+				}
+			_attackingPieces
+		}
+	}
+	
+	private static List<Integer>  hasViewOf(Coordinate thisPieceCoordinate,byte[] vision, boolean repeatable)
+	{
+		List<Integer> list = new ArrayList<Integer>();
 		
+		for(int i = 0; i < vision.length;i++)
+		{
+			for(int j = 1 ; j <= 7; j++)
+			{
+				if(thisPieceCoordinate.getCoordinate() + vision[i]*j >=0 && thisPieceCoordinate.getCoordinate() + vision[i]*j <=63)
+				{
+					list.add(thisPieceCoordinate.getCoordinate()+vision[i]*j);
+				}
+				if(!repeatable)
+				{
+					break;
+				}
+			}
+		}
+		return list;
 	}
 	
 	// Finde heraus, ob der König im Schach steht, wenn die Figur gelöscht ist. Sonderregel für enPassant ist nötig.
