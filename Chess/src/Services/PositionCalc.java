@@ -182,7 +182,7 @@ public class PositionCalc
 		}
 	}
 	
-	
+	//TODO noch nicht implementiert
 	private static void getLegalKingMoves(Entry<Byte, Piece> entry)
 	{
 		
@@ -345,7 +345,7 @@ public class PositionCalc
 		return list;
 	}
 	
-	// der letzte Spieler hat seinen Zug gemach, steht sein König jetzt im Schach? Wenn ja sollte FALSE zurückgegeben werden.
+	// TODO der letzte Spieler hat seinen Zug gemach, steht sein König jetzt im Schach? Wenn ja sollte FALSE zurückgegeben werden.
 	private static boolean isPositionLegal(Position position)
 	{
 		
