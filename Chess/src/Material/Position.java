@@ -22,7 +22,8 @@ public class Position
     {
         createPosition(fenPosition);
     }
-
+    
+    //TODO Funktioniert nicht JAVA ist kacke
     public Position(Position copyable)
     {
         this._whiteFiguren = copyable.getWhiteFiguren();
