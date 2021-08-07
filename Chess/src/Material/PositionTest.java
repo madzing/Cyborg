@@ -18,7 +18,15 @@ public class PositionTest {
 	Position _startPosition = new Position(_startFen);
 	Position _startPositionFuerMove = new Position(_startFen);
 	
-	
+	@Test
+	public void KonstruktorTest()
+	{
+		Position newPosition = new Position(_startPosition);
+		System.out.println(_startPosition.getFen());
+		newPosition.makeMove((byte)48, (byte)32);
+		System.out.println(_startPosition.getFen());
+		assertEquals("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",_startPosition.getFen());
+	}
 	@Test
 	public void testMakeMove() {
 		Fen schrittEinsFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1");
@@ -63,7 +71,7 @@ public class PositionTest {
 		Position promotionTest = new Position(promotionFen);
 		Fen promotedFen = Fen.select("4Q3/8/8/2k5/8/4K3/8/2r5 w - - 0 57");
 		promotionTest.makeMove((byte)12, (byte)4);
-		promotionTest.promotion(new Queen((byte)4)); //weißer Bauer auf e8 wird zur Queen
+		promotionTest.promotion(new Queen((byte)4)); //weiï¿½er Bauer auf e8 wird zur Queen
 		promotionTest.makeMove((byte)50, (byte)58);
 		promotionTest.promotion(new Rook((byte)58)); //schwarzer Bauer auf c1 wird zu Rook
 		assertEquals(promotedFen.getString(), promotionTest.getFen());
