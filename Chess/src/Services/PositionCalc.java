@@ -144,22 +144,16 @@ public class PositionCalc
 			if(entry.getValue() instanceof King)
 				{
 					byte kingPosition = entry.getValue().getCoordinate();
-					int pawnFelder[] = null;
 					int bishopFelder[]=new int[14];
 					int rookFelder[] = null;
-					int knightFelder[] = {kingPosition -15,kingPosition -6,kingPosition +10, kingPosition +17, kingPosition +15, kingPosition +6, kingPosition -10,kingPosition -17};
+
 					
-					for(int i = 1 ; i <= 7; i++)
-					{
-						bishopFelder[i-1] = -7*i;
-						bishopFelder[i-1] = -7*i;
-					}
 				}
 			_attackingPieces
 		}
 	}
 	
-	private static List<Integer>  hasViewOf(Coordinate thisPieceCoordinate,byte[] vision, boolean repeatable)
+	private static List<Integer>  hasViewOf(Coordinate thisPieceCoordinate,byte[] vision, boolean repeatable, boolean blocked)
 	{
 		List<Integer> list = new ArrayList<Integer>();
 		
@@ -169,7 +163,16 @@ public class PositionCalc
 			{
 				if(thisPieceCoordinate.getCoordinate() + vision[i]*j >=0 && thisPieceCoordinate.getCoordinate() + vision[i]*j <=63)
 				{
-					list.add(thisPieceCoordinate.getCoordinate()+vision[i]*j);
+					if (_figurenDesGegners.containsKey((byte)(thisPieceCoordinate.getCoordinate() + vision[i]*j))&& blocked)
+					{
+						list.add(thisPieceCoordinate.getCoordinate()+vision[i]*j);
+						break;
+					}
+					
+					else if( _figurenAmZug.containsKey((byte)(thisPieceCoordinate.getCoordinate()+ vision[i]*j)) && blocked)
+					{
+						break;
+					}
 				}
 				if(!repeatable)
 				{
