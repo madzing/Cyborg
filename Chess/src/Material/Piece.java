@@ -25,4 +25,14 @@ public abstract class Piece {
 	public void setCoordinate(byte coordinate) {
 		_coordinate = Coordinate.select(coordinate);
 	}
+	
+    @Override
+    public int hashCode() {
+    	return this.getCoordinate();
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+    	return this.hashCode() == obj.hashCode();
+    }
 }
