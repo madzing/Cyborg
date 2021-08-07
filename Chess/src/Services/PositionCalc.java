@@ -163,13 +163,17 @@ public class PositionCalc
 			{
 				if(thisPieceCoordinate.getCoordinate() + vision[i]*j >=0 && thisPieceCoordinate.getCoordinate() + vision[i]*j <=63)
 				{
-					if (_figurenDesGegners.containsKey((byte)(thisPieceCoordinate.getCoordinate() + vision[i]*j))&& blocked)
+					if(!blocked)
+					{
+						list.add(thisPieceCoordinate.getCoordinate()+vision[i]*j);
+					}
+					else if (_figurenDesGegners.containsKey((byte)(thisPieceCoordinate.getCoordinate() + vision[i]*j)))
 					{
 						list.add(thisPieceCoordinate.getCoordinate()+vision[i]*j);
 						break;
 					}
 					
-					else if( _figurenAmZug.containsKey((byte)(thisPieceCoordinate.getCoordinate()+ vision[i]*j)) && blocked)
+					else if( _figurenAmZug.containsKey((byte)(thisPieceCoordinate.getCoordinate()+ vision[i]*j)))
 					{
 						break;
 					}
