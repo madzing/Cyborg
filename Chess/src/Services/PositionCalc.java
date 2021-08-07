@@ -38,7 +38,7 @@ public class PositionCalc
 	{
 		_currentPosition = currentPosition;
 		_folgePositionen = new ArrayList<Position>();
-		_attackingPieces = new HashMap<Byte,Piece>();
+		_attackingPieces = new HashMap<Byte,Piece>(); // wird im Moment nicht verwendet, nur Daten zugewiesen --> vllt in der Zukunft?
 
 		_pinnedPieces = new HashMap<Byte,Piece>();
 		_kingInCheck = false;
@@ -61,11 +61,11 @@ public class PositionCalc
 		{
 			if(entry.getValue() instanceof Pawn)
 			{
-				insertLegalPawnMoves(entry);
+				getLegalPawnMoves(entry);
 			}
 			else if(entry.getValue() instanceof King)
 			{
-				insertLegalKingMoves(entry);
+				getLegalKingMoves(entry);
 			}
 			else
 			{
@@ -76,21 +76,75 @@ public class PositionCalc
 		return _folgePositionen;
 	}
 	
-	 public static Map<Byte, Piece> convertListToMap(List<Piece> list) {
+	 public static Map<Byte, Piece> convertListToMap(List<Piece> list) 
+	 {
 		   	Map<Byte,Piece> map = new HashMap<>(64);
 		   	for (Piece piece:list) {
 		   		map.put(piece.getCoordinate(), piece);
 		   	}
 		    return map;
-		}
+	 }
 	
 	
-	private static void insertLegalPawnMoves(Entry<Byte, Piece> entry)
+	private static void getLegalPawnMoves(Entry<Byte, Piece> entry)
 	{
-
-		if(_pinnedPieces.containsKey(entry.getValue().getCoordinate()))
+		Piece piece = entry.getValue();
+		List<Byte> pieceFelder = new ArrayList<Byte>();
+		
+		
+		if(_currentPosition.getZugrecht()) 
 		{
-			// König jetzt im Schach?
+			if(!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()-8))|| !_figurenAmZug.containsKey((byte)(piece.getCoordinate()-8)))
+			{
+				pieceFelder.add((byte)(piece.getCoordinate()-8));
+				if((!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()-16))|| !_figurenAmZug.containsKey((byte)(piece.getCoordinate()-16)))&& piece.getCoordinate()>=48&&piece.getCoordinate()<=55)
+				{
+					pieceFelder.add((byte)(piece.getCoordinate()-16));
+				}
+			}
+			if(_figurenDesGegners.containsKey((byte)(piece.getCoordinate()-7))||_currentPosition.getEnPassant()==(byte)(piece.getCoordinate()-7))
+			{
+				pieceFelder.add((byte)(piece.getCoordinate()-7));
+			}
+			if(_figurenDesGegners.containsKey((byte)(piece.getCoordinate()-9))||_currentPosition.getEnPassant()==(byte)(piece.getCoordinate()-9))
+			{
+				pieceFelder.add((byte)(piece.getCoordinate()-9));
+			}
+		}
+		else
+		{
+			if(!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()+8))|| !_figurenAmZug.containsKey((byte)(piece.getCoordinate()+8)))
+			{
+				pieceFelder.add((byte)(piece.getCoordinate()+8));
+				if(!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()+16))|| !_figurenAmZug.containsKey((byte)(piece.getCoordinate()+16))&& piece.getCoordinate()>=8&&piece.getCoordinate()<=15)
+				{
+					pieceFelder.add((byte)(piece.getCoordinate()+16));
+				}
+			}
+			if(_figurenDesGegners.containsKey((byte)(piece.getCoordinate()+7))||_currentPosition.getEnPassant()==(byte)(piece.getCoordinate()+7))
+			{
+				pieceFelder.add((byte)(piece.getCoordinate()+7));
+			}
+			if(_figurenDesGegners.containsKey((byte)(piece.getCoordinate()+9))||_currentPosition.getEnPassant()==(byte)(piece.getCoordinate()+9))
+			{
+				pieceFelder.add((byte)(piece.getCoordinate()+9));
+			}
+		}
+		
+		for(byte key: pieceFelder)
+		{
+			Position nextPosition = new Position(_currentPosition);
+			nextPosition.makeMove(piece.getCoordinate(), key);
+			
+			if(_pinnedPieces.containsKey(entry.getValue().getCoordinate())||_kingInCheck||key==_currentPosition.getEnPassant())
+			{
+				if(!isPositionLegal(nextPosition))
+				{
+					break;
+				}
+			}
+			
+			_folgePositionen.add(nextPosition);
 		}
 	}
 	
@@ -112,9 +166,12 @@ public class PositionCalc
 			Position nextPosition = new Position(_currentPosition);
 			nextPosition.makeMove(piece.getCoordinate(), key);
 			
-			if(_pinnedPieces.containsKey(entry.getValue().getCoordinate()))
+			if(_pinnedPieces.containsKey(entry.getValue().getCoordinate())||_kingInCheck)
 			{
-				// König jetzt im Schach?
+				if(!isPositionLegal(nextPosition))
+				{
+					break;
+				}
 			}
 			
 			_folgePositionen.add(nextPosition);
@@ -122,7 +179,7 @@ public class PositionCalc
 	}
 	
 	
-	private static void insertLegalKingMoves(Entry<Byte, Piece> entry)
+	private static void getLegalKingMoves(Entry<Byte, Piece> entry)
 	{
 		
 	}
@@ -284,9 +341,10 @@ public class PositionCalc
 		return list;
 	}
 	
+	// der letzte Spieler hat seinen Zug gemach, steht sein König jetzt im Schach? Wenn ja sollte FALSE zurückgegeben werden.
 	private static boolean isPositionLegal(Position position)
 	{
 		
-		return false;
+		return true;
 	}
 }
