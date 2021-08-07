@@ -177,6 +177,10 @@ public class PositionCalc
 					{
 						break;
 					}
+					else
+					{
+						list.add(thisPieceCoordinate.getCoordinate()+vision[i]*j);
+					}
 				}
 				if(!repeatable)
 				{
