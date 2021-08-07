@@ -18,12 +18,10 @@ import Material.Rook;
 import Material.Queen;
 import Material.King;
 
-
-
-
 public class PositionCalc 
 {
-
+	private static Position _currentPosition;
+	
 	private static Map<Byte,Piece> _figurenAmZug;  
 	private static Map<Byte,Piece> _figurenDesGegners; 
 	
@@ -38,13 +36,13 @@ public class PositionCalc
 	
 	public static List<Position> getLegalPositions(Position currentPosition)
 	{
-		
+		_currentPosition = currentPosition;
 		_folgePositionen = new ArrayList<Position>();
 		_attackingPieces = new HashMap<Byte,Piece>();
-		
-		
+
 		_pinnedPieces = new HashMap<Byte,Piece>();
-		_kinginCheck = false;
+		_kingInCheck = false;
+		
 		
 		if(currentPosition.getZugrecht())
 		{
@@ -65,25 +63,13 @@ public class PositionCalc
 			{
 				insertLegalPawnMoves(entry);
 			}
-			else if(entry.getValue() instanceof Knight)
+			else if(entry.getValue() instanceof King)
 			{
-				insertLegalKnightMoves(entry);
-			}
-			else if(entry.getValue() instanceof Bishop)
-			{
-				insertLegalBishopMoves(entry);
-			}
-			else if(entry.getValue() instanceof Rook)
-			{
-				insertLegalRookMoves(entry);
-			}
-			else if(entry.getValue() instanceof Queen)
-			{
-				insertLegalQueenMoves(entry);
+				insertLegalKingMoves(entry);
 			}
 			else
 			{
-				insertLegalKingMoves(entry);
+				getLegalPieceMoves(entry);
 			}
 		}
 
@@ -108,43 +94,33 @@ public class PositionCalc
 		}
 	}
 	
-	private static void insertLegalKnightMoves(Entry<Byte, Piece> entry)
+	private static void getLegalPieceMoves(Entry<Byte, Piece> entry)
 	{
-		List<Position> =
-		
-		if(_pinnedPieces.containsKey(entry.getValue().getCoordinate()))
+		Piece piece = entry.getValue();
+		List<Byte> pieceFelder;
+		if(piece instanceof Knight)
 		{
-			// König jetzt im Schach?
+			pieceFelder = hasViewOf(piece.getCoordinate(),piece.getMovement() ,false,true);
+		}
+		else
+		{
+			pieceFelder = hasViewOf(piece.getCoordinate(),piece.getMovement() ,true,true);
+		}
+
+		for(byte key: pieceFelder)
+		{
+			Position nextPosition = new Position(_currentPosition);
+			nextPosition.makeMove(piece.getCoordinate(), key);
+			
+			if(_pinnedPieces.containsKey(entry.getValue().getCoordinate()))
+			{
+				// König jetzt im Schach?
+			}
+			
+			_folgePositionen.add(nextPosition);
 		}
 	}
 	
-	private static void insertLegalBishopMoves(Entry<Byte, Piece> entry)
-	{
-		
-		if(_pinnedPieces.containsKey(entry.getValue().getCoordinate()))
-		{
-			// König jetzt im Schach?
-		}
-		
-	}
-	
-	private static void insertLegalRookMoves(Entry<Byte, Piece> entry)
-	{
-		
-		if(_pinnedPieces.containsKey(entry.getValue().getCoordinate()))
-		{
-			// König jetzt im Schach?
-		}
-	}
-	
-	private static void insertLegalQueenMoves(Entry<Byte, Piece> entry)
-	{
-		
-		if(_pinnedPieces.containsKey(entry.getValue().getCoordinate()))
-		{
-			// König jetzt im Schach?
-		}
-	}
 	
 	private static void insertLegalKingMoves(Entry<Byte, Piece> entry)
 	{
@@ -163,6 +139,46 @@ public class PositionCalc
 					List<Byte> bishopFelder = hasViewOf(kingPosition,new byte[]{ -7, 9, 7, -9 } ,true,false);
 					List<Byte> rookFelder = hasViewOf(kingPosition,new byte[]{8, 1, 8, -1} ,true,false);
 					List<Byte> knightFelder = hasViewOf(kingPosition,new byte[]{-15, -6, 10, 17, 15, 6, -10, -17 } ,false,false);
+					
+					if(_currentPosition.getZugrecht())
+					{
+						if(_figurenDesGegners.containsKey((byte)(kingPosition-9)))
+						{
+							Piece figur = _figurenDesGegners.get((byte)(kingPosition-9));
+							if(figur instanceof Pawn)
+							{
+								_kingInCheck = true;
+							}
+						}
+						if(_figurenDesGegners.containsKey((byte)(kingPosition-7)))
+						{
+							Piece figur = _figurenDesGegners.get((byte)(kingPosition-7));
+							if(figur instanceof Pawn)
+							{
+								_kingInCheck = true;
+							}
+						}
+					}
+					else
+					{
+						if(_figurenDesGegners.containsKey((byte)(kingPosition+9)))
+						{
+							Piece figur = _figurenDesGegners.get((byte)(kingPosition+9));
+							if(figur instanceof Pawn)
+							{
+								_kingInCheck = true;
+							}
+						}
+						if(_figurenDesGegners.containsKey((byte)(kingPosition+7)))
+						{
+							Piece figur = _figurenDesGegners.get((byte)(kingPosition+7));
+							if(figur instanceof Pawn)
+							{
+								_kingInCheck = true;
+							}
+						}
+					}
+					
 					for(byte piecePosition: knightFelder)
 					{
 						if(_figurenDesGegners.containsKey(piecePosition))
@@ -174,6 +190,7 @@ public class PositionCalc
 							}
 						}
 					}
+					
 					for(byte piecePosition: bishopFelder)
 					{
 						Map<Byte,Piece> pinnedByBishopOrQueen =new HashMap<Byte,Piece>();
@@ -199,6 +216,7 @@ public class PositionCalc
 								}
 						}
 					}
+					
 					for(byte piecePosition: rookFelder)
 					{
 						Map<Byte,Piece> pinnedByRookpOrQueen =new HashMap<Byte,Piece>();
@@ -271,7 +289,4 @@ public class PositionCalc
 		
 		return false;
 	}
-	
-	// Finde heraus, ob der König im Schach steht, wenn die Figur gelöscht ist. Sonderregel für enPassant ist nötig.
-	// Wenn dies für eine Figur zutrifft muss nach desses Movements geschaut werden, ob der König geschlagen werden kann.
 }

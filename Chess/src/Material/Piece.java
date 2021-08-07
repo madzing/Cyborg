@@ -20,7 +20,7 @@ public abstract class Piece {
 		return _coordinate.getCoordinate();
 	}
 
-	//public abstract int[] getMovement();
+	public abstract byte[] getMovement();
 
 	public void setCoordinate(byte coordinate) {
 		_coordinate = Coordinate.select(coordinate);
