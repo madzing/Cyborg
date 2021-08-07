@@ -92,7 +92,7 @@ public class PositionCalc
 	}
 	
 	 public static Map<Byte, Piece> convertListToMap(List<Piece> list) {
-		   	Map<Byte,Piece> map = new HashMap<>();
+		   	Map<Byte,Piece> map = new HashMap<>(64);
 		   	for (Piece piece:list) {
 		   		map.put(piece.getCoordinate(), piece);
 		   	}
