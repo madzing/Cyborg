@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import Fachwerte.Coordinate;
 import Material.Bishop;
@@ -47,13 +48,13 @@ public class PositionCalc
 		
 		if(currentPosition.getZugrecht())
 		{
-			_figurenAmZug = currentPosition.getWhiteFiguren();
-			_figurenDesGegners = currentPosition.getBlackFiguren();			
+			_figurenAmZug = convertListToMap(currentPosition.getWhiteFiguren());
+			_figurenDesGegners = convertListToMap(currentPosition.getBlackFiguren());			
 		}
 		else
 		{
-			_figurenAmZug = currentPosition.getBlackFiguren();
-			_figurenDesGegners = currentPosition.getWhiteFiguren();	
+			_figurenAmZug = convertListToMap(currentPosition.getBlackFiguren());
+			_figurenDesGegners = convertListToMap(currentPosition.getWhiteFiguren());	
 		}
 		kingInCheck();
 		attackingPieces();
@@ -89,6 +90,14 @@ public class PositionCalc
 
 		return _folgePositionen;
 	}
+	
+	 public static Map<Byte, Piece> convertListToMap(List<Piece> list) {
+		   	Map<Byte,Piece> map = new HashMap<>();
+		   	for (Piece piece:list) {
+		   		map.put(piece.getCoordinate(), piece);
+		   	}
+		    return map;
+		}
 	
 	
 	private static void insertLegalPawnMoves(Entry<Byte, Piece> entry)
