@@ -31,7 +31,7 @@ public class PositionCalc
 	private static List<Position> _folgePositionen;
 	
 	// besondere Daten bezüglich King safety
-	private static boolean _kinginCheck;
+	private static boolean _kingInCheck;
 	private static Map<Byte,Piece> _attackingPieces;
 	private static Map<Byte,Piece> _pinnedPieces;
 	
@@ -57,8 +57,7 @@ public class PositionCalc
 			_figurenDesGegners = convertListToMap(currentPosition.getWhiteFiguren());	
 		}
 		attackingPieces();
-		kingInCheck();
-		pinnedPieces();
+		
 		//Map.Entry<String, String> entry : map.entrySet()
 		for(Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet())
 		{
@@ -102,41 +101,58 @@ public class PositionCalc
 	
 	private static void insertLegalPawnMoves(Entry<Byte, Piece> entry)
 	{
-			
+
+		if(_pinnedPieces.containsKey(entry.getValue().getCoordinate()))
+		{
+			// König jetzt im Schach?
+		}
 	}
 	
 	private static void insertLegalKnightMoves(Entry<Byte, Piece> entry)
 	{
+		List<Position> =
 		
+		if(_pinnedPieces.containsKey(entry.getValue().getCoordinate()))
+		{
+			// König jetzt im Schach?
+		}
 	}
 	
 	private static void insertLegalBishopMoves(Entry<Byte, Piece> entry)
 	{
+		
+		if(_pinnedPieces.containsKey(entry.getValue().getCoordinate()))
+		{
+			// König jetzt im Schach?
+		}
 		
 	}
 	
 	private static void insertLegalRookMoves(Entry<Byte, Piece> entry)
 	{
 		
+		if(_pinnedPieces.containsKey(entry.getValue().getCoordinate()))
+		{
+			// König jetzt im Schach?
+		}
 	}
 	
 	private static void insertLegalQueenMoves(Entry<Byte, Piece> entry)
 	{
 		
+		if(_pinnedPieces.containsKey(entry.getValue().getCoordinate()))
+		{
+			// König jetzt im Schach?
+		}
 	}
 	
 	private static void insertLegalKingMoves(Entry<Byte, Piece> entry)
 	{
 		
 	}
+
 	
-	// Ist der König im Schach?
-	private static void kingInCheck()
-	{
-		
-	}
-	
-	// Welche gegnerischen Figuren haben meinen König "in Sichtweite"?
+	// Welche gegnerischen Figuren haben meinen König "in Sichtweite", welche meiner Figuren sind gepinnt, steht der König im Schach?
 	private static void attackingPieces()
 	{
 		for(Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet())
@@ -144,42 +160,101 @@ public class PositionCalc
 			if(entry.getValue() instanceof King)
 				{
 					byte kingPosition = entry.getValue().getCoordinate();
-					int bishopFelder[]=new int[14];
-					int rookFelder[] = null;
-
-					
+					List<Byte> bishopFelder = hasViewOf(kingPosition,new byte[]{ -7, 9, 7, -9 } ,true,false);
+					List<Byte> rookFelder = hasViewOf(kingPosition,new byte[]{8, 1, 8, -1} ,true,false);
+					List<Byte> knightFelder = hasViewOf(kingPosition,new byte[]{-15, -6, 10, 17, 15, 6, -10, -17 } ,false,false);
+					for(byte piecePosition: knightFelder)
+					{
+						if(_figurenDesGegners.containsKey(piecePosition))
+						{
+							Piece figur = _figurenDesGegners.get(piecePosition);
+							if(figur instanceof Knight)
+							{
+								_kingInCheck = true;
+							}
+						}
+					}
+					for(byte piecePosition: bishopFelder)
+					{
+						Map<Byte,Piece> pinnedByBishopOrQueen =new HashMap<Byte,Piece>();
+						if(_figurenAmZug.containsKey(piecePosition))
+						{
+							pinnedByBishopOrQueen.put(piecePosition, _figurenAmZug.get(piecePosition));
+						}
+						if(_figurenDesGegners.containsKey(piecePosition))
+						{
+								Piece figur = _figurenDesGegners.get(piecePosition);
+								if(figur instanceof Bishop|| figur instanceof Queen)
+								{
+									_attackingPieces.put(piecePosition, figur);
+									if(pinnedByBishopOrQueen.size()==1)
+									{
+										_pinnedPieces.putAll(pinnedByBishopOrQueen);
+									}
+									else if(pinnedByBishopOrQueen.size()==0)
+									{
+										_kingInCheck = true;
+									}
+									break;
+								}
+						}
+					}
+					for(byte piecePosition: rookFelder)
+					{
+						Map<Byte,Piece> pinnedByRookpOrQueen =new HashMap<Byte,Piece>();
+						if(_figurenAmZug.containsKey(piecePosition))
+						{
+							pinnedByRookpOrQueen.put(piecePosition, _figurenAmZug.get(piecePosition));
+						}
+						if(_figurenDesGegners.containsKey(piecePosition))
+						{
+							Piece figur = _figurenDesGegners.get(piecePosition);
+							if(figur instanceof Rook|| figur instanceof Queen)
+							{
+								_attackingPieces.put(piecePosition, figur);
+								if(pinnedByRookpOrQueen.size()==1)
+								{
+									_pinnedPieces.putAll(pinnedByRookpOrQueen);
+								}
+								else if(pinnedByRookpOrQueen.size()==0)
+								{
+									_kingInCheck = true;
+								}
+								break;
+							}
+						}
+					}
 				}
-			_attackingPieces
 		}
 	}
 	
-	private static List<Integer>  hasViewOf(Coordinate thisPieceCoordinate,byte[] vision, boolean repeatable, boolean blocked)
+	private static List<Byte>  hasViewOf(byte thisPieceCoordinate,byte[] vision, boolean repeatable, boolean blocked)
 	{
-		List<Integer> list = new ArrayList<Integer>();
+		List<Byte> list = new ArrayList<Byte>();
 		
 		for(int i = 0; i < vision.length;i++)
 		{
 			for(int j = 1 ; j <= 7; j++)
 			{
-				if(thisPieceCoordinate.getCoordinate() + vision[i]*j >=0 && thisPieceCoordinate.getCoordinate() + vision[i]*j <=63)
+				if(thisPieceCoordinate + vision[i]*j >=0 && thisPieceCoordinate + vision[i]*j <=63)
 				{
 					if(!blocked)
 					{
-						list.add(thisPieceCoordinate.getCoordinate()+vision[i]*j);
+						list.add((byte) (thisPieceCoordinate+vision[i]*j));
 					}
-					else if (_figurenDesGegners.containsKey((byte)(thisPieceCoordinate.getCoordinate() + vision[i]*j)))
+					else if (_figurenDesGegners.containsKey((byte)(thisPieceCoordinate + vision[i]*j)))
 					{
-						list.add(thisPieceCoordinate.getCoordinate()+vision[i]*j);
+						list.add((byte) (thisPieceCoordinate+vision[i]*j));
 						break;
 					}
 					
-					else if( _figurenAmZug.containsKey((byte)(thisPieceCoordinate.getCoordinate()+ vision[i]*j)))
+					else if( _figurenAmZug.containsKey((byte)(thisPieceCoordinate+ vision[i]*j)))
 					{
 						break;
 					}
 					else
 					{
-						list.add(thisPieceCoordinate.getCoordinate()+vision[i]*j);
+						list.add((byte)(thisPieceCoordinate+vision[i]*j));
 					}
 				}
 				if(!repeatable)
@@ -191,10 +266,12 @@ public class PositionCalc
 		return list;
 	}
 	
-	// Finde heraus, ob der König im Schach steht, wenn die Figur gelöscht ist. Sonderregel für enPassant ist nötig.
-	// Wenn dies für eine Figur zutrifft muss nach desses Movements geschaut werden, ob der König geschlagen werden kann.
-	private static void pinnedPieces()
+	private static boolean isPositionLegal(Position position)
 	{
 		
+		return false;
 	}
+	
+	// Finde heraus, ob der König im Schach steht, wenn die Figur gelöscht ist. Sonderregel für enPassant ist nötig.
+	// Wenn dies für eine Figur zutrifft muss nach desses Movements geschaut werden, ob der König geschlagen werden kann.
 }
