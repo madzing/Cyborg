@@ -134,6 +134,8 @@ public class PositionCalc
 		for(byte key: pieceFelder)
 		{
 			Position nextPosition = new Position(_currentPosition);
+			
+			System.out.println(" "+piece.getCoordinate()+ " "+ key +"//");
 			nextPosition.makeMove(piece.getCoordinate(), key);
 			
 			if(_pinnedPieces.containsKey(entry.getValue().getCoordinate())||_kingInCheck||key==_currentPosition.getEnPassant())
@@ -164,7 +166,9 @@ public class PositionCalc
 		for(byte key: pieceFelder)
 		{
 			Position nextPosition = new Position(_currentPosition);
+			System.out.println(" "+piece.getCoordinate()+ " "+ key +"//");
 			nextPosition.makeMove(piece.getCoordinate(), key);
+			
 			
 			if(_pinnedPieces.containsKey(entry.getValue().getCoordinate())||_kingInCheck)
 			{
