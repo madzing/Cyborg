@@ -6,8 +6,8 @@ public class Rook extends Piece {
 		super(coordinate);
 	}
 
-	public int[] getMovement() {
-		return new int[] { -8, 1, 8, -1 };
+	public byte[] getMovement() {
+		return new byte[] { -8, 1, 8, -1 };
 	}
 
 }

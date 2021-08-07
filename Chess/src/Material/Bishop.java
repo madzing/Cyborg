@@ -6,7 +6,7 @@ public class Bishop extends Piece {
 		super(coordinate);
 	}
 
-//	public int[] getMovement() {
-//		return new int[] { -7, 9, 7, -9 };
-//	}
+	public byte[] getMovement() {
+		return new byte[] { -7, 9, 7, -9 };
+	}
 }
