@@ -48,7 +48,7 @@ public class PositionCalcTest {
 		if (depth ==5) {
 			assertEquals(4865609, nodes.size());
 		}
-		if (depth ==1) {
+		if (depth ==6) {
 			assertEquals(119060324, nodes.size());
 		}
 		
