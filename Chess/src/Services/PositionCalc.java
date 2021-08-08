@@ -137,10 +137,13 @@ public class PositionCalc
 			
 			System.out.println(" "+piece.getCoordinate()+ " "+ key +"//");
 			nextPosition.makeMove(piece.getCoordinate(), key);
-			
+			//Wenn der Bauer gepinnt ist, oder der k�nig im schach steht , oder der bauer auf einem enpassant feld staht,
 			if(_pinnedPieces.containsKey(entry.getValue().getCoordinate())||_kingInCheck||key==_currentPosition.getEnPassant())
 			{
-				if(isPositionLegal(nextPosition))
+
+				//dann wird getestet ob die Position legal ist.
+				if(!isPositionLegal(nextPosition))
+
 				{
 					_folgePositionen.add(nextPosition);
 				}	
