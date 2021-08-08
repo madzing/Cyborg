@@ -20,21 +20,25 @@ import Material.King;
 
 public class PositionCalc 
 {
-	private static Position _currentPosition;
+	private  Position _currentPosition;
 	
-	private static Map<Byte,Piece> _figurenAmZug;  
-	private static Map<Byte,Piece> _figurenDesGegners; 
+	private  Map<Byte,Piece> _figurenAmZug;  
+	private  Map<Byte,Piece> _figurenDesGegners; 
 	
 	// Liste aller möglichen "folgePositionen"
-	private static List<Position> _folgePositionen;
+	private  List<Position> _folgePositionen;
 	
 	// besondere Daten bezüglich King safety
-	private static boolean _kingInCheck;
-	private static Map<Byte,Piece> _attackingPieces;
-	private static Map<Byte,Piece> _pinnedPieces;
+	private  boolean _kingInCheck;
+	private  Map<Byte,Piece> _attackingPieces;
+	private  Map<Byte,Piece> _pinnedPieces;
 	
+	public PositionCalc()
+	{
+		
+	}
 	
-	public static List<Position> getLegalPositions(Position currentPosition)
+	public  List<Position> getLegalPositions(Position currentPosition)
 	{
 		_currentPosition = currentPosition;
 		_folgePositionen = new ArrayList<Position>();
@@ -86,7 +90,7 @@ public class PositionCalc
 	 }
 	
 	
-	private static void getLegalPawnMoves(Entry<Byte, Piece> entry)
+	private  void getLegalPawnMoves(Entry<Byte, Piece> entry)
 	{
 		Piece piece = entry.getValue();
 		List<Byte> pieceFelder = new ArrayList<Byte>();
@@ -172,7 +176,7 @@ public class PositionCalc
 		}
 	}
 	
-	private static void getLegalPieceMoves(Entry<Byte, Piece> entry)
+	private  void getLegalPieceMoves(Entry<Byte, Piece> entry)
 	{
 		Piece piece = entry.getValue();
 		List<Byte> pieceFelder;
@@ -206,7 +210,7 @@ public class PositionCalc
 	}
 	
 	//TODO noch nicht implementiert
-	private static void getLegalKingMoves(Entry<Byte, Piece> entry)
+	private  void getLegalKingMoves(Entry<Byte, Piece> entry)
 	{
 		Piece piece = entry.getValue();
 		List<Byte> pieceFelder;
@@ -256,7 +260,7 @@ public class PositionCalc
 
 	
 	// Welche gegnerischen Figuren haben meinen König "in Sichtweite", welche meiner Figuren sind gepinnt, steht der König im Schach?
-	private static void attackingPieces()
+	private  void attackingPieces()
 	{
 		for(Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet())
 		{
@@ -373,7 +377,7 @@ public class PositionCalc
 		}
 	}
 	
-	private static List<Byte>  hasViewOf(byte thisPieceCoordinate,byte[] vision, boolean repeatable, boolean blocked)
+	private  List<Byte>  hasViewOf(byte thisPieceCoordinate,byte[] vision, boolean repeatable, boolean blocked)
 	{
 		List<Byte> list = new ArrayList<Byte>();
 		
@@ -419,15 +423,17 @@ public class PositionCalc
 		return list;
 	}
 	
-	private static boolean SprungUeberKante(int alteFigurPos, int neueFigurPos)
+	private  boolean SprungUeberKante(int alteFigurPos, int neueFigurPos)
 	{
 		return Math.abs((alteFigurPos % 8)-(neueFigurPos % 8))>2 ||  Math.abs((alteFigurPos / 8)-(neueFigurPos / 8))>2;
 	}
 	
 	// TODO der letzte Spieler hat seinen Zug gemach, steht sein König jetzt im Schach? Wenn ja sollte FALSE zurückgegeben werden.
-	private static boolean isPositionLegal(Position position)
+	private  boolean isPositionLegal(Position position)
 	{
-		
-		return true;
+		position._zugrecht = !position._zugrecht;
+		PositionCalc neuePosition = new PositionCalc();
+		neuePosition.getLegalPositions(position);
+		return neuePosition._kingInCheck;
 	}
 }
