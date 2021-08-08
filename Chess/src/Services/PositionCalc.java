@@ -317,6 +317,10 @@ public class PositionCalc
 			{
 				if(thisPieceCoordinate + vision[i]*j >=0 && thisPieceCoordinate + vision[i]*j <=63)
 				{
+					if(SprungUeberKante(thisPieceCoordinate+vision[i]*(j-1),thisPieceCoordinate+vision[i]*j))
+					{
+						break;
+					}
 					if(!blocked)
 					{
 						list.add((byte) (thisPieceCoordinate+vision[i]*j));
@@ -343,6 +347,11 @@ public class PositionCalc
 			}
 		}
 		return list;
+	}
+	
+	private static boolean SprungUeberKante(int alteFigurPos, int neueFigurPos)
+	{
+		return Math.abs((alteFigurPos % 8)-(neueFigurPos % 8))>2 ||  Math.abs((alteFigurPos / 8)-(neueFigurPos / 8))>2;
 	}
 	
 	// TODO der letzte Spieler hat seinen Zug gemach, steht sein König jetzt im Schach? Wenn ja sollte FALSE zurückgegeben werden.
