@@ -94,12 +94,12 @@ public class PositionCalc
 		
 		if(_currentPosition.getZugrecht()) 
 		{
-			if(!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()-8))|| !_figurenAmZug.containsKey((byte)(piece.getCoordinate()-8)))
+			if(!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()-8))&& !_figurenAmZug.containsKey((byte)(piece.getCoordinate()-8)))
 			{
 				if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()-8)) {
 				pieceFelder.add((byte)(piece.getCoordinate()-8));
 				}
-				if((!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()-16))|| !_figurenAmZug.containsKey((byte)(piece.getCoordinate()-16)))&& piece.getCoordinate()>=48&&piece.getCoordinate()<=55)
+				if((!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()-16))&& !_figurenAmZug.containsKey((byte)(piece.getCoordinate()-16)))&& piece.getCoordinate()>=48&&piece.getCoordinate()<=55)
 				{
 					if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()-16)) {
 					pieceFelder.add((byte)(piece.getCoordinate()-16));
@@ -122,12 +122,12 @@ public class PositionCalc
 		}
 		else
 		{
-			if(!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()+8))|| !_figurenAmZug.containsKey((byte)(piece.getCoordinate()+8)))
+			if(!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()+8))&& !_figurenAmZug.containsKey((byte)(piece.getCoordinate()+8)))
 			{
 				if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()+8)) {
 				pieceFelder.add((byte)(piece.getCoordinate()+8));
 				}
-				if(!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()+16))|| !_figurenAmZug.containsKey((byte)(piece.getCoordinate()+16))&& piece.getCoordinate()>=8&&piece.getCoordinate()<=15)
+				if(!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()+16))&& !_figurenAmZug.containsKey((byte)(piece.getCoordinate()+16))&& piece.getCoordinate()>=8&&piece.getCoordinate()<=15)
 				{
 					if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()+16)) {
 					pieceFelder.add((byte)(piece.getCoordinate()+16));

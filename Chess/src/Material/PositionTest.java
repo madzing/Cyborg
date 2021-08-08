@@ -200,4 +200,25 @@ public class PositionTest {
 		assertEquals((short)1,_startPosition.getZuegeGesamt());
 	}
 
+	@Test
+	public void testGanzesSpiel()
+	{
+		Fen startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+		Position startPosition = new Position(_startFen);
+		assertEquals("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",startPosition.getFen());
+		startPosition.makeMove((byte)52,(byte) 36);
+		assertEquals("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1",startPosition.getFen());
+		startPosition.makeMove((byte)12,(byte) 28);
+		assertEquals("rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2",startPosition.getFen());
+		startPosition.makeMove((byte)62,(byte) 45);
+		assertEquals("rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",startPosition.getFen());
+		startPosition.makeMove((byte)1,(byte) 18);
+		assertEquals("r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",startPosition.getFen());
+		startPosition.makeMove((byte)61,(byte) 34);
+		assertEquals("r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3",startPosition.getFen());
+		startPosition.makeMove((byte)5,(byte) 26);
+		assertEquals("r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",startPosition.getFen());
+		startPosition.makeMove((byte)60,(byte) 62);
+		assertEquals("r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQ1RK1 b kq - 5 4",startPosition.getFen());
+	}
 }
