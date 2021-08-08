@@ -137,12 +137,12 @@ public class PositionCalc
 			
 			System.out.println(" "+piece.getCoordinate()+ " "+ key +"//");
 			nextPosition.makeMove(piece.getCoordinate(), key);
-			//Wenn der Bauer gepinnt ist, oder der k�nig im schach steht , oder der bauer auf einem enpassant feld staht,
+			//Wenn der Bauer gepinnt ist, oder der k�nig im schach steht , oder der bauer auf einem enpassant feld schlägt,
 			if(_pinnedPieces.containsKey(entry.getValue().getCoordinate())||_kingInCheck||key==_currentPosition.getEnPassant())
 			{
 
 				//dann wird getestet ob die Position legal ist.
-				if(!isPositionLegal(nextPosition))
+				if(isPositionLegal(nextPosition))
 
 				{
 					_folgePositionen.add(nextPosition);
@@ -177,20 +177,66 @@ public class PositionCalc
 			
 			if(_pinnedPieces.containsKey(entry.getValue().getCoordinate())||_kingInCheck)
 			{
-				if(!isPositionLegal(nextPosition))
+				if(isPositionLegal(nextPosition))
 				{
-					break;
+					_folgePositionen.add(nextPosition);
 				}
 			}
-			
-			_folgePositionen.add(nextPosition);
+			else
+			{
+				_folgePositionen.add(nextPosition);
+			}
 		}
 	}
 	
 	//TODO noch nicht implementiert
 	private static void getLegalKingMoves(Entry<Byte, Piece> entry)
 	{
+		Piece piece = entry.getValue();
+		List<Byte> pieceFelder;
+		pieceFelder = hasViewOf(piece.getCoordinate(),piece.getMovement() ,false,true);
 		
+		if(_currentPosition.getZugrecht()&& piece.getCoordinate()==60)
+		{
+			// Kann Weiss kingside castlen?
+			if(_currentPosition.getWhiteCastleRights()[0]==true&&!_figurenAmZug.containsKey((byte)61)&&!_figurenAmZug.containsKey((byte)62)&&!_figurenDesGegners.containsKey((byte)61)&&!_figurenDesGegners.containsKey((byte)62))
+			{
+				pieceFelder.add((byte)62);
+			}
+			
+			// Kann Weiss queenside castlen?
+			if(_currentPosition.getWhiteCastleRights()[1]==true&&!_figurenAmZug.containsKey((byte)59)&&!_figurenAmZug.containsKey((byte)58)&&!_figurenAmZug.containsKey((byte)57)&&!_figurenDesGegners.containsKey((byte)59)&&!_figurenDesGegners.containsKey((byte)58)&&!_figurenDesGegners.containsKey((byte)57))
+			{
+				pieceFelder.add((byte)58);
+			}
+		}
+		
+		else
+		{
+			// Kann Schwarz kingside castlen?
+			if(_currentPosition.getBlackCastleRights()[0]==true&&!_figurenAmZug.containsKey((byte)5)&&!_figurenAmZug.containsKey((byte)6)&&!_figurenDesGegners.containsKey((byte)5)&&!_figurenDesGegners.containsKey((byte)6))
+			{
+				pieceFelder.add((byte)6);
+			}
+			
+			// Kann Weiss queenside castlen?
+			if(_currentPosition.getBlackCastleRights()[1]==true&&!_figurenAmZug.containsKey((byte)3)&&!_figurenAmZug.containsKey((byte)2)&&!_figurenAmZug.containsKey((byte)1)&&!_figurenDesGegners.containsKey((byte)3)&&!_figurenDesGegners.containsKey((byte)2)&&!_figurenDesGegners.containsKey((byte)1))
+			{
+				pieceFelder.add((byte)2);
+			}
+		}
+		
+		
+		for(byte key: pieceFelder)
+		{
+			Position nextPosition = new Position(_currentPosition);
+			System.out.println(" "+piece.getCoordinate()+ " "+ key +"//");
+			nextPosition.makeMove(piece.getCoordinate(), key);
+			if(isPositionLegal(nextPosition))
+			{
+				_folgePositionen.add(nextPosition);
+			}
+		}
 	}
 
 	
