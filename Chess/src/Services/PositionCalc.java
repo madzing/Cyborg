@@ -340,6 +340,10 @@ public class PositionCalc
 						list.add((byte)(thisPieceCoordinate+vision[i]*j));
 					}
 				}
+				else
+				{
+					break;
+				}
 				if(!repeatable)
 				{
 					break;
