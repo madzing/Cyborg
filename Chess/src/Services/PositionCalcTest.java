@@ -38,13 +38,26 @@ public class PositionCalcTest {
 	}
 
 
-	public static Map<String, Position> removeDuplicates(List<Position> list) {
+	public static Map<String, Position> removeDuplicates(List<Position> list) 
+	{
 		Map<String, Position> bla = new HashMap<String, Position>();
 		for (Position pos : list) {
 			bla.put(pos.getFen(), pos);
 		}
 		return bla;
-
+	}
+	
+	@Test
+	public void testSinglePosition()
+	{
+		Fen startFen = Fen.select("rnbqkbnr/ppppppp1/8/7p/7P/8/PPPPPPP1/RNBQKBNR w KQkq h6 0 2");
+		Position startPosition = new Position(startFen);
+		List<Position> nodes = PositionCalc.getLegalPositions(startPosition);
+		for(Position pos : nodes)
+		{
+			System.out.println(pos.getFen());
+		}
+		
 	}
 
 }
