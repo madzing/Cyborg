@@ -25,10 +25,10 @@ public class PositionCalc
 	private static Map<Byte,Piece> _figurenAmZug;  
 	private static Map<Byte,Piece> _figurenDesGegners; 
 	
-	// Liste aller mÃ¶glichen "folgePositionen"
+	// Liste aller möglichen "folgePositionen"
 	private static List<Position> _folgePositionen;
 	
-	// besondere Daten bezÃ¼glich King safety
+	// besondere Daten bezüglich King safety
 	private static boolean _kingInCheck;
 	private static Map<Byte,Piece> _attackingPieces;
 	private static Map<Byte,Piece> _pinnedPieces;
@@ -96,48 +96,65 @@ public class PositionCalc
 		{
 			if(!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()-8))|| !_figurenAmZug.containsKey((byte)(piece.getCoordinate()-8)))
 			{
+				if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()-8)) {
 				pieceFelder.add((byte)(piece.getCoordinate()-8));
+				}
 				if((!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()-16))|| !_figurenAmZug.containsKey((byte)(piece.getCoordinate()-16)))&& piece.getCoordinate()>=48&&piece.getCoordinate()<=55)
 				{
+					if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()-16)) {
 					pieceFelder.add((byte)(piece.getCoordinate()-16));
+					}
 				}
 			}
 			if(_figurenDesGegners.containsKey((byte)(piece.getCoordinate()-7))||_currentPosition.getEnPassant()==(byte)(piece.getCoordinate()-7))
 			{
+				if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()-7)) {
 				pieceFelder.add((byte)(piece.getCoordinate()-7));
+				}
 			}
 			if(_figurenDesGegners.containsKey((byte)(piece.getCoordinate()-9))||_currentPosition.getEnPassant()==(byte)(piece.getCoordinate()-9))
 			{
+				if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()-9)) {
 				pieceFelder.add((byte)(piece.getCoordinate()-9));
+				}
 			}
+			
 		}
 		else
 		{
 			if(!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()+8))|| !_figurenAmZug.containsKey((byte)(piece.getCoordinate()+8)))
 			{
+				if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()+8)) {
 				pieceFelder.add((byte)(piece.getCoordinate()+8));
+				}
 				if(!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()+16))|| !_figurenAmZug.containsKey((byte)(piece.getCoordinate()+16))&& piece.getCoordinate()>=8&&piece.getCoordinate()<=15)
 				{
+					if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()+16)) {
 					pieceFelder.add((byte)(piece.getCoordinate()+16));
+					}
 				}
 			}
 			if(_figurenDesGegners.containsKey((byte)(piece.getCoordinate()+7))||_currentPosition.getEnPassant()==(byte)(piece.getCoordinate()+7))
 			{
+				if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()+7)) {
 				pieceFelder.add((byte)(piece.getCoordinate()+7));
+				}
 			}
 			if(_figurenDesGegners.containsKey((byte)(piece.getCoordinate()+9))||_currentPosition.getEnPassant()==(byte)(piece.getCoordinate()+9))
 			{
+				if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()+9)) {
 				pieceFelder.add((byte)(piece.getCoordinate()+9));
+				}
 			}
 		}
 		
 		for(byte key: pieceFelder)
 		{
 			Position nextPosition = new Position(_currentPosition);
-			
-			System.out.println(" "+piece.getCoordinate()+ " "+ key +"//");
+
 			nextPosition.makeMove(piece.getCoordinate(), key);
-			//Wenn der Bauer gepinnt ist, oder der kï¿½nig im schach steht , oder der bauer auf einem enpassant feld schlägt,
+
+			//Wenn der Bauer gepinnt ist, oder der k�nig im schach steht , oder der bauer auf einem enpassant feld schlägt,
 			if(_pinnedPieces.containsKey(entry.getValue().getCoordinate())||_kingInCheck||key==_currentPosition.getEnPassant())
 			{
 
@@ -171,30 +188,74 @@ public class PositionCalc
 		for(byte key: pieceFelder)
 		{
 			Position nextPosition = new Position(_currentPosition);
-			System.out.println(" "+piece.getCoordinate()+ " "+ key +"//");
 			nextPosition.makeMove(piece.getCoordinate(), key);
 			
 			
 			if(_pinnedPieces.containsKey(entry.getValue().getCoordinate())||_kingInCheck)
 			{
-				if(!isPositionLegal(nextPosition))
+				if(isPositionLegal(nextPosition))
 				{
-					break;
+					_folgePositionen.add(nextPosition);
 				}
 			}
-			
-			_folgePositionen.add(nextPosition);
+			else
+			{
+				_folgePositionen.add(nextPosition);
+			}
 		}
 	}
 	
 	//TODO noch nicht implementiert
 	private static void getLegalKingMoves(Entry<Byte, Piece> entry)
 	{
+		Piece piece = entry.getValue();
+		List<Byte> pieceFelder;
+		pieceFelder = hasViewOf(piece.getCoordinate(),piece.getMovement() ,false,true);
 		
+		if(_currentPosition.getZugrecht()&& piece.getCoordinate()==60)
+		{
+			// Kann Weiss kingside castlen?
+			if(_currentPosition.getWhiteCastleRights()[0]==true&&!_figurenAmZug.containsKey((byte)61)&&!_figurenAmZug.containsKey((byte)62)&&!_figurenDesGegners.containsKey((byte)61)&&!_figurenDesGegners.containsKey((byte)62))
+			{
+				pieceFelder.add((byte)62);
+			}
+			
+			// Kann Weiss queenside castlen?
+			if(_currentPosition.getWhiteCastleRights()[1]==true&&!_figurenAmZug.containsKey((byte)59)&&!_figurenAmZug.containsKey((byte)58)&&!_figurenAmZug.containsKey((byte)57)&&!_figurenDesGegners.containsKey((byte)59)&&!_figurenDesGegners.containsKey((byte)58)&&!_figurenDesGegners.containsKey((byte)57))
+			{
+				pieceFelder.add((byte)58);
+			}
+		}
+		
+		else
+		{
+			// Kann Schwarz kingside castlen?
+			if(_currentPosition.getBlackCastleRights()[0]==true&&!_figurenAmZug.containsKey((byte)5)&&!_figurenAmZug.containsKey((byte)6)&&!_figurenDesGegners.containsKey((byte)5)&&!_figurenDesGegners.containsKey((byte)6))
+			{
+				pieceFelder.add((byte)6);
+			}
+			
+			// Kann Weiss queenside castlen?
+			if(_currentPosition.getBlackCastleRights()[1]==true&&!_figurenAmZug.containsKey((byte)3)&&!_figurenAmZug.containsKey((byte)2)&&!_figurenAmZug.containsKey((byte)1)&&!_figurenDesGegners.containsKey((byte)3)&&!_figurenDesGegners.containsKey((byte)2)&&!_figurenDesGegners.containsKey((byte)1))
+			{
+				pieceFelder.add((byte)2);
+			}
+		}
+		
+		
+		for(byte key: pieceFelder)
+		{
+			Position nextPosition = new Position(_currentPosition);
+			nextPosition.makeMove(piece.getCoordinate(), key);
+			if(isPositionLegal(nextPosition))
+			{
+				_folgePositionen.add(nextPosition);
+			}
+		}
 	}
 
 	
-	// Welche gegnerischen Figuren haben meinen KÃ¶nig "in Sichtweite", welche meiner Figuren sind gepinnt, steht der KÃ¶nig im Schach?
+	// Welche gegnerischen Figuren haben meinen König "in Sichtweite", welche meiner Figuren sind gepinnt, steht der König im Schach?
 	private static void attackingPieces()
 	{
 		for(Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet())
@@ -363,7 +424,7 @@ public class PositionCalc
 		return Math.abs((alteFigurPos % 8)-(neueFigurPos % 8))>2 ||  Math.abs((alteFigurPos / 8)-(neueFigurPos / 8))>2;
 	}
 	
-	// TODO der letzte Spieler hat seinen Zug gemach, steht sein KÃ¶nig jetzt im Schach? Wenn ja sollte FALSE zurÃ¼ckgegeben werden.
+	// TODO der letzte Spieler hat seinen Zug gemach, steht sein König jetzt im Schach? Wenn ja sollte FALSE zurückgegeben werden.
 	private static boolean isPositionLegal(Position position)
 	{
 		
