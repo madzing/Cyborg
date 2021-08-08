@@ -17,9 +17,12 @@ public class PositionCalcTest {
 	public void getLegalPositions() {
 		List<Position> firstPositions = PositionCalc.getLegalPositions(_startPosition);
 		assertEquals(20,firstPositions.size());
-		
-		
-		
+		_startPosition.makeMove((byte)54,(byte) 46);
+		firstPositions = PositionCalc.getLegalPositions(_startPosition);
+		assertEquals(20,firstPositions.size());
+		_startPosition.makeMove((byte)8,(byte) 16);
+		firstPositions = PositionCalc.getLegalPositions(_startPosition);
+		assertEquals(21,firstPositions.size());
 		
 		
 		
