@@ -427,12 +427,29 @@ public class PositionCalc
 	// TODO der letzte Spieler hat seinen Zug gemach, steht sein König jetzt im Schach? Wenn ja sollte FALSE zurückgegeben werden.
 	private static boolean isPositionLegal(Position position)
 	{
+
 		Map<Byte, Piece> figurenDesGegners;
 		Map<Byte,Piece> figurenAmZug;
 		List<Byte> pawnFelder;
 
 		byte kingPosition;
 		boolean zugrecht = position.getZugrecht();
+
+
+		 Position currentPosition = new Position(_currentPosition);
+		 position._zugrecht=!position._zugrecht;
+		
+		 Map<Byte,Piece> figurenAmZug= new HashMap<>(_figurenAmZug);  
+		 Map<Byte,Piece> figurenDesGegners =new HashMap<>(_figurenDesGegners); 
+		
+		// Liste aller möglichen "folgePositionen"
+		List<Position> folgePositionen = new ArrayList<>(_folgePositionen);
+		
+		// besondere Daten bezüglich King safety
+		boolean kingInCheck = _kingInCheck;
+		Map<Byte,Piece> attackingPieces = new HashMap<>(_attackingPieces);
+		Map<Byte,Piece> pinnedPieces = new HashMap<>(_pinnedPieces);
+
 		
 		if(zugrecht)
 		{
@@ -445,6 +462,7 @@ public class PositionCalc
 			figurenDesGegners = convertListToMap(position.getWhiteFiguren());	
 		}
 		
+
 		for(Map.Entry<Byte, Piece> entry : figurenDesGegners.entrySet())
 		{
 			if(entry.getValue() instanceof King)
@@ -504,5 +522,16 @@ public class PositionCalc
 		}
 
 		return true;
+
+		_currentPosition = currentPosition;
+		_figurenAmZug = figurenAmZug;
+		_figurenDesGegners = figurenDesGegners;
+		_folgePositionen = folgePositionen;
+		_kingInCheck = kingInCheck;
+		_attackingPieces = attackingPieces;
+		_pinnedPieces = pinnedPieces;
+		return schach;
+
+
 	}
 }
