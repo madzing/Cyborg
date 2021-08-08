@@ -33,9 +33,7 @@ public class PositionCalcTest {
 			}
 			nodes = latestNodes;
 		}
-		if (depth ==1) {
-			assertEquals(20, nodes.size());
-		}
+
 		if (depth ==2) {
 			assertEquals(400, nodes.size());
 		}
