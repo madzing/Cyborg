@@ -428,6 +428,31 @@ public class PositionCalc
 	private static boolean isPositionLegal(Position position)
 	{
 
-		return true;
+		 Position currentPosition = new Position(_currentPosition);
+		 position._zugrecht=!position._zugrecht;
+		
+		 Map<Byte,Piece> figurenAmZug= new HashMap<>(_figurenAmZug);  
+		 Map<Byte,Piece> figurenDesGegners =new HashMap<>(_figurenDesGegners); 
+		
+		// Liste aller möglichen "folgePositionen"
+		List<Position> folgePositionen = new ArrayList<>(_folgePositionen);
+		
+		// besondere Daten bezüglich King safety
+		boolean kingInCheck = _kingInCheck;
+		Map<Byte,Piece> attackingPieces = new HashMap<>(_attackingPieces);
+		Map<Byte,Piece> pinnedPieces = new HashMap<>(_pinnedPieces);
+		
+		getLegalPositions(position);
+		boolean schach = _kingInCheck;
+		
+		_currentPosition = currentPosition;
+		_figurenAmZug = figurenAmZug;
+		_figurenDesGegners = figurenDesGegners;
+		_folgePositionen = folgePositionen;
+		_kingInCheck = kingInCheck;
+		_attackingPieces = attackingPieces;
+		_pinnedPieces = pinnedPieces;
+		return schach;
+
 	}
 }
