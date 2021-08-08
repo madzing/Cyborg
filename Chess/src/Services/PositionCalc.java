@@ -140,13 +140,15 @@ public class PositionCalc
 			
 			if(_pinnedPieces.containsKey(entry.getValue().getCoordinate())||_kingInCheck||key==_currentPosition.getEnPassant())
 			{
-				if(!isPositionLegal(nextPosition))
+				if(isPositionLegal(nextPosition))
 				{
-					break;
-				}
+					_folgePositionen.add(nextPosition);
+				}	
 			}
-			
-			_folgePositionen.add(nextPosition);
+			else
+			{
+				_folgePositionen.add(nextPosition);
+			}
 		}
 	}
 	
