@@ -34,7 +34,7 @@ public class PositionCalcTest {
 			nodes = latestNodes;
 		}
 		
-		assertEquals(8902, removeDuplicates(nodes).size());
+		assertEquals(8902, nodes.size());
 	}
 
 
