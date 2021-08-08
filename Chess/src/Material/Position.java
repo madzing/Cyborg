@@ -73,10 +73,10 @@ public class Position
     }
     private boolean[] copyArray(boolean[] copyable)
     {
-    	boolean array[] = {false, false};
+    	boolean[] array = {false, false};
     	array[0]=copyable[0];
     	array[1]=copyable[1];
-    	return null;
+    	return array;
     }
 
     private void createPosition(Fen fenPosition)
