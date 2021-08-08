@@ -96,46 +96,62 @@ public class PositionCalc
 		{
 			if(!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()-8))|| !_figurenAmZug.containsKey((byte)(piece.getCoordinate()-8)))
 			{
+				if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()-8)) {
 				pieceFelder.add((byte)(piece.getCoordinate()-8));
+				}
 				if((!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()-16))|| !_figurenAmZug.containsKey((byte)(piece.getCoordinate()-16)))&& piece.getCoordinate()>=48&&piece.getCoordinate()<=55)
 				{
+					if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()-16)) {
 					pieceFelder.add((byte)(piece.getCoordinate()-16));
+					}
 				}
 			}
 			if(_figurenDesGegners.containsKey((byte)(piece.getCoordinate()-7))||_currentPosition.getEnPassant()==(byte)(piece.getCoordinate()-7))
 			{
+				if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()-7)) {
 				pieceFelder.add((byte)(piece.getCoordinate()-7));
+				}
 			}
 			if(_figurenDesGegners.containsKey((byte)(piece.getCoordinate()-9))||_currentPosition.getEnPassant()==(byte)(piece.getCoordinate()-9))
 			{
+				if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()-9)) {
 				pieceFelder.add((byte)(piece.getCoordinate()-9));
+				}
 			}
+			
 		}
 		else
 		{
 			if(!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()+8))|| !_figurenAmZug.containsKey((byte)(piece.getCoordinate()+8)))
 			{
+				if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()+8)) {
 				pieceFelder.add((byte)(piece.getCoordinate()+8));
+				}
 				if(!_figurenDesGegners.containsKey((byte)(piece.getCoordinate()+16))|| !_figurenAmZug.containsKey((byte)(piece.getCoordinate()+16))&& piece.getCoordinate()>=8&&piece.getCoordinate()<=15)
 				{
+					if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()+16)) {
 					pieceFelder.add((byte)(piece.getCoordinate()+16));
+					}
 				}
 			}
 			if(_figurenDesGegners.containsKey((byte)(piece.getCoordinate()+7))||_currentPosition.getEnPassant()==(byte)(piece.getCoordinate()+7))
 			{
+				if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()+7)) {
 				pieceFelder.add((byte)(piece.getCoordinate()+7));
+				}
 			}
 			if(_figurenDesGegners.containsKey((byte)(piece.getCoordinate()+9))||_currentPosition.getEnPassant()==(byte)(piece.getCoordinate()+9))
 			{
+				if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()+9)) {
 				pieceFelder.add((byte)(piece.getCoordinate()+9));
+				}
 			}
 		}
 		
 		for(byte key: pieceFelder)
 		{
 			Position nextPosition = new Position(_currentPosition);
-			
-			System.out.println(" "+piece.getCoordinate()+ " "+ key +"//");
+
 			nextPosition.makeMove(piece.getCoordinate(), key);
 
 			//Wenn der Bauer gepinnt ist, oder der k�nig im schach steht , oder der bauer auf einem enpassant feld schlägt,
@@ -172,7 +188,6 @@ public class PositionCalc
 		for(byte key: pieceFelder)
 		{
 			Position nextPosition = new Position(_currentPosition);
-			System.out.println(" "+piece.getCoordinate()+ " "+ key +"//");
 			nextPosition.makeMove(piece.getCoordinate(), key);
 			
 			
@@ -231,7 +246,6 @@ public class PositionCalc
 		for(byte key: pieceFelder)
 		{
 			Position nextPosition = new Position(_currentPosition);
-			System.out.println(" "+piece.getCoordinate()+ " "+ key +"//");
 			nextPosition.makeMove(piece.getCoordinate(), key);
 			if(isPositionLegal(nextPosition))
 			{
