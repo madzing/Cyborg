@@ -428,6 +428,14 @@ public class PositionCalc
 	private static boolean isPositionLegal(Position position)
 	{
 
+		Map<Byte, Piece> figurenDesGegners;
+		Map<Byte,Piece> figurenAmZug;
+		List<Byte> pawnFelder;
+
+		byte kingPosition;
+		boolean zugrecht = position.getZugrecht();
+
+
 		 Position currentPosition = new Position(_currentPosition);
 		 position._zugrecht=!position._zugrecht;
 		
@@ -441,10 +449,80 @@ public class PositionCalc
 		boolean kingInCheck = _kingInCheck;
 		Map<Byte,Piece> attackingPieces = new HashMap<>(_attackingPieces);
 		Map<Byte,Piece> pinnedPieces = new HashMap<>(_pinnedPieces);
+
 		
-		getLegalPositions(position);
-		boolean schach = _kingInCheck;
+		if(zugrecht)
+		{
+			figurenAmZug = convertListToMap(position.getWhiteFiguren());
+			figurenDesGegners = convertListToMap(position.getBlackFiguren());			
+		}
+		else
+		{
+			figurenAmZug = convertListToMap(position.getBlackFiguren());
+			figurenDesGegners = convertListToMap(position.getWhiteFiguren());	
+		}
 		
+
+		for(Map.Entry<Byte, Piece> entry : figurenDesGegners.entrySet())
+		{
+			if(entry.getValue() instanceof King)
+			{
+				kingPosition = entry.getValue().getCoordinate();
+				
+				if(zugrecht)
+				{
+					pawnFelder = hasViewOf(kingPosition,new byte[]{-7,-9} ,false,true);
+				}
+				else
+				{
+					pawnFelder = hasViewOf(kingPosition,new byte[]{7,9} ,false,true);
+				}
+				List<Byte> kingFelder = hasViewOf(kingPosition,new byte[]{ -7, 9, 7, -9,8, 1, 8, -1 } ,false,true);
+				List<Byte> bishopFelder = hasViewOf(kingPosition,new byte[]{ -7, 9, 7, -9 } ,true,true);
+				List<Byte> rookFelder = hasViewOf(kingPosition,new byte[]{8, 1, 8, -1} ,true,true);
+				List<Byte> knightFelder = hasViewOf(kingPosition,new byte[]{-15, -6, 10, 17, 15, 6, -10, -17 } ,false,false);
+				
+				
+				for(byte pawn : pawnFelder)
+				{
+					if(figurenAmZug.get(pawn) instanceof Pawn)
+					{
+						return false;
+					}
+				}
+				for(byte king : kingFelder)
+				{
+					if(figurenAmZug.get(king) instanceof King)
+					{
+						return false;
+					}
+				}
+				for(byte knight : knightFelder)
+				{
+					if(figurenAmZug.get(knight) instanceof Knight)
+					{
+						return false;
+					}
+				}
+				for(byte bishop : bishopFelder)
+				{
+					if(figurenAmZug.get(bishop) instanceof Bishop|| figurenAmZug.get(bishop) instanceof Queen)
+					{
+						return false;
+					}
+				}
+				for(byte rook : rookFelder)
+				{
+					if(figurenAmZug.get(rook) instanceof Rook|| figurenAmZug.get(rook) instanceof Queen)
+					{
+						return false;
+					}
+				}
+			}
+		}
+
+		return true;
+
 		_currentPosition = currentPosition;
 		_figurenAmZug = figurenAmZug;
 		_figurenDesGegners = figurenDesGegners;
@@ -453,6 +531,7 @@ public class PositionCalc
 		_attackingPieces = attackingPieces;
 		_pinnedPieces = pinnedPieces;
 		return schach;
+
 
 	}
 }
