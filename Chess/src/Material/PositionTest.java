@@ -22,9 +22,7 @@ public class PositionTest {
 	public void KonstruktorTest()
 	{
 		Position newPosition = new Position(_startPosition);
-		System.out.println(_startPosition.getFen());
 		newPosition.makeMove((byte)48, (byte)32);
-		System.out.println(_startPosition.getFen());
 		assertEquals("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",_startPosition.getFen());
 	}
 	
