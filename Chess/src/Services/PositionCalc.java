@@ -427,6 +427,7 @@ public class PositionCalc
 	// TODO der letzte Spieler hat seinen Zug gemach, steht sein König jetzt im Schach? Wenn ja sollte FALSE zurückgegeben werden.
 	private static boolean isPositionLegal(Position position)
 	{
+
 		 Position currentPosition = new Position(_currentPosition);
 		 position._zugrecht=!position._zugrecht;
 		
@@ -452,5 +453,6 @@ public class PositionCalc
 		_attackingPieces = attackingPieces;
 		_pinnedPieces = pinnedPieces;
 		return schach;
+
 	}
 }
