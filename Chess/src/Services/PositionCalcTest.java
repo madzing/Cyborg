@@ -25,7 +25,7 @@ public class PositionCalcTest {
 		List<Position> nodes = PositionCalc.getLegalPositions(_startPosition);
 		// depth 1
 		assertEquals(20, nodes.size());
-		int depth = 4;
+		int depth = 3;
 		for (int i = 1; i < depth; i++) {
 			List<Position> latestNodes = new ArrayList<>();
 			for (Position pos : nodes) {
@@ -33,8 +33,23 @@ public class PositionCalcTest {
 			}
 			nodes = latestNodes;
 		}
+
+		if (depth ==2) {
+			assertEquals(400, nodes.size());
+		}
+		if (depth ==3) {
+			assertEquals(8902, nodes.size());
+		}
+		if (depth ==4) {
+			assertEquals(197281, nodes.size());
+		}
+		if (depth ==5) {
+			assertEquals(4865609, nodes.size());
+		}
+		if (depth ==6) {
+			assertEquals(119060324, nodes.size());
+		}
 		
-		assertEquals(197281, nodes.size());
 	}
 
 
