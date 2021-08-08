@@ -142,7 +142,7 @@ public class PositionCalc
 			{
 
 				//dann wird getestet ob die Position legal ist.
-				if(!isPositionLegal(nextPosition))
+				if(isPositionLegal(nextPosition))
 
 				{
 					_folgePositionen.add(nextPosition);
