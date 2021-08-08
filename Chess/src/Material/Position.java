@@ -11,7 +11,7 @@ public class Position
     private List<Piece> _whiteFiguren = new ArrayList<Piece>();
     private List<Piece> _blackFiguren= new ArrayList<Piece>();
 
-    private boolean _zugrecht;
+    public boolean _zugrecht;
     private boolean _whiteCanCastle[] = {false, false};
     private boolean _blackCanCastle[] = {false, false};
     private byte _enpassant;
