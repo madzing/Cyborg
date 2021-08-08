@@ -23,7 +23,6 @@ public class Position
         createPosition(fenPosition);
     }
     
-    //TODO Funktioniert nicht JAVA ist kacke
     public Position(Position copyable)
     {
         this._whiteFiguren = copyList(copyable.getWhiteFiguren());
@@ -38,7 +37,7 @@ public class Position
     }
     
     
-    // TODO Copy eine liste
+
     private List<Piece> copyList(List<Piece> copyable)
     {
     	List<Piece> neueListe = new ArrayList<Piece>();
@@ -89,7 +88,7 @@ public class Position
         fenToZuegeGesamt(fenPosition);
     }
 
-    //TODO alles
+
     public void makeMove(byte alteFigurPosition, byte neueFigurPosition)
     { 
     	byte enPassant = _enpassant;
