@@ -27,6 +27,7 @@ public class PositionTest {
 		System.out.println(_startPosition.getFen());
 		assertEquals("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",_startPosition.getFen());
 	}
+	
 	@Test
 	public void testMakeMove() {
 		Fen schrittEinsFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1");

@@ -26,14 +26,57 @@ public class Position
     //TODO Funktioniert nicht JAVA ist kacke
     public Position(Position copyable)
     {
-        this._whiteFiguren = copyable.getWhiteFiguren();
-        this._blackFiguren = copyable.getBlackFiguren();
+        this._whiteFiguren = copyList(copyable.getWhiteFiguren());
+        this._blackFiguren = copyList(copyable.getBlackFiguren());
+        this._whiteCanCastle = copyArray(copyable.getWhiteCastleRights());
+        this._blackCanCastle = copyArray(copyable.getBlackCastleRights());
+        
         this._zugrecht = copyable.getZugrecht();
-        this._whiteCanCastle = copyable.getWhiteCastleRights();
-        this._blackCanCastle = copyable.getBlackCastleRights();
         this._enpassant = copyable.getEnPassant();
         this._zuegeKleiner50 = copyable.getZuegeKleiner50();
         this._zuegeGesamt = copyable.getZuegeGesamt();
+    }
+    
+    
+    // TODO Copy eine liste
+    private List<Piece> copyList(List<Piece> copyable)
+    {
+    	List<Piece> neueListe = new ArrayList<Piece>();
+    	for(Piece piece : copyable)
+    	{
+    		if(piece instanceof Pawn)
+    		{
+    			neueListe.add((Pawn)new Pawn(piece.getCoordinate()));
+    		}
+    		if(piece instanceof Knight)
+    		{
+    			neueListe.add((Knight)new Knight(piece.getCoordinate()));
+    		}
+    		if(piece instanceof Bishop)
+    		{
+    			neueListe.add((Bishop)new Bishop(piece.getCoordinate()));
+    		}
+    		if(piece instanceof Rook)
+    		{
+    			neueListe.add((Rook)new Rook(piece.getCoordinate()));
+    		}
+    		if(piece instanceof Queen)
+    		{
+    			neueListe.add((Queen)new Queen(piece.getCoordinate()));
+    		}
+    		if(piece instanceof King)
+    		{
+    			neueListe.add((King)new King(piece.getCoordinate()));
+    		}
+    	}
+    	return neueListe; 	
+    }
+    private boolean[] copyArray(boolean[] copyable)
+    {
+    	boolean array[] = {false, false};
+    	array[0]=copyable[0];
+    	array[1]=copyable[1];
+    	return null;
     }
 
     private void createPosition(Fen fenPosition)
