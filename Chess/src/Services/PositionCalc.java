@@ -431,7 +431,9 @@ public class PositionCalc
 		Map<Byte, Piece> figurenDesGegners;
 		Map<Byte,Piece> figurenAmZug;
 		List<Byte> pawnFelder;
-
+		Map<Byte, Piece> zwischenspeicher;
+		
+		
 		byte kingPosition;
 		boolean zugrecht = position.getZugrecht();
 
@@ -454,6 +456,8 @@ public class PositionCalc
 			{
 				kingPosition = entry.getValue().getCoordinate();
 				
+				
+				
 				if(zugrecht)
 				{
 					pawnFelder = hasViewOf(kingPosition,new byte[]{-7,-9} ,false,true);
@@ -465,13 +469,14 @@ public class PositionCalc
 				List<Byte> kingFelder = hasViewOf(kingPosition,new byte[]{ -7, 9, 7, -9,8, 1, 8, -1 } ,false,true);
 				List<Byte> bishopFelder = hasViewOf(kingPosition,new byte[]{ -7, 9, 7, -9 } ,true,true);
 				List<Byte> rookFelder = hasViewOf(kingPosition,new byte[]{8, 1, 8, -1} ,true,true);
-				List<Byte> knightFelder = hasViewOf(kingPosition,new byte[]{-15, -6, 10, 17, 15, 6, -10, -17 } ,false,false);
+				List<Byte> knightFelder = hasViewOf(kingPosition,new byte[]{-15, -6, 10, 17, 15, 6, -10, -17 } ,false,true);
 				
 				
 				for(byte pawn : pawnFelder)
 				{
 					if(figurenAmZug.get(pawn) instanceof Pawn)
 					{
+
 						return false;
 					}
 				}
@@ -479,6 +484,7 @@ public class PositionCalc
 				{
 					if(figurenAmZug.get(king) instanceof King)
 					{
+
 						return false;
 					}
 				}
@@ -486,6 +492,7 @@ public class PositionCalc
 				{
 					if(figurenAmZug.get(knight) instanceof Knight)
 					{
+
 						return false;
 					}
 				}
@@ -493,6 +500,7 @@ public class PositionCalc
 				{
 					if(figurenAmZug.get(bishop) instanceof Bishop|| figurenAmZug.get(bishop) instanceof Queen)
 					{
+
 						return false;
 					}
 				}
@@ -500,11 +508,13 @@ public class PositionCalc
 				{
 					if(figurenAmZug.get(rook) instanceof Rook|| figurenAmZug.get(rook) instanceof Queen)
 					{
+
 						return false;
 					}
 				}
 			}
 		}
+
 
 		return true;
 

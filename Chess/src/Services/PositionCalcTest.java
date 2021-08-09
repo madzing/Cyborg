@@ -62,17 +62,5 @@ public class PositionCalcTest {
 		return bla;
 	}
 	
-	@Test
-	public void testSinglePosition()
-	{
-		Fen startFen = Fen.select("rnbqkbnr/ppppppp1/8/7p/7P/8/PPPPPPP1/RNBQKBNR w KQkq h6 0 2");
-		Position startPosition = new Position(startFen);
-		List<Position> nodes = PositionCalc.getLegalPositions(startPosition);
-		for(Position pos : nodes)
-		{
-			System.out.println(pos.getFen());
-		}
-		
-	}
 
 }
