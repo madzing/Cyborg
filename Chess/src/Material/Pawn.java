@@ -2,17 +2,19 @@ package Material;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class Pawn extends Piece {
-	public Pawn(byte coordinate, boolean color) {
-		super(coordinate, color);
+	public Pawn(byte coordinate) {
+		super(coordinate);
 	}
 
 	@Override
 	public byte[] getMovement() {
 		return new byte[] {8,-8};
 		}
+	
 	public  ArrayList<Byte> getMoves(Map<Byte, Piece> figurenAmZug, Map<Byte, Piece> figurenDesGegners, byte enPassant)
 	{
 		ArrayList<Byte> pieceFelder = new ArrayList<Byte>();
@@ -33,7 +35,7 @@ public class Pawn extends Piece {
 			//Wenn oben rechts ein gegner oder ein enPassant Feld ist
 			if(figurenDesGegners.containsKey((byte)(getCoordinate()-7))|| enPassant == (byte)(getCoordinate()-7))
 			{
-				//Wenn kein Sprung Ã¼ber Kante
+				//Wenn kein Sprung über Kante
 				if (!SprungUeberKante(getCoordinate(), getCoordinate()-7)) {
 				pieceFelder.add((byte)(getCoordinate()-7));
 				}
@@ -78,4 +80,3 @@ public class Pawn extends Piece {
 	return pieceFelder;
 	}
 	}
-
