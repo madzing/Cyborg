@@ -34,7 +34,7 @@ public class PositionCalc3Test {
 		List<Position> nodes = posCalc.getLegalFollowingPositions();
 		// depth 1
 		assertEquals(20, nodes.size());
-		int depth = 1;
+		int depth = 3;
 		for (int i = 1; i < depth; i++) {
 			List<Position> latestNodes = new ArrayList<>();
 			for (Position pos : nodes) {
