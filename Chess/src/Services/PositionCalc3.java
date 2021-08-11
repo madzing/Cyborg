@@ -40,7 +40,7 @@ public class PositionCalc3 {
 	public ArrayList<Position> getLegalFollowingPositions() {
 		ArrayList<Position> folgePositionen = new ArrayList<Position>();
 		for (Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet()) {
-			for (Byte bite : entry.getValue().getMoves(_figurenAmZug, _figurenDesGegners, _currentPosition.getEnPassant())) {
+			for (Byte bite : entry.getValue().getMoves(_figurenAmZug, _figurenDesGegners, _currentPosition)) {
 
 				Position neuePos = new Position(_currentPosition);
 				neuePos.makeMove(entry.getValue().getCoordinate(), bite);

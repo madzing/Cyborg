@@ -31,7 +31,7 @@ public abstract class Piece {
 		_coordinate = Coordinate.select(coordinate);
 	}
 	
-	public  ArrayList<Byte>  getMoves(Map<Byte, Piece> figurenAmZug, Map<Byte, Piece> figurenDesGegners, byte enPassant)
+	public  ArrayList<Byte>  getMoves(Map<Byte, Piece> figurenAmZug, Map<Byte, Piece> figurenDesGegners, Position position)
 	{
     	ArrayList<Byte> list = new ArrayList<Byte>();
 		for(int i = 0; i < getMovement().length;i++)

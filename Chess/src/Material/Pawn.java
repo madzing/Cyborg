@@ -15,7 +15,7 @@ public class Pawn extends Piece {
 		return new byte[] {8,-8};
 		}
 
-	public  ArrayList<Byte> getMoves(Map<Byte, Piece> figurenAmZug, Map<Byte, Piece> figurenDesGegners, byte enPassant)
+	public  ArrayList<Byte> getMoves(Map<Byte, Piece> figurenAmZug, Map<Byte, Piece> figurenDesGegners, Position position)
 	{
 		ArrayList<Byte> pieceFelder = new ArrayList<Byte>();
 
@@ -33,7 +33,7 @@ public class Pawn extends Piece {
 				}
 			}
 			//Wenn oben rechts ein gegner oder ein enPassant Feld ist
-			if(figurenDesGegners.containsKey((byte)(getCoordinate()-7))|| enPassant == (byte)(getCoordinate()-7))
+			if(figurenDesGegners.containsKey((byte)(getCoordinate()-7))|| position.getEnPassant() == (byte)(getCoordinate()-7))
 			{
 				//Wenn kein Sprung �ber Kante
 				if (!SprungUeberKante(getCoordinate(), getCoordinate()-7)) {
@@ -41,7 +41,7 @@ public class Pawn extends Piece {
 				}
 			}
 			//Wenn oben links ein gegner oder ein enPassant Feld ist
-			if(figurenDesGegners.containsKey((byte)(getCoordinate()-9))|| enPassant == (byte)(getCoordinate()-9))
+			if(figurenDesGegners.containsKey((byte)(getCoordinate()-9))|| position.getEnPassant() == (byte)(getCoordinate()-9))
 			{
 				if (!SprungUeberKante(getCoordinate(), getCoordinate()-9)) {
 				pieceFelder.add((byte)(getCoordinate()-9));
@@ -64,13 +64,13 @@ public class Pawn extends Piece {
 					}
 				}
 			}
-			if(figurenDesGegners.containsKey((byte)(getCoordinate()+7)) || enPassant == (byte)(getCoordinate()+7))
+			if(figurenDesGegners.containsKey((byte)(getCoordinate()+7)) || position.getEnPassant() == (byte)(getCoordinate()+7))
 			{
 				if (!SprungUeberKante(getCoordinate(), getCoordinate()+7)) {
 				pieceFelder.add((byte)(getCoordinate()+7));
 				}
 			}
-			if(figurenDesGegners.containsKey((byte)(getCoordinate()+9)) || enPassant == (byte)(getCoordinate()+9))
+			if(figurenDesGegners.containsKey((byte)(getCoordinate()+9)) || position.getEnPassant() == (byte)(getCoordinate()+9))
 			{
 				if (!SprungUeberKante(getCoordinate(), getCoordinate()+9)) {
 				pieceFelder.add((byte)(getCoordinate()+9));
