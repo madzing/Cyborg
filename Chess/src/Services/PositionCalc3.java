@@ -41,7 +41,7 @@ public class PositionCalc3 {
 		ArrayList<Position> folgePositionen = new ArrayList<Position>();
 		// Map.Entry<String, String> entry : map.entrySet()
 		for (Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet()) {
-			for (Byte bite : entry.getValue().getMoves(_figurenAmZug, _figurenDesGegners)) {
+			for (Byte bite : entry.getValue().getMoves(_figurenAmZug, _figurenDesGegners, _currentPosition.getEnPassant())) {
 
 				Position neuePos = new Position(_currentPosition);
 				neuePos.makeMove(entry.getValue().getCoordinate(), bite);
