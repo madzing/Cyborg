@@ -70,9 +70,9 @@ public class PositionTest {
 		Position promotionTest = new Position(promotionFen);
 		Fen promotedFen = Fen.select("4Q3/8/8/2k5/8/4K3/8/2r5 w - - 0 57");
 		promotionTest.makeMove((byte)12, (byte)4);
-		promotionTest.promotion(new Queen((byte)4)); //wei�er Bauer auf e8 wird zur Queen
+		promotionTest.promotion(new Queen((byte)4,true)); //wei�er Bauer auf e8 wird zur Queen
 		promotionTest.makeMove((byte)50, (byte)58);
-		promotionTest.promotion(new Rook((byte)58)); //schwarzer Bauer auf c1 wird zu Rook
+		promotionTest.promotion(new Rook((byte)58, false)); //schwarzer Bauer auf c1 wird zu Rook
 		assertEquals(promotedFen.getString(), promotionTest.getFen());
 		
 	}
@@ -92,22 +92,22 @@ public class PositionTest {
 	@Test
 	public void testGetWhiteFiguren() {
 		List<Piece> white = new ArrayList<Piece>();
-		white.add(new Pawn((byte)48));		//0
-		white.add(new Pawn((byte)49));		//1
-		white.add(new Pawn((byte)50)); 		//2
-		white.add(new Pawn((byte)51)); 		//3
-		white.add(new Pawn((byte)52)); 		//4
-		white.add(new Pawn((byte)53)); 		//5
-		white.add(new Pawn((byte)54)); 		//6
-		white.add(new Pawn((byte)55)); 		//7
-		white.add(new Rook((byte)56)); 		//8
-		white.add(new Knight((byte)57));	//9
-		white.add(new Bishop((byte)58));	//10
-		white.add(new Queen((byte)59)); 	//11
-		white.add(new King((byte)60)); 		//12
-		white.add(new Bishop((byte)61));	//13
-		white.add(new Knight((byte)62)); 	//14
-		white.add(new Rook((byte)63)); 		//15
+		white.add(new Pawn((byte)48,true));		//0
+		white.add(new Pawn((byte)49,true));		//1
+		white.add(new Pawn((byte)50,true)); 		//2
+		white.add(new Pawn((byte)51,true)); 		//3
+		white.add(new Pawn((byte)52,true)); 		//4
+		white.add(new Pawn((byte)53,true)); 		//5
+		white.add(new Pawn((byte)54,true)); 		//6
+		white.add(new Pawn((byte)55,true)); 		//7
+		white.add(new Rook((byte)56,true)); 		//8
+		white.add(new Knight((byte)57,true));	//9
+		white.add(new Bishop((byte)58,true));	//10
+		white.add(new Queen((byte)59,true)); 	//11
+		white.add(new King((byte)60,true)); 		//12
+		white.add(new Bishop((byte)61,true));	//13
+		white.add(new Knight((byte)62,true)); 	//14
+		white.add(new Rook((byte)63,true)); 		//15
 
 		assertEquals(white.get(0).getClass(),_startPosition.getWhiteFiguren().get(0).getClass());
 		assertEquals(white.get(1).getClass(),_startPosition.getWhiteFiguren().get(1).getClass());
@@ -130,22 +130,22 @@ public class PositionTest {
 	@Test
 	public void testGetBlackFiguren() {
 		List<Piece> black = new ArrayList<Piece>();
-		black.add(new Rook((byte)0));		//0
-		black.add(new Knight((byte)1));		//1
-		black.add(new Bishop((byte)2));		//2
-		black.add(new Queen((byte)3));		//3
-		black.add(new King((byte)4));		//4
-		black.add(new Bishop((byte)5));		//5		
-		black.add(new Knight((byte)6));		//6
-		black.add(new Rook((byte)7));		//7
-		black.add(new Pawn((byte)8));		//8
-		black.add(new Pawn((byte)9));		//9
-		black.add(new Pawn((byte)10));		//10
-		black.add(new Pawn((byte)11));		//11
-		black.add(new Pawn((byte)12));		//12
-		black.add(new Pawn((byte)13));		//13
-		black.add(new Pawn((byte)14));		//14
-		black.add(new Pawn((byte)15));		//15
+		black.add(new Rook((byte)0, false));		//0
+		black.add(new Knight((byte)1, false));		//1
+		black.add(new Bishop((byte)2, false));		//2
+		black.add(new Queen((byte)3, false));		//3
+		black.add(new King((byte)4, false));		//4
+		black.add(new Bishop((byte)5, false));		//5		
+		black.add(new Knight((byte)6, false));		//6
+		black.add(new Rook((byte)7, false));		//7
+		black.add(new Pawn((byte)8, false));		//8
+		black.add(new Pawn((byte)9, false));		//9
+		black.add(new Pawn((byte)10, false));		//10
+		black.add(new Pawn((byte)11, false));		//11
+		black.add(new Pawn((byte)12, false));		//12
+		black.add(new Pawn((byte)13, false));		//13
+		black.add(new Pawn((byte)14, false));		//14
+		black.add(new Pawn((byte)15, false));		//15
 		assertEquals(black.get(0).getClass(),_startPosition.getBlackFiguren().get(0).getClass());
 		assertEquals(black.get(1).getClass(),_startPosition.getBlackFiguren().get(1).getClass());
 		assertEquals(black.get(2).getClass(),_startPosition.getBlackFiguren().get(2).getClass());
