@@ -261,7 +261,7 @@ public class PositionCalc2
 	// Welche gegnerischen Figuren haben meinen KÃ¶nig "in Sichtweite", welche meiner Figuren sind gepinnt, steht der KÃ¶nig im Schach?
 	protected  void attackingPieces()
 	{
-		//Iteriert über alle Figuren am Zug
+		//Iteriert ï¿½ber alle Figuren am Zug
 		for(Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet())
 		{
 			//Wenn King gefunden 
@@ -272,7 +272,7 @@ public class PositionCalc2
 					List<Byte> rookFelder = hasViewOf(kingPosition,new byte[]{8, 1, 8, -1} ,true,false);
 					List<Byte> knightFelder = hasViewOf(kingPosition,new byte[]{-15, -6, 10, 17, 15, 6, -10, -17 } ,false,false);
 					
-					//Wenn weiß dran ist
+					//Wenn weiï¿½ dran ist
 					if(_currentPosition.getZugrecht())
 					{
 						//Wenn der Gegner eine Figur auf Kingfeld -9 hat
@@ -321,7 +321,7 @@ public class PositionCalc2
 						}
 					}
 					//
-					//Iteriert über alle Felder, von denen aus ein Knight den König schlagen könnte
+					//Iteriert ï¿½ber alle Felder, von denen aus ein Knight den Kï¿½nig schlagen kï¿½nnte
 					for(byte piecePosition: knightFelder)
 					{
 						//Wenn eine gegnerische Figur auf einem dieser Felder steht
@@ -335,7 +335,7 @@ public class PositionCalc2
 							}
 						}
 					}
-					//Iteriert über alle Felder, von denen aus ein Bishop den König schlagen könnte
+					//Iteriert ï¿½ber alle Felder, von denen aus ein Bishop den Kï¿½nig schlagen kï¿½nnte
 					for(byte piecePosition: bishopFelder)
 					{
 						
@@ -355,13 +355,13 @@ public class PositionCalc2
 								{
 									//kommt sie in _attackingpieces
 									_attackingPieces.put(piecePosition, figur);
-									//Wenn die Map pinnedByBishopOrQueen genau ein Element enthält
+									//Wenn die Map pinnedByBishopOrQueen genau ein Element enthï¿½lt
 									if(pinnedByBishopOrQueen.size()==1)
 									{
 										//kommt sie in pinnedPieces
 										_pinnedPieces.putAll(pinnedByBishopOrQueen);
 									}
-									//Wenn die Map pinnedByBishopOrQueen nicht genau ein und genau 0 Elemente enhält
+									//Wenn die Map pinnedByBishopOrQueen nicht genau ein und genau 0 Elemente enhï¿½lt
 									else if(pinnedByBishopOrQueen.size()==0)
 									{
 										_kingInCheck = true;
@@ -452,7 +452,7 @@ public class PositionCalc2
 	}
 	
 	// TODO der letzte Spieler hat seinen Zug gemach, steht sein KÃ¶nig jetzt im Schach? Wenn ja sollte FALSE zurÃ¼ckgegeben werden.
-	private  boolean isPositionLegal(Position position)
+	public  boolean isPositionLegal(Position position)
 	{
 		PositionCalc2 neuPos = new PositionCalc2(position);
 		Map<Byte, Piece> figurenDesGegners;
@@ -546,13 +546,15 @@ public class PositionCalc2
 		return true;
 
 	}
+
 	public Map<Byte, Piece> getAttackingPieces(){
 		return _attackingPieces;
 	}
 	public Map<Byte, Piece> getPinnedPieces(){
 		return _attackingPieces;
 	}
-	public boolean getKingInCheck() {
+	public boolean getKingInCheck()
+	{
 		return _kingInCheck;
 	}
 }

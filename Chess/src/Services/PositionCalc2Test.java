@@ -31,7 +31,12 @@ public class PositionCalc2Test {
 				latestNodes.addAll(posCalc.getLegalPositions());
 			}
 			nodes = latestNodes;
+
 		}
+//		for (Position p : nodes)
+//		{
+//			System.out.println(p.getFen());
+//		}
 
 		if (depth ==2) {
 			assertEquals(400, nodes.size());
@@ -50,6 +55,7 @@ public class PositionCalc2Test {
 		}
 		
 	}
+
 //	@Test
 //	public void attackingPieces() {
 //		//	rnbqk1nr/pppp1ppp/4p3/8/1bPP4/8/PP2PPPP/RNBQKBNR w KQkq - 1 3
@@ -67,6 +73,17 @@ public class PositionCalc2Test {
 //		System.out.println(posCalc2.getPinnedPieces());
 //		System.out.println(posCalc2.getKingInCheck());
 //	}
+
+	
+	@Test
+	public void TestIsPositionLegal()
+	{
+		Fen startFen = Fen.select("rr1bqkbnr/ppppp1pp/2n5/5p1Q/4P3/8/PPPP1PPP/RNB1KBNR w KQkq - 2 1");
+		Position startPosition = new Position(startFen);
+		posCalc = new PositionCalc2(startPosition);
+		assertFalse(posCalc.isPositionLegal(startPosition));
+		
+	}
 	public static Map<String, Position> removeDuplicates(List<Position> list) 
 	{
 		Map<String, Position> bla = new HashMap<String, Position>();
