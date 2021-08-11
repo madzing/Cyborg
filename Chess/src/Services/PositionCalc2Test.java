@@ -14,7 +14,7 @@ import Material.Position;
 
 public class PositionCalc2Test {
 
-	Fen _startFen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+	Fen _startFen = Fen.select("rnbqkbnr/ppppp1pp/8/5p1Q/4P3/8/PPPP1PPP/RNB1KBNR b KQkq - 1 2");
 	Position _startPosition = new Position(_startFen);
 	Position _startPosition2 = new Position(_startFen);
 	PositionCalc2 posCalc = new PositionCalc2(_startPosition);
@@ -23,7 +23,7 @@ public class PositionCalc2Test {
 		List<Position> nodes = posCalc.getLegalPositions();
 		// depth 1
 		assertEquals(20, nodes.size());
-		int depth = 4;
+		int depth = 1;
 		for (int i = 1; i < depth; i++) {
 			List<Position> latestNodes = new ArrayList<>();
 			for (Position pos : nodes) {
@@ -31,6 +31,11 @@ public class PositionCalc2Test {
 				latestNodes.addAll(posCalc.getLegalPositions());
 			}
 			nodes = latestNodes;
+
+		}
+		for (Position p : nodes)
+		{
+			System.out.println(p.getFen());
 		}
 
 		if (depth ==2) {
@@ -50,7 +55,17 @@ public class PositionCalc2Test {
 		}
 		
 	}
-
+	
+	@Test
+	public void TestIsPositionLegal()
+	{
+		Fen startFen = Fen.select("rr1bqkbnr/ppppp1pp/2n5/5p1Q/4P3/8/PPPP1PPP/RNB1KBNR w KQkq - 2 1");
+		Position startPosition = new Position(startFen);
+		posCalc = new PositionCalc2(startPosition);
+		System.out.println(posCalc.isPositionLegal(startPosition));
+		assertFalse(posCalc.isPositionLegal(startPosition));
+		
+	}
 
 	public static Map<String, Position> removeDuplicates(List<Position> list) 
 	{
