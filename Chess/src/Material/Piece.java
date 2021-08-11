@@ -8,7 +8,7 @@ import Fachwerte.Coordinate;
 import Fachwerte.PieceValue;
 
 public abstract class Piece {
-	private boolean _color;
+	boolean _color;
 	private PieceValue _value;
 	private Coordinate _coordinate; 
 

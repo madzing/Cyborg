@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class Pawn extends Piece {
-	public Pawn(byte coordinate) {
-		super(coordinate);
+	public Pawn(byte coordinate,boolean color) {
+		super(coordinate, color);
 	}
 
 	@Override
@@ -20,7 +20,7 @@ public class Pawn extends Piece {
 		ArrayList<Byte> pieceFelder = new ArrayList<Byte>();
 
 		//Wenn weiss
-		if(_color)
+		if(super._color)
 		{
 			//Wenn vor ihm kein gegner und keine eigene Figur
 			if(!figurenDesGegners.containsKey((byte)(getCoordinate()-8))&& !figurenAmZug.containsKey((byte)(getCoordinate()-8)))
