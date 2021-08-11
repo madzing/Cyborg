@@ -16,20 +16,20 @@ public class PositionCalc3Test {
 
 	@Test
 	public void TestKonstruktor() {
-		Fen _startFen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-		Position _startPosition = new Position(_startFen);
-		PositionCalc3 posCalc = new PositionCalc3(_startPosition);
+		Fen startFen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+		Position startPosition = new Position(startFen);
+		PositionCalc3 posCalc = new PositionCalc3(startPosition);
 		
 		assertEquals(posCalc.getFigurenAmZug().size(), 16);
 		assertEquals(posCalc.getFigurenDesGegners().size(), 16);
-		assertEquals(posCalc.getCurrentPosition(), _startPosition);
+		assertEquals(posCalc.getCurrentPosition(), startPosition);
 	}
 	
 	@Test
 	public void getLegalPositions() {
-		Fen _startFen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-		Position _startPosition = new Position(_startFen);
-		PositionCalc3 posCalc = new PositionCalc3(_startPosition);
+		Fen startFen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+		Position startPosition = new Position(startFen);
+		PositionCalc3 posCalc = new PositionCalc3(startPosition);
 		
 		List<Position> nodes = posCalc.getLegalFollowingPositions();
 		// depth 1
