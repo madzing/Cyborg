@@ -24,5 +24,8 @@ public class PositionCalc3Test {
 		assertEquals(posCalc.getFigurenDesGegners().size(), 16);
 		assertEquals(posCalc.getCurrentPosition(), _startPosition);
 	}
+	
+	
+	
 
 }
