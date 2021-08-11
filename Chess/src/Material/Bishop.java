@@ -1,5 +1,9 @@
 package Material;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class Bishop extends Piece {
 
 	public Bishop(byte coordinate) {

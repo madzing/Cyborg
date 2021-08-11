@@ -18,6 +18,7 @@ public class PositionCalc3 {
 
 	private Position _currentPosition;
 	private Map<Byte, Piece> _figurenAmZug;
+	private Map<Byte, Piece> _figurenDesGegners;
 
 	public PositionCalc3(Position currentPosition) {
 		_currentPosition = new Position(currentPosition);
@@ -25,43 +26,35 @@ public class PositionCalc3 {
 		// wenn weiß am Zug ist
 		if (currentPosition.getZugrecht()) {
 			_figurenAmZug = convertListToMap(currentPosition.getWhiteFiguren());
+			_figurenDesGegners = convertListToMap(currentPosition.getBlackFiguren());
 		}
 		// wenn schwarz am Zug ist
 		else {
 			_figurenAmZug = convertListToMap(currentPosition.getBlackFiguren());
+			_figurenDesGegners = convertListToMap(currentPosition.getWhiteFiguren());
 		}
 	}
 
-	
-	// Diese Methode gibt alle legalen Positionen, welche aus der derzeitigen Position resultieren zurück.
-	public List<Position> getLegalFollowingPositions() {
-		{
-			ArrayList<Position> folgePositionen = new ArrayList<Position>();
-			//Map.Entry<String, String> entry : map.entrySet()
-			for(Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet())
-			{				
-				if(false)//not King && not in check && notpinned && notpawn and capturing enPassant
-				{
-					folgePositionen.addAll(entry.getValue().getMoves(_currentPosition));
-				}
-				
-				else
-				{
-					for(Position position : entry.getValue().getMoves(_currentPosition))
-					{
-						if(isPositionLegal(position))
-						{
-							folgePositionen.add(position);
-						}
-					}
+	// Diese Methode gibt alle legalen Positionen, welche aus der derzeitigen
+	// Position resultieren zurück.
+	public ArrayList<Position> getLegalFollowingPositions() {
+		ArrayList<Position> folgePositionen = new ArrayList<Position>();
+		// Map.Entry<String, String> entry : map.entrySet()
+		for (Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet()) {
+			for (Byte bite : entry.getValue().getMoves(_figurenAmZug, _figurenDesGegners)) {
+
+				Position neuePos = new Position(_currentPosition);
+				neuePos.makeMove(entry.getValue().getCoordinate(), bite);
+				if (isPositionLegal(neuePos)) {
+					folgePositionen.add(neuePos);
 				}
 			}
-
-			return folgePositionen;
 		}
+		return folgePositionen;
 	}
-	
-	// Ist die übergebene Position legal? oder steht der König nach einem Zug der eigenen Seite im Schach?
+
+	// Ist die übergebene Position legal? oder steht der König nach einem Zug der
+	// eigenen Seite im Schach?
 	public boolean isPositionLegal(Position position)
 	{
 		
@@ -96,6 +89,9 @@ public class PositionCalc3 {
 		return _figurenAmZug;
 	}
 
+	public Map<Byte, Piece> getFigurenDesGegners() {
+		return _figurenDesGegners;
+	}
 
 /// Hilfsmethoden
 
