@@ -24,14 +24,14 @@ public class PositionCalc3 {
 		_currentPosition = new Position(currentPosition);
 
 		// wenn weiß am Zug ist
-		if (currentPosition.getZugrecht()) {
-			_figurenAmZug = convertListToMap(currentPosition.getWhiteFiguren());
-			_figurenDesGegners = convertListToMap(currentPosition.getBlackFiguren());
+		if (_currentPosition.getZugrecht()) {
+			_figurenAmZug = convertListToMap(_currentPosition.getWhiteFiguren());
+			_figurenDesGegners = convertListToMap(_currentPosition.getBlackFiguren());
 		}
 		// wenn schwarz am Zug ist
 		else {
-			_figurenAmZug = convertListToMap(currentPosition.getBlackFiguren());
-			_figurenDesGegners = convertListToMap(currentPosition.getWhiteFiguren());
+			_figurenAmZug = convertListToMap(_currentPosition.getBlackFiguren());
+			_figurenDesGegners = convertListToMap(_currentPosition.getWhiteFiguren());
 		}
 	}
 
