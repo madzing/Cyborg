@@ -2,8 +2,8 @@ package Material;
 
 public class Rook extends Piece {
 
-	public Rook(byte coordinate) {
-		super(coordinate);
+	public Rook(byte coordinate, boolean color) {
+		super(coordinate, color);
 	}
 
 	public byte[] getMovement() {

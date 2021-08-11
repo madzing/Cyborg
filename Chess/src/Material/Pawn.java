@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map.Entry;
 
 public class Pawn extends Piece {
-	public Pawn(byte coordinate) {
-		super(coordinate);
+	public Pawn(byte coordinate, boolean color) {
+		super(coordinate, color);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class Pawn extends Piece {
 			//Wenn oben rechts ein gegner oder ein enPassant Feld ist
 			if(_figurenDesGegners.containsKey((byte)(piece.getCoordinate()-7))||_currentPosition.getEnPassant()==(byte)(piece.getCoordinate()-7))
 			{
-				//Wenn kein Sprung über Kante
+				//Wenn kein Sprung ï¿½ber Kante
 				if (!SprungUeberKante(piece.getCoordinate(), piece.getCoordinate()-7)) {
 				pieceFelder.add((byte)(piece.getCoordinate()-7));
 				}

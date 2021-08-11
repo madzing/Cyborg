@@ -2,8 +2,8 @@ package Material;
 
 public class Queen extends Piece {
 
-	public Queen(byte coordinate) {
-		super(coordinate);
+	public Queen(byte coordinate, boolean color) {
+		super(coordinate, color);
 	}
 
 	public byte[] getMovement() {

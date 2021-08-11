@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Knight extends Piece {
-	public Knight(byte coordinate) {
-		super(coordinate);
+	public Knight(byte coordinate, boolean color) {
+		super(coordinate,color);
 	}
 
 	public byte[] getMovement() {

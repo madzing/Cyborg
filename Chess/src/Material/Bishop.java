@@ -6,8 +6,9 @@ import java.util.Map;
 
 public class Bishop extends Piece {
 
-	public Bishop(byte coordinate) {
-		super(coordinate);
+	public Bishop(byte coordinate, boolean color) {
+		super(coordinate, color);
+		
 	}
 
 	public byte[] getMovement() {
