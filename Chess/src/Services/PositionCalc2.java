@@ -259,10 +259,12 @@ public class PositionCalc2
 
 	
 	// Welche gegnerischen Figuren haben meinen König "in Sichtweite", welche meiner Figuren sind gepinnt, steht der König im Schach?
-	private  void attackingPieces()
+	protected  void attackingPieces()
 	{
+		//Iteriert �ber alle Figuren am Zug
 		for(Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet())
 		{
+			//Wenn King gefunden 
 			if(entry.getValue() instanceof King)
 				{
 					byte kingPosition = entry.getValue().getCoordinate();
@@ -270,18 +272,23 @@ public class PositionCalc2
 					List<Byte> rookFelder = hasViewOf(kingPosition,new byte[]{8, 1, 8, -1} ,true,false);
 					List<Byte> knightFelder = hasViewOf(kingPosition,new byte[]{-15, -6, 10, 17, 15, 6, -10, -17 } ,false,false);
 					
+					//Wenn wei� dran ist
 					if(_currentPosition.getZugrecht())
 					{
+						//Wenn der Gegner eine Figur auf Kingfeld -9 hat
 						if(_figurenDesGegners.containsKey((byte)(kingPosition-9)))
 						{
+							//Wenn die Figur ein Bauer ist
 							Piece figur = _figurenDesGegners.get((byte)(kingPosition-9));
 							if(figur instanceof Pawn)
 							{
 								_kingInCheck = true;
 							}
 						}
+						//Wenn der Gegner eine Figur auf Kingfeld -7 hat
 						if(_figurenDesGegners.containsKey((byte)(kingPosition-7)))
 						{
+							//Wenn die Figur ein Bauer ist
 							Piece figur = _figurenDesGegners.get((byte)(kingPosition-7));
 							if(figur instanceof Pawn)
 							{
@@ -289,18 +296,23 @@ public class PositionCalc2
 							}
 						}
 					}
+					//Wenn schwarz dran ist
 					else
 					{
+						//Wenn der Gegner eine Figur auf Kingfeld +9 hat
 						if(_figurenDesGegners.containsKey((byte)(kingPosition+9)))
 						{
+							//Wenn die Figur ein Bauer ist
 							Piece figur = _figurenDesGegners.get((byte)(kingPosition+9));
 							if(figur instanceof Pawn)
 							{
 								_kingInCheck = true;
 							}
 						}
+						//Wenn der Gegner eine Figur auf Kingfeld +7 hat
 						if(_figurenDesGegners.containsKey((byte)(kingPosition+7)))
 						{
+							//Wenn die Figur ein Bauer ist
 							Piece figur = _figurenDesGegners.get((byte)(kingPosition+7));
 							if(figur instanceof Pawn)
 							{
@@ -308,11 +320,14 @@ public class PositionCalc2
 							}
 						}
 					}
-					
+					//
+					//Iteriert �ber alle Felder, von denen aus ein Knight den K�nig schlagen k�nnte
 					for(byte piecePosition: knightFelder)
 					{
+						//Wenn eine gegnerische Figur auf einem dieser Felder steht
 						if(_figurenDesGegners.containsKey(piecePosition))
 						{
+							//Wenn die Figur ein Knight ist
 							Piece figur = _figurenDesGegners.get(piecePosition);
 							if(figur instanceof Knight)
 							{
@@ -320,24 +335,33 @@ public class PositionCalc2
 							}
 						}
 					}
-					
+					//Iteriert �ber alle Felder, von denen aus ein Bishop den K�nig schlagen k�nnte
 					for(byte piecePosition: bishopFelder)
 					{
+						
 						Map<Byte,Piece> pinnedByBishopOrQueen =new HashMap<Byte,Piece>();
+						//Wenn auf einem dieser Felder eine eigene Figur steht
 						if(_figurenAmZug.containsKey(piecePosition))
 						{
+							//Dann kommt sie in die Map pinnedByBishopOrQueen
 							pinnedByBishopOrQueen.put(piecePosition, _figurenAmZug.get(piecePosition));
 						}
+						//Wenn auf einem dieser Felder eine gegnerische Figur steht
 						if(_figurenDesGegners.containsKey(piecePosition))
 						{
+								//Wenn die Figur ein Bishop oder eine Queen ist
 								Piece figur = _figurenDesGegners.get(piecePosition);
 								if(figur instanceof Bishop|| figur instanceof Queen)
 								{
+									//kommt sie in _attackingpieces
 									_attackingPieces.put(piecePosition, figur);
+									//Wenn die Map pinnedByBishopOrQueen genau ein Element enth�lt
 									if(pinnedByBishopOrQueen.size()==1)
 									{
+										//kommt sie in pinnedPieces
 										_pinnedPieces.putAll(pinnedByBishopOrQueen);
 									}
+									//Wenn die Map pinnedByBishopOrQueen nicht genau ein und genau 0 Elemente enh�lt
 									else if(pinnedByBishopOrQueen.size()==0)
 									{
 										_kingInCheck = true;
@@ -521,6 +545,13 @@ public class PositionCalc2
 
 		return true;
 
+	}
+
+	public Map<Byte, Piece> getAttackingPieces(){
+		return _attackingPieces;
+	}
+	public Map<Byte, Piece> getPinnedPieces(){
+		return _attackingPieces;
 	}
 	public boolean getKingInCheck()
 	{
