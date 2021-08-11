@@ -1,8 +1,8 @@
 package Material;
 
 public class King extends Piece {
-	public King(byte coordinate) {
-		super(coordinate);
+	public King(byte coordinate, boolean color) {
+		super(coordinate, color);
 	}
 
 	public byte[] getMovement() {

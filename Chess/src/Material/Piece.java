@@ -12,8 +12,9 @@ public abstract class Piece {
 	private PieceValue _value;
 	private Coordinate _coordinate; 
 
-	public Piece (byte coordinate) {
+	public Piece (byte coordinate, boolean color) {
 		setCoordinate(coordinate);
+		_color = color;
 	}
 	
 	public byte getValue() {
@@ -77,7 +78,10 @@ public abstract class Piece {
     	return this.hashCode() == obj.hashCode();
     }
     
-    
+    public boolean getColor()
+    {
+    	return _color;
+    }
     public  boolean SprungUeberKante(int alteFigurPos,int neueFigurPos)
 	{
 		return Math.abs((alteFigurPos % 8)-(neueFigurPos % 8))>2 ||  Math.abs((alteFigurPos / 8)-(neueFigurPos / 8))>2;

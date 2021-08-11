@@ -45,27 +45,27 @@ public class Position
     	{
     		if(piece instanceof Pawn)
     		{
-    			neueListe.add((Pawn)new Pawn(piece.getCoordinate()));
+    			neueListe.add((Pawn)new Pawn(piece.getCoordinate(), piece.getColor()));
     		}
     		if(piece instanceof Knight)
     		{
-    			neueListe.add((Knight)new Knight(piece.getCoordinate()));
+    			neueListe.add((Knight)new Knight(piece.getCoordinate(),piece.getColor()));
     		}
     		if(piece instanceof Bishop)
     		{
-    			neueListe.add((Bishop)new Bishop(piece.getCoordinate()));
+    			neueListe.add((Bishop)new Bishop(piece.getCoordinate(),piece.getColor()));
     		}
     		if(piece instanceof Rook)
     		{
-    			neueListe.add((Rook)new Rook(piece.getCoordinate()));
+    			neueListe.add((Rook)new Rook(piece.getCoordinate(),piece.getColor()));
     		}
     		if(piece instanceof Queen)
     		{
-    			neueListe.add((Queen)new Queen(piece.getCoordinate()));
+    			neueListe.add((Queen)new Queen(piece.getCoordinate(),piece.getColor()));
     		}
     		if(piece instanceof King)
     		{
-    			neueListe.add((King)new King(piece.getCoordinate()));
+    			neueListe.add((King)new King(piece.getCoordinate(),piece.getColor()));
     		}
     	}
     	return neueListe; 	
@@ -307,62 +307,62 @@ public class Position
             {
 
             case 'p':
-                _blackFiguren.add(new Pawn(counter));
+                _blackFiguren.add(new Pawn(counter, false));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'P':
-                _whiteFiguren.add(new Pawn(counter));
+                _whiteFiguren.add(new Pawn(counter, true));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'n':
-                _blackFiguren.add(new Knight(counter));
+                _blackFiguren.add(new Knight(counter, false));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'N':
-                _whiteFiguren.add(new Knight(counter));
+                _whiteFiguren.add(new Knight(counter, true));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'b':
-                _blackFiguren.add(new Bishop(counter));
+                _blackFiguren.add(new Bishop(counter, false));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'B':
-                _whiteFiguren.add(new Bishop(counter));
+                _whiteFiguren.add(new Bishop(counter, true));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'r':
-                _blackFiguren.add(new Rook(counter));
+                _blackFiguren.add(new Rook(counter, false));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'R':
-                _whiteFiguren.add(new Rook(counter));
+                _whiteFiguren.add(new Rook(counter, true));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'q':
-                _blackFiguren.add(new Queen(counter));
+                _blackFiguren.add(new Queen(counter, false));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'Q':
-                _whiteFiguren.add(new Queen(counter));
+                _whiteFiguren.add(new Queen(counter, true));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'k':
-                _blackFiguren.add(new King(counter));
+                _blackFiguren.add(new King(counter, false));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'K':
-                _whiteFiguren.add(new King(counter));
+                _whiteFiguren.add(new King(counter, true));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;

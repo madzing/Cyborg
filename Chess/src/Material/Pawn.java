@@ -14,13 +14,13 @@ public class Pawn extends Piece {
 	public byte[] getMovement() {
 		return new byte[] {8,-8};
 		}
-	
+
 	public  ArrayList<Byte> getMoves(Map<Byte, Piece> figurenAmZug, Map<Byte, Piece> figurenDesGegners, byte enPassant)
 	{
 		ArrayList<Byte> pieceFelder = new ArrayList<Byte>();
-		
+
 		//Wenn weiss
-		if(_color) 
+		if(_color)
 		{
 			//Wenn vor ihm kein gegner und keine eigene Figur
 			if(!figurenDesGegners.containsKey((byte)(getCoordinate()-8))&& !figurenAmZug.containsKey((byte)(getCoordinate()-8)))
@@ -35,7 +35,7 @@ public class Pawn extends Piece {
 			//Wenn oben rechts ein gegner oder ein enPassant Feld ist
 			if(figurenDesGegners.containsKey((byte)(getCoordinate()-7))|| enPassant == (byte)(getCoordinate()-7))
 			{
-				//Wenn kein Sprung über Kante
+				//Wenn kein Sprung ï¿½ber Kante
 				if (!SprungUeberKante(getCoordinate(), getCoordinate()-7)) {
 				pieceFelder.add((byte)(getCoordinate()-7));
 				}
@@ -47,7 +47,7 @@ public class Pawn extends Piece {
 				pieceFelder.add((byte)(getCoordinate()-9));
 				}
 			}
-			
+
 		}
 		//Wenn schwarz
 		else
@@ -80,4 +80,3 @@ public class Pawn extends Piece {
 	return pieceFelder;
 	}
 	}
-
