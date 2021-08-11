@@ -32,6 +32,8 @@ public class PositionCalc3 {
 		}
 	}
 
+	
+	// Diese Methode gibt alle legalen Positionen, welche aus der derzeitigen Position resultieren zurück.
 	public List<Position> getLegalFollowingPositions() {
 		{
 			ArrayList<Position> folgePositionen = new ArrayList<Position>();
@@ -59,6 +61,7 @@ public class PositionCalc3 {
 		}
 	}
 	
+	// Ist die übergebene Position legal? oder steht der König nach einem Zug der eigenen Seite im Schach?
 	public boolean isPositionLegal(Position position)
 	{
 		
