@@ -9,4 +9,8 @@ public class King extends Piece {
 		return new byte[] { -8, 1, 8, -1, -7, 9, 7, -9 };
 	}
 
+	public boolean isInCheck(Position position)
+	{
+		return false;
+	}
 }

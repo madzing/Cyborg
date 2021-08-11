@@ -64,7 +64,7 @@ public class PositionCalc3 {
 			{
 				if(figur instanceof King)
 				{
-					return figur.isInCheck(position);
+					return  ((King) figur).isInCheck(position);
 				}
 			}
 		}
@@ -74,10 +74,11 @@ public class PositionCalc3 {
 			{
 				if(figur instanceof King)
 				{
-					return figur.isInCheck(position;
+					return  ((King) figur).isInCheck(position);
 				}
 			}
 		}
+		return true;
 	}
 
 /////////////GETTER
