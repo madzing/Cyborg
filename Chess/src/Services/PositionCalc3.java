@@ -39,7 +39,6 @@ public class PositionCalc3 {
 	// Position resultieren zurück.
 	public ArrayList<Position> getLegalFollowingPositions() {
 		ArrayList<Position> folgePositionen = new ArrayList<Position>();
-		// Map.Entry<String, String> entry : map.entrySet()
 		for (Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet()) {
 			for (Byte bite : entry.getValue().getMoves(_figurenAmZug, _figurenDesGegners, _currentPosition.getEnPassant())) {
 
@@ -64,7 +63,7 @@ public class PositionCalc3 {
 			{
 				if(figur instanceof King)
 				{
-					return  ((King) figur).isInCheck(position);
+					return  !((King) figur).isInCheck(position);
 				}
 			}
 		}
@@ -74,7 +73,7 @@ public class PositionCalc3 {
 			{
 				if(figur instanceof King)
 				{
-					return  ((King) figur).isInCheck(position);
+					return  !((King) figur).isInCheck(position);
 				}
 			}
 		}
