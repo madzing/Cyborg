@@ -23,7 +23,7 @@ public class PositionCalc2Test {
 		List<Position> nodes = posCalc.getLegalPositions();
 		// depth 1
 		assertEquals(20, nodes.size());
-		int depth = 4;
+		int depth = 3;
 		for (int i = 1; i < depth; i++) {
 			List<Position> latestNodes = new ArrayList<>();
 			for (Position pos : nodes) {
@@ -50,8 +50,23 @@ public class PositionCalc2Test {
 		}
 		
 	}
-
-
+//	@Test
+//	public void attackingPieces() {
+//		//	rnbqk1nr/pppp1ppp/4p3/8/1bPP4/8/PP2PPPP/RNBQKBNR w KQkq - 1 3
+//		Fen f = Fen.select("rnbqk1nr/pppp1ppp/4p3/8/1b1P4/2P5/PP2PPPP/RNBQKBNR w KQkq - 1 3");
+//		Fen f2 = Fen.select("rnbqk1nr/pppp1ppp/4p3/8/1bPP4/8/PP2PPPP/RNBQKBNR w KQkq - 1 3");
+//		Position p = new Position(f);
+//		Position p2 = new Position(f2);
+//		
+//		PositionCalc2 posCalc2 = new PositionCalc2(p); 
+//		System.out.println(posCalc2.getAttackingPieces());
+//		System.out.println(posCalc2.getPinnedPieces());
+//		System.out.println(posCalc2.getKingInCheck());
+//		posCalc2.attackingPieces();
+//		System.out.println(posCalc2.getAttackingPieces());
+//		System.out.println(posCalc2.getPinnedPieces());
+//		System.out.println(posCalc2.getKingInCheck());
+//	}
 	public static Map<String, Position> removeDuplicates(List<Position> list) 
 	{
 		Map<String, Position> bla = new HashMap<String, Position>();
