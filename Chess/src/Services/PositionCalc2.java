@@ -428,7 +428,7 @@ public class PositionCalc2
 	}
 	
 	// TODO der letzte Spieler hat seinen Zug gemach, steht sein König jetzt im Schach? Wenn ja sollte FALSE zurückgegeben werden.
-	private  boolean isPositionLegal(Position position)
+	public  boolean isPositionLegal(Position position)
 	{
 		PositionCalc2 neuPos = new PositionCalc2(position);
 		Map<Byte, Piece> figurenDesGegners;
@@ -521,5 +521,9 @@ public class PositionCalc2
 
 		return true;
 
+	}
+	public boolean getKingInCheck()
+	{
+		return _kingInCheck;
 	}
 }
