@@ -11,7 +11,7 @@ public class Cyborg
         _currentPosition = currentPosition;
     }
 
-    public Position calculate()
+    public Position getBestMove()
     {
 
         return _currentPosition;
