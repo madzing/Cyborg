@@ -1,4 +1,4 @@
-package Services;
+package OldCode;
 
 import static org.junit.Assert.*;
 
@@ -12,12 +12,12 @@ import org.junit.Test;
 import Fachwerte.Fen;
 import Material.Position;
 
-public class PositionCalc2Test {
+public class OldPositionCalc2Test {
 
 	Fen _startFen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 	Position _startPosition = new Position(_startFen);
 	Position _startPosition2 = new Position(_startFen);
-	PositionCalc2 posCalc = new PositionCalc2(_startPosition);
+	OldPositionCalc2 posCalc = new OldPositionCalc2(_startPosition);
 	@Test
 	public void getLegalPositions() {
 		List<Position> nodes = posCalc.getLegalPositions();
@@ -27,7 +27,7 @@ public class PositionCalc2Test {
 		for (int i = 1; i < depth; i++) {
 			List<Position> latestNodes = new ArrayList<>();
 			for (Position pos : nodes) {
-				posCalc = new PositionCalc2(pos);
+				posCalc = new OldPositionCalc2(pos);
 				latestNodes.addAll(posCalc.getLegalPositions());
 			}
 			nodes = latestNodes;
@@ -80,7 +80,7 @@ public class PositionCalc2Test {
 	{
 		Fen startFen = Fen.select("rr1bqkbnr/ppppp1pp/2n5/5p1Q/4P3/8/PPPP1PPP/RNB1KBNR w KQkq - 2 1");
 		Position startPosition = new Position(startFen);
-		posCalc = new PositionCalc2(startPosition);
+		posCalc = new OldPositionCalc2(startPosition);
 		assertFalse(posCalc.isPositionLegal(startPosition));
 		
 	}
