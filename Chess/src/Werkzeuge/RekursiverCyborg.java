@@ -8,14 +8,14 @@ import Material.Position;
 import Services.Eval;
 import Services.PositionCalc;
 
-public class Cyborg
+public class RekursiverCyborg
 {
 	Eval _eval;
 	int _tiefe;
     
  
 
-    public Cyborg(int tiefe)
+    public RekursiverCyborg(int tiefe)
     {
     	_eval= new Eval();
         _tiefe = tiefe; 
