@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 public class Pawn extends Piece {
 	public Pawn(byte coordinate,boolean color) {
 		super(coordinate, color);
+		super.setValue((byte)1);
 	}
 
 	@Override

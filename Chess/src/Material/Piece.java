@@ -20,6 +20,11 @@ public abstract class Piece {
 	public byte getValue() {
 		return _value.getValue();
 	}
+	
+	public void setValue(byte value)
+	{
+		_value = PieceValue.select(value);
+	}
 
 	public byte getCoordinate() {
 		return _coordinate.getCoordinate();

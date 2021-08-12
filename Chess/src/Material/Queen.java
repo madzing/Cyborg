@@ -4,6 +4,7 @@ public class Queen extends Piece {
 
 	public Queen(byte coordinate, boolean color) {
 		super(coordinate, color);
+		super.setValue((byte)9);
 	}
 
 	public byte[] getMovement() {

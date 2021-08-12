@@ -8,7 +8,7 @@ public class Bishop extends Piece {
 
 	public Bishop(byte coordinate, boolean color) {
 		super(coordinate, color);
-		
+		super.setValue((byte)3);
 	}
 
 	public byte[] getMovement() {
