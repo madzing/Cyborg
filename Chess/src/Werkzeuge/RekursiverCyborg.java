@@ -58,7 +58,9 @@ public class RekursiverCyborg
     	if(position.getZugrecht())
     	{
 
-    		return bestValueforWhite(list);
+
+        return bestValueforWhite(list);
+
 
     	}
     	else
