@@ -11,12 +11,12 @@ public class startupChess
     {
 
         RekursiverCyborg anton = new RekursiverCyborg(5);
-        
+
         Fen startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
         Position startPosition = new Position(startFen);
-        
+
         Position besteFolgePos = anton.getBestFollowingPosition(startPosition);
-        
+
         System.out.println(besteFolgePos.getFen());
 
     }
