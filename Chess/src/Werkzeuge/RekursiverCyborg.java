@@ -73,9 +73,11 @@ public class RekursiverCyborg
     						{
     							list.add((short)-127);
     						}
+    						else {
+    							list.add((short)0);
+    						}
     					}
     				}
-    				return 0;
     			}
     			else
     			{
@@ -87,9 +89,12 @@ public class RekursiverCyborg
     						{
     							list.add((short)127);
     						}
+    						else
+    						{
+    							list.add((short)0);
+    						}
     					}
-    				}
-    				return 0;	
+    				}	
     			}
     		}
     		for(Position p : legalPositions)
