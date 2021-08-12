@@ -5,9 +5,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import Fachwerte.PieceValue;
+
 public class Pawn extends Piece {
+	
+
 	public Pawn(byte coordinate,boolean color) {
 		super(coordinate, color);
+		super.setValue((byte)1);
 	}
 
 	@Override

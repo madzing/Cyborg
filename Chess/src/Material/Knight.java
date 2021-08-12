@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import Fachwerte.PieceValue;
+
 public class Knight extends Piece {
 	public Knight(byte coordinate, boolean color) {
 		super(coordinate,color);
+		super.setValue((byte)3);
 	}
 
 	public byte[] getMovement() {

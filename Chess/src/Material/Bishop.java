@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Bishop extends Piece {
+import Fachwerte.PieceValue;
 
+public class Bishop extends Piece {
+	
 	public Bishop(byte coordinate, boolean color) {
 		super(coordinate, color);
-		
+		super.setValue((byte)3);
 	}
 
 	public byte[] getMovement() {

@@ -86,4 +86,8 @@ public abstract class Piece {
 	{
 		return Math.abs((alteFigurPos % 8)-(neueFigurPos % 8))>2 ||  Math.abs((alteFigurPos / 8)-(neueFigurPos / 8))>2;
 	}
+    public void setValue(Byte value) {
+    	_value = PieceValue.select(value);
+    }
+    
 }
