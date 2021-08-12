@@ -57,11 +57,9 @@ public class RekursiverCyborg
     	}
     	if(position.getZugrecht())
     	{
-<<<<<<< Updated upstream
-        return bestValueforWhite(list);
-=======
+
     		return bestValueforWhite(list);
->>>>>>> Stashed changes
+
     	}
     	else
     	{

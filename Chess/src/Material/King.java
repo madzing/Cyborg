@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 public class King extends Piece {
 	public King(byte coordinate, boolean color) {
 		super(coordinate, color);
+		super.setValue((byte)127);
 	}
 
 	public byte[] getMovement() {

@@ -7,6 +7,7 @@ import java.util.Map;
 public class Knight extends Piece {
 	public Knight(byte coordinate, boolean color) {
 		super(coordinate,color);
+		super.setValue((byte)3);
 	}
 
 	public byte[] getMovement() {
