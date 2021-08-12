@@ -24,7 +24,7 @@ public class RekursiverCyborg
     public Position getBestFollowingPosition(Position position)
     {
 		Position bestPosition = null;
-		short bestEval = 0;
+		double bestEval = 0;
 		ArrayList<Position> legalPositions = new PositionCalc(position).getLegalFollowingPositions();
 		for(Position pos : legalPositions)
 		{
@@ -49,9 +49,9 @@ public class RekursiverCyborg
     	return bestPosition;
     }
 
-    public Short getEvaluation(Position position, int tiefe)
+    public Double getEvaluation(Position position, int tiefe)
     {
-    	ArrayList<Short> list = new ArrayList<Short>();
+    	ArrayList<Double> list = new ArrayList<Double>();
     	if(tiefe == 0)
     	{
     		list.add(_eval.getEval(position));
@@ -71,11 +71,13 @@ public class RekursiverCyborg
     					{
     						if(((King) piece).isInCheck(position))
     						{
-    							list.add((short)-127);
+    							list.add((double) -127);
+    						}
+    						else {
+    							list.add((double)0);
     						}
     					}
     				}
-    				return 0;
     			}
     			else
     			{
@@ -85,11 +87,14 @@ public class RekursiverCyborg
     					{
     						if(((King) piece).isInCheck(position))
     						{
-    							list.add((short)127);
+    							list.add((double)127);
+    						}
+    						else
+    						{
+    							list.add((double)0);
     						}
     					}
-    				}
-    				return 0;	
+    				}	
     			}
     		}
     		for(Position p : legalPositions)
@@ -111,11 +116,11 @@ public class RekursiverCyborg
     	}
     }
     
-    public short bestValueforWhite(ArrayList<Short> list)
+    public double bestValueforWhite(ArrayList<Double> list)
     {
-		short maximum = -127;
+    	double maximum = -127.0;
 		
-		for(short current: list)
+		for(double current: list)
 		{
 			if(current>maximum)
 			{
@@ -125,11 +130,11 @@ public class RekursiverCyborg
     	return maximum;
     }
     
-    public short bestValueForBlack(ArrayList<Short> list)
+    public double bestValueForBlack(ArrayList<Double> list)
     {
-  		short minimum = 127;
+    	double minimum = 127.0;
   		
-  		for(short current: list)
+  		for(double current: list)
   		{
   			if(current<minimum)
   			{
