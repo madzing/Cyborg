@@ -26,7 +26,7 @@ public class PositionCalc3Test {
 	}
 	
 	@Test
-	public void getLegalPositions() {
+	public void TestgetLegalPositions() {
 		Fen startFen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 		Position startPosition = new Position(startFen);
 		PositionCalc3 posCalc = new PositionCalc3(startPosition);
@@ -61,6 +61,17 @@ public class PositionCalc3Test {
 			assertEquals(119060324, nodes.size());
 		}
 		
+	}
+	
+	@Test
+	public void Testcastle()
+	{
+		Fen startFen = Fen.select("rnbqkbnr/1pp1p1p1/p2pPp1p/P2P1P1P/P2P1P1P/P2P1P1P/P2P1P1P/R3K2R w KQkq - 0 1");
+		Position startPosition = new Position(startFen);
+		PositionCalc3 posCalc = new PositionCalc3(startPosition);
+		List<Position> nodes = posCalc.getLegalFollowingPositions();
+		
+		assertEquals(10, nodes.size());
 	}
 	
 

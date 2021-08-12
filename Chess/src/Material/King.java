@@ -40,13 +40,13 @@ public class King extends Piece {
 		if(position.getZugrecht()&& getCoordinate()==60)
 		{
 			// Kann Weiss kingside castlen?
-			if(position.getWhiteCastleRights()[0]==true&&!isInCheck(super.getCoordinate())&&!isInCheck((byte)(super.getCoordinate()+1))&&!isInCheck((byte)(super.getCoordinate()+2)) &&!figurenAmZug.containsKey((byte)61)&&!figurenAmZug.containsKey((byte)62)&&!figurenDesGegners.containsKey((byte)61)&&!figurenDesGegners.containsKey((byte)62))
+			if(position.getWhiteCastleRights()[0]==true&&!isInCheck(position)&&!new King((byte)(super.getCoordinate()+1),false).isInCheck(position)&&!new King((byte)(super.getCoordinate()+2),false).isInCheck(position) &&!figurenAmZug.containsKey((byte)61)&&!figurenAmZug.containsKey((byte)62)&&!figurenDesGegners.containsKey((byte)61)&&!figurenDesGegners.containsKey((byte)62))
 			{
 				pieceFelder.add((byte)62);
 			}
 			
 			// Kann Weiss queenside castlen?
-			if(position.getWhiteCastleRights()[1]==true&&!isInCheck(super.getCoordinate())&&!isInCheck((byte)(super.getCoordinate()-1))&&!isInCheck((byte)(super.getCoordinate()-2))&&!figurenAmZug.containsKey((byte)59)&&!figurenAmZug.containsKey((byte)58)&&!figurenAmZug.containsKey((byte)57)&&!figurenDesGegners.containsKey((byte)59)&&!figurenDesGegners.containsKey((byte)58)&&!figurenDesGegners.containsKey((byte)57))
+			if(position.getWhiteCastleRights()[1]==true&&!isInCheck(position)&&!new King((byte)(super.getCoordinate()-1),false).isInCheck(position)&&!new King((byte)(super.getCoordinate()-2),false).isInCheck(position)&&!figurenAmZug.containsKey((byte)59)&&!figurenAmZug.containsKey((byte)58)&&!figurenAmZug.containsKey((byte)57)&&!figurenDesGegners.containsKey((byte)59)&&!figurenDesGegners.containsKey((byte)58)&&!figurenDesGegners.containsKey((byte)57))
 			{
 				pieceFelder.add((byte)58);
 			}
@@ -55,29 +55,21 @@ public class King extends Piece {
 		else
 		{
 			// Kann Schwarz kingside castlen?
-			if(position.getBlackCastleRights()[0]==true&&!isInCheck(super.getCoordinate())&&!isInCheck((byte)(super.getCoordinate()+1))&&!isInCheck((byte)(super.getCoordinate()+2))&&!figurenAmZug.containsKey((byte)5)&&!figurenAmZug.containsKey((byte)6)&&!figurenDesGegners.containsKey((byte)5)&&!figurenDesGegners.containsKey((byte)6))
+			if(position.getBlackCastleRights()[0]==true&&!isInCheck(position)&&!new King((byte)(super.getCoordinate()+1),false).isInCheck(position)&&!new King((byte)(super.getCoordinate()+2),false).isInCheck(position)&&!figurenAmZug.containsKey((byte)5)&&!figurenAmZug.containsKey((byte)6)&&!figurenDesGegners.containsKey((byte)5)&&!figurenDesGegners.containsKey((byte)6))
 			{
 				pieceFelder.add((byte)6);
 			}
-			
+			new King((byte)(super.getCoordinate()-1),false).isInCheck(position);
 			// Kann Weiss queenside castlen?
-			if(position.getBlackCastleRights()[1]==true&&!isInCheck(super.getCoordinate())&&!isInCheck((byte)(super.getCoordinate()-1))&&!isInCheck((byte)(super.getCoordinate()-2))&&!figurenAmZug.containsKey((byte)3)&&!figurenAmZug.containsKey((byte)2)&&!figurenAmZug.containsKey((byte)1)&&!figurenDesGegners.containsKey((byte)3)&&!figurenDesGegners.containsKey((byte)2)&&!figurenDesGegners.containsKey((byte)1))
+			if(position.getBlackCastleRights()[1]==true&&!isInCheck(position)&&!new King((byte)(super.getCoordinate()-1),false).isInCheck(position)&&!new King((byte)(super.getCoordinate()-2),false).isInCheck(position)&&!figurenAmZug.containsKey((byte)3)&&!figurenAmZug.containsKey((byte)2)&&!figurenAmZug.containsKey((byte)1)&&!figurenDesGegners.containsKey((byte)3)&&!figurenDesGegners.containsKey((byte)2)&&!figurenDesGegners.containsKey((byte)1))
 			{
 				pieceFelder.add((byte)2);
 			}
 		}
-		
-		
 		return pieceFelder;
 	}
 
 	public boolean isInCheck(Position position)
-	{
-		return false;
-	}
-	
-
-	public boolean isInCheck(Byte Kingposition)
 	{
 		return false;
 	}

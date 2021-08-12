@@ -714,4 +714,5 @@ public class Position
 //    public static int toInt(String fen) {
 //    	return Integer.parseInt(fen);
 //    }
+    
 }
