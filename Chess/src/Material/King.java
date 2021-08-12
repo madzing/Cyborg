@@ -74,15 +74,15 @@ public class King extends Piece {
 	public boolean isInCheck(Position position)
 	{
 		Map<Byte, Piece> figurenDesGegners;
-		Map<Byte, Piece> figurenDesKönigs;
+		Map<Byte, Piece> figurenDesKoenigs;
 		if(super.getColor())
 		{
-			figurenDesKönigs = convertListToMap(position.getWhiteFiguren());
+			figurenDesKoenigs = convertListToMap(position.getWhiteFiguren());
 			figurenDesGegners = convertListToMap(position.getBlackFiguren());
 		}
 		else
 		{
-			figurenDesKönigs = convertListToMap(position.getBlackFiguren());
+			figurenDesKoenigs = convertListToMap(position.getBlackFiguren());
 			figurenDesGegners = convertListToMap(position.getWhiteFiguren());
 		}
 		
@@ -90,7 +90,7 @@ public class King extends Piece {
 		{
 			if(!(entry.getValue() instanceof King))
 			{
-			if(entry.getValue().getMoves(figurenDesGegners, figurenDesKönigs, position).contains(super.getCoordinate()))
+			if(entry.getValue().getMoves(figurenDesGegners, figurenDesKoenigs, position).contains(super.getCoordinate()))
 			{
 				return true;
 			}
