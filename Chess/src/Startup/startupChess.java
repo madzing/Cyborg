@@ -10,13 +10,13 @@ public class startupChess
     public static void main(String[] args)
     {
 
-        RekursiverCyborg anton = new RekursiverCyborg(5);
+        RekursiverCyborg anton = new RekursiverCyborg(3);
 
-        Fen startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+        Fen startFen= Fen.select("r1bqkb1r/pppp1ppp/n6n/4p3/2B1P3/3P1Q2/PPP2PPP/RNB1K1NR b KQkq - 0 4");
         Position startPosition = new Position(startFen);
 
         Position besteFolgePos = anton.getBestFollowingPosition(startPosition);
-
+        
         System.out.println(besteFolgePos.getFen());
 
     }

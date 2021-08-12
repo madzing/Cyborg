@@ -1,28 +1,28 @@
 package Services;
 
+import java.util.ArrayList;
+
+import Material.King;
 import Material.Piece;
 import Material.Position;
 
-public class Eval
-{
-    public Eval()
-    {
+public class Eval {
+	public Eval() {
 
-    }
+	}
 
-    public short getEval(Position position)
-    {
-        short whitePoints = 0;
-        short blackPoints = 0;
-        for (Piece figur : position.getWhiteFiguren())
-        {
-            whitePoints = (short) (whitePoints + figur.getValue());
-        }
-        for (Piece figur : position.getBlackFiguren())
-        {
-            blackPoints = (short) (blackPoints + figur.getValue());
-        }
+	public short getEval(Position position) {
 
-        return (short) (whitePoints - blackPoints);
-    }
+			short whitePoints = 0;
+			short blackPoints = 0;
+			for (Piece figur : position.getWhiteFiguren()) {
+				whitePoints = (short) (whitePoints + figur.getValue());
+			}
+			for (Piece figur : position.getBlackFiguren()) {
+				blackPoints = (short) (blackPoints + figur.getValue());
+			}
+
+			return (short) (whitePoints - blackPoints);
+		}
+
 }

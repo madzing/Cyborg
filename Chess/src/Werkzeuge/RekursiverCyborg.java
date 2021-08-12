@@ -3,6 +3,7 @@ package Werkzeuge;
 import java.util.ArrayList;
 import java.util.List;
 
+import Material.King;
 import Material.Piece;
 import Material.Position;
 import Services.Eval;
@@ -27,14 +28,24 @@ public class RekursiverCyborg
 		ArrayList<Position> legalPositions = new PositionCalc(position).getLegalFollowingPositions();
 		for(Position pos : legalPositions)
 		{
-			if(bestPosition == null || bestEval < getEvaluation(pos,_tiefe))
+			if(bestPosition == null)
 			{
 				bestPosition = pos;
 				bestEval = getEvaluation(pos,_tiefe);
 			}		
+			else if (position.getZugrecht() && bestEval < getEvaluation(pos,_tiefe))
+			{
+				bestPosition = pos;
+				bestEval = getEvaluation(pos,_tiefe);
+			}
+			else if (!position.getZugrecht() && bestEval > getEvaluation(pos,_tiefe))
+			{
+				bestPosition = pos;
+				bestEval = getEvaluation(pos,_tiefe);
+			}
 		}
 		
-		
+		System.out.println(""+bestEval+"");
     	return bestPosition;
     }
 
@@ -50,6 +61,37 @@ public class RekursiverCyborg
     		
     		PositionCalc posCalc = new PositionCalc(position);
     		ArrayList<Position> legalPositions = posCalc.getLegalFollowingPositions();
+    		if(legalPositions.size()==0)
+    		{
+    			if(position.getZugrecht())
+    			{	
+    				for(Piece piece : position.getWhiteFiguren())
+    				{
+    					if(piece instanceof King)
+    					{
+    						if(((King) piece).isInCheck(position))
+    						{
+    							list.add((short)-127);
+    						}
+    					}
+    				}
+    				return 0;
+    			}
+    			else
+    			{
+    				for(Piece piece : position.getBlackFiguren())
+    				{
+    					if(piece instanceof King)
+    					{
+    						if(((King) piece).isInCheck(position))
+    						{
+    							list.add((short)127);
+    						}
+    					}
+    				}
+    				return 0;	
+    			}
+    		}
     		for(Position p : legalPositions)
     		{
     			list.add(getEvaluation(p,tiefe-1));
@@ -71,7 +113,7 @@ public class RekursiverCyborg
     
     public short bestValueforWhite(ArrayList<Short> list)
     {
-		short maximum = list.get(0);
+		short maximum = -127;
 		
 		for(short current: list)
 		{
@@ -85,7 +127,7 @@ public class RekursiverCyborg
     
     public short bestValueForBlack(ArrayList<Short> list)
     {
-  		short minimum = list.get(0);
+  		short minimum = 127;
   		
   		for(short current: list)
   		{
