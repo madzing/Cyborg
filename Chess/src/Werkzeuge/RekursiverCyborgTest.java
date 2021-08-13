@@ -27,7 +27,7 @@ public class RekursiverCyborgTest {
 
 }
 
-/* DOKUMENTATION:
+/* DOKUMENTATION: (Zeit, die RekursiverCyborg braucht um seinen Zug zu finden in Sekunden)
 *	
 *	Startversion (keine der unter ZWISCHENZIEL genannten "Verbesserungen implementiert):
 *		10,346 /// 10.542 /// 10,365
@@ -39,13 +39,13 @@ public class RekursiverCyborgTest {
 *
 */
 
-/* ZWISCHENZIEL --->  Codebase anpassen, sodass RekursiverCyborg schneller wird
+/* ZWISCHENZIEL --->  Codebase anpassen, sodass RekursiverCyborg schneller wird, ihn selbst jedoch nicht verändern
  * 
- * - Position muss white und black Figuren als map speichern
+ * - Position sollte white und black Figuren als map und nicht als Liste speichern 
  * 
  * - Nicht mehr jede Position sollte in PositionCalc auf legalität geprüft werden müssen
  * 
- * - König wir oft gesucht, gibt es eine bessere methode dies zu tun
+ * - König wir oft gesucht, gibt es eine bessere methode dies zu tun_
  * 
  * - king.isInCheck ist im Moment ineffizient
  * 
