@@ -71,7 +71,7 @@ public class King extends Piece {
 		return pieceFelder;
 	}
 	
-	// ineffiziente Methode
+	// TODO ineffiziente Methode
 	public boolean isInCheck(Position position)
 	{
 		Map<Byte, Piece> figurenDesGegners;
@@ -100,13 +100,4 @@ public class King extends Piece {
 		return false;
 	}
 	
-	
-	//Eine Hilfsmethode, welche eine Liste von Pieces in eine Hashmap von Pieces umwandelt.
-		public Map<Byte, Piece> convertListToMap(List<Piece> list) {
-			Map<Byte, Piece> map = new HashMap<>(64);
-			for (Piece piece : list) {
-				map.put(piece.getCoordinate(), piece);
-			}
-			return map;
-		}
 }

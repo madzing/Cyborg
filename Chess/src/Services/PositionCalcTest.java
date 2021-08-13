@@ -101,10 +101,7 @@ public class PositionCalcTest {
 		
 		List<Position> nodes = posCalc.getLegalFollowingPositions();
 		
-		for(Position p : nodes)
-		{
-			System.out.println(p.getFen());
-		}
+
 		// depth 1
 		assertEquals(14, nodes.size());
 		int depth = 3;

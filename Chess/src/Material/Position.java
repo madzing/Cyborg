@@ -9,8 +9,8 @@ import java.util.Map;
 import Fachwerte.Fen;
 
 public class Position {
-	private Map<Byte, Piece> _whiteFiguren = new HashMap<>(64);
-	private Map<Byte, Piece> _blackFiguren = new HashMap<>(64);
+	private Map<Byte, Piece> _whiteFiguren = new HashMap<>(16);
+	private Map<Byte, Piece> _blackFiguren = new HashMap<>(16);
 	public boolean _zugrecht;
 	private boolean _whiteCanCastle[] = { false, false };
 	private boolean _blackCanCastle[] = { false, false };
@@ -23,8 +23,8 @@ public class Position {
 	}
 
 	public Position(Position copyable) {
-		this._whiteFiguren = copyList(copyable.getWhiteFiguren());
-		this._blackFiguren = copyList(copyable.getBlackFiguren());
+		this._whiteFiguren = copyMap(copyable.getWhiteFiguren());
+		this._blackFiguren = copyMap(copyable.getBlackFiguren());
 		this._whiteCanCastle = copyArray(copyable.getWhiteCastleRights());
 		this._blackCanCastle = copyArray(copyable.getBlackCastleRights());
 
@@ -34,8 +34,8 @@ public class Position {
 		this._zuegeGesamt = copyable.getZuegeGesamt();
 	}
 
-	private Map<Byte, Piece> copyList(Map<Byte, Piece> copyable) {
-		Map<Byte, Piece> neueMap = new HashMap<>(64);
+	private Map<Byte, Piece> copyMap(Map<Byte, Piece> copyable) {
+		Map<Byte, Piece> neueMap = new HashMap<>(16);
 		for (Map.Entry<Byte, Piece> piece : copyable.entrySet())
 
 		{
@@ -100,7 +100,7 @@ public class Position {
 				}
 
 			}
-			if (_whiteFiguren.get(alteFigurPosition) instanceof King) {
+			else if (_whiteFiguren.get(alteFigurPosition) instanceof King) {
 				_whiteCanCastle[0] = false;
 				_whiteCanCastle[1] = false;
 				if (alteFigurPosition == 60 && neueFigurPosition == 62) {
@@ -108,16 +108,16 @@ public class Position {
 							_whiteFiguren.put((byte)61, _whiteFiguren.remove((byte)63));
 					}
 
-				if (alteFigurPosition == 60 && neueFigurPosition == 58) {
+				else if (alteFigurPosition == 60 && neueFigurPosition == 58) {
 							_whiteFiguren.get((byte)56).setCoordinate((byte) 59);
 							_whiteFiguren.put((byte)59, _whiteFiguren.remove((byte)56));
 				}
 			}
-			if (_whiteFiguren.get(alteFigurPosition) instanceof Rook) {
+			else if (_whiteFiguren.get(alteFigurPosition) instanceof Rook) {
 				if (alteFigurPosition == 56) {
 					_whiteCanCastle[1] = false;
 				}
-				if (alteFigurPosition == 63) {
+				else if (alteFigurPosition == 63) {
 					_whiteCanCastle[0] = false;
 				}
 			}
@@ -140,19 +140,16 @@ public class Position {
 				}
 
 			}
-			if (_blackFiguren.get(alteFigurPosition) instanceof King) {
+			else if (_blackFiguren.get(alteFigurPosition) instanceof King) {
 				_blackCanCastle[0] = false;
 				_blackCanCastle[1] = false;
 				if (alteFigurPosition == 4 && neueFigurPosition == 6) {
 							_blackFiguren.get((byte)7).setCoordinate((byte) 5);
-							_blackFiguren.put((byte)5, _whiteFiguren.remove((byte)7));
+							_blackFiguren.put((byte)5, _blackFiguren.remove((byte)7));
 				}
-				if (alteFigurPosition == 4 && neueFigurPosition == 2) {
-					for (Map.Entry<Byte, Piece> piece : _blackFiguren.entrySet()) {
-						if (piece.getValue().getCoordinate() == 0) {
-							piece.getValue().setCoordinate((byte) 3);
-						}
-					}
+				else if (alteFigurPosition == 4 && neueFigurPosition == 2) {
+							_blackFiguren.get((byte)0).setCoordinate((byte) 3);
+							_blackFiguren.put((byte)3, _blackFiguren.remove((byte)0));
 				}
 			}
 			if (_blackFiguren.get(alteFigurPosition) instanceof Rook) {

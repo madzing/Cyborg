@@ -64,6 +64,7 @@ public class PositionCalc {
 				if(blackPiece.getValue() instanceof King)
 				{
 					return  !((King) blackPiece.getValue()).isInCheck(position);
+					
 				}
 			}
 		}
