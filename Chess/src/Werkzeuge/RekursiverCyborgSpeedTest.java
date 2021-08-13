@@ -7,7 +7,7 @@ import org.junit.Test;
 import Fachwerte.Fen;
 import Material.Position;
 
-public class RekursiverCyborgTest {
+public class RekursiverCyborgSpeedTest {
 
 	@Test
 	public void testSpeed() {
