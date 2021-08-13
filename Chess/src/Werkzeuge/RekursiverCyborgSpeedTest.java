@@ -33,8 +33,11 @@ public class RekursiverCyborgSpeedTest {
 *	Jan PC:
 *		- Startversion (keine der unter ZWISCHENZIEL genannten "Verbesserungen" implementiert):
 *				10,346 /// 10,542 /// 10,365
+*
 *		- Version-2 (Position sollte white und black Figuren als map und nicht als Liste speichern):
 *				10.606 /// 10.733 /// 10.693	
+*
+*		- Version-3 (Nich bei jedem Schritt eine neue Position und einen neuen PositionCalc erzeugen):
 *	
 *	Kai PC:
 *
@@ -48,6 +51,8 @@ public class RekursiverCyborgSpeedTest {
 /* ZWISCHENZIEL --->  Codebase anpassen, sodass RekursiverCyborg schneller wird, ihn selbst jedoch nicht verändern
  * 
  * DONE - Position sollte white und black Figuren als map und nicht als Liste speichern 
+ *  
+ *  - Nich bei jedem Schritt eine neue Position und einen neuen PositionCalc erzeugen
  * 
  * - Nicht mehr jede Position sollte in PositionCalc auf Legalität geprüft werden müssen
  * 
@@ -58,5 +63,7 @@ public class RekursiverCyborgSpeedTest {
  * - alle maps, keys , hashcode Sachen verstehen, um dann besser zu machen. 
  * 
  * - Position Make Move überarbeiten
+ * 
+ *
  * 
  */
