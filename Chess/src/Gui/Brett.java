@@ -3,8 +3,11 @@ package Gui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JButton;
+import java.awt.BorderLayout;
+import javax.swing.ImageIcon;
 
-public class Brett {
+public class brett {
 
 	private JFrame frame;
 
@@ -15,7 +18,7 @@ public class Brett {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Brett window = new Brett();
+					brett window = new brett();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -27,7 +30,7 @@ public class Brett {
 	/**
 	 * Create the application.
 	 */
-	public Brett() {
+	public brett() {
 		initialize();
 	}
 
@@ -38,6 +41,11 @@ public class Brett {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.setIcon(new ImageIcon(brett.class.getResource("/Piece_Images/Black_King.png")));
+		btnNewButton.setSelectedIcon(new ImageIcon(brett.class.getResource("/Piece_Images/Black_Bishop.png")));
+		frame.getContentPane().add(btnNewButton, BorderLayout.WEST);
 	}
 
 }
