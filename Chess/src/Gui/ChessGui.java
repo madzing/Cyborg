@@ -38,24 +38,6 @@ import javax.swing.Box;
 public class ChessGui extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-					Position _startPosition = new Position(_startFen);
-					ChessGui frame = new ChessGui(_startPosition);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	Position _position;
 	List<Piece> _whiteFiguren;
 	List<Piece> _blackFiguren;
