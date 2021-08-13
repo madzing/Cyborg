@@ -31,7 +31,7 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ChessGui extends JFrame {
+public class ChessGui extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 
@@ -52,17 +52,22 @@ public class ChessGui extends JFrame {
 			}
 		});
 	}
-
+	Position _position;
 	List<Piece> _whiteFiguren;
 	List<Piece> _blackFiguren;
 	List<JButton> _buttons;
+	byte _alteCoordinate;
+	byte _neueCoordinate;
+	
 	/**
 	 * Create the frame.
 	 */
 	public ChessGui(Position position) {
+		_position = position;
 		_whiteFiguren = position.getWhiteFiguren();
 		_blackFiguren = position.getBlackFiguren();
 		_buttons = new ArrayList<JButton>(64);
+		_neueCoordinate = 0;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 800);
@@ -74,13 +79,18 @@ public class ChessGui extends JFrame {
 		
 		createButtons();
 		setFiguren();
+		ButtonListenerErzeugen();
 		
 		
 	}
 
-	private void makeMove()
+	
+	private void ButtonListenerErzeugen()
 	{
-		
+		for (int i = 0; i <64; i++)
+		{
+			_buttons.get(i).addActionListener(this);
+		}
 	}
 	
 	private void setFiguren() {
@@ -392,6 +402,7 @@ public class ChessGui extends JFrame {
 		JButton btnNewButton_49 = new JButton("b2");
 		btnNewButton_49.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_49);
+		btnNewButton_49.addActionListener(this);
 		_buttons.add(btnNewButton_49);
 				
 		JButton btnNewButton_50 = new JButton("c2");
@@ -465,6 +476,20 @@ public class ChessGui extends JFrame {
 		_buttons.add(btnNewButton_63);
 		
 	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		_alteCoordinate = _neueCoordinate;
+		_neueCoordinate = (byte)_buttons.indexOf(e.getSource());
+		_position.makeMove(_alteCoordinate, _neueCoordinate);
+		setFiguren();
+		System.out.println(_position.getFen());
+		System.out.println(_alteCoordinate);
+		System.out.println(_neueCoordinate);
+	}
+}
+	
+	
 	
 
-}
+
