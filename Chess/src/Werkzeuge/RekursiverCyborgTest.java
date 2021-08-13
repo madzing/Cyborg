@@ -30,8 +30,8 @@ public class RekursiverCyborgTest {
 /* DOKUMENTATION: (Zeit, die RekursiverCyborg braucht um seinen Zug zu finden in Sekunden)
 *	
 *	Jan PC:
-*	Startversion (keine der unter ZWISCHENZIEL genannten "Verbesserungen implementiert):
-*		10,346 /// 10.542 /// 10,365
+*		- Startversion (keine der unter ZWISCHENZIEL genannten "Verbesserungen" implementiert):
+*				10,346 /// 10.542 /// 10,365
 *	
 *	Kai PC:
 *
