@@ -1,16 +1,19 @@
-package Startup;
+package Werkzeuge;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 import Fachwerte.Fen;
 import Material.Position;
-import Werkzeuge.RekursiverCyborg;
 
-public class startupChess {
+public class RekursiverCyborgTest {
 
-	public static void main(String[] args) {
-
+	@Test
+	public void testSpeed() {
 		RekursiverCyborg anton = new RekursiverCyborg(3);
 
-		Fen startFen = Fen.select("2r3k1/p4pp1/4p2p/3p1b2/n3N3/b3BP2/PqP1NQPP/K2R1R2 w - - 7 24");
+		Fen startFen = Fen.select("r4rk1/1bpqbppp/p1np1n2/1p2p3/4P3/1BNP1N1P/PPPB1PP1/R2Q1RK1 w - - 3 11");
 		Position startPosition = new Position(startFen);
 
 		Position besteFolgePos = anton.getBestFollowingPosition(startPosition);
