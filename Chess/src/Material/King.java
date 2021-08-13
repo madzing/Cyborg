@@ -78,13 +78,13 @@ public class King extends Piece {
 		Map<Byte, Piece> figurenDesKoenigs;
 		if(super.getColor())
 		{
-			figurenDesKoenigs = convertListToMap(position.getWhiteFiguren());
-			figurenDesGegners = convertListToMap(position.getBlackFiguren());
+			figurenDesKoenigs = position.getWhiteFiguren();
+			figurenDesGegners = position.getBlackFiguren();
 		}
 		else
 		{
-			figurenDesKoenigs = convertListToMap(position.getBlackFiguren());
-			figurenDesGegners = convertListToMap(position.getWhiteFiguren());
+			figurenDesKoenigs = position.getBlackFiguren();
+			figurenDesGegners = position.getWhiteFiguren();
 		}
 		
 		for(Map.Entry<Byte, Piece> entry : figurenDesGegners.entrySet())

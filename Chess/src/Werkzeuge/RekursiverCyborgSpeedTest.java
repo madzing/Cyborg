@@ -33,7 +33,8 @@ public class RekursiverCyborgSpeedTest {
 *	Jan PC:
 *		- Startversion (keine der unter ZWISCHENZIEL genannten "Verbesserungen" implementiert):
 *				10,346 /// 10,542 /// 10,365
-*		- Version 2 
+*		- Version-2 (Position sollte white und black Figuren als map und nicht als Liste speichern):
+*				
 *	
 *	Kai PC:
 *

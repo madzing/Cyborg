@@ -1,16 +1,17 @@
 package Material;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import Fachwerte.Fen;
 
 public class Position
 {
-    private List<Piece> _whiteFiguren = new ArrayList<Piece>();
-    private List<Piece> _blackFiguren= new ArrayList<Piece>();
-
+	private Map<Byte, Piece> _whiteFiguren = new HashMap<>(64);
+	private Map<Byte, Piece> _blackFiguren= new HashMap<>(64);
     public boolean _zugrecht;
     private boolean _whiteCanCastle[] = {false, false};
     private boolean _blackCanCastle[] = {false, false};
@@ -38,37 +39,38 @@ public class Position
     
     
 
-    private List<Piece> copyList(List<Piece> copyable)
+    private Map<Byte, Piece>  copyList(Map<Byte, Piece>  copyable)
     {
-    	List<Piece> neueListe = new ArrayList<Piece>();
-    	for(Piece piece : copyable)
+    	Map<Byte, Piece> neueMap = new HashMap<>(64);
+    	for(Map.Entry<Byte, Piece> piece : copyable.entrySet())
+    		
     	{
-    		if(piece instanceof Pawn)
+    		if(piece.getValue() instanceof Pawn)
     		{
-    			neueListe.add((Pawn)new Pawn(piece.getCoordinate(), piece.getColor()));
+    			neueMap.put(piece.getValue().getCoordinate(),(Pawn)new Pawn(piece.getValue().getCoordinate(), piece.getValue().getColor()));
     		}
     		if(piece instanceof Knight)
     		{
-    			neueListe.add((Knight)new Knight(piece.getCoordinate(),piece.getColor()));
+    			neueMap.put(piece.getValue().getCoordinate(),(Knight)new Knight(piece.getValue().getCoordinate(),piece.getValue().getColor()));
     		}
     		if(piece instanceof Bishop)
     		{
-    			neueListe.add((Bishop)new Bishop(piece.getCoordinate(),piece.getColor()));
+    			neueMap.put(piece.getValue().getCoordinate(),(Bishop)new Bishop(piece.getValue().getCoordinate(),piece.getValue().getColor()));
     		}
     		if(piece instanceof Rook)
     		{
-    			neueListe.add((Rook)new Rook(piece.getCoordinate(),piece.getColor()));
+    			neueMap.put(piece.getValue().getCoordinate(),(Rook)new Rook(piece.getValue().getCoordinate(),piece.getValue().getColor()));
     		}
     		if(piece instanceof Queen)
     		{
-    			neueListe.add((Queen)new Queen(piece.getCoordinate(),piece.getColor()));
+    			neueMap.put(piece.getValue().getCoordinate(),(Queen)new Queen(piece.getValue().getCoordinate(),piece.getValue().getColor()));
     		}
     		if(piece instanceof King)
     		{
-    			neueListe.add((King)new King(piece.getCoordinate(),piece.getColor()));
+    			neueMap.put(piece.getValue().getCoordinate(),(King)new King(piece.getValue().getCoordinate(),piece.getValue().getColor()));
     		}
     	}
-    	return neueListe; 	
+    	return neueMap; 	
     }
     private boolean[] copyArray(boolean[] copyable)
     {
@@ -272,26 +274,26 @@ public class Position
     {
     	if(!_zugrecht)
     	{
-    		for (Iterator<Piece> figur = _whiteFiguren.iterator(); figur.hasNext();)
+    		for (Map.Entry<Byte, Piece> whitePiece : _whiteFiguren.entrySet())
+    			
     		{
-    			if (figur.next().getCoordinate() == promotedFigur.getCoordinate())
+    			if (whitePiece.getValue().getCoordinate() == promotedFigur.getCoordinate())
     			{
-    				figur.remove();
+    				_whiteFiguren.remove(whitePiece.getValue().getCoordinate());
     			}
 	 		}
-    		_whiteFiguren.add(promotedFigur);
+    		_whiteFiguren.put(promotedFigur.getCoordinate(),promotedFigur);
     	}
     	else
     	{
-    		for (Iterator<Piece> figur = _blackFiguren.iterator(); figur.hasNext();)
+    		for (Map.Entry<Byte, Piece> blackPiece : _blackFiguren.entrySet())
     		{
-    			if (figur.next().getCoordinate() == promotedFigur.getCoordinate())
+    			if (blackPiece.getValue().getCoordinate() == promotedFigur.getCoordinate())
     			{
-    				figur.remove();
+    				_whiteFiguren.remove(blackPiece.getValue().getCoordinate());
     			}
-    			
-    		}
-    		_blackFiguren.add(promotedFigur);
+	 		}
+    		_blackFiguren.put(promotedFigur.getCoordinate(),promotedFigur);
     	}
     }
     
@@ -307,62 +309,62 @@ public class Position
             {
 
             case 'p':
-                _blackFiguren.add(new Pawn(counter, false));
+                _blackFiguren.put(counter, new Pawn(counter, false));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'P':
-                _whiteFiguren.add(new Pawn(counter, true));
+                _whiteFiguren.put(counter,new Pawn(counter, true));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'n':
-                _blackFiguren.add(new Knight(counter, false));
+                _blackFiguren.put(counter,new Knight(counter, false));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'N':
-                _whiteFiguren.add(new Knight(counter, true));
+                _whiteFiguren.put(counter,new Knight(counter, true));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'b':
-                _blackFiguren.add(new Bishop(counter, false));
+                _blackFiguren.put(counter,new Bishop(counter, false));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'B':
-                _whiteFiguren.add(new Bishop(counter, true));
+                _whiteFiguren.put(counter,new Bishop(counter, true));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'r':
-                _blackFiguren.add(new Rook(counter, false));
+                _blackFiguren.put(counter,new Rook(counter, false));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'R':
-                _whiteFiguren.add(new Rook(counter, true));
+                _whiteFiguren.put(counter,new Rook(counter, true));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'q':
-                _blackFiguren.add(new Queen(counter, false));
+                _blackFiguren.put(counter,new Queen(counter, false));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'Q':
-                _whiteFiguren.add(new Queen(counter, true));
+                _whiteFiguren.put(counter,new Queen(counter, true));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'k':
-                _blackFiguren.add(new King(counter, false));
+                _blackFiguren.put(counter,new King(counter, false));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
             case 'K':
-                _whiteFiguren.add(new King(counter, true));
+                _whiteFiguren.put(counter,new King(counter, true));
                 counter++;
                 FigurPosition = FigurPosition.substring(1);
                 break;
@@ -486,32 +488,32 @@ public class Position
     }
     // Getter
 
-    // TODO alles
-    // "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+   
     public String getFen()
     {
     	String placement = "0000000000000000000000000000000000000000000000000000000000000000";
     	char[] array = placement.toCharArray();
-    	for (Piece whitePiece :_whiteFiguren)
+    	
+    	for (Map.Entry<Byte, Piece> whitePiece : _whiteFiguren.entrySet())
     	{
-    		byte platz = whitePiece.getCoordinate();
+    		byte platz = whitePiece.getValue().getCoordinate();
     		
-    		if(whitePiece instanceof Pawn) {
+    		if(whitePiece.getValue() instanceof Pawn) {
     		 array[platz]='P';
     		}
-    		else if(whitePiece instanceof Knight)
+    		else if(whitePiece.getValue() instanceof Knight)
     		{
     			array[platz]='N';
     		}
-    		else if(whitePiece instanceof Bishop)
+    		else if(whitePiece.getValue() instanceof Bishop)
     		{
     			array[platz]='B';
     		}
-    		else if(whitePiece instanceof Rook)
+    		else if(whitePiece.getValue() instanceof Rook)
     		{
     			array[platz]='R';
     		}
-    		else if(whitePiece instanceof Queen)
+    		else if(whitePiece.getValue() instanceof Queen)
     		{
     			array[platz]='Q';
     		}
@@ -520,26 +522,26 @@ public class Position
     		}
     		
     	}
-    	for (Piece blackPiece :_blackFiguren)
+    	for (Map.Entry<Byte, Piece> blackPiece : _blackFiguren.entrySet())
     	{
-    		byte platz = blackPiece.getCoordinate();
+    		byte platz = blackPiece.getValue().getCoordinate();
     		
-    		if(blackPiece instanceof Pawn) {
+    		if(blackPiece.getValue() instanceof Pawn) {
     		 array[platz]='p';
     		}
-    		else if(blackPiece instanceof Knight)
+    		else if(blackPiece.getValue() instanceof Knight)
     		{
     			array[platz]='n';
     		}
-    		else if(blackPiece instanceof Bishop)
+    		else if(blackPiece.getValue() instanceof Bishop)
     		{
     			array[platz]='b';
     		}
-    		else if(blackPiece instanceof Rook)
+    		else if(blackPiece.getValue() instanceof Rook)
     		{
     			array[platz]='r';
     		}
-    		else if(blackPiece instanceof Queen)
+    		else if(blackPiece.getValue() instanceof Queen)
     		{
     			array[platz]='q';
     		}
@@ -664,12 +666,12 @@ public class Position
         return placement +  " " + zugrecht + " " + castling + " " + enPassant + " " + halfmoves + " " + fullmoves;
     }
 
-    public List<Piece> getWhiteFiguren()
+    public Map<Byte, Piece> getWhiteFiguren()
     {
         return _whiteFiguren;
     }
 
-    public List<Piece> getBlackFiguren()
+    public Map<Byte, Piece> getBlackFiguren()
     {
         return _blackFiguren;
     }
