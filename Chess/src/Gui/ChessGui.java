@@ -16,6 +16,7 @@ import Material.Piece;
 import Material.Position;
 import Material.Queen;
 import Material.Rook;
+import Services.PositionCalc;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -30,6 +31,9 @@ import java.awt.Button;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JMenuBar;
+import java.awt.Component;
+import javax.swing.Box;
 
 public class ChessGui extends JFrame implements ActionListener{
 
@@ -56,8 +60,12 @@ public class ChessGui extends JFrame implements ActionListener{
 	List<Piece> _whiteFiguren;
 	List<Piece> _blackFiguren;
 	List<JButton> _buttons;
-	byte _alteCoordinate;
-	byte _neueCoordinate;
+	int _letzterGedrueckterButton;
+	int _gedrueckterButton;
+	JLabel _lblNewLabel;
+	JLabel _lblNewLabel_1;
+	JButton _btnNewButton_64;
+	PositionCalc _posCalc;
 	
 	/**
 	 * Create the frame.
@@ -67,10 +75,32 @@ public class ChessGui extends JFrame implements ActionListener{
 		_whiteFiguren = position.getWhiteFiguren();
 		_blackFiguren = position.getBlackFiguren();
 		_buttons = new ArrayList<JButton>(64);
-		_neueCoordinate = 0;
+		_letzterGedrueckterButton = 0;
+		_gedrueckterButton = 0;
+		_posCalc = new PositionCalc(position);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 800);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		_lblNewLabel = new JLabel("Alte Koordinate");
+		menuBar.add(_lblNewLabel);
+		
+		Component verticalStrut = Box.createVerticalStrut(20);
+		menuBar.add(verticalStrut);
+		
+		_lblNewLabel_1 = new JLabel("Neue Koordinate");
+		menuBar.add(_lblNewLabel_1);
+		
+		Component verticalStrut_1 = Box.createVerticalStrut(20);
+		menuBar.add(verticalStrut_1);
+		
+		_btnNewButton_64 = new JButton("Make Move");
+		menuBar.add(_btnNewButton_64);
+		_btnNewButton_64.addActionListener(this);
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -94,6 +124,12 @@ public class ChessGui extends JFrame implements ActionListener{
 	}
 	
 	private void setFiguren() {
+		for (JButton b: _buttons)
+		{
+			b.setIcon(null);
+		}
+		_whiteFiguren = _position.getWhiteFiguren();
+		_blackFiguren = _position.getBlackFiguren();
 		for (Piece whiteFigur: _whiteFiguren)
 		{
 			int whiteCoordinate= (int) whiteFigur.getCoordinate();
@@ -479,13 +515,30 @@ public class ChessGui extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		_alteCoordinate = _neueCoordinate;
-		_neueCoordinate = (byte)_buttons.indexOf(e.getSource());
-		_position.makeMove(_alteCoordinate, _neueCoordinate);
-		setFiguren();
-		System.out.println(_position.getFen());
-		System.out.println(_alteCoordinate);
-		System.out.println(_neueCoordinate);
+		if (_buttons.contains(e.getSource()))
+			{
+				_letzterGedrueckterButton = _gedrueckterButton;
+				_gedrueckterButton = _buttons.indexOf(e.getSource());
+				_lblNewLabel.setText("Alte Koordinate: " + Integer.toString(_letzterGedrueckterButton));
+				_lblNewLabel_1.setText("Neue Koordinate: " + Integer.toString(_gedrueckterButton));
+			}
+		else
+			{
+				_posCalc = new PositionCalc(_position);
+				ArrayList<Position> legalePositionen = _posCalc.getLegalFollowingPositions();
+				Position positionSpeicher = new Position(_position);
+				positionSpeicher.makeMove((byte)_letzterGedrueckterButton, (byte)_gedrueckterButton);
+				for(Position p: legalePositionen)
+				{
+					if (p.getFen().equals(positionSpeicher.getFen()))
+					{
+						_position = positionSpeicher;
+					}
+				}
+				setFiguren();
+				System.out.println(_position.getFen());
+			}
+		
 	}
 }
 	
