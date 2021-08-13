@@ -2,9 +2,7 @@ package Startup;
 
 public class TODO {
 	
-	
-	
-	
+
 	/* ZWISCHENZIEL --->  Codebase anpassen, sodass RekursiverCyborg schneller wird
 	 * 
 	 * - Methode finden, um die Geschwindigkeit von rekursiverCyborg zu Dokumentieren
@@ -21,5 +19,4 @@ public class TODO {
 	 * 
 	 */
 	
-
 }
