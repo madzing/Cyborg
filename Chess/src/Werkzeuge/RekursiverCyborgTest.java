@@ -46,12 +46,12 @@ public class RekursiverCyborgTest {
  * 
  * - Position sollte white und black Figuren als map und nicht als Liste speichern 
  * 
- * - Nicht mehr jede Position sollte in PositionCalc auf legalität geprüft werden müssen
+ * - Nicht mehr jede Position sollte in PositionCalc auf Legalität geprüft werden müssen
  * 
- * - König wir oft gesucht, gibt es eine bessere methode dies zu tun?
+ * - König wir oft gesucht, gibt es eine bessere Methode dies zu tun?
  * 
  * - king.isInCheck ist im Moment ineffizient
  * 
- * - alle maps, keys , hashcode sachen verstehen, um dann besser zu machen. 
+ * - alle maps, keys , hashcode Sachen verstehen, um dann besser zu machen. 
  * 
  */
