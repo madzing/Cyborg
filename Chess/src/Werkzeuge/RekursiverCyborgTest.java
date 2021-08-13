@@ -45,7 +45,7 @@ public class RekursiverCyborgTest {
  * 
  * - Nicht mehr jede Position sollte in PositionCalc auf legalität geprüft werden müssen
  * 
- * - König wir oft gesucht, gibt es eine bessere methode dies zu tun_
+ * - König wir oft gesucht, gibt es eine bessere methode dies zu tun?
  * 
  * - king.isInCheck ist im Moment ineffizient
  * 
