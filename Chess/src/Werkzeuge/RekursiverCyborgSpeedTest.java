@@ -8,8 +8,9 @@ import Fachwerte.Fen;
 import Material.Position;
 
 public class RekursiverCyborgSpeedTest {
-
+	
 	@Test
+	// Fen für die Startposition als Ansicherung "r4rk1/1bpqbppp/p1np1n2/1p2p3/4P3/1BNP1N1P/PPPB1PP1/R2Q1RK1 w - - 3 11"
 	public void testSpeed() {
 		RekursiverCyborg anton = new RekursiverCyborg(3);
 
@@ -32,6 +33,7 @@ public class RekursiverCyborgSpeedTest {
 *	Jan PC:
 *		- Startversion (keine der unter ZWISCHENZIEL genannten "Verbesserungen" implementiert):
 *				10,346 /// 10,542 /// 10,365
+*		- Version 2 
 *	
 *	Kai PC:
 *
