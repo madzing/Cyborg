@@ -22,8 +22,7 @@ public class PositionTest {
 	public void KonstruktorTest()
 	{
 		Position newPosition = new Position(_startPosition);
-		newPosition.makeMove((byte)48, (byte)32);
-		assertEquals("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",_startPosition.getFen());
+		assertEquals("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",newPosition.getFen());
 	}
 	
 	@Test
@@ -109,22 +108,22 @@ public class PositionTest {
 		white.add(new Knight((byte)62,true)); 	//14
 		white.add(new Rook((byte)63,true)); 		//15
 
-		assertEquals(white.get(0).getClass(),_startPosition.getWhiteFiguren().get(0).getClass());
-		assertEquals(white.get(1).getClass(),_startPosition.getWhiteFiguren().get(1).getClass());
-		assertEquals(white.get(2).getClass(),_startPosition.getWhiteFiguren().get(2).getClass());
-		assertEquals(white.get(3).getClass(),_startPosition.getWhiteFiguren().get(3).getClass());
-		assertEquals(white.get(4).getClass(),_startPosition.getWhiteFiguren().get(4).getClass());
-		assertEquals(white.get(5).getClass(),_startPosition.getWhiteFiguren().get(5).getClass());
-		assertEquals(white.get(6).getClass(),_startPosition.getWhiteFiguren().get(6).getClass());
-		assertEquals(white.get(7).getClass(),_startPosition.getWhiteFiguren().get(7).getClass());
-		assertEquals(white.get(8).getClass(),_startPosition.getWhiteFiguren().get(8).getClass());
-		assertEquals(white.get(9).getClass(),_startPosition.getWhiteFiguren().get(9).getClass());
-		assertEquals(white.get(10).getClass(),_startPosition.getWhiteFiguren().get(10).getClass());
-		assertEquals(white.get(11).getClass(),_startPosition.getWhiteFiguren().get(11).getClass());
-		assertEquals(white.get(12).getClass(),_startPosition.getWhiteFiguren().get(12).getClass());
-		assertEquals(white.get(13).getClass(),_startPosition.getWhiteFiguren().get(13).getClass());
-		assertEquals(white.get(14).getClass(),_startPosition.getWhiteFiguren().get(14).getClass());
-		assertEquals(white.get(15).getClass(),_startPosition.getWhiteFiguren().get(15).getClass());
+		assertEquals(white.get(0).getClass(),_startPosition.getWhiteFiguren().get((byte)48).getClass());
+		assertEquals(white.get(1).getClass(),_startPosition.getWhiteFiguren().get((byte)49).getClass());
+		assertEquals(white.get(2).getClass(),_startPosition.getWhiteFiguren().get((byte)50).getClass());
+		assertEquals(white.get(3).getClass(),_startPosition.getWhiteFiguren().get((byte)51).getClass());
+		assertEquals(white.get(4).getClass(),_startPosition.getWhiteFiguren().get((byte)52).getClass());
+		assertEquals(white.get(5).getClass(),_startPosition.getWhiteFiguren().get((byte)53).getClass());
+		assertEquals(white.get(6).getClass(),_startPosition.getWhiteFiguren().get((byte)54).getClass());
+		assertEquals(white.get(7).getClass(),_startPosition.getWhiteFiguren().get((byte)55).getClass());
+		assertEquals(white.get(8).getClass(),_startPosition.getWhiteFiguren().get((byte)56).getClass());
+		assertEquals(white.get(9).getClass(),_startPosition.getWhiteFiguren().get((byte)57).getClass());
+		assertEquals(white.get(10).getClass(),_startPosition.getWhiteFiguren().get((byte)58).getClass());
+		assertEquals(white.get(11).getClass(),_startPosition.getWhiteFiguren().get((byte)59).getClass());
+		assertEquals(white.get(12).getClass(),_startPosition.getWhiteFiguren().get((byte)60).getClass());
+		assertEquals(white.get(13).getClass(),_startPosition.getWhiteFiguren().get((byte)61).getClass());
+		assertEquals(white.get(14).getClass(),_startPosition.getWhiteFiguren().get((byte)62).getClass());
+		assertEquals(white.get(15).getClass(),_startPosition.getWhiteFiguren().get((byte)63).getClass());
 	}
 
 	@Test
@@ -146,22 +145,22 @@ public class PositionTest {
 		black.add(new Pawn((byte)13, false));		//13
 		black.add(new Pawn((byte)14, false));		//14
 		black.add(new Pawn((byte)15, false));		//15
-		assertEquals(black.get(0).getClass(),_startPosition.getBlackFiguren().get(0).getClass());
-		assertEquals(black.get(1).getClass(),_startPosition.getBlackFiguren().get(1).getClass());
-		assertEquals(black.get(2).getClass(),_startPosition.getBlackFiguren().get(2).getClass());
-		assertEquals(black.get(3).getClass(),_startPosition.getBlackFiguren().get(3).getClass());
-		assertEquals(black.get(4).getClass(),_startPosition.getBlackFiguren().get(4).getClass());
-		assertEquals(black.get(5).getClass(),_startPosition.getBlackFiguren().get(5).getClass());
-		assertEquals(black.get(6).getClass(),_startPosition.getBlackFiguren().get(6).getClass());
-		assertEquals(black.get(7).getClass(),_startPosition.getBlackFiguren().get(7).getClass());
-		assertEquals(black.get(8).getClass(),_startPosition.getBlackFiguren().get(8).getClass());
-		assertEquals(black.get(9).getClass(),_startPosition.getBlackFiguren().get(9).getClass());
-		assertEquals(black.get(10).getClass(),_startPosition.getBlackFiguren().get(10).getClass());
-		assertEquals(black.get(11).getClass(),_startPosition.getBlackFiguren().get(11).getClass());
-		assertEquals(black.get(12).getClass(),_startPosition.getBlackFiguren().get(12).getClass());
-		assertEquals(black.get(13).getClass(),_startPosition.getBlackFiguren().get(13).getClass());
-		assertEquals(black.get(14).getClass(),_startPosition.getBlackFiguren().get(14).getClass());
-		assertEquals(black.get(15).getClass(),_startPosition.getBlackFiguren().get(15).getClass());
+		assertEquals(black.get(0).getClass(),_startPosition.getBlackFiguren().get((byte)0).getClass());
+		assertEquals(black.get(1).getClass(),_startPosition.getBlackFiguren().get((byte)1).getClass());
+		assertEquals(black.get(2).getClass(),_startPosition.getBlackFiguren().get((byte)2).getClass());
+		assertEquals(black.get(3).getClass(),_startPosition.getBlackFiguren().get((byte)3).getClass());
+		assertEquals(black.get(4).getClass(),_startPosition.getBlackFiguren().get((byte)4).getClass());
+		assertEquals(black.get(5).getClass(),_startPosition.getBlackFiguren().get((byte)5).getClass());
+		assertEquals(black.get(6).getClass(),_startPosition.getBlackFiguren().get((byte)6).getClass());
+		assertEquals(black.get(7).getClass(),_startPosition.getBlackFiguren().get((byte)7).getClass());
+		assertEquals(black.get(8).getClass(),_startPosition.getBlackFiguren().get((byte)8).getClass());
+		assertEquals(black.get(9).getClass(),_startPosition.getBlackFiguren().get((byte)9).getClass());
+		assertEquals(black.get(10).getClass(),_startPosition.getBlackFiguren().get((byte)10).getClass());
+		assertEquals(black.get(11).getClass(),_startPosition.getBlackFiguren().get((byte)11).getClass());
+		assertEquals(black.get(12).getClass(),_startPosition.getBlackFiguren().get((byte)12).getClass());
+		assertEquals(black.get(13).getClass(),_startPosition.getBlackFiguren().get((byte)13).getClass());
+		assertEquals(black.get(14).getClass(),_startPosition.getBlackFiguren().get((byte)14).getClass());
+		assertEquals(black.get(15).getClass(),_startPosition.getBlackFiguren().get((byte)15).getClass());
 	}
 
 

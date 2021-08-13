@@ -61,7 +61,7 @@ public class PositionCalc {
 		{
 			for(Map.Entry<Byte, Piece> blackPiece : position.getBlackFiguren().entrySet())
 			{
-				if(blackPiece instanceof King)
+				if(blackPiece.getValue() instanceof King)
 				{
 					return  !((King) blackPiece.getValue()).isInCheck(position);
 				}

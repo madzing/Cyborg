@@ -57,4 +57,6 @@ public class RekursiverCyborgSpeedTest {
  * 
  * - alle maps, keys , hashcode Sachen verstehen, um dann besser zu machen. 
  * 
+ * - Position Make Move überarbeiten
+ * 
  */
