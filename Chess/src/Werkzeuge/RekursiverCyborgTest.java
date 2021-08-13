@@ -26,3 +26,29 @@ public class RekursiverCyborgTest {
 	}
 
 }
+
+/* DOKUMENTATION:
+*	
+*	Startversion (keine der unter ZWISCHENZIEL genannten "Verbesserungen implementiert):
+*		10,346 /// 10.542 /// 10,365
+*	
+*
+*
+*
+*
+*
+*/
+
+/* ZWISCHENZIEL --->  Codebase anpassen, sodass RekursiverCyborg schneller wird
+ * 
+ * - Position muss white und black Figuren als map speichern
+ * 
+ * - Nicht mehr jede Position sollte in PositionCalc auf legalität geprüft werden müssen
+ * 
+ * - König wir oft gesucht, gibt es eine bessere methode dies zu tun
+ * 
+ * - king.isInCheck ist im Moment ineffizient
+ * 
+ * - alle maps, keys , hashcode sachen verstehen, um dann besser zu machen. 
+ * 
+ */
