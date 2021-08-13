@@ -31,7 +31,7 @@ public class RekursiverCyborgSpeedTest {
 *	
 *	Jan PC:
 *		- Startversion (keine der unter ZWISCHENZIEL genannten "Verbesserungen" implementiert):
-*				10,346 /// 10.542 /// 10,365
+*				10,346 /// 10,542 /// 10,365
 *	
 *	Kai PC:
 *
