@@ -32,6 +32,8 @@ import Material.Position;
 import Material.Queen;
 import Material.Rook;
 import Services.PositionCalc;
+import Werkzeuge.RekursiverCyborg;
+
 import java.awt.BorderLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JToggleButton;
@@ -52,6 +54,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	private JPanel contentPane;
 	private JButton _btnGetAktuelleFen;
 	private JLabel _zugrechtLabel;
+	private JToggleButton _tglbtnNewToggleButton;
 
 	/**
 	 * Launch the application.
@@ -125,9 +128,9 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		getContentPane().add(_btnGetAktuelleFen);
 		_btnGetAktuelleFen.addActionListener(this);
 		
-		JToggleButton tglbtnNewToggleButton = new JToggleButton("Automatisch");
-		tglbtnNewToggleButton.setBounds(784, 0, 190, 34);
-		getContentPane().add(tglbtnNewToggleButton);
+		_tglbtnNewToggleButton = new JToggleButton("Automatisch");
+		_tglbtnNewToggleButton.setBounds(784, 0, 190, 34);
+		getContentPane().add(_tglbtnNewToggleButton);
 		
 		_btnNewButton_64 = new JButton("Make Move");
 		_btnNewButton_64.setBounds(784, 679, 190, 47);
@@ -141,6 +144,25 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		
 	}
 
+	
+	/*
+	 * Wäre noch nice:
+	 * -Anzeige geschlagener Figuren
+	 * -gemachter Zug von Schwarz highlighten
+	 * -Schwierigkeit einstellen
+	 * -Zug reversen
+	 * -PROMOTION!!
+	 * -Zugrecht Feld displayed Gewinner
+	 */
+	
+	public void makeCyborgMove()
+	{
+		RekursiverCyborg Ernd = new RekursiverCyborg(3);
+		_position = Ernd.getBestFollowingPosition(_position);
+		setFiguren();
+		setZugrechtLabel();
+		System.out.println(_position.getFen());
+	}
 	
 	private void ButtonListenerErzeugen()
 	{
@@ -553,6 +575,10 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(_tglbtnNewToggleButton.isSelected() && !(_position._zugrecht))
+		{
+			makeCyborgMove();
+		}
 		if (_buttons.contains(e.getSource()))
 			{
 				_letzterGedrueckterButton = _gedrueckterButton;
@@ -583,6 +609,5 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				setZugrechtLabel();
 				System.out.println(_position.getFen());
 			}
-		
 	}
 }
