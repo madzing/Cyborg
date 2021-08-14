@@ -55,7 +55,10 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	private JButton _btnGetAktuelleFen;
 	private JLabel _zugrechtLabel;
 	private JToggleButton _tglbtnNewToggleButton;
-
+	private makeMoveListener _makeMoveListener;
+	List <String> _spalte;
+	List <String> _zeile;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -85,6 +88,10 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		_letzterGedrueckterButton = 0;
 		_gedrueckterButton = 0;
 		_posCalc = new PositionCalc(position);
+		_makeMoveListener = new makeMoveListener();
+		_spalte = new ArrayList<String>(8);
+		_zeile = new ArrayList<String>(8);
+		befuelleZeileSpalte();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 800);
@@ -141,11 +148,10 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		setFiguren();
 		ButtonListenerErzeugen();
 		
-		
 	}
 
 	
-	/*
+	/* TODO
 	 * Wäre noch nice:
 	 * -Anzeige geschlagener Figuren
 	 * -gemachter Zug von Schwarz highlighten
@@ -561,6 +567,12 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		_buttons.add(btnNewButton_63);
 	}
 
+	private void befuelleZeileSpalte()
+	{
+		_spalte.add("a"); _spalte.add("b"); _spalte.add("c"); _spalte.add("d"); _spalte.add("e"); _spalte.add("f"); _spalte.add("g"); _spalte.add("h");
+		_zeile.add("8"); _zeile.add("7"); _zeile.add("6"); _zeile.add("5"); _zeile.add("4"); _zeile.add("3"); _zeile.add("2"); _zeile.add("1");
+	}
+	
 	private void setZugrechtLabel()
 	{
 		if(_position.getZugrecht())
@@ -575,16 +587,16 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(_tglbtnNewToggleButton.isSelected() && !(_position._zugrecht))
-		{
-			makeCyborgMove();
-		}
 		if (_buttons.contains(e.getSource()))
 			{
 				_letzterGedrueckterButton = _gedrueckterButton;
 				_gedrueckterButton = _buttons.indexOf(e.getSource());
-				_lblNewLabel.setText("Alte Koordinate: " + Integer.toString(_letzterGedrueckterButton));
-				_lblNewLabel_1.setText("Neue Koordinate: " + Integer.toString(_gedrueckterButton));
+				int spalte = Math.floorMod(_gedrueckterButton, 8);
+				int zeile = Math.abs(_gedrueckterButton / 8);
+				int letzteSpalte = Math.floorMod(_letzterGedrueckterButton, 8);
+				int letzteZeile = Math.abs(_letzterGedrueckterButton / 8);
+				_lblNewLabel.setText("Alte Koordinate: " + _spalte.get(letzteSpalte) + _zeile.get(letzteZeile));
+				_lblNewLabel_1.setText("Neue Koordinate: " + _spalte.get(spalte) + _zeile.get(zeile));
 			}
 		else if(e.getSource() == _btnGetAktuelleFen)
 		{
@@ -609,5 +621,11 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				setZugrechtLabel();
 				System.out.println(_position.getFen());
 			}
+		if(_tglbtnNewToggleButton.isSelected() && !(_position._zugrecht))
+		{
+			makeCyborgMove();
+		}
 	}
+	
+	
 }
