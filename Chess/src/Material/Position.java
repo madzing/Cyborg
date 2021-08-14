@@ -11,8 +11,8 @@ import Fachwerte.Fen;
 import Fachwerte.Zug;
 
 public class Position {
-	private Map<Byte, Piece> _whiteFiguren = new HashMap<>(16);
-	private Map<Byte, Piece> _blackFiguren = new HashMap<>(16);
+	private Map<Byte, Piece> _whiteFiguren = new HashMap<>(16,(float)1.0);
+	private Map<Byte, Piece> _blackFiguren = new HashMap<>(16,(float)1.0);
 	public boolean _zugrecht;
 	private boolean _whiteCanCastle[] = { false, false };
 	private boolean _blackCanCastle[] = { false, false };
@@ -38,7 +38,7 @@ public class Position {
 	}
 
 	private Map<Byte, Piece> copyMap(Map<Byte, Piece> copyable) {
-		Map<Byte, Piece> neueMap = new HashMap<>(16);
+		Map<Byte, Piece> neueMap = new HashMap<>(16,(float)1.0);
 		for (Map.Entry<Byte, Piece> piece : copyable.entrySet())
 
 		{
