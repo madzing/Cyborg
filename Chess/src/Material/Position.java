@@ -11,8 +11,8 @@ import Fachwerte.Fen;
 import Fachwerte.Zug;
 
 public class Position {
-	private Map<Byte, Piece> _whiteFiguren = new HashMap<>(16,(float)1.0);
-	private Map<Byte, Piece> _blackFiguren = new HashMap<>(16,(float)1.0);
+	private Map<Byte, Piece> _whiteFiguren = new HashMap<>(16, (float) 1.0);
+	private Map<Byte, Piece> _blackFiguren = new HashMap<>(16, (float) 1.0);
 	public boolean _zugrecht;
 	private boolean _whiteCanCastle[] = { false, false };
 	private boolean _blackCanCastle[] = { false, false };
@@ -38,7 +38,7 @@ public class Position {
 	}
 
 	private Map<Byte, Piece> copyMap(Map<Byte, Piece> copyable) {
-		Map<Byte, Piece> neueMap = new HashMap<>(16,(float)1.0);
+		Map<Byte, Piece> neueMap = new HashMap<>(16, (float) 1.0);
 		for (Map.Entry<Byte, Piece> piece : copyable.entrySet())
 
 		{
@@ -86,7 +86,6 @@ public class Position {
 		fenToZuegeGesamt(fenPosition);
 	}
 
-
 	public void makeMove(byte alteFigurPosition, byte neueFigurPosition) {
 		byte enPassant = _enpassant;
 		_enpassant = -1;
@@ -102,33 +101,36 @@ public class Position {
 					neuePos = (byte) (neuePos + 8);
 				}
 
-			}
-			else if (_whiteFiguren.get(alteFigurPosition) instanceof King) {
+			} else if (_whiteFiguren.get(alteFigurPosition) instanceof King) {
 				_whiteCanCastle[0] = false;
 				_whiteCanCastle[1] = false;
 				if (alteFigurPosition == 60 && neueFigurPosition == 62) {
-							_whiteFiguren.get((byte)63).setCoordinate((byte) 61);
-							_whiteFiguren.put((byte)61, _whiteFiguren.remove((byte)63));
-					}
+					_whiteFiguren.get((byte) 63).setCoordinate((byte) 61);
+					_whiteFiguren.put((byte) 61, _whiteFiguren.remove((byte) 63));
+				}
 
 				else if (alteFigurPosition == 60 && neueFigurPosition == 58) {
-							_whiteFiguren.get((byte)56).setCoordinate((byte) 59);
-							_whiteFiguren.put((byte)59, _whiteFiguren.remove((byte)56));
+					_whiteFiguren.get((byte) 56).setCoordinate((byte) 59);
+					_whiteFiguren.put((byte) 59, _whiteFiguren.remove((byte) 56));
 				}
-			}
-			else if (_whiteFiguren.get(alteFigurPosition) instanceof Rook) {
+			} else if (_whiteFiguren.get(alteFigurPosition) instanceof Rook) {
 				if (alteFigurPosition == 56) {
 					_whiteCanCastle[1] = false;
-				}
-				else if (alteFigurPosition == 63) {
+				} else if (alteFigurPosition == 63) {
 					_whiteCanCastle[0] = false;
 				}
 			}
 
 			_whiteFiguren.get(alteFigurPosition).setCoordinate(neueFigurPosition);
 			_zugrecht = false;
-
-			_blackFiguren.remove(neuePos);
+			Piece capturedPiece = _blackFiguren.remove(neuePos);
+			if (capturedPiece instanceof Rook) {
+				if (capturedPiece.getCoordinate() == 7) {
+					_blackCanCastle[0] = false;
+				} else if (capturedPiece.getCoordinate() == 0) {
+					_blackCanCastle[1] = false;
+				}
+			}
 			_whiteFiguren.put(neueFigurPosition, _whiteFiguren.remove(alteFigurPosition));
 
 		} else {
@@ -142,17 +144,15 @@ public class Position {
 					neuePos = (byte) (neuePos - 8);
 				}
 
-			}
-			else if (_blackFiguren.get(alteFigurPosition) instanceof King) {
+			} else if (_blackFiguren.get(alteFigurPosition) instanceof King) {
 				_blackCanCastle[0] = false;
 				_blackCanCastle[1] = false;
 				if (alteFigurPosition == 4 && neueFigurPosition == 6) {
-							_blackFiguren.get((byte)7).setCoordinate((byte) 5);
-							_blackFiguren.put((byte)5, _blackFiguren.remove((byte)7));
-				}
-				else if (alteFigurPosition == 4 && neueFigurPosition == 2) {
-							_blackFiguren.get((byte)0).setCoordinate((byte) 3);
-							_blackFiguren.put((byte)3, _blackFiguren.remove((byte)0));
+					_blackFiguren.get((byte) 7).setCoordinate((byte) 5);
+					_blackFiguren.put((byte) 5, _blackFiguren.remove((byte) 7));
+				} else if (alteFigurPosition == 4 && neueFigurPosition == 2) {
+					_blackFiguren.get((byte) 0).setCoordinate((byte) 3);
+					_blackFiguren.put((byte) 3, _blackFiguren.remove((byte) 0));
 				}
 			}
 			if (_blackFiguren.get(alteFigurPosition) instanceof Rook) {
@@ -168,7 +168,16 @@ public class Position {
 
 			_zugrecht = true;
 
-			_whiteFiguren.remove(neuePos);
+			
+			Piece capturedPiece = _whiteFiguren.remove(neuePos);
+			if (capturedPiece instanceof Rook) {
+				if (capturedPiece.getCoordinate() == 63) {
+					_whiteCanCastle[0] = false;
+				} else if (capturedPiece.getCoordinate() == 59) {
+					_whiteCanCastle[1] = false;
+				}
+			}
+			
 			_blackFiguren.put(neueFigurPosition, _blackFiguren.remove(alteFigurPosition));
 		}
 
