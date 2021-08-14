@@ -543,7 +543,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	{
 		if(_position.getZugrecht())
 		{
-			_zugrechtLabel.setText("Weiﬂ ist am Zug");
+			_zugrechtLabel.setText("Weiss ist am Zug");
 		}
 		else
 		{
