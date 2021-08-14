@@ -17,6 +17,7 @@ public class PositionSpeedTest {
 		{
 			Position pos = new Position(_startPosition);
 			pos.makeMove((byte)52,(byte) 36);
+			//pos.undoLastMove();
 		}
 	}
 	
