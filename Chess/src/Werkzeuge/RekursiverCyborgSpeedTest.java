@@ -61,4 +61,6 @@ public class RekursiverCyborgSpeedTest {
  * 
  * - Position Make Move überarbeiten
  * 
+ * 	- white und blackfiguren als Fachwerte speichern ? 
+ * 
  */
