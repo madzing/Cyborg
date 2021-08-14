@@ -25,6 +25,6 @@ public class Coordinate {
     @Override
     public int hashCode() {
     	
-    	return 1;
+    	return _coordinate;
     }
 }
