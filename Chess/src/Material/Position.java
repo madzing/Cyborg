@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import Fachwerte.Fen;
+import Fachwerte.Zug;
 
 public class Position {
 	private Map<Byte, Piece> _whiteFiguren = new HashMap<>(16);
@@ -17,6 +19,7 @@ public class Position {
 	private byte _enpassant;
 	private byte _zuegeKleiner50;
 	private short _zuegeGesamt;
+	private Stack<Zug> zugfolge;
 
 	public Position(Fen fenPosition) {
 		createPosition(fenPosition);
