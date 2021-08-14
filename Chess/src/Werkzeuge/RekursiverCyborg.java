@@ -2,6 +2,7 @@ package Werkzeuge;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import Material.King;
 import Material.Piece;
@@ -65,11 +66,11 @@ public class RekursiverCyborg
     		{
     			if(position.getZugrecht())
     			{	
-    				for(Piece piece : position.getWhiteFiguren())
+    				for(Map.Entry<Byte, Piece> whitePiece : position.getWhiteFiguren().entrySet())
     				{
-    					if(piece instanceof King)
+    					if(whitePiece.getValue() instanceof King)
     					{
-    						if(((King) piece).isInCheck(position))
+    						if(((King) whitePiece.getValue()).isInCheck(position))
     						{
     							list.add((double) -127);
     						}
@@ -81,11 +82,11 @@ public class RekursiverCyborg
     			}
     			else
     			{
-    				for(Piece piece : position.getBlackFiguren())
+    				for(Map.Entry<Byte, Piece> blackPiece : position.getBlackFiguren().entrySet())
     				{
-    					if(piece instanceof King)
+    					if(blackPiece.getValue() instanceof King)
     					{
-    						if(((King) piece).isInCheck(position))
+    						if(((King) blackPiece.getValue()).isInCheck(position))
     						{
     							list.add((double)127);
     						}

@@ -71,20 +71,20 @@ public class King extends Piece {
 		return pieceFelder;
 	}
 	
-	// ineffiziente Methode
+	// TODO ineffiziente Methode
 	public boolean isInCheck(Position position)
 	{
 		Map<Byte, Piece> figurenDesGegners;
 		Map<Byte, Piece> figurenDesKoenigs;
 		if(super.getColor())
 		{
-			figurenDesKoenigs = convertListToMap(position.getWhiteFiguren());
-			figurenDesGegners = convertListToMap(position.getBlackFiguren());
+			figurenDesKoenigs = position.getWhiteFiguren();
+			figurenDesGegners = position.getBlackFiguren();
 		}
 		else
 		{
-			figurenDesKoenigs = convertListToMap(position.getBlackFiguren());
-			figurenDesGegners = convertListToMap(position.getWhiteFiguren());
+			figurenDesKoenigs = position.getBlackFiguren();
+			figurenDesGegners = position.getWhiteFiguren();
 		}
 		
 		for(Map.Entry<Byte, Piece> entry : figurenDesGegners.entrySet())
@@ -100,13 +100,4 @@ public class King extends Piece {
 		return false;
 	}
 	
-	
-	//Eine Hilfsmethode, welche eine Liste von Pieces in eine Hashmap von Pieces umwandelt.
-		public Map<Byte, Piece> convertListToMap(List<Piece> list) {
-			Map<Byte, Piece> map = new HashMap<>(64);
-			for (Piece piece : list) {
-				map.put(piece.getCoordinate(), piece);
-			}
-			return map;
-		}
 }

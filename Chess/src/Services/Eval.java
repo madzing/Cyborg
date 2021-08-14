@@ -1,9 +1,8 @@
 package Services;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 import Material.Bishop;
-import Material.King;
 import Material.Knight;
 import Material.Pawn;
 import Material.Piece;
@@ -81,56 +80,57 @@ public class Eval {
 
 			double whitePoints = 0;
 			double blackPoints = 0;
-			for (Piece figur : position.getWhiteFiguren()) {
-				if(figur instanceof Pawn)
+			for (Map.Entry<Byte, Piece> whitePiece : position.getWhiteFiguren().entrySet()) {
+				
+				if(whitePiece.getValue() instanceof Pawn)
 				{
-					whitePoints = (double) (whitePoints + (figur.getValue()* _pawnFelder[figur.getCoordinate()]));
+					whitePoints = (double) (whitePoints + (whitePiece.getValue().getValue()* _pawnFelder[whitePiece.getValue().getCoordinate()]));
 				}
-				else if(figur instanceof Knight)
+				else if(whitePiece.getValue() instanceof Knight)
 				{
-					whitePoints = (double) (whitePoints + (figur.getValue()*_knightFelder[figur.getCoordinate()]));
+					whitePoints = (double) (whitePoints + (whitePiece.getValue().getValue()*_knightFelder[whitePiece.getValue().getCoordinate()]));
 				}
-				else if(figur instanceof Bishop)
+				else if(whitePiece.getValue() instanceof Bishop)
 				{
-					whitePoints = (double) (whitePoints + (figur.getValue()*_bishopFelder[figur.getCoordinate()]));
+					whitePoints = (double) (whitePoints + (whitePiece.getValue().getValue()*_bishopFelder[whitePiece.getValue().getCoordinate()]));
 				}
-				else if(figur instanceof Rook)
+				else if(whitePiece.getValue() instanceof Rook)
 				{
-					whitePoints = (double) (whitePoints + (figur.getValue()*_rookFelder[figur.getCoordinate()]));
+					whitePoints = (double) (whitePoints + (whitePiece.getValue().getValue()*_rookFelder[whitePiece.getValue().getCoordinate()]));
 				}
-				else if(figur instanceof Queen)
+				else if(whitePiece.getValue() instanceof Queen)
 				{
-					whitePoints = (double) (whitePoints + (figur.getValue()*_queenFelder[figur.getCoordinate()]));
+					whitePoints = (double) (whitePoints + (whitePiece.getValue().getValue()*_queenFelder[whitePiece.getValue().getCoordinate()]));
 				}
 				else 
 				{
-					whitePoints = (double) (whitePoints + (figur.getValue()*_kingFelder[figur.getCoordinate()]));
+					whitePoints = (double) (whitePoints + (whitePiece.getValue().getValue()*_kingFelder[whitePiece.getValue().getCoordinate()]));
 				}
 			}
-			for (Piece figur : position.getBlackFiguren()) {
-				if (figur instanceof Pawn)
+			for (Map.Entry<Byte, Piece> blackPiece : position.getBlackFiguren().entrySet()) {
+				if (blackPiece.getValue() instanceof Pawn)
 				{
-					blackPoints = (double) (blackPoints + (figur.getValue()*_pawnFelder[figur.getCoordinate()]));
+					blackPoints = (double) (blackPoints + (blackPiece.getValue().getValue()*_pawnFelder[blackPiece.getValue().getCoordinate()]));
 				}
-				else if (figur instanceof Knight)
+				else if (blackPiece.getValue() instanceof Knight)
 				{
-					blackPoints = (double) (blackPoints + (figur.getValue()*_knightFelder[figur.getCoordinate()]));
+					blackPoints = (double) (blackPoints + (blackPiece.getValue().getValue()*_knightFelder[blackPiece.getValue().getCoordinate()]));
 				}
-				else if (figur instanceof Bishop)
+				else if (blackPiece.getValue() instanceof Bishop)
 				{
-					blackPoints = (double) (blackPoints + (figur.getValue()*_bishopFelder[figur.getCoordinate()]));
+					blackPoints = (double) (blackPoints + (blackPiece.getValue().getValue()*_bishopFelder[blackPiece.getValue().getCoordinate()]));
 				}
-				else if (figur instanceof Rook)
+				else if (blackPiece.getValue() instanceof Rook)
 				{
-					blackPoints = (double) (blackPoints + (figur.getValue()*_rookFelder[figur.getCoordinate()]));
+					blackPoints = (double) (blackPoints + (blackPiece.getValue().getValue()*_rookFelder[blackPiece.getValue().getCoordinate()]));
 				}
-				else if (figur instanceof Queen)
+				else if (blackPiece.getValue() instanceof Queen)
 				{
-					blackPoints = (double) (blackPoints + (figur.getValue()*_queenFelder[figur.getCoordinate()]));
+					blackPoints = (double) (blackPoints + (blackPiece.getValue().getValue()*_queenFelder[blackPiece.getValue().getCoordinate()]));
 				}
 				else 
 				{
-					blackPoints = (double) (blackPoints + (figur.getValue()+_kingFelder[figur.getCoordinate()]));
+					blackPoints = (double) (blackPoints + (blackPiece.getValue().getValue()+_kingFelder[blackPiece.getValue().getCoordinate()]));
 				}
 			}
 

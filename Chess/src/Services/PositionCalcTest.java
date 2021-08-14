@@ -100,6 +100,8 @@ public class PositionCalcTest {
 		PositionCalc posCalc = new PositionCalc(startPosition);
 		
 		List<Position> nodes = posCalc.getLegalFollowingPositions();
+		
+
 		// depth 1
 		assertEquals(14, nodes.size());
 		int depth = 3;

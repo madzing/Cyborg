@@ -25,13 +25,13 @@ public class PositionCalc {
 
 		// wenn weiß am Zug ist
 		if (_currentPosition.getZugrecht()) {
-			_figurenAmZug = convertListToMap(_currentPosition.getWhiteFiguren());
-			_figurenDesGegners = convertListToMap(_currentPosition.getBlackFiguren());
+			_figurenAmZug = _currentPosition.getWhiteFiguren();
+			_figurenDesGegners = _currentPosition.getBlackFiguren();
 		}
 		// wenn schwarz am Zug ist
 		else {
-			_figurenAmZug = convertListToMap(_currentPosition.getBlackFiguren());
-			_figurenDesGegners = convertListToMap(_currentPosition.getWhiteFiguren());
+			_figurenAmZug = _currentPosition.getBlackFiguren();
+			_figurenDesGegners = _currentPosition.getWhiteFiguren();
 		}
 	}
 
@@ -59,21 +59,22 @@ public class PositionCalc {
 		
 		if(position.getZugrecht())
 		{
-			for(Piece figur : position.getBlackFiguren())
+			for(Map.Entry<Byte, Piece> blackPiece : position.getBlackFiguren().entrySet())
 			{
-				if(figur instanceof King)
+				if(blackPiece.getValue() instanceof King)
 				{
-					return  !((King) figur).isInCheck(position);
+					return  !((King) blackPiece.getValue()).isInCheck(position);
+					
 				}
 			}
 		}
 		else
 		{
-			for(Piece figur : position.getWhiteFiguren())
+			for(Map.Entry<Byte, Piece> whitePiece : position.getWhiteFiguren().entrySet())
 			{
-				if(figur instanceof King)
+				if( whitePiece.getValue() instanceof King)
 				{
-					return  !((King) figur).isInCheck(position);
+					return  !((King) whitePiece.getValue()).isInCheck(position);
 				}
 			}
 		}
@@ -93,14 +94,4 @@ public class PositionCalc {
 		return _figurenDesGegners;
 	}
 
-/// Hilfsmethoden
-
-//Eine Hilfsmethode, welche eine Liste von Pieces in eine Hashmap von Pieces umwandelt.
-	public Map<Byte, Piece> convertListToMap(List<Piece> list) {
-		Map<Byte, Piece> map = new HashMap<>(64);
-		for (Piece piece : list) {
-			map.put(piece.getCoordinate(), piece);
-		}
-		return map;
-	}
 }
