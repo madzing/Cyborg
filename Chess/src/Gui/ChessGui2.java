@@ -159,6 +159,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	 * -Zug reversen
 	 * -PROMOTION!!
 	 * -Zugrecht Feld displayed Gewinner
+	 * -Schrift in den Schwarzen Kacheln weiﬂ machen
 	 */
 	
 	public void makeCyborgMove()
@@ -254,6 +255,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_1.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_1);
 		_buttons.add(btnNewButton_1);
+		btnNewButton_1.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_2 = new JButton("c8");
 		btnNewButton_2.setBackground(Color.WHITE);
@@ -264,6 +266,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_3.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_3);
 		_buttons.add(btnNewButton_3);
+		btnNewButton_3.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_4 = new JButton("e8");
 		btnNewButton_4.setBackground(Color.WHITE);
@@ -274,6 +277,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_5.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_5);
 		_buttons.add(btnNewButton_5);
+		btnNewButton_5.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_6 = new JButton("g8");
 		btnNewButton_6.setBackground(Color.WHITE);
@@ -284,11 +288,13 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_7.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_7);
 		_buttons.add(btnNewButton_7);
+		btnNewButton_7.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_8 = new JButton("a7");
 		btnNewButton_8.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_8);
 		_buttons.add(btnNewButton_8);
+		btnNewButton_8.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_9 = new JButton("b7");
 		btnNewButton_9.setBackground(Color.WHITE);
@@ -299,6 +305,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_10.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_10);
 		_buttons.add(btnNewButton_10);
+		btnNewButton_10.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_11 = new JButton("d7");
 		btnNewButton_11.setBackground(Color.WHITE);
@@ -309,6 +316,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_12.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_12);
 		_buttons.add(btnNewButton_12);
+		btnNewButton_12.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_13 = new JButton("f7");
 		btnNewButton_13.setBackground(Color.WHITE);
@@ -319,6 +327,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_14.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_14);
 		_buttons.add(btnNewButton_14);
+		btnNewButton_14.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_15 = new JButton("h7");
 		btnNewButton_15.setBackground(Color.WHITE);
@@ -334,6 +343,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_17.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_17);
 		_buttons.add(btnNewButton_17);
+		btnNewButton_17.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_18 = new JButton("c6");
 		btnNewButton_18.setBackground(Color.WHITE);
@@ -344,6 +354,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_19.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_19);
 		_buttons.add(btnNewButton_19);
+		btnNewButton_19.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_20 = new JButton("e6");
 		btnNewButton_20.setBackground(Color.WHITE);
@@ -354,6 +365,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_21.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_21);
 		_buttons.add(btnNewButton_21);
+		btnNewButton_21.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_22 = new JButton("g6");
 		btnNewButton_22.setBackground(Color.WHITE);
@@ -364,11 +376,13 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_23.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_23);
 		_buttons.add(btnNewButton_23);
+		btnNewButton_23.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_24 = new JButton("a5");
 		btnNewButton_24.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_24);
 		_buttons.add(btnNewButton_24);
+		btnNewButton_24.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_25 = new JButton("b5");
 		btnNewButton_25.setBackground(Color.WHITE);
@@ -379,6 +393,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_26.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_26);
 		_buttons.add(btnNewButton_26);
+		btnNewButton_26.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_27 = new JButton("d5");
 		btnNewButton_27.setBackground(Color.WHITE);
@@ -389,6 +404,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_28.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_28);
 		_buttons.add(btnNewButton_28);
+		btnNewButton_28.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_29 = new JButton("f5");
 		btnNewButton_29.setBackground(Color.WHITE);
@@ -399,6 +415,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_30.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_30);
 		_buttons.add(btnNewButton_30);
+		btnNewButton_30.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_31 = new JButton("h5");
 		btnNewButton_31.setBackground(Color.WHITE);
@@ -414,6 +431,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_33.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_33);
 		_buttons.add(btnNewButton_33);
+		btnNewButton_33.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_34 = new JButton("c4");
 		btnNewButton_34.setBackground(Color.WHITE);
@@ -424,6 +442,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_35.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_35);
 		_buttons.add(btnNewButton_35);
+		btnNewButton_35.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_36 = new JButton("e4");
 		btnNewButton_36.setBackground(Color.WHITE);
@@ -434,21 +453,24 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_37.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_37);
 		_buttons.add(btnNewButton_37);
+		btnNewButton_37.setForeground(Color.WHITE);
 		
-		JButton btnNewButton_38 = new JButton("h4");
+		JButton btnNewButton_38 = new JButton("g4");
 		btnNewButton_38.setBackground(Color.WHITE);
 		contentPane.add(btnNewButton_38);
 		_buttons.add(btnNewButton_38);
 		
-		JButton btnNewButton_39 = new JButton("g4");
+		JButton btnNewButton_39 = new JButton("h4");
 		btnNewButton_39.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_39);
 		_buttons.add(btnNewButton_39);
+		btnNewButton_39.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_40 = new JButton("a3");
 		btnNewButton_40.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_40);
 		_buttons.add(btnNewButton_40);
+		btnNewButton_40.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_41 = new JButton("b3");
 		btnNewButton_41.setBackground(Color.WHITE);
@@ -459,6 +481,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_42.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_42);
 		_buttons.add(btnNewButton_42);
+		btnNewButton_42.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_43 = new JButton("d3");
 		btnNewButton_43.setBackground(Color.WHITE);
@@ -469,6 +492,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_44.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_44);
 		_buttons.add(btnNewButton_44);
+		btnNewButton_44.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_45 = new JButton("f3");
 		btnNewButton_45.setBackground(Color.WHITE);
@@ -479,6 +503,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_46.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_46);
 		_buttons.add(btnNewButton_46);
+		btnNewButton_46.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_47 = new JButton("h3");
 		btnNewButton_47.setBackground(Color.WHITE);
@@ -493,8 +518,8 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		JButton btnNewButton_49 = new JButton("b2");
 		btnNewButton_49.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_49);
-		btnNewButton_49.addActionListener(this);
 		_buttons.add(btnNewButton_49);
+		btnNewButton_49.setForeground(Color.WHITE);
 				
 		JButton btnNewButton_50 = new JButton("c2");
 		btnNewButton_50.setBackground(Color.WHITE);
@@ -505,6 +530,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_51.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_51);
 		_buttons.add(btnNewButton_51);
+		btnNewButton_51.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_52 = new JButton("e2");
 		btnNewButton_52.setBackground(Color.WHITE);
@@ -515,6 +541,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_53.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_53);
 		_buttons.add(btnNewButton_53);
+		btnNewButton_53.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_54 = new JButton("g2");
 		btnNewButton_54.setBackground(Color.WHITE);
@@ -525,11 +552,13 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_55.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_55);
 		_buttons.add(btnNewButton_55);
+		btnNewButton_55.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_56 = new JButton("a1");
 		btnNewButton_56.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_56);
 		_buttons.add(btnNewButton_56);
+		btnNewButton_56.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_57 = new JButton("b1");
 		btnNewButton_57.setBackground(Color.WHITE);
@@ -540,6 +569,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_58.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_58);
 		_buttons.add(btnNewButton_58);
+		btnNewButton_58.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_59 = new JButton("d1");
 		btnNewButton_59.setBackground(Color.WHITE);
@@ -550,18 +580,20 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		btnNewButton_60.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_60);
 		_buttons.add(btnNewButton_60);
+		btnNewButton_60.setForeground(Color.WHITE);
 		
 		JButton btnNewButton_61 = new JButton("f1");
 		btnNewButton_61.setBackground(Color.WHITE);
 		contentPane.add(btnNewButton_61);
 		_buttons.add(btnNewButton_61);
 		
-		JButton btnNewButton_62 = new JButton("h1");
+		JButton btnNewButton_62 = new JButton("g1");
 		btnNewButton_62.setBackground(Color.BLACK);
 		contentPane.add(btnNewButton_62);
 		_buttons.add(btnNewButton_62);
+		btnNewButton_62.setForeground(Color.WHITE);
 		
-		JButton btnNewButton_63 = new JButton("g1");
+		JButton btnNewButton_63 = new JButton("h1");
 		btnNewButton_63.setBackground(Color.WHITE);
 		contentPane.add(btnNewButton_63);
 		_buttons.add(btnNewButton_63);
