@@ -86,7 +86,7 @@ public class Position {
 		fenToZuegeGesamt(fenPosition);
 	}
 
-	// TODO kann effizienter geschrieben werden
+
 	public void makeMove(byte alteFigurPosition, byte neueFigurPosition) {
 		byte enPassant = _enpassant;
 		_enpassant = -1;
