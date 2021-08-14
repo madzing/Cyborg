@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -39,8 +40,8 @@ import javax.swing.JComboBox;
 
 public class ChessGui2 extends JFrame implements ActionListener{
 	Position _position;
-	List<Piece> _whiteFiguren;
-	List<Piece> _blackFiguren;
+	Map<Byte, Piece> _whiteFiguren;
+	Map<Byte, Piece> _blackFiguren;
 	List<JButton> _buttons;
 	int _letzterGedrueckterButton;
 	int _gedrueckterButton;
@@ -156,58 +157,58 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		}
 		_whiteFiguren = _position.getWhiteFiguren();
 		_blackFiguren = _position.getBlackFiguren();
-		for (Piece whiteFigur: _whiteFiguren)
+		for (Map.Entry<Byte, Piece> whiteFigur : _whiteFiguren.entrySet())
 		{
-			int whiteCoordinate= (int) whiteFigur.getCoordinate();
-			if(whiteFigur instanceof Pawn)
+			int whiteCoordinate= (int) whiteFigur.getValue().getCoordinate();
+			if(whiteFigur.getValue() instanceof Pawn)
     		{
     			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/White_Pawn.png")));
     		}
-    		if(whiteFigur instanceof Knight)
+    		if(whiteFigur.getValue() instanceof Knight)
     		{
     			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/White_Knight.png")));
     		}
-    		if(whiteFigur instanceof Bishop)
+    		if(whiteFigur.getValue() instanceof Bishop)
     		{
     			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/White_Bishop.png")));
     		}
-    		if(whiteFigur instanceof Rook)
+    		if(whiteFigur.getValue() instanceof Rook)
     		{
     			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/White_Rook.png")));
     		}
-    		if(whiteFigur instanceof Queen)
+    		if(whiteFigur.getValue() instanceof Queen)
     		{
     			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/White_Queen.png")));
     		}
-    		if(whiteFigur instanceof King)
+    		if(whiteFigur.getValue() instanceof King)
     		{
     			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/White_King.png")));
     		}
     		
-    		for (Piece blackFigur: _blackFiguren)
+    		for (Map.Entry<Byte, Piece> blackFigur : _blackFiguren.entrySet())
     		{
-    			int blackCoordinate= (int) blackFigur.getCoordinate();
-    			if(blackFigur instanceof Pawn)
+    			int blackCoordinate= (int) blackFigur.getValue().getCoordinate();
+    			if(blackFigur.getValue() instanceof Pawn)
         		{
         			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/Black_Pawn.png")));
         		}
-        		if(blackFigur instanceof Knight)
+        		if(blackFigur.getValue() instanceof Knight)
         		{
         			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/Black_Knight.png")));
         		}
-        		if(blackFigur instanceof Bishop)
+        		if(blackFigur.getValue() instanceof Bishop)
         		{
         			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/Black_Bishop.png")));
         		}
-        		if(blackFigur instanceof Rook)
+        		if(blackFigur.getValue() instanceof Rook)
         		{
         			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/Black_Rook.png")));
         		}
-        		if(blackFigur instanceof Queen)
+        		if(blackFigur.getValue() instanceof Queen)
         		{
         			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/Black_Queen.png")));
         		}
-        		if(blackFigur instanceof King)
+        		if(blackFigur.getValue() instanceof King)
         		{
         			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/Black_King.png")));
         		}
