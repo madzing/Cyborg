@@ -21,5 +21,10 @@ public class Coordinate {
 	public byte getCoordinate() {
 		return _coordinate;
 	}
-
+	
+    @Override
+    public int hashCode() {
+    	
+    	return 1;
+    }
 }
