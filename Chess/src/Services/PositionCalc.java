@@ -38,7 +38,7 @@ public class PositionCalc {
 	// Position resultieren zurück.
 	public ArrayList<Position> getLegalFollowingPositions() {
 		ArrayList<Position> folgePositionen = new ArrayList<Position>();
-		for (Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet()) {
+		for (Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet()) {	
 			for (Byte neueFigurPos : entry.getValue().getMoves(_figurenAmZug, _figurenDesGegners, _currentPosition)) {
 
 				Position neuePos = new Position(_currentPosition);
@@ -67,27 +67,19 @@ public class PositionCalc {
 
 	// Ist die übergebene Position legal? oder steht der König nach einem Zug der
 	// eigenen Seite im Schach?
-	public boolean isPositionLegal(Position position)
-	{
-		
-		if(position.getZugrecht())
-		{
-			for(Map.Entry<Byte, Piece> blackPiece : position.getBlackFiguren().entrySet())
-			{
-				if(blackPiece.getValue() instanceof King)
-				{
-					return  !((King) blackPiece.getValue()).isInCheck(position);
-					
+	public boolean isPositionLegal(Position position) {
+
+		if (position.getZugrecht()) {
+			for (Map.Entry<Byte, Piece> blackPiece : position.getBlackFiguren().entrySet()) {
+				if (blackPiece.getValue() instanceof King) {
+					return !((King) blackPiece.getValue()).isInCheck(position);
+
 				}
 			}
-		}
-		else
-		{
-			for(Map.Entry<Byte, Piece> whitePiece : position.getWhiteFiguren().entrySet())
-			{
-				if( whitePiece.getValue() instanceof King)
-				{
-					return  !((King) whitePiece.getValue()).isInCheck(position);
+		} else {
+			for (Map.Entry<Byte, Piece> whitePiece : position.getWhiteFiguren().entrySet()) {
+				if (whitePiece.getValue() instanceof King) {
+					return !((King) whitePiece.getValue()).isInCheck(position);
 				}
 			}
 		}

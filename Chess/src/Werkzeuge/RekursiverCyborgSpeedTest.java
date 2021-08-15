@@ -49,7 +49,6 @@ public class RekursiverCyborgSpeedTest {
 
 /* ZWISCHENZIEL --->  Codebase anpassen, sodass RekursiverCyborg schneller wird, ihn selbst jedoch nicht verändern
  * 
- * DONE - Position sollte white und black Figuren als map und nicht als Liste speichern 
  * 
  * - Nicht mehr jede Position sollte in PositionCalc auf Legalität geprüft werden müssen
  * 
@@ -58,9 +57,4 @@ public class RekursiverCyborgSpeedTest {
  * - king.isInCheck ist im Moment ineffizient
  * 
  * - alle maps, keys , hashcode Sachen verstehen, um dann besser zu machen. 
- * 
- * - Position Make Move überarbeiten
- * 
- * 	- white und blackfiguren als Fachwerte speichern ? 
- * 
  */
