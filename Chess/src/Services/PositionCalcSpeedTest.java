@@ -38,8 +38,7 @@ public class PositionCalcSpeedTest {
 		
 		return numPositions;
 	}
-	
- sekunden! Viel zu lange! Es muss jedes mal eine neue Position und ein neuer Poscalc erzeugt werden das ist kacke!
+}
 
 // depth 5 35,4 sekunden! Viel zu lange! Es muss jedes mal eine neue Position und ein neuer Poscalc erzeugt werden das ist kacke!
 // Kai depth 5 beide Fachwert gel�scht: 26,8 / 26,657 / 26,787
