@@ -40,4 +40,5 @@ public class PositionCalcSpeedTest {
 	}
 	
 }
+// Jan
 // depth 5 35,4 sekunden! Viel zu lange! Es muss jedes mal eine neue Position und ein neuer Poscalc erzeugt werden das ist kacke!
