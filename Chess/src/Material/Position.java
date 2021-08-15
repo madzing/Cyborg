@@ -99,10 +99,11 @@ public class Position {
 				} else if (neuePos == enpassant) {
 					neuePos = (byte) (neuePos + 8);
 				}
+				_zuegeKleiner50 = 0;
 				_zugfolge.push(Zug.select(alteFigurPosition, neueFigurPosition,
 						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
 						copyArray(_blackCanCastle), _zuegeKleiner50));
-				_zuegeKleiner50 = 0;
+
 			}
 
 			else if (_whiteFiguren.get(alteFigurPosition) instanceof King) {
@@ -201,7 +202,7 @@ public class Position {
 		_enpassant = lastMove.getenPassant();
 		_zuegeKleiner50 = lastMove.getZuegeKleiner50();
 		_zugrecht = !_zugrecht;
-		_zuegeGesamt--;
+		
 		
 		if (_zugrecht) {
 			_whiteFiguren.get(lastMove.getNeueFigurPosition()).setCoordinate(lastMove.getAlteFigurPosition());
@@ -224,7 +225,7 @@ public class Position {
 			if(lastMove.getGeschlageneFigur()!='-')
 			{
 				//wenn enpassant geschlagen wurde
-				if (lastMove.getenPassant() == lastMove.getNeueFigurPosition()-8)
+				if (lastMove.getenPassant() == lastMove.getNeueFigurPosition()+8)
 				{
 					_blackFiguren.put(lastMove.getenPassant(), pieceRepresentationOfChar(lastMove.getGeschlageneFigur(),lastMove.getenPassant(),false));
 				}
@@ -237,6 +238,7 @@ public class Position {
 		} else {
 			_blackFiguren.get(lastMove.getNeueFigurPosition()).setCoordinate(lastMove.getAlteFigurPosition());
 			_blackFiguren.put(lastMove.getAlteFigurPosition(), _blackFiguren.remove(lastMove.getNeueFigurPosition()));
+			_zuegeGesamt--;
 			
 			if(_blackFiguren.get(lastMove.getAlteFigurPosition()) instanceof King && Math.abs(lastMove.getAlteFigurPosition()-lastMove.getNeueFigurPosition())==2 ) // wenn der König bewegt wurde / castling
 			{
