@@ -6,8 +6,8 @@ import java.util.Map;
 public class Zug {
 
 	private static Map<String, Zug> _zugMap = new HashMap<String, Zug>();
-	private final Coordinate _alteFigurPosition;
-	private final Coordinate _neueFigurPosition;
+	private final byte _alteFigurPosition;
+	private final byte _neueFigurPosition;
 	private final char _geschlageneFigur;
 	private final byte _enPassant;
 	private final boolean[] _whiteCanCastle; 
@@ -15,8 +15,8 @@ public class Zug {
 	
 	private Zug(byte alteFigurPosition, byte neueFigurPosition, char geschlageneFigur, byte enPassant,boolean[] whiteCanCastle,boolean[] blackCanCastle) 
 	{
-		_alteFigurPosition = Coordinate.select(neueFigurPosition);
-		_neueFigurPosition = Coordinate.select(neueFigurPosition);
+		_alteFigurPosition = alteFigurPosition;
+		_neueFigurPosition = neueFigurPosition;
 		_geschlageneFigur = geschlageneFigur;
 		_enPassant = enPassant;
 		_whiteCanCastle = whiteCanCastle;
@@ -39,12 +39,12 @@ public class Zug {
 
 	public byte getAlteFigurPosition() 
 	{
-		return _alteFigurPosition.getCoordinate();
+		return _alteFigurPosition;
 	}
 
 	public byte getNeueFigurPosition() 
 	{
-		return _neueFigurPosition.getCoordinate();
+		return _neueFigurPosition;
 	}
 
 	public char getGeschlageneFigur() 
