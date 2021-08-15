@@ -33,7 +33,10 @@ public class PositionCalcSpeedTest {
 		
 		for(Position p : nodes)
 		{
+			// position.makemove(bla bla);
 			numPositions += MoveGenerationTest(depth-1,p);
+			// position.undomove();
+			
 		}
 		
 		return numPositions;
