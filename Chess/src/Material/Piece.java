@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 
-import Fachwerte.PieceValue;
+
 
 public abstract class Piece {
 	boolean _color;
-	private PieceValue _value;
+	private byte _value;
 	private byte _coordinate; 
 
 	public Piece (byte coordinate, boolean color) {
@@ -18,12 +18,12 @@ public abstract class Piece {
 	}
 	
 	public byte getValue() {
-		return _value.getValue();
+		return _value;
 	}
 	
 	public void setValue(byte value)
 	{
-		_value = PieceValue.select(value);
+		_value = value;
 	}
 
 	public byte getCoordinate() {
