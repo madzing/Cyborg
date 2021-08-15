@@ -191,27 +191,27 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			int whiteCoordinate= (int) whiteFigur.getValue().getCoordinate();
 			if(whiteFigur.getValue() instanceof Pawn)
     		{
-    			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/White_Pawn.png")));
+    			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui2.class.getResource("/Piece_Images/White_Pawn.png")));
     		}
     		if(whiteFigur.getValue() instanceof Knight)
     		{
-    			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/White_Knight.png")));
+    			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui2.class.getResource("/Piece_Images/White_Knight.png")));
     		}
     		if(whiteFigur.getValue() instanceof Bishop)
     		{
-    			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/White_Bishop.png")));
+    			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui2.class.getResource("/Piece_Images/White_Bishop.png")));
     		}
     		if(whiteFigur.getValue() instanceof Rook)
     		{
-    			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/White_Rook.png")));
+    			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui2.class.getResource("/Piece_Images/White_Rook.png")));
     		}
     		if(whiteFigur.getValue() instanceof Queen)
     		{
-    			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/White_Queen.png")));
+    			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui2.class.getResource("/Piece_Images/White_Queen.png")));
     		}
     		if(whiteFigur.getValue() instanceof King)
     		{
-    			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/White_King.png")));
+    			_buttons.get(whiteCoordinate).setIcon(new ImageIcon(ChessGui2.class.getResource("/Piece_Images/White_King.png")));
     		}
     		
     		for (Map.Entry<Byte, Piece> blackFigur : _blackFiguren.entrySet())
@@ -219,27 +219,27 @@ public class ChessGui2 extends JFrame implements ActionListener{
     			int blackCoordinate= (int) blackFigur.getValue().getCoordinate();
     			if(blackFigur.getValue() instanceof Pawn)
         		{
-        			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/Black_Pawn.png")));
+        			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui2.class.getResource("/Piece_Images/Black_Pawn.png")));
         		}
         		if(blackFigur.getValue() instanceof Knight)
         		{
-        			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/Black_Knight.png")));
+        			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui2.class.getResource("/Piece_Images/Black_Knight.png")));
         		}
         		if(blackFigur.getValue() instanceof Bishop)
         		{
-        			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/Black_Bishop.png")));
+        			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui2.class.getResource("/Piece_Images/Black_Bishop.png")));
         		}
         		if(blackFigur.getValue() instanceof Rook)
         		{
-        			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/Black_Rook.png")));
+        			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui2.class.getResource("/Piece_Images/Black_Rook.png")));
         		}
         		if(blackFigur.getValue() instanceof Queen)
         		{
-        			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/Black_Queen.png")));
+        			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui2.class.getResource("/Piece_Images/Black_Queen.png")));
         		}
         		if(blackFigur.getValue() instanceof King)
         		{
-        			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui.class.getResource("/Piece_Images/Black_King.png")));
+        			_buttons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui2.class.getResource("/Piece_Images/Black_King.png")));
         		}
     		}
 		}
