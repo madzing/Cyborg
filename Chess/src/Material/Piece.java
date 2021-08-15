@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import Fachwerte.Coordinate;
+
 import Fachwerte.PieceValue;
 
 public abstract class Piece {
 	boolean _color;
 	private PieceValue _value;
-	private Coordinate _coordinate; 
+	private byte _coordinate; 
 
 	public Piece (byte coordinate, boolean color) {
-		setCoordinate(coordinate);
+		_coordinate = coordinate;
 		_color = color;
 	}
 	
@@ -27,13 +27,13 @@ public abstract class Piece {
 	}
 
 	public byte getCoordinate() {
-		return _coordinate.getCoordinate();
+		return _coordinate;
 	}
 
 	public abstract byte[] getMovement();
 
 	public void setCoordinate(byte coordinate) {
-		_coordinate = Coordinate.select(coordinate);
+		_coordinate = coordinate;
 	}
 	
 	public  ArrayList<Byte>  getMoves(Map<Byte, Piece> figurenAmZug, Map<Byte, Piece> figurenDesGegners, Position position)
