@@ -36,30 +36,30 @@ public class Position {
 		for (Map.Entry<Byte, Piece> piece : copyable.entrySet())
 
 		{
-			Piece a = piece.getValue();
-			if (a instanceof Pawn) {
-				neueMap.put(a.getCoordinate(),
-						(Pawn) new Pawn(a.getCoordinate(), a.getColor()));
+			Piece figur = piece.getValue();
+			if (figur instanceof Pawn) {
+				neueMap.put(figur.getCoordinate(),
+						(Pawn) new Pawn(figur.getCoordinate(), figur.getColor()));
 			}
-			if (a instanceof Knight) {
-				neueMap.put(a.getCoordinate(),
-						(Knight) new Knight(a.getCoordinate(), a.getColor()));
+			if (figur instanceof Knight) {
+				neueMap.put(figur.getCoordinate(),
+						(Knight) new Knight(figur.getCoordinate(), figur.getColor()));
 			}
-			if (a instanceof Bishop) {
-				neueMap.put(a.getCoordinate(),
-						(Bishop) new Bishop(a.getCoordinate(), a.getColor()));
+			if (figur instanceof Bishop) {
+				neueMap.put(figur.getCoordinate(),
+						(Bishop) new Bishop(figur.getCoordinate(), figur.getColor()));
 			}
-			if (a instanceof Rook) {
-				neueMap.put(a.getCoordinate(),
-						(Rook) new Rook(a.getCoordinate(), a.getColor()));
+			if (figur instanceof Rook) {
+				neueMap.put(figur.getCoordinate(),
+						(Rook) new Rook(figur.getCoordinate(), figur.getColor()));
 			}
-			if (a instanceof Queen) {
-				neueMap.put(a.getCoordinate(),
-						(Queen) new Queen(a.getCoordinate(), a.getColor()));
+			if (figur instanceof Queen) {
+				neueMap.put(figur.getCoordinate(),
+						(Queen) new Queen(figur.getCoordinate(), figur.getColor()));
 			}
-			if (a instanceof King) {
-				neueMap.put(a.getCoordinate(),
-						(King) new King(a.getCoordinate(), a.getColor()));
+			if (figur instanceof King) {
+				neueMap.put(figur.getCoordinate(),
+						(King) new King(figur.getCoordinate(), figur.getColor()));
 			}
 		}
 		return neueMap;
