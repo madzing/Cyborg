@@ -152,14 +152,14 @@ public class ChessGui2 extends JFrame implements ActionListener{
 
 	
 	/* TODO
-	 * Wäre noch nice:
+	 * Wï¿½re noch nice:
 	 * -Anzeige geschlagener Figuren
 	 * -gemachter Zug von Schwarz highlighten
 	 * -Schwierigkeit einstellen
 	 * -Zug reversen
 	 * -PROMOTION!!
 	 * -Zugrecht Feld displayed Gewinner
-	 * -Schrift in den Schwarzen Kacheln weiß machen
+	 * -Schrift in den Schwarzen Kacheln weiï¿½ machen
 	 */
 	
 	public void makeCyborgMove()
@@ -168,7 +168,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		_position = Ernd.getBestFollowingPosition(_position);
 		setFiguren();
 		setZugrechtLabel();
-		System.out.println(_position.getFen());
+		//System.out.println(_position.getFen());
 	}
 	
 	private void ButtonListenerErzeugen()
@@ -651,7 +651,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				}
 				setFiguren();
 				setZugrechtLabel();
-				System.out.println(_position.getFen());
+				//System.out.println(_position.getFen());
 			}
 		if(_tglbtnNewToggleButton.isSelected() && !(_position._zugrecht))
 		{
