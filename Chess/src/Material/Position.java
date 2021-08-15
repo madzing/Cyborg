@@ -2,10 +2,7 @@ package Material;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
-
 import Fachwerte.Fen;
-import Fachwerte.Zug;
 
 
 public class Position {
