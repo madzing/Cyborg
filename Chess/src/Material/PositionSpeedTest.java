@@ -15,9 +15,8 @@ public class PositionSpeedTest {
 		
 		for(int i = 0; i < 4865609; i++)
 		{
-			//Position pos = new Position(_startPosition);
-			_startPosition.makeMove((byte)52,(byte) 36);
-			_startPosition.undoLastMove();
+			Position pos = new Position(_startPosition);
+			pos.makeMove((byte)52,(byte) 36);
 		}
 	}
 	

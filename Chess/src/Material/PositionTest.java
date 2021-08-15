@@ -219,6 +219,5 @@ public class PositionTest {
 		assertEquals("r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",startPosition.getFen());
 		startPosition.makeMove((byte)60,(byte) 62);
 		assertEquals("r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQ1RK1 b kq - 5 4",startPosition.getFen());
-		System.out.println(startPosition.getZugfolge().toString());
 	}
 }

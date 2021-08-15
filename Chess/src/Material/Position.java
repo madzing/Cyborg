@@ -14,7 +14,6 @@ public class Position {
 	private byte _enpassant;
 	private byte _zuegeKleiner50;
 	private short _zuegeGesamt;
-	private Stack<Zug> _zugfolge = new Stack<>();
 
 	public Position(Fen fenPosition) {
 		createPosition(fenPosition);
@@ -30,7 +29,6 @@ public class Position {
 		this._enpassant = copyable.getEnPassant();
 		this._zuegeKleiner50 = copyable.getZuegeKleiner50();
 		this._zuegeGesamt = copyable.getZuegeGesamt();
-		this._zugfolge = copyable.getZugfolge();
 	}
 
 	private Map<Byte, Piece> copyMap(Map<Byte, Piece> copyable) {
@@ -84,28 +82,21 @@ public class Position {
 	}
 
 	public void makeMove(byte alteFigurPosition, byte neueFigurPosition) {
-		byte enpassant = _enpassant;
+		byte enPassant = _enpassant;
 		_enpassant = -1;
 		_zuegeKleiner50++;
 		byte neuePos = neueFigurPosition;
 		if (_zugrecht) {
+
 			if (_whiteFiguren.get(alteFigurPosition) instanceof Pawn) {
+				_zuegeKleiner50 = 0;
 				if (Math.abs(alteFigurPosition - neueFigurPosition) == 16) {
 					_enpassant = (byte) (alteFigurPosition + ((neueFigurPosition - alteFigurPosition) / 2));
-				} else if (neuePos == enpassant) {
+				} else if (neuePos == enPassant) {
 					neuePos = (byte) (neuePos + 8);
 				}
-				_zuegeKleiner50 = 0;
-				_zugfolge.push(Zug.select(alteFigurPosition, neueFigurPosition,
-						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
-						copyArray(_blackCanCastle), _zuegeKleiner50));
 
-			}
-
-			else if (_whiteFiguren.get(alteFigurPosition) instanceof King) {
-				_zugfolge.push(Zug.select(alteFigurPosition, neueFigurPosition,
-						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
-						copyArray(_blackCanCastle), _zuegeKleiner50));
+			} else if (_whiteFiguren.get(alteFigurPosition) instanceof King) {
 				_whiteCanCastle[0] = false;
 				_whiteCanCastle[1] = false;
 				if (alteFigurPosition == 60 && neueFigurPosition == 62) {
@@ -118,18 +109,11 @@ public class Position {
 					_whiteFiguren.put((byte) 59, _whiteFiguren.remove((byte) 56));
 				}
 			} else if (_whiteFiguren.get(alteFigurPosition) instanceof Rook) {
-				_zugfolge.push(Zug.select(alteFigurPosition, neueFigurPosition,
-						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
-						copyArray(_blackCanCastle), _zuegeKleiner50));
 				if (alteFigurPosition == 56) {
 					_whiteCanCastle[1] = false;
 				} else if (alteFigurPosition == 63) {
 					_whiteCanCastle[0] = false;
 				}
-			} else {
-				_zugfolge.push(Zug.select(alteFigurPosition, neueFigurPosition,
-						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
-						copyArray(_blackCanCastle), _zuegeKleiner50));
 			}
 
 			_whiteFiguren.get(alteFigurPosition).setCoordinate(neueFigurPosition);
@@ -148,20 +132,14 @@ public class Position {
 			_zuegeGesamt++;
 
 			if (_blackFiguren.get(alteFigurPosition) instanceof Pawn) {
-
+				_zuegeKleiner50 = 0;
 				if (Math.abs(alteFigurPosition - neueFigurPosition) == 16) {
 					_enpassant = (byte) (alteFigurPosition + ((neueFigurPosition - alteFigurPosition) / 2));
-				} else if (neuePos == enpassant) {
+				} else if (neuePos == enPassant) {
 					neuePos = (byte) (neuePos - 8);
 				}
-				_zugfolge.push(Zug.select(alteFigurPosition, neueFigurPosition,
-						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
-						copyArray(_blackCanCastle), _zuegeKleiner50));
-				_zuegeKleiner50 = 0;
+
 			} else if (_blackFiguren.get(alteFigurPosition) instanceof King) {
-				_zugfolge.push(Zug.select(alteFigurPosition, neueFigurPosition,
-						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
-						copyArray(_blackCanCastle), _zuegeKleiner50));
 				_blackCanCastle[0] = false;
 				_blackCanCastle[1] = false;
 				if (alteFigurPosition == 4 && neueFigurPosition == 6) {
@@ -171,27 +149,21 @@ public class Position {
 					_blackFiguren.get((byte) 0).setCoordinate((byte) 3);
 					_blackFiguren.put((byte) 3, _blackFiguren.remove((byte) 0));
 				}
-			} else if (_blackFiguren.get(alteFigurPosition) instanceof Rook) {
-				_zugfolge.push(Zug.select(alteFigurPosition, neueFigurPosition,
-						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
-						copyArray(_blackCanCastle), _zuegeKleiner50));
+			}
+			if (_blackFiguren.get(alteFigurPosition) instanceof Rook) {
 				if (alteFigurPosition == 0) {
 					_blackCanCastle[1] = false;
 				}
 				if (alteFigurPosition == 7) {
 					_blackCanCastle[0] = false;
 				}
-			} else {
-				_zugfolge.push(Zug.select(alteFigurPosition, neueFigurPosition,
-						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
-						copyArray(_blackCanCastle), _zuegeKleiner50));
 			}
 
 			_blackFiguren.get(alteFigurPosition).setCoordinate(neueFigurPosition);
 
 			_zugrecht = true;
 
-
+			
 			Piece capturedPiece = _whiteFiguren.remove(neuePos);
 			if (capturedPiece instanceof Rook) {
 				if (capturedPiece.getCoordinate() == 63) {
@@ -200,127 +172,10 @@ public class Position {
 					_whiteCanCastle[1] = false;
 				}
 			}
-
+			
 			_blackFiguren.put(neueFigurPosition, _blackFiguren.remove(alteFigurPosition));
 		}
 
-	}
-
-	public void undoLastMove() {
-		Zug lastMove = _zugfolge.pop();
-		_whiteCanCastle = lastMove.getWhiteCanCastle();
-		_blackCanCastle = lastMove.getBlackCanCastle();
-		_enpassant = lastMove.getenPassant();
-		_zuegeKleiner50 = lastMove.getZuegeKleiner50();
-		_zugrecht = !_zugrecht;
-
-
-		if (_zugrecht) {
-			_whiteFiguren.get(lastMove.getNeueFigurPosition()).setCoordinate(lastMove.getAlteFigurPosition());
-			_whiteFiguren.put(lastMove.getAlteFigurPosition(), _whiteFiguren.remove(lastMove.getNeueFigurPosition()));
-
-			if(_whiteFiguren.get(lastMove.getAlteFigurPosition()) instanceof King && Math.abs(lastMove.getAlteFigurPosition()-lastMove.getNeueFigurPosition())==2 ) // wenn der König bewegt wurde / castling
-			{
-				if(lastMove.getNeueFigurPosition()==62)
-				{
-					_whiteFiguren.get((byte)61).setCoordinate((byte)63);
-					_whiteFiguren.put((byte)63, _whiteFiguren.remove((byte)61));
-				}
-				else
-				{
-					_whiteFiguren.get((byte)59).setCoordinate((byte)56);
-					_whiteFiguren.put((byte)56, _whiteFiguren.remove((byte)59));
-				}
-			}
-
-			if(lastMove.getGeschlageneFigur()!='-')
-			{
-				//wenn enpassant geschlagen wurde
-				if (lastMove.getenPassant() == lastMove.getNeueFigurPosition()+8)
-				{
-					_blackFiguren.put(lastMove.getenPassant(), pieceRepresentationOfChar(lastMove.getGeschlageneFigur(),lastMove.getenPassant(),false));
-				}
-				else
-				{
-					_blackFiguren.put(lastMove.getNeueFigurPosition(), pieceRepresentationOfChar(lastMove.getGeschlageneFigur(),lastMove.getNeueFigurPosition(),false));
-				}
-			}
-
-		} else {
-			_blackFiguren.get(lastMove.getNeueFigurPosition()).setCoordinate(lastMove.getAlteFigurPosition());
-			_blackFiguren.put(lastMove.getAlteFigurPosition(), _blackFiguren.remove(lastMove.getNeueFigurPosition()));
-			_zuegeGesamt--;
-
-			if(_blackFiguren.get(lastMove.getAlteFigurPosition()) instanceof King && Math.abs(lastMove.getAlteFigurPosition()-lastMove.getNeueFigurPosition())==2 ) // wenn der König bewegt wurde / castling
-			{
-				if(lastMove.getNeueFigurPosition()==6)
-				{
-					_blackFiguren.get((byte)5).setCoordinate((byte)7);
-					_blackFiguren.put((byte)7, _blackFiguren.remove((byte)5));
-				}
-				else
-				{
-					_blackFiguren.get((byte)3).setCoordinate((byte)0);
-					_blackFiguren.put((byte)0, _blackFiguren.remove((byte)3));
-				}
-			}
-
-			if(lastMove.getGeschlageneFigur()!='-')
-			{
-				//wenn enpassant geschlagen wurde
-				if (lastMove.getenPassant() == lastMove.getNeueFigurPosition()-8)
-				{
-					_whiteFiguren.put(lastMove.getenPassant(), pieceRepresentationOfChar(lastMove.getGeschlageneFigur(),lastMove.getenPassant(),true));
-				}
-				else
-				{
-					_whiteFiguren.put(lastMove.getNeueFigurPosition(), pieceRepresentationOfChar(lastMove.getGeschlageneFigur(),lastMove.getNeueFigurPosition(),true));
-				}
-			}
-		}
-	}
-
-	public Piece pieceRepresentationOfChar(char charPiece, byte coordinate, boolean color) {
-		switch (charPiece) {
-
-		case 'p':
-			return new Pawn(coordinate, color);
-
-		case 'n':
-			return new Knight(coordinate, color);
-
-		case 'b':
-			return new Bishop(coordinate, color);
-
-		case 'r':
-			return new Rook(coordinate, color);
-
-		case 'q':
-			return new Queen(coordinate, color);
-
-		case 'k':
-			return new King(coordinate, color);
-		default:
-			return null;
-		}
-	}
-
-	public char charRepresentationOfPiece(Piece piece) {
-		if (piece == null) {
-			return '-';
-		} else if (piece instanceof Pawn) {
-			return 'p';
-		} else if (piece instanceof Knight) {
-			return 'n';
-		} else if (piece instanceof Bishop) {
-			return 'b';
-		} else if (piece instanceof Rook) {
-			return 'r';
-		} else if (piece instanceof Queen) {
-			return 'q';
-		} else {
-			return 'k';
-		}
 	}
 
 	public void promotion(Piece promotedFigur) {
@@ -650,10 +505,6 @@ public class Position {
 
 	public Map<Byte, Piece> getWhiteFiguren() {
 		return _whiteFiguren;
-	}
-
-	public Stack<Zug> getZugfolge() {
-		return _zugfolge;
 	}
 
 	public Map<Byte, Piece> getBlackFiguren() {
