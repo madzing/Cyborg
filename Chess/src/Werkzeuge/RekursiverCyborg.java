@@ -119,7 +119,7 @@ public class RekursiverCyborg
     
     public double bestValueforWhite(ArrayList<Double> list)
     {
-    	double maximum = -127.0;
+    	double maximum = -126.0;
 		
 		for(double current: list)
 		{
@@ -133,7 +133,7 @@ public class RekursiverCyborg
     
     public double bestValueForBlack(ArrayList<Double> list)
     {
-    	double minimum = 127.0;
+    	double minimum = 126.0;
   		
   		for(double current: list)
   		{
