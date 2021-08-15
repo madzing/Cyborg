@@ -102,6 +102,7 @@ public class RekursiverCyborg
     			list.add(getEvaluation(p,tiefe-1));
     		}
     	}
+    	// damit er für das schnellste matt pielt
     	if(position.getZugrecht())
     	{
     		double value = bestValueforWhite(list);
@@ -111,6 +112,7 @@ public class RekursiverCyborg
     		}
     		return value;
     	}
+    	// damit er für das schnellste matt pielt
     	else
     	{
     		double value = bestValueForBlack(list);
