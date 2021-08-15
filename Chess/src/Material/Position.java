@@ -36,29 +36,30 @@ public class Position {
 		for (Map.Entry<Byte, Piece> piece : copyable.entrySet())
 
 		{
-			if (piece.getValue() instanceof Pawn) {
-				neueMap.put(piece.getValue().getCoordinate(),
-						(Pawn) new Pawn(piece.getValue().getCoordinate(), piece.getValue().getColor()));
+			Piece a = piece.getValue();
+			if (a instanceof Pawn) {
+				neueMap.put(a.getCoordinate(),
+						(Pawn) new Pawn(a.getCoordinate(), a.getColor()));
 			}
-			if (piece.getValue() instanceof Knight) {
-				neueMap.put(piece.getValue().getCoordinate(),
-						(Knight) new Knight(piece.getValue().getCoordinate(), piece.getValue().getColor()));
+			if (a instanceof Knight) {
+				neueMap.put(a.getCoordinate(),
+						(Knight) new Knight(a.getCoordinate(), a.getColor()));
 			}
-			if (piece.getValue() instanceof Bishop) {
-				neueMap.put(piece.getValue().getCoordinate(),
-						(Bishop) new Bishop(piece.getValue().getCoordinate(), piece.getValue().getColor()));
+			if (a instanceof Bishop) {
+				neueMap.put(a.getCoordinate(),
+						(Bishop) new Bishop(a.getCoordinate(), a.getColor()));
 			}
-			if (piece.getValue() instanceof Rook) {
-				neueMap.put(piece.getValue().getCoordinate(),
-						(Rook) new Rook(piece.getValue().getCoordinate(), piece.getValue().getColor()));
+			if (a instanceof Rook) {
+				neueMap.put(a.getCoordinate(),
+						(Rook) new Rook(a.getCoordinate(), a.getColor()));
 			}
-			if (piece.getValue() instanceof Queen) {
-				neueMap.put(piece.getValue().getCoordinate(),
-						(Queen) new Queen(piece.getValue().getCoordinate(), piece.getValue().getColor()));
+			if (a instanceof Queen) {
+				neueMap.put(a.getCoordinate(),
+						(Queen) new Queen(a.getCoordinate(), a.getColor()));
 			}
-			if (piece.getValue() instanceof King) {
-				neueMap.put(piece.getValue().getCoordinate(),
-						(King) new King(piece.getValue().getCoordinate(), piece.getValue().getColor()));
+			if (a instanceof King) {
+				neueMap.put(a.getCoordinate(),
+						(King) new King(a.getCoordinate(), a.getColor()));
 			}
 		}
 		return neueMap;
