@@ -41,3 +41,5 @@ public class PositionCalcSpeedTest {
 	
 }
 // depth 5 35,4 sekunden! Viel zu lange! Es muss jedes mal eine neue Position und ein neuer Poscalc erzeugt werden das ist kacke!
+
+//Kai main: 46,295 / 45,967 / 46,116
