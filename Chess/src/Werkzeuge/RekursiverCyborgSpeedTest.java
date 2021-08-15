@@ -12,7 +12,7 @@ public class RekursiverCyborgSpeedTest {
 	@Test
 	// Fen für die Startposition als Ansicherung "r4rk1/1bpqbppp/p1np1n2/1p2p3/4P3/1BNP1N1P/PPPB1PP1/R2Q1RK1 w - - 3 11"
 	public void testSpeed() {
-		RekursiverCyborg anton = new RekursiverCyborg(3);
+		RekursiverCyborg anton = new RekursiverCyborg(2);
 
 		Fen startFen = Fen.select("r4rk1/1bpqbppp/p1np1n2/1p2p3/4P3/1BNP1N1P/PPPB1PP1/R2Q1RK1 w - - 3 11");
 		Position startPosition = new Position(startFen);
