@@ -16,7 +16,7 @@ public class Zug {
 	
 	private Zug(byte alteFigurPosition, byte neueFigurPosition, char geschlageneFigur, byte enPassant,boolean[] whiteCanCastle,boolean[] blackCanCastle,byte zuegeKleiner50) 
 	{
-		_alteFigurPosition = Coordinate.select(neueFigurPosition);
+		_alteFigurPosition = Coordinate.select(alteFigurPosition);
 		_neueFigurPosition = Coordinate.select(neueFigurPosition);
 		_geschlageneFigur = geschlageneFigur;
 		_enPassant = enPassant;
