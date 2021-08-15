@@ -14,14 +14,13 @@ public class RekursiverCyborg
 {
 	Eval _eval;
 	int _tiefe;
-    
- 
 
     public RekursiverCyborg(int tiefe)
     {
     	_eval= new Eval();
         _tiefe = tiefe; 
     }
+    
     public Position getBestFollowingPosition(Position position)
     {
 		Position bestPosition = null;
@@ -105,21 +104,27 @@ public class RekursiverCyborg
     	}
     	if(position.getZugrecht())
     	{
-
-
-        return bestValueforWhite(list);
-
-
+    		double value = bestValueforWhite(list);
+    		if(value > 100)
+    		{
+    			value--;
+    		}
+    		return value;
     	}
     	else
     	{
-    		return bestValueForBlack(list);
+    		double value = bestValueForBlack(list);
+    		if(value<-100)
+    		{
+    			value++;
+    		}
+    		return value;
     	}
     }
     
     public double bestValueforWhite(ArrayList<Double> list)
     {
-    	double maximum = -126.0;
+    	double maximum = -127.0;
 		
 		for(double current: list)
 		{
@@ -133,7 +138,7 @@ public class RekursiverCyborg
     
     public double bestValueForBlack(ArrayList<Double> list)
     {
-    	double minimum = 126.0;
+    	double minimum = 127.0;
   		
   		for(double current: list)
   		{

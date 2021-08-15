@@ -41,5 +41,5 @@ public class PositionCalcSpeedTest {
 	
 }
 // depth 5 35,4 sekunden! Viel zu lange! Es muss jedes mal eine neue Position und ein neuer Poscalc erzeugt werden das ist kacke!
-
-// Kai depth 5 beide Fachwert gelöscht: 26,8 / 26,657 / 26,787
+// Kai depth 5 beide Fachwert gelï¿½scht: 26,8 / 26,657 / 26,787
+//Kai main: 46,295 / 45,967 / 46,116 
