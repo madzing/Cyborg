@@ -1,14 +1,9 @@
 package Material;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Stack;
-
 import Fachwerte.Fen;
-import Fachwerte.Zug;
+
 
 public class Position {
 	private Map<Byte, Piece> _whiteFiguren = new HashMap<>(16, (float) 1.0);
@@ -19,7 +14,6 @@ public class Position {
 	private byte _enpassant;
 	private byte _zuegeKleiner50;
 	private short _zuegeGesamt;
-	private Stack<Zug> zugfolge;
 
 	public Position(Fen fenPosition) {
 		createPosition(fenPosition);
@@ -173,7 +167,7 @@ public class Position {
 			if (capturedPiece instanceof Rook) {
 				if (capturedPiece.getCoordinate() == 63) {
 					_whiteCanCastle[0] = false;
-				} else if (capturedPiece.getCoordinate() == 59) {
+				} else if (capturedPiece.getCoordinate() == 56) {
 					_whiteCanCastle[1] = false;
 				}
 			}
