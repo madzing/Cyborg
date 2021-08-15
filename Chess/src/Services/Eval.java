@@ -80,6 +80,10 @@ public class Eval {
 
 			double whitePoints = 0;
 			double blackPoints = 0;
+			if(position.getZuegeKleiner50()>=50)
+			{
+				return 0.0;
+			}
 			for (Map.Entry<Byte, Piece> whitePiece : position.getWhiteFiguren().entrySet()) {
 				
 				if(whitePiece.getValue() instanceof Pawn)
