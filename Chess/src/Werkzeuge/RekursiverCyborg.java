@@ -28,20 +28,21 @@ public class RekursiverCyborg
 		ArrayList<Position> legalPositions = new PositionCalc(position).getLegalFollowingPositions();
 		for(Position pos : legalPositions)
 		{
+			double neweval = getEvaluation(pos,_tiefe);
 			if(bestPosition == null)
 			{
 				bestPosition = pos;
-				bestEval = getEvaluation(pos,_tiefe);
+				bestEval = neweval;
 			}		
-			else if (position.getZugrecht() && bestEval < getEvaluation(pos,_tiefe))
+			else if (position.getZugrecht() && bestEval < neweval)
 			{
 				bestPosition = pos;
-				bestEval = getEvaluation(pos,_tiefe);
+				bestEval = neweval;
 			}
-			else if (!position.getZugrecht() && bestEval > getEvaluation(pos,_tiefe))
+			else if (!position.getZugrecht() && bestEval > neweval)
 			{
 				bestPosition = pos;
-				bestEval = getEvaluation(pos,_tiefe);
+				bestEval = neweval;
 			}
 		}
 		
