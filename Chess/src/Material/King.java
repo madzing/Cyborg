@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class King extends Piece {
+public class King extends Piece implements Copy {
 	public King(byte coordinate, boolean color) {
 		super(coordinate, color);
 		super.setValue((byte)5);
@@ -98,6 +98,11 @@ public class King extends Piece {
 		}
 		}
 		return false;
+	}
+	public Map<Byte, Piece> copy(Map<Byte, Piece> copyable) {
+		copyable.put(this.getCoordinate(),
+				new King(this.getCoordinate(), this.getColor()));
+		return copyable;
 	}
 	
 }

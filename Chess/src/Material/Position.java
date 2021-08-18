@@ -37,30 +37,33 @@ public class Position {
 
 		{
 			Piece figur = piece.getValue();
-			if (figur instanceof Pawn) {
-				neueMap.put(figur.getCoordinate(),
-						(Pawn) new Pawn(figur.getCoordinate(), figur.getColor()));
-			}
-			if (figur instanceof Knight) {
-				neueMap.put(figur.getCoordinate(),
-						(Knight) new Knight(figur.getCoordinate(), figur.getColor()));
-			}
-			if (figur instanceof Bishop) {
-				neueMap.put(figur.getCoordinate(),
-						(Bishop) new Bishop(figur.getCoordinate(), figur.getColor()));
-			}
-			if (figur instanceof Rook) {
-				neueMap.put(figur.getCoordinate(),
-						(Rook) new Rook(figur.getCoordinate(), figur.getColor()));
-			}
-			if (figur instanceof Queen) {
-				neueMap.put(figur.getCoordinate(),
-						(Queen) new Queen(figur.getCoordinate(), figur.getColor()));
-			}
-			if (figur instanceof King) {
-				neueMap.put(figur.getCoordinate(),
-						(King) new King(figur.getCoordinate(), figur.getColor()));
-			}
+			figur.copy(neueMap);
+			
+//			Piece figur = piece.getValue();
+//			if (figur instanceof Pawn) {
+//				neueMap.put(figur.getCoordinate(),
+//						(Pawn) new Pawn(figur.getCoordinate(), figur.getColor()));
+//			}
+//			if (figur instanceof Knight) {
+//				neueMap.put(figur.getCoordinate(),
+//						(Knight) new Knight(figur.getCoordinate(), figur.getColor()));
+//			}
+//			if (figur instanceof Bishop) {
+//				neueMap.put(figur.getCoordinate(),
+//						(Bishop) new Bishop(figur.getCoordinate(), figur.getColor()));
+//			}
+//			if (figur instanceof Rook) {
+//				neueMap.put(figur.getCoordinate(),
+//						(Rook) new Rook(figur.getCoordinate(), figur.getColor()));
+//			}
+//			if (figur instanceof Queen) {
+//				neueMap.put(figur.getCoordinate(),
+//						(Queen) new Queen(figur.getCoordinate(), figur.getColor()));
+//			}
+//			if (figur instanceof King) {
+//				neueMap.put(figur.getCoordinate(),
+//						(King) new King(figur.getCoordinate(), figur.getColor()));
+//			}
 		}
 		return neueMap;
 	}

@@ -91,4 +91,5 @@ public abstract class Piece {
 	{
 		return Math.abs((alteFigurPos % 8)-(neueFigurPos % 8))>2 ||  Math.abs((alteFigurPos / 8)-(neueFigurPos / 8))>2;
 	}
+	public abstract Map<Byte, Piece> copy(Map<Byte, Piece> copyable);
 }
