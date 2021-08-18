@@ -21,8 +21,8 @@ public class AlphaBetaCyborg {
 	}
 
 	public Position getBestFollowingPosition(Position position) {
-		double alpha = Double.MIN_VALUE;
-		double beta = Double.MAX_VALUE;
+		double alpha = -99999999;
+		double beta = 99999999;
 		_bestPosition = null;
 
 		if (position.getZugrecht()) {
@@ -41,9 +41,25 @@ public class AlphaBetaCyborg {
 		double wert = 0;
 		ArrayList<Position> legalPositions = new PositionCalc(position).getLegalFollowingPositions();
 
+		if(legalPositions.size()==0)
+		{	
+				for(Map.Entry<Byte, Piece> whitePiece : position.getWhiteFiguren().entrySet())
+				{
+					if(whitePiece.getValue() instanceof King)
+					{
+						if(((King) whitePiece.getValue()).isInCheck(position))
+						{
+							return -9999999;
+						}
+						else {
+							return 0;
+						}
+					}
+				}
+			}
+		
 		for (Position pos : legalPositions) {
 			wert = min(pos, tiefe - 1, maxWert, beta);
-
 			if (wert > maxWert) {
 				maxWert = wert;
 				if (tiefe == _gewuenschtetiefe) {
@@ -55,7 +71,10 @@ public class AlphaBetaCyborg {
 			}
 
 		}
-
+		if(maxWert > 9000000)
+		{
+			maxWert = maxWert-1;
+		}
 		return maxWert;
 	}
 
@@ -67,6 +86,24 @@ public class AlphaBetaCyborg {
 		double wert = 0;
 		ArrayList<Position> legalPositions = new PositionCalc(position).getLegalFollowingPositions();
 
+		if(legalPositions.size()==0)
+		{
+			for(Map.Entry<Byte, Piece> blackPiece : position.getBlackFiguren().entrySet())
+			{
+				if(blackPiece.getValue() instanceof King)
+				{
+					if(((King) blackPiece.getValue()).isInCheck(position))
+					{
+						return 9999999;
+					}
+					else
+					{
+						return 0;
+					}
+				}
+			}	
+		}
+		
 		for (Position pos : legalPositions) {
 			wert = max(pos, tiefe - 1, alpha, minWert);
 			if (wert < minWert) {
@@ -79,7 +116,10 @@ public class AlphaBetaCyborg {
 				}
 			}
 		}
-
+		if(minWert < -9000000)
+		{
+			minWert = minWert+1;
+		}
 		return minWert;
 	}
 

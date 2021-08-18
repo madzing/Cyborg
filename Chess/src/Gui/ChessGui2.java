@@ -67,7 +67,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+					Fen _startFen= Fen.select("7k/8/7K/8/8/8/8/8 w - - 0 1");
 					Position _startPosition = new Position(_startFen);
 					ChessGui2 window = new ChessGui2(_startPosition);
 					window.setVisible(true);
@@ -165,7 +165,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	
 	public void makeCyborgMove()
 	{
-		AlphaBetaCyborg Ernd = new AlphaBetaCyborg(3);
+		AlphaBetaCyborg Ernd = new AlphaBetaCyborg(5);
 		_position = Ernd.getBestFollowingPosition(_position);
 		setFiguren();
 		setZugrechtLabel();

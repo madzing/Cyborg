@@ -89,14 +89,13 @@ public class King extends Piece {
 		
 		for(Map.Entry<Byte, Piece> entry : figurenDesGegners.entrySet())
 		{
-			if(!(entry.getValue() instanceof King))
-			{
+
 			if(entry.getValue().getMoves(figurenDesGegners, figurenDesKoenigs, position).contains(super.getCoordinate()))
 			{
 				return true;
 			}
 		}
-		}
+		
 		return false;
 	}
 	
