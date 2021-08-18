@@ -14,7 +14,7 @@ public class AlphaBetaCyborgSpeedTest {
 	public void testSpeed() {
 		AlphaBetaCyborg anton = new AlphaBetaCyborg(5);
 
-		Fen startFen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+		Fen startFen = Fen.select("7k/8/7K/8/8/8/8/8 w - - 0 1");
 		Position startPosition = new Position(startFen);
 
 		Position besteFolgePos = anton.getBestFollowingPosition(startPosition);
