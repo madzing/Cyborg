@@ -9,8 +9,8 @@ import java.util.Map;
 
 public abstract class Piece {
 	boolean _color;
-	private byte _value;
-	private byte _coordinate; 
+	protected byte _value;
+	protected byte _coordinate; 
 
 	public Piece (byte coordinate, boolean color) {
 		_coordinate = coordinate;

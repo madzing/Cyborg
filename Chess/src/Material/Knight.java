@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Knight extends Piece implements Copy{
+public class Knight extends Piece {
 	public Knight(byte coordinate, boolean color) {
 		super(coordinate,color);
 		super.setValue((byte)3);
@@ -34,8 +34,8 @@ public class Knight extends Piece implements Copy{
 		return list;
 	}
 	public Map<Byte, Piece> copy(Map<Byte, Piece> copyable) {
-		copyable.put(this.getCoordinate(),
-				new Knight(this.getCoordinate(), this.getColor()));
+		copyable.put(super._coordinate,
+				new Knight(super._coordinate, super._color));
 		return copyable;
 	}
 }

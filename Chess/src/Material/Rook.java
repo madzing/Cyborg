@@ -2,7 +2,7 @@ package Material;
 
 import java.util.Map;
 
-public class Rook extends Piece implements Copy{
+public class Rook extends Piece {
 
 	public Rook(byte coordinate, boolean color) {
 		super(coordinate, color);
@@ -13,8 +13,8 @@ public class Rook extends Piece implements Copy{
 		return new byte[] { -8, 1, 8, -1 };
 	}
 	public Map<Byte, Piece> copy(Map<Byte, Piece> copyable) {
-		copyable.put(this.getCoordinate(),
-				new Rook(this.getCoordinate(), this.getColor()));
+		copyable.put(super._coordinate,
+				new Rook(super._coordinate, super._color));
 		return copyable;
 	}
 

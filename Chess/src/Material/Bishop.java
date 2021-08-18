@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Bishop extends Piece implements Copy {
+public class Bishop extends Piece {
 
 	public Bishop(byte coordinate, boolean color) {
 		super(coordinate, color);
@@ -15,8 +15,8 @@ public class Bishop extends Piece implements Copy {
 		return new byte[] { -7, 9, 7, -9 };
 	}
 	public Map<Byte, Piece> copy(Map<Byte, Piece> copyable) {
-		copyable.put(this.getCoordinate(),
-				new Bishop(this.getCoordinate(), this.getColor()));
+		copyable.put(super._coordinate,
+				new Bishop(super._coordinate, super._color));
 		return copyable;
 	}
 }

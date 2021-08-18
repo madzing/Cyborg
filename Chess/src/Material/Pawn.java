@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class Pawn extends Piece implements Copy {
+public class Pawn extends Piece {
 	public Pawn(byte coordinate, boolean color) {
 		super(coordinate, color);
 		super.setValue((byte) 1);
@@ -81,8 +81,8 @@ public class Pawn extends Piece implements Copy {
 		return pieceFelder;
 	}
 	public Map<Byte, Piece> copy(Map<Byte, Piece> copyable) {
-		copyable.put(this.getCoordinate(),
-				new Pawn(this.getCoordinate(), this.getColor()));
+		copyable.put(super._coordinate,
+				new Pawn(super._coordinate, super._color));
 		return copyable;
 	}
 }
