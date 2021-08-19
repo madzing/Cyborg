@@ -138,8 +138,19 @@ public class Eval {
 					blackPoints = (double) (blackPoints + (blackPiece.getValue().getValue()+_kingFelder[blackPiece.getValue().getCoordinate()]));
 				}
 			}
-
-			return (double) (whitePoints - blackPoints);
+			
+			
+			double rueckgabe = (double) (whitePoints - blackPoints);
+			if(position.getZugrecht())
+			{
+				rueckgabe = rueckgabe+0.251234;
+			}
+			else
+			{
+				rueckgabe = rueckgabe-0.251234;
+			}
+			
+			return rueckgabe;
 		}
 
 }

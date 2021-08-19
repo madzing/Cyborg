@@ -14,12 +14,7 @@ import Services.Eval;
 import Services.PositionCalc;
 
 
-// treemap oder hashMap?
-// key nicht getfen?
-// warum Positions tatsächlich "abspeichern", wenn später ehh nur dach dem Key gesucht wird und die Position nicht verwendet wird?
-// einträge von vorherigen durchläufen löschen?
-
-
+// Probleme mit endlosschleife nicht behoben
 public class AlphaBetaCyborg {
 
 	Eval _eval;
@@ -68,9 +63,9 @@ public class AlphaBetaCyborg {
 		}
 		else if (tiefe <= 0) {
 			double currentEval = _eval.getEval(position);
-			if(Math.abs(Math.abs(currentEval)-Math.abs(_lastEval))<2||currentEval<8000||currentEval>8000)
+			if(Math.abs(Math.abs(currentEval)-Math.abs(_lastEval))<2||_lastEval<-9000||_lastEval>9000||_lastEval==0.0)
 			{
-				//System.out.println(tiefe);
+				System.out.println(tiefe);
 				return currentEval;
 			}
 
@@ -90,9 +85,11 @@ public class AlphaBetaCyborg {
 					{
 						if(((King) whitePiece.getValue()).isInCheck(position))
 						{
+							_lastEval = -9999999.0;
 							return -9999999;
 						}
 						else {
+							_lastEval = 0.0;
 							return 0;
 						}
 					}
@@ -127,7 +124,7 @@ public class AlphaBetaCyborg {
 		}
 		else if (tiefe <= 0) {
 			double currentEval = _eval.getEval(position);
-			if(Math.abs(Math.abs(currentEval)-Math.abs(_lastEval))<2||currentEval<8000||currentEval>8000)
+			if(Math.abs(Math.abs(currentEval)-Math.abs(_lastEval))<2||_lastEval<-9000||_lastEval>9000||_lastEval==0.0)
 			{
 				//System.out.println(tiefe);
 				return currentEval;
@@ -149,10 +146,12 @@ public class AlphaBetaCyborg {
 				{
 					if(((King) blackPiece.getValue()).isInCheck(position))
 					{
+						_lastEval = 9999999.0;
 						return 9999999;
 					}
 					else
 					{
+						_lastEval = 0.0;
 						return 0;
 					}
 				}
