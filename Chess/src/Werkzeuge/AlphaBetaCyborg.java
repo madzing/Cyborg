@@ -41,10 +41,12 @@ public class AlphaBetaCyborg {
 		}
 		else if (tiefe <= 0) {
 			double currentEval = _eval.getEval(position);
-			if(Math.abs(currentEval-_lastEval)<1)
+			if(Math.abs(Math.abs(currentEval)-Math.abs(_lastEval))<2)
 			{
+				//System.out.println(tiefe);
 				return currentEval;
 			}
+
 			_lastEval = currentEval;
 		}
 		double maxWert = alpha;
@@ -95,10 +97,11 @@ public class AlphaBetaCyborg {
 		}
 		else if (tiefe <= 0) {
 			double currentEval = _eval.getEval(position);
-			if(Math.abs(currentEval-_lastEval)<1)
+			if(Math.abs(Math.abs(currentEval)-Math.abs(_lastEval))<2)
 			{
 				return currentEval;
 			}
+
 			_lastEval = currentEval;
 		}
 		double minWert = beta;

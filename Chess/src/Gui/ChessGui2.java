@@ -165,7 +165,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	
 	public void makeCyborgMove()
 	{
-		AlphaBetaCyborg Ernd = new AlphaBetaCyborg(5);
+		AlphaBetaCyborg Ernd = new AlphaBetaCyborg(4);
 		_position = Ernd.getBestFollowingPosition(_position);
 		setFiguren();
 		setZugrechtLabel();
