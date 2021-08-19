@@ -576,12 +576,5 @@ public class Position {
 	public boolean equals(Object pos) {
 		return (getFen().equals((((Position) pos).getFen())));
 	}
-//    @Override
-//    public int hashCode() {
-//    	return toInt(this.getFen());
-//    }
-//    public static int toInt(String fen) {
-//    	return Integer.parseInt(fen);
-//    }
 
 }

@@ -184,10 +184,11 @@ public class AlphaBetaCyborg {
 		ArrayList<Position> schlechtesArray = new ArrayList<Position>();
 		for (Position p : legalPositions)
 		{
-			if(_guteZuege.containsKey(p.getPlacement()))
+			String placement = p.getPlacement();
+			if(_guteZuege.containsKey(placement))
 			{
 				gutesArray.add(p);
-				_guteZuege.remove(p.getPlacement());
+				_guteZuege.remove(placement);
 			}
 			else
 			{
