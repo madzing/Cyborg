@@ -68,7 +68,7 @@ public class AlphaBetaCyborg {
 		}
 		else if (tiefe <= 0) {
 			double currentEval = _eval.getEval(position);
-			if(Math.abs(Math.abs(currentEval)-Math.abs(_lastEval))<2)
+			if(Math.abs(Math.abs(currentEval)-Math.abs(_lastEval))<2||currentEval<8000||currentEval>8000)
 			{
 				//System.out.println(tiefe);
 				return currentEval;
@@ -127,8 +127,9 @@ public class AlphaBetaCyborg {
 		}
 		else if (tiefe <= 0) {
 			double currentEval = _eval.getEval(position);
-			if(Math.abs(Math.abs(currentEval)-Math.abs(_lastEval))<2)
+			if(Math.abs(Math.abs(currentEval)-Math.abs(_lastEval))<2||currentEval<8000||currentEval>8000)
 			{
+				//System.out.println(tiefe);
 				return currentEval;
 			}
 
