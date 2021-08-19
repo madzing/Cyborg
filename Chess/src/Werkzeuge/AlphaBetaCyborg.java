@@ -3,6 +3,7 @@ package Werkzeuge;
 import java.util.ArrayList;
 import java.util.Map;
 
+import Buchwissen.Buch;
 import Material.King;
 import Material.Piece;
 import Material.Position;
@@ -15,13 +16,22 @@ public class AlphaBetaCyborg {
 	int _gewuenschtetiefe;
 	Position _bestPosition;
 	Double _lastEval;
+	Buch _buch;
+	
 
 	public AlphaBetaCyborg(int tiefe) {
 		_eval = new Eval();
 		_gewuenschtetiefe = tiefe;
+		_buch = new Buch();
 	}
 
 	public Position getBestFollowingPosition(Position position) {
+		if(_buch.istEnthalten(position))
+		{
+			return _buch.folgePos(position);
+		}
+		
+		
 		double alpha = -99999999;
 		double beta = 99999999;
 		_bestPosition = null;
