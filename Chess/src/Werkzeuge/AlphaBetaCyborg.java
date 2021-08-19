@@ -14,6 +14,7 @@ public class AlphaBetaCyborg {
 	Eval _eval;
 	int _gewuenschtetiefe;
 	Position _bestPosition;
+	Double _lastEval;
 
 	public AlphaBetaCyborg(int tiefe) {
 		_eval = new Eval();
@@ -34,8 +35,17 @@ public class AlphaBetaCyborg {
 	}
 
 	private double max(Position position, int tiefe, double alpha, double beta) {
-		if (tiefe == 0) {
-			return _eval.getEval(position);
+		if(tiefe == 1)
+		{
+			_lastEval = _eval.getEval(position);
+		}
+		else if (tiefe <= 0) {
+			double currentEval = _eval.getEval(position);
+			if(Math.abs(currentEval-_lastEval)<1)
+			{
+				return currentEval;
+			}
+			_lastEval = currentEval;
 		}
 		double maxWert = alpha;
 		double wert = 0;
@@ -79,8 +89,17 @@ public class AlphaBetaCyborg {
 	}
 
 	private double min(Position position, int tiefe, double alpha, double beta) {
-		if (tiefe == 0) {
-			return _eval.getEval(position);
+		if(tiefe == 1)
+		{
+			_lastEval = _eval.getEval(position);
+		}
+		else if (tiefe <= 0) {
+			double currentEval = _eval.getEval(position);
+			if(Math.abs(currentEval-_lastEval)<1)
+			{
+				return currentEval;
+			}
+			_lastEval = currentEval;
 		}
 		double minWert = beta;
 		double wert = 0;
