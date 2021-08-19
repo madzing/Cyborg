@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -43,6 +44,7 @@ import javax.swing.JComboBox;
 
 public class ChessGui2 extends JFrame implements ActionListener{
 	Position _position;
+	Position _positionSpeicher;
 	Map<Byte, Piece> _whiteFiguren;
 	Map<Byte, Piece> _blackFiguren;
 	List<JButton> _buttons;
@@ -56,7 +58,6 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	private JButton _btnGetAktuelleFen;
 	private JLabel _zugrechtLabel;
 	private JToggleButton _tglbtnNewToggleButton;
-	private makeMoveListener _makeMoveListener;
 	List <String> _spalte;
 	List <String> _zeile;
 	
@@ -67,7 +68,10 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Fen _startFen= Fen.select("7k/8/8/7p/6pP/6P1/5pRK/6BR b - - 0 1");
+
+					Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+//					Fen _startFen = Fen.select("rnbqkbn1/pppppppP/8/8/8/8/PPPPPPPp/RNBQKBN1 w KQkq - 0 1");
+
 					Position _startPosition = new Position(_startFen);
 					ChessGui2 window = new ChessGui2(_startPosition);
 					window.setVisible(true);
@@ -83,13 +87,13 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	 */
 	public ChessGui2(Position position) {
 		_position = position;
+		_positionSpeicher = new Position(_position);
 		_whiteFiguren = position.getWhiteFiguren();
 		_blackFiguren = position.getBlackFiguren();
 		_buttons = new ArrayList<JButton>(64);
 		_letzterGedrueckterButton = 0;
 		_gedrueckterButton = 0;
 		_posCalc = new PositionCalc(position);
-		_makeMoveListener = new makeMoveListener();
 		_spalte = new ArrayList<String>(8);
 		_zeile = new ArrayList<String>(8);
 		befuelleZeileSpalte();
@@ -160,7 +164,6 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	 * -Zug reversen
 	 * -PROMOTION!!
 	 * -Zugrecht Feld displayed Gewinner
-	 * -Schrift in den Schwarzen Kacheln wei� machen
 	 */
 	
 	public void makeCyborgMove()
@@ -170,6 +173,50 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		setFiguren();
 		setZugrechtLabel();
 		//System.out.println(_position.getFen());
+	}
+	private void promotion(int piece)
+	{
+		// piece = 0 wenn Queen. 1 wenn Rook. 2 wenn Bishop. 3 wenn Knight.
+		if (! _position.getZugrecht())
+		{
+			if (piece == 0)
+			{
+				_positionSpeicher.promotion(new Queen((byte)_gedrueckterButton, false));
+			}
+			if (piece == 1)
+			{
+				_positionSpeicher.promotion(new Rook((byte)_gedrueckterButton, false));
+			}
+			if (piece == 2)
+			{
+				_positionSpeicher.promotion(new Bishop((byte)_gedrueckterButton, false));
+			}
+			if (piece == 3)
+			{
+				_positionSpeicher.promotion(new Knight((byte)_gedrueckterButton, false));
+			}
+					
+		}
+		else 
+		{
+			if (piece == 0)
+			{
+				_positionSpeicher.promotion(new Queen((byte)_gedrueckterButton, true));
+			}
+			if (piece == 1)
+			{
+				_positionSpeicher.promotion(new Rook((byte)_gedrueckterButton, true));
+			}
+			if (piece == 2)
+			{
+				_positionSpeicher.promotion(new Bishop((byte)_gedrueckterButton, true));
+			}
+			if (piece == 3)
+			{
+				_positionSpeicher.promotion(new Knight((byte)_gedrueckterButton, true));
+			}
+
+		}
 	}
 	
 	private void ButtonListenerErzeugen()
@@ -641,18 +688,33 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			{
 				_posCalc = new PositionCalc(_position);
 				ArrayList<Position> legalePositionen = _posCalc.getLegalFollowingPositions();
-				Position positionSpeicher = new Position(_position);
-				positionSpeicher.makeMove((byte)_letzterGedrueckterButton, (byte)_gedrueckterButton);
+				_positionSpeicher = new Position(_position);
+				Object[] optionen = {"Queen", "Rook", "Bishop", "Knight"};
+				
+				_positionSpeicher.makeMove((byte)_letzterGedrueckterButton, (byte)_gedrueckterButton);
+				System.out.println("positionSpeicher1: " + _positionSpeicher.getFen());
+				
+				if ((_gedrueckterButton >=56 && _blackFiguren.get((byte)_letzterGedrueckterButton) instanceof Pawn)|| (_gedrueckterButton <=7 && _whiteFiguren.get((byte)_letzterGedrueckterButton) instanceof Pawn))
+				{
+					int piece = JOptionPane.showOptionDialog(null, "W�hle eine Figur:", null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, optionen, null); 
+					promotion(piece);
+					System.out.println("piece: "+piece);
+					System.out.println("zugrecht: " +_position.getZugrecht());
+					// piece = 0 wenn Queen. 1 wenn Rook. 2 wenn Bishop. 3 wenn Knight.
+				}	
+				
+				
 				for(Position p: legalePositionen)
 				{
-					if (p.getFen().equals(positionSpeicher.getFen()))
+					if (p.getFen().equals(_positionSpeicher.getFen()))
 					{
-						_position = positionSpeicher;
+						_position = _positionSpeicher;
 					}
 				}
 				setFiguren();
 				setZugrechtLabel();
-				//System.out.println(_position.getFen());
+				System.out.println("positionSpeicher2: " + _positionSpeicher.getFen());
+				System.out.println("_position: " + _position.getFen());
 			}
 		if(_tglbtnNewToggleButton.isSelected() && !(_position._zugrecht))
 		{
