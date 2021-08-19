@@ -33,6 +33,7 @@ import Material.Position;
 import Material.Queen;
 import Material.Rook;
 import Services.PositionCalc;
+import Werkzeuge.AlphaBetaCyborg;
 import Werkzeuge.RekursiverCyborg;
 
 import java.awt.BorderLayout;
@@ -67,8 +68,10 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+
 					Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 //					Fen _startFen = Fen.select("rnbqkbn1/pppppppP/8/8/8/8/PPPPPPPp/RNBQKBN1 w KQkq - 0 1");
+
 					Position _startPosition = new Position(_startFen);
 					ChessGui2 window = new ChessGui2(_startPosition);
 					window.setVisible(true);
@@ -165,7 +168,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	
 	public void makeCyborgMove()
 	{
-		RekursiverCyborg Ernd = new RekursiverCyborg(3);
+		AlphaBetaCyborg Ernd = new AlphaBetaCyborg(4);
 		_position = Ernd.getBestFollowingPosition(_position);
 		setFiguren();
 		setZugrechtLabel();
@@ -693,7 +696,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				
 				if ((_gedrueckterButton >=56 && _blackFiguren.get((byte)_letzterGedrueckterButton) instanceof Pawn)|| (_gedrueckterButton <=7 && _whiteFiguren.get((byte)_letzterGedrueckterButton) instanceof Pawn))
 				{
-					int piece = JOptionPane.showOptionDialog(null, "Wähle eine Figur:", null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, optionen, null); 
+					int piece = JOptionPane.showOptionDialog(null, "Wï¿½hle eine Figur:", null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, optionen, null); 
 					promotion(piece);
 					System.out.println("piece: "+piece);
 					System.out.println("zugrecht: " +_position.getZugrecht());

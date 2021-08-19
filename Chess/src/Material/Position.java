@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import Fachwerte.Fen;
 
-
 public class Position {
 	private Map<Byte, Piece> _whiteFiguren = new HashMap<>(16, (float) 1.0);
 	private Map<Byte, Piece> _blackFiguren = new HashMap<>(16, (float) 1.0);
@@ -38,28 +37,22 @@ public class Position {
 		{
 			Piece figur = piece.getValue();
 			if (figur instanceof Pawn) {
-				neueMap.put(figur.getCoordinate(),
-						(Pawn) new Pawn(figur.getCoordinate(), figur.getColor()));
+				neueMap.put(figur.getCoordinate(), (Pawn) new Pawn(figur.getCoordinate(), figur.getColor()));
 			}
 			if (figur instanceof Knight) {
-				neueMap.put(figur.getCoordinate(),
-						(Knight) new Knight(figur.getCoordinate(), figur.getColor()));
+				neueMap.put(figur.getCoordinate(), (Knight) new Knight(figur.getCoordinate(), figur.getColor()));
 			}
 			if (figur instanceof Bishop) {
-				neueMap.put(figur.getCoordinate(),
-						(Bishop) new Bishop(figur.getCoordinate(), figur.getColor()));
+				neueMap.put(figur.getCoordinate(), (Bishop) new Bishop(figur.getCoordinate(), figur.getColor()));
 			}
 			if (figur instanceof Rook) {
-				neueMap.put(figur.getCoordinate(),
-						(Rook) new Rook(figur.getCoordinate(), figur.getColor()));
+				neueMap.put(figur.getCoordinate(), (Rook) new Rook(figur.getCoordinate(), figur.getColor()));
 			}
 			if (figur instanceof Queen) {
-				neueMap.put(figur.getCoordinate(),
-						(Queen) new Queen(figur.getCoordinate(), figur.getColor()));
+				neueMap.put(figur.getCoordinate(), (Queen) new Queen(figur.getCoordinate(), figur.getColor()));
 			}
 			if (figur instanceof King) {
-				neueMap.put(figur.getCoordinate(),
-						(King) new King(figur.getCoordinate(), figur.getColor()));
+				neueMap.put(figur.getCoordinate(), (King) new King(figur.getCoordinate(), figur.getColor()));
 			}
 		}
 		return neueMap;
@@ -163,7 +156,6 @@ public class Position {
 
 			_zugrecht = true;
 
-			
 			Piece capturedPiece = _whiteFiguren.remove(neuePos);
 			if (capturedPiece instanceof Rook) {
 				if (capturedPiece.getCoordinate() == 63) {
@@ -172,7 +164,7 @@ public class Position {
 					_whiteCanCastle[1] = false;
 				}
 			}
-			
+
 			_blackFiguren.put(neueFigurPosition, _blackFiguren.remove(alteFigurPosition));
 		}
 
@@ -503,6 +495,51 @@ public class Position {
 		return placement + " " + zugrecht + " " + castling + " " + enPassant + " " + halfmoves + " " + fullmoves;
 	}
 
+	public String getPlacement() {
+		String placement = "0000000000000000000000000000000000000000000000000000000000000000";
+		char[] array = placement.toCharArray();
+
+		for (Map.Entry<Byte, Piece> whitePiece : _whiteFiguren.entrySet()) {
+			byte platz = whitePiece.getValue().getCoordinate();
+
+			if (whitePiece.getValue() instanceof Pawn) {
+				array[platz] = 'P';
+			} else if (whitePiece.getValue() instanceof Knight) {
+				array[platz] = 'N';
+			} else if (whitePiece.getValue() instanceof Bishop) {
+				array[platz] = 'B';
+			} else if (whitePiece.getValue() instanceof Rook) {
+				array[platz] = 'R';
+			} else if (whitePiece.getValue() instanceof Queen) {
+				array[platz] = 'Q';
+			} else {
+				array[platz] = 'K';
+			}
+
+		}
+		for (Map.Entry<Byte, Piece> blackPiece : _blackFiguren.entrySet()) {
+			byte platz = blackPiece.getValue().getCoordinate();
+
+			if (blackPiece.getValue() instanceof Pawn) {
+				array[platz] = 'p';
+			} else if (blackPiece.getValue() instanceof Knight) {
+				array[platz] = 'n';
+			} else if (blackPiece.getValue() instanceof Bishop) {
+				array[platz] = 'b';
+			} else if (blackPiece.getValue() instanceof Rook) {
+				array[platz] = 'r';
+			} else if (blackPiece.getValue() instanceof Queen) {
+				array[platz] = 'q';
+			} else {
+				array[platz] = 'k';
+			}
+		}
+
+		placement = new String(array);
+		//System.out.println(placement);
+		return placement;
+	}
+
 	public Map<Byte, Piece> getWhiteFiguren() {
 		return _whiteFiguren;
 	}
@@ -539,12 +576,5 @@ public class Position {
 	public boolean equals(Object pos) {
 		return (getFen().equals((((Position) pos).getFen())));
 	}
-//    @Override
-//    public int hashCode() {
-//    	return toInt(this.getFen());
-//    }
-//    public static int toInt(String fen) {
-//    	return Integer.parseInt(fen);
-//    }
 
 }

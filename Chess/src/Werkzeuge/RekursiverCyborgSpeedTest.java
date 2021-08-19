@@ -28,6 +28,7 @@ public class RekursiverCyborgSpeedTest {
 
 }
 
+
 /* DOKUMENTATION: (Zeit, die RekursiverCyborg braucht um seinen Zug zu finden in Sekunden)
 *	
 *	Jan PC:
