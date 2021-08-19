@@ -6,7 +6,7 @@ import java.util.Map;
 
 import javax.lang.model.type.NullType;
 
-import Buchwissen.Buch;
+import Buchwissen.Book;
 import Material.King;
 import Material.Piece;
 import Material.Position;
@@ -21,13 +21,13 @@ public class AlphaBetaCyborg {
 	int _gewuenschtetiefe;
 	Position _bestPosition;
 	Double _lastEval;
-	Buch _buch;
+	Book _buch;
 	HashMap <String,NullType> _guteZuege;
 
 	public AlphaBetaCyborg(int tiefe) {
 		_eval = new Eval();
 		_gewuenschtetiefe = tiefe;
-		_buch = new Buch();
+		_buch = new Book();
 		_guteZuege = new HashMap<String,NullType>();
 	}
 

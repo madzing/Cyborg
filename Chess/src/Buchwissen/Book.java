@@ -6,11 +6,11 @@ import java.util.HashMap;
 import Fachwerte.Fen;
 import Material.Position;
 
-public class Buch {
+public class Book {
 
 	HashMap <String,Position> buch  = new HashMap<String,Position>();
 	
-	public Buch()
+	public Book()
 	{
 		//e4
 		buch.put("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", new Position(Fen.select("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1")));
