@@ -32,6 +32,7 @@ import Material.Position;
 import Material.Queen;
 import Material.Rook;
 import Services.PositionCalc;
+import Werkzeuge.AlphaBetaCyborg;
 import Werkzeuge.RekursiverCyborg;
 
 import java.awt.BorderLayout;
@@ -164,7 +165,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	
 	public void makeCyborgMove()
 	{
-		RekursiverCyborg Ernd = new RekursiverCyborg(3);
+		AlphaBetaCyborg Ernd = new AlphaBetaCyborg(5);
 		_position = Ernd.getBestFollowingPosition(_position);
 		setFiguren();
 		setZugrechtLabel();
