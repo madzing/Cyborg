@@ -80,6 +80,7 @@ public class Eval {
 
 			double whitePoints = 0;
 			double blackPoints = 0;
+
 			if(position.getZuegeKleiner50()>=50)
 			{
 				return 0.0;
