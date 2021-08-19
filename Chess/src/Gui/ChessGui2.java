@@ -67,7 +67,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Fen _startFen= Fen.select("4k3/8/8/8/7p/7P/5pPK/6BB b - - 0 1");
+					Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 					Position _startPosition = new Position(_startFen);
 					ChessGui2 window = new ChessGui2(_startPosition);
 					window.setVisible(true);
