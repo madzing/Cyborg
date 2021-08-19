@@ -103,7 +103,7 @@ public class AlphaBetaCyborg {
 			wert = min(pos, tiefe - 1, maxWert, beta);
 			if (wert > maxWert) {
 				maxWert = wert;
-				_guteZuege.put(pos.getFen(), null);
+				_guteZuege.put(pos.getPlacement(), null);
 				if (tiefe == _gewuenschtetiefe) {
 					_bestPosition = pos;
 				}
@@ -162,7 +162,7 @@ public class AlphaBetaCyborg {
 			wert = max(pos, tiefe - 1, alpha, minWert);
 			if (wert < minWert) {
 				minWert = wert;
-				_guteZuege.put(pos.getFen(), null);
+				_guteZuege.put(pos.getPlacement(), null);
 				if (tiefe == _gewuenschtetiefe) {
 					_bestPosition = pos;
 				}
@@ -184,10 +184,10 @@ public class AlphaBetaCyborg {
 		ArrayList<Position> schlechtesArray = new ArrayList<Position>();
 		for (Position p : legalPositions)
 		{
-			if(_guteZuege.containsKey(p.getFen()))
+			if(_guteZuege.containsKey(p.getPlacement()))
 			{
 				gutesArray.add(p);
-				_guteZuege.remove(p.getFen());
+				_guteZuege.remove(p.getPlacement());
 			}
 			else
 			{
