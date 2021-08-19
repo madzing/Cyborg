@@ -45,7 +45,7 @@ public class RekursiverCyborg
 			}
 		}
 		
-		//System.out.println(""+bestEval+"");
+		System.out.println(""+bestEval+"");
     	return bestPosition;
     }
 
