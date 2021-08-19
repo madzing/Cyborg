@@ -89,6 +89,18 @@ public class PositionTest {
 	}
 
 	@Test
+	public void testGetPlacement() {
+		assertEquals("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" , _startPosition.getPlacement());
+		Fen zweiKoenigeFen = Fen.select("8/8/8/2k5/8/4K3/8/8 w - - 5 56");
+		Position zweiKoenigeTest = new Position(zweiKoenigeFen);
+		assertEquals("8/8/8/2k5/8/4K3/8/8 w - - 5 56", zweiKoenigeTest.getFen());
+		Fen enpassantfen = Fen.select("8/8/8/2k5/8/4K3/8/8 w - b6 5 56");
+		Position enPassantPosition = new Position(enpassantfen);
+		assertEquals("8/8/8/2k5/8/4K3/8/8 w - b6 5 56", enPassantPosition.getFen());
+		
+	}
+	
+	@Test
 	public void testGetWhiteFiguren() {
 		List<Piece> white = new ArrayList<Piece>();
 		white.add(new Pawn((byte)48,true));		//0
