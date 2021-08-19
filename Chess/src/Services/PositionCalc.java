@@ -48,13 +48,13 @@ public class PositionCalc {
 							neuePos.promotion(new Knight(neueFigurPos,entry.getValue().getColor()));
 							if (isPositionLegal(neuePos))
 							{
-								folgePositionen.add(neuePos);
+								folgePositionen.add(new Position(neuePos));
 								neuePos.promotion(new Bishop(neueFigurPos,entry.getValue().getColor()));
-								folgePositionen.add(neuePos);
+								folgePositionen.add(new Position(neuePos));
 								neuePos.promotion(new Rook(neueFigurPos,entry.getValue().getColor()));
-								folgePositionen.add(neuePos);
+								folgePositionen.add(new Position(neuePos));
 								neuePos.promotion(new Queen(neueFigurPos,entry.getValue().getColor()));
-								folgePositionen.add(neuePos);
+								folgePositionen.add(new Position(neuePos));
 							}
 						}
 				else if (isPositionLegal(neuePos)) {

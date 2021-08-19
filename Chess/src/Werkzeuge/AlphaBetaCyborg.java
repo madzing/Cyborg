@@ -65,7 +65,7 @@ public class AlphaBetaCyborg {
 			double currentEval = _eval.getEval(position);
 			if(Math.abs(Math.abs(currentEval)-Math.abs(_lastEval))<2||_lastEval<-9000||_lastEval>9000||_lastEval==0.0)
 			{
-				System.out.println(tiefe);
+				//System.out.println(tiefe);
 				return currentEval;
 			}
 
@@ -188,7 +188,6 @@ public class AlphaBetaCyborg {
 			if(_guteZuege.containsKey(placement))
 			{
 				gutesArray.add(p);
-				_guteZuege.remove(placement);
 			}
 			else
 			{
