@@ -536,7 +536,7 @@ public class Position {
 		}
 
 		placement = new String(array);
-System.out.println(placement);
+		//System.out.println(placement);
 		return placement;
 	}
 
