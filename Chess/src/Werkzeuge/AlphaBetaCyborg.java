@@ -22,13 +22,13 @@ public class AlphaBetaCyborg {
 	Position _bestPosition;
 	Double _lastEval;
 	BookReader _buch;
-	HashMap <String,NullType> _guteZuege;
+	HashMap <String,Double> _guteZuege;
 
 	public AlphaBetaCyborg(int tiefe) {
 		_eval = new Eval();
 		_gewuenschtetiefe = tiefe;
 		_buch = new BookReader();
-		_guteZuege = new HashMap<String,NullType>();
+		_guteZuege = new HashMap<String,Double>();
 	}
 
 	public Position getBestFollowingPosition(Position position) {
@@ -65,7 +65,7 @@ public class AlphaBetaCyborg {
 			double currentEval = _eval.getEval(position);
 			if(Math.abs(Math.abs(currentEval)-Math.abs(_lastEval))<2||_lastEval<-9000||_lastEval>9000||_lastEval==0.0)
 			{
-				System.out.println(tiefe);
+				//System.out.println(tiefe);
 				return currentEval;
 			}
 
@@ -100,7 +100,7 @@ public class AlphaBetaCyborg {
 			wert = min(pos, tiefe - 1, maxWert, beta);
 			if (wert > maxWert) {
 				maxWert = wert;
-				_guteZuege.put(pos.getPlacement(), null);
+				_guteZuege.put(pos.getPlacement(), wert);
 				if (tiefe == _gewuenschtetiefe) {
 					_bestPosition = pos;
 				}
@@ -126,7 +126,7 @@ public class AlphaBetaCyborg {
 			double currentEval = _eval.getEval(position);
 			if(Math.abs(Math.abs(currentEval)-Math.abs(_lastEval))<2||_lastEval<-9000||_lastEval>9000||_lastEval==0.0)
 			{
-				System.out.println(tiefe);
+				//System.out.println(tiefe);
 				return currentEval;
 			}
 
@@ -162,7 +162,7 @@ public class AlphaBetaCyborg {
 			wert = max(pos, tiefe - 1, alpha, minWert);
 			if (wert < minWert) {
 				minWert = wert;
-				_guteZuege.put(pos.getPlacement(), null);
+				_guteZuege.put(pos.getPlacement(), wert);
 				if (tiefe == _gewuenschtetiefe) {
 					_bestPosition = pos;
 				}
@@ -188,6 +188,7 @@ public class AlphaBetaCyborg {
 			if(_guteZuege.containsKey(placement))
 			{
 				gutesArray.add(p);
+				//_guteZuege.remove(placement); // TODO warum funktioniert dies nicht, sondern macht das Programm langsamer
 			}
 			else
 			{
@@ -197,5 +198,11 @@ public class AlphaBetaCyborg {
 		gutesArray.addAll(schlechtesArray);
 		return gutesArray;
 	}
+	
+	public 	HashMap <String,Double> getGuteZuege()
+	{
+		return _guteZuege;
+	}
+	
 
 }
