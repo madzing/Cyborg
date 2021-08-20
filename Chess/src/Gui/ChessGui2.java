@@ -49,7 +49,9 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	Map<Byte, Piece> _whiteFiguren;
 	Map<Byte, Piece> _blackFiguren;
 	List<JButton> _buttons;
-	List<Position> _positions;
+	ArrayList<Position> _positions;
+	List<JLabel> _geschlageneWhiteFiguren;
+	List<JLabel> _geschlageneBlackFiguren;
 	int _letzterGedrueckterButton;
 	int _gedrueckterButton;
 	int _aktuellerZug;
@@ -97,6 +99,8 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		_blackFiguren = position.getBlackFiguren();
 		_buttons = new ArrayList<JButton>(64);
 		_positions = new ArrayList<Position>(6000);
+		_geschlageneWhiteFiguren = new ArrayList<JLabel>(16);
+		_geschlageneBlackFiguren = new ArrayList<JLabel>(16);
 		_letzterGedrueckterButton = 0;
 		_gedrueckterButton = 0;
 		_aktuellerZug = 0;
@@ -144,12 +148,12 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		_btnGetAktuelleFen.setBounds(784, 50, 190, 45);
+		_btnGetAktuelleFen.setBounds(784, 60, 190, 45);
 		getContentPane().add(_btnGetAktuelleFen);
 		_btnGetAktuelleFen.addActionListener(this);
 
 		_tglbtnNewToggleButton = new JToggleButton("Automatisch");
-		_tglbtnNewToggleButton.setBounds(784, 0, 190, 45);
+		_tglbtnNewToggleButton.setBounds(784, 10, 190, 45);
 		getContentPane().add(_tglbtnNewToggleButton);
 
 		_btnNewButton_64 = new JButton("Make Move");
@@ -162,10 +166,12 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		getContentPane().add(_btnNewButton_65);
 		_btnNewButton_65.addActionListener(this);
 		
+				
 		createButtons();
 		setFiguren();
 		setZugrechtLabel();
 		ButtonListenerErzeugen();
+		createGeschlageneFigurLabels();
 
 	}
 
@@ -189,7 +195,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		setFiguren();
 		setZugrechtLabel();
 		_buttons.get(alteKoordinate).setBackground(LIGHT_BLUE);
-		_buttons.get(neueKoordinate).setBackground(LIGHT_BLUE);
+		_buttons.get(neueKoordinate).setBackground(Color.RED);
 		//System.out.println(_position.getFen());
 	}
 
@@ -734,6 +740,119 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		_buttons.add(btnNewButton_63);
 	}
 
+	private void createGeschlageneFigurLabels()
+	{
+		JLabel whitePawn1 = new JLabel("P");
+		whitePawn1.setBounds(790, 550, 23, 25);
+		_geschlageneWhiteFiguren.add(whitePawn1);
+		JLabel whitePawn2 = new JLabel("P");
+		whitePawn2.setBounds(813, 550, 23, 25);
+		_geschlageneWhiteFiguren.add(whitePawn2);
+		JLabel whitePawn3 = new JLabel("P");
+		whitePawn3.setBounds(836, 550, 23, 25);
+		_geschlageneWhiteFiguren.add(whitePawn3);
+		JLabel whitePawn4 = new JLabel("P");
+		whitePawn4.setBounds(859, 550, 23, 25);
+		_geschlageneWhiteFiguren.add(whitePawn4);
+		JLabel whitePawn5 = new JLabel("P");
+		whitePawn5.setBounds(882, 550, 23, 25);
+		_geschlageneWhiteFiguren.add(whitePawn5);
+		JLabel whitePawn6 = new JLabel("P");
+		whitePawn6.setBounds(905, 550, 23, 25);
+		_geschlageneWhiteFiguren.add(whitePawn6);
+		JLabel whitePawn7 = new JLabel("P");
+		whitePawn7.setBounds(928, 550, 23, 25);
+		_geschlageneWhiteFiguren.add(whitePawn7);
+		JLabel whitePawn8 = new JLabel("P");
+		whitePawn8.setBounds(951, 550, 23, 25);
+		_geschlageneWhiteFiguren.add(whitePawn8);
+		
+		JLabel whiteRook1 = new JLabel("R");
+		whiteRook1.setBounds(790, 575, 23, 25);
+		_geschlageneWhiteFiguren.add(whiteRook1);
+		JLabel whiteKnight1 = new JLabel("N");
+		whiteKnight1.setBounds(813, 575, 23, 25);
+		_geschlageneWhiteFiguren.add(whiteKnight1);
+		JLabel whiteBishop1 = new JLabel("B");
+		whiteBishop1.setBounds(836, 575, 23, 25);
+		_geschlageneWhiteFiguren.add(whiteBishop1);
+		JLabel whiteQueen = new JLabel("Q");
+		whiteQueen.setBounds(859, 575, 23, 25);
+		_geschlageneWhiteFiguren.add(whiteQueen);
+		JLabel whiteKing = new JLabel("K");
+		whiteKing.setBounds(882, 575, 23, 25);
+		_geschlageneWhiteFiguren.add(whiteKing);
+		JLabel whiteBishop2 = new JLabel("B");
+		whiteBishop2.setBounds(905, 575, 23, 25);
+		_geschlageneWhiteFiguren.add(whiteBishop2);
+		JLabel whiteKnight2 = new JLabel("N");
+		whiteKnight2.setBounds(928, 575, 23, 25);
+		_geschlageneWhiteFiguren.add(whiteKnight2);
+		JLabel whiteRook2 = new JLabel("R");
+		whiteRook2.setBounds(951, 575, 23, 25);
+		_geschlageneWhiteFiguren.add(whiteRook2);
+		
+		for(int i = 0; i<16;i++)
+		{
+			getContentPane().add(_geschlageneWhiteFiguren.get(i));
+		}
+		
+		JLabel blackPawn1 = new JLabel("p");
+		blackPawn1.setBounds(790, 160, 23, 25);
+		_geschlageneBlackFiguren.add(blackPawn1);
+		JLabel blackPawn2 = new JLabel("p");
+		blackPawn2.setBounds(813, 160, 23, 25);
+		_geschlageneBlackFiguren.add(blackPawn2);
+		JLabel blackPawn3 = new JLabel("p");
+		blackPawn3.setBounds(836, 160, 23, 25);
+		_geschlageneBlackFiguren.add(blackPawn3);
+		JLabel blackPawn4 = new JLabel("p");
+		blackPawn4.setBounds(859, 160, 23, 25);
+		_geschlageneBlackFiguren.add(blackPawn4);
+		JLabel blackPawn5 = new JLabel("p");
+		blackPawn5.setBounds(882, 160, 23, 25);
+		_geschlageneBlackFiguren.add(blackPawn5);
+		JLabel blackPawn6 = new JLabel("p");
+		blackPawn6.setBounds(905, 160, 23, 25);
+		_geschlageneBlackFiguren.add(blackPawn6);
+		JLabel blackPawn7 = new JLabel("p");
+		blackPawn7.setBounds(928, 160, 23, 25);
+		_geschlageneBlackFiguren.add(blackPawn7);
+		JLabel blackPawn8 = new JLabel("p");
+		blackPawn8.setBounds(951, 160, 23, 25);
+		_geschlageneBlackFiguren.add(blackPawn8);
+		
+		JLabel blackRook1 = new JLabel("r");
+		blackRook1.setBounds(790, 135, 23, 25);
+		_geschlageneBlackFiguren.add(blackRook1);
+		JLabel blackKnight1 = new JLabel("n");
+		blackKnight1.setBounds(813, 135, 23, 25);
+		_geschlageneBlackFiguren.add(blackKnight1);
+		JLabel blackBishop1 = new JLabel("b");
+		blackBishop1.setBounds(836, 135, 23, 25);
+		_geschlageneBlackFiguren.add(blackBishop1);
+		JLabel blackQueen = new JLabel("q");
+		blackQueen.setBounds(859, 135, 23, 25);
+		_geschlageneBlackFiguren.add(blackQueen);
+		JLabel blackKing = new JLabel("k");
+		blackKing.setBounds(882, 135, 23, 25);
+		_geschlageneBlackFiguren.add(blackKing);
+		JLabel blackBishop2 = new JLabel("b");
+		blackBishop2.setBounds(908, 135, 23, 25);
+		_geschlageneBlackFiguren.add(blackBishop2);
+		JLabel blackKnight2 = new JLabel("n");
+		blackKnight2.setBounds(928, 135, 23, 25);
+		_geschlageneBlackFiguren.add(blackKnight2);
+		JLabel blackRook2 = new JLabel("r");
+		blackRook2.setBounds(951, 135, 23, 25);
+		_geschlageneBlackFiguren.add(blackRook2);		
+		
+		for(int i = 0; i<16;i++)
+		{
+			getContentPane().add(_geschlageneBlackFiguren.get(i));
+		}
+	}
+	
 	private void befuelleZeileSpalte()
 	{
 		_spalte.add("a"); _spalte.add("b"); _spalte.add("c"); _spalte.add("d"); _spalte.add("e"); _spalte.add("f"); _spalte.add("g"); _spalte.add("h");
@@ -799,7 +918,8 @@ public class ChessGui2 extends JFrame implements ActionListener{
 					// piece = 0 wenn Queen. 1 wenn Rook. 2 wenn Bishop. 3 wenn Knight.
 				}
 
-
+				Position altePosition = new Position(_position);
+				
 				for(Position p: legalePositionen)
 				{
 					if (p.getFen().equals(_positionSpeicher.getFen()))
@@ -807,11 +927,17 @@ public class ChessGui2 extends JFrame implements ActionListener{
 						_position = _positionSpeicher;
 					}
 				}
-				setFiguren();
-				setZugrechtLabel();
-				resetteFelder();
 				_positions.add(_position);
 				_aktuellerZug++;
+				PositionsVergleicher posVergleicher = new PositionsVergleicher(_positions, _aktuellerZug);
+				if(posVergleicher.wurdeFigurGeschlagen() == true)
+				{
+					System.out.println(posVergleicher.welcheFigurWurdeGeschlagen());
+				}
+				System.out.println(posVergleicher.wurdeFigurGeschlagen());
+				setFiguren();
+				setZugrechtLabel();
+				resetteFelder();				
 //				System.out.println("positionSpeicher2: " + _positionSpeicher.getFen());
 //				System.out.println("_position: " + _position.getFen());
 			}
