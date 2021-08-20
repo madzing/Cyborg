@@ -97,7 +97,7 @@ public class AlphaBetaCyborg {
 		
 		for (Position pos : legalPositions) {
 			wert = min(pos, tiefe - 1, maxWert, beta);
-			
+
 			if (wert > maxWert) {
 				maxWert = wert;
 				_guteZuege.put(pos.getPlacement(), wert);
@@ -160,6 +160,7 @@ public class AlphaBetaCyborg {
 		
 		for (Position pos : legalPositions) {
 			wert = max(pos, tiefe - 1, alpha, minWert);
+
 			if (wert < minWert) {
 				minWert = wert;
 
@@ -190,7 +191,7 @@ public class AlphaBetaCyborg {
 			{
 				p.setComparator(_guteZuege.get(placement));
 				gutesArray.add(p);
-				_guteZuege.remove(placement); // TODO warum funktioniert dies nicht, sondern macht das Programm langsamer
+				//_guteZuege.remove(placement); // TODO warum funktioniert dies nicht, sondern macht das Programm langsamer
 			}
 			else
 			{
