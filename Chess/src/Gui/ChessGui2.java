@@ -762,6 +762,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		}
 		else
 			{
+				resetteFelder();
 				_posCalc = new PositionCalc(_position);
 				ArrayList<Position> legalePositionen = _posCalc.getLegalFollowingPositions();
 				_positionSpeicher = new Position(_position);
@@ -794,7 +795,6 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			}
 		if(_tglbtnNewToggleButton.isSelected() && !(_position._zugrecht))
 		{
-			resetteFelder();
 			makeCyborgMove();
 		}
 	}
