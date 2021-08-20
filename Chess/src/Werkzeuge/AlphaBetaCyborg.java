@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.lang.model.type.NullType;
 
 import Buchwissen.BookReader;
 import Material.King;
@@ -98,6 +97,7 @@ public class AlphaBetaCyborg {
 		
 		for (Position pos : legalPositions) {
 			wert = min(pos, tiefe - 1, maxWert, beta);
+
 			if (wert > maxWert) {
 				maxWert = wert;
 				_guteZuege.put(pos.getPlacement(), wert);
@@ -160,6 +160,7 @@ public class AlphaBetaCyborg {
 		
 		for (Position pos : legalPositions) {
 			wert = max(pos, tiefe - 1, alpha, minWert);
+
 			if (wert < minWert) {
 				minWert = wert;
 				_guteZuege.put(pos.getPlacement(), wert);
@@ -187,6 +188,7 @@ public class AlphaBetaCyborg {
 			String placement = p.getPlacement();
 			if(_guteZuege.containsKey(placement))
 			{
+				p.setComparator(_guteZuege.get(placement));
 				gutesArray.add(p);
 				//_guteZuege.remove(placement); // TODO warum funktioniert dies nicht, sondern macht das Programm langsamer
 			}
@@ -195,6 +197,7 @@ public class AlphaBetaCyborg {
 				schlechtesArray.add(p);
 			}
 		}
+		gutesArray.sort(null);
 		gutesArray.addAll(schlechtesArray);
 		return gutesArray;
 	}
