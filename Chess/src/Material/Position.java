@@ -590,9 +590,11 @@ public class Position implements Comparable<Object>{
 	}
 
 	@Override
+	
+	// sortiert für schwarz gut aber für weiß nicht?
 	public int compareTo(Object comparable) {
 		// TODO Auto-generated method stub
-		return getComparator()-((Position) comparable).getComparator();
+		return getComparator()- ((Position) comparable).getComparator();
 	}
 
 }
