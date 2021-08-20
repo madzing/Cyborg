@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import Fachwerte.Fen;
 
-public class Position {
+public class Position implements Comparable<Object>{
 	private Map<Byte, Piece> _whiteFiguren = new HashMap<>(16, (float) 1.0);
 	private Map<Byte, Piece> _blackFiguren = new HashMap<>(16, (float) 1.0);
 	public boolean _zugrecht;
@@ -13,6 +13,7 @@ public class Position {
 	private byte _enpassant;
 	private byte _zuegeKleiner50;
 	private short _zuegeGesamt;
+	private int _comparator =0;
 
 	public Position(Fen fenPosition) {
 		createPosition(fenPosition);
@@ -28,6 +29,7 @@ public class Position {
 		this._enpassant = copyable.getEnPassant();
 		this._zuegeKleiner50 = copyable.getZuegeKleiner50();
 		this._zuegeGesamt = copyable.getZuegeGesamt();
+		
 	}
 
 	private Map<Byte, Piece> copyMap(Map<Byte, Piece> copyable) {
@@ -571,10 +573,26 @@ public class Position {
 	public short getZuegeGesamt() {
 		return _zuegeGesamt;
 	}
+	
+	public int getComparator()
+	{
+		return _comparator;
+	}
+	
+	public void setComparator(double d)
+	{
+		_comparator = (int) (d*10000);
+	}
 
 	@Override
 	public boolean equals(Object pos) {
 		return (getFen().equals((((Position) pos).getFen())));
+	}
+
+	@Override
+	public int compareTo(Object comparable) {
+		// TODO Auto-generated method stub
+		return getComparator()-((Position) comparable).getComparator();
 	}
 
 }
