@@ -163,7 +163,6 @@ public class AlphaBetaCyborg {
 
 			if (wert < minWert) {
 				minWert = wert;
-
 				_guteZuege.put(pos.getPlacement(), wert);
 				if (tiefe == _gewuenschtetiefe) {
 					_bestPosition = pos;
