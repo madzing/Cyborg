@@ -33,6 +33,7 @@ import Material.Position;
 import Material.Queen;
 import Material.Rook;
 import Services.PositionCalc;
+import Services.PositionsVergleicher;
 import Werkzeuge.AlphaBetaCyborg;
 import Werkzeuge.RekursiverCyborg;
 
@@ -60,6 +61,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	private JToggleButton _tglbtnNewToggleButton;
 	List <String> _spalte;
 	List <String> _zeile;
+	public static final Color LIGHT_BLUE = new Color(51,153,255);
 	
 	/**
 	 * Launch the application.
@@ -159,7 +161,6 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	/* TODO
 	 * W�re noch nice:
 	 * -Anzeige geschlagener Figuren
-	 * -gemachter Zug von Schwarz highlighten
 	 * -Schwierigkeit einstellen
 	 * -Zug reversen
 	 * -Zugrecht Feld displayed Gewinner
@@ -168,46 +169,85 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	public void makeCyborgMove()
 	{
 		AlphaBetaCyborg Ernd = new AlphaBetaCyborg(4);
+		Position altePosition = new Position(_position);
 		_position = Ernd.getBestFollowingPosition(_position);
+		PositionsVergleicher posVergleicher = new PositionsVergleicher(altePosition, _position);
+		posVergleicher.whatMoveWasMade();
+		int alteKoordinate = posVergleicher.getAlteKoordinate();
+		int neueKoordinate = posVergleicher.getNeueKoordinate();
 		setFiguren();
 		setZugrechtLabel();
+		_buttons.get(alteKoordinate).setBackground(LIGHT_BLUE);
+		_buttons.get(neueKoordinate).setBackground(LIGHT_BLUE);
 		//System.out.println(_position.getFen());
 	}
 	
-	private void makeFelderSchwarz()
+	private void resetteFelder()
 	{
+		_buttons.get(0).setBackground(Color.WHITE);
 		_buttons.get(1).setBackground(Color.BLACK);
+		_buttons.get(2).setBackground(Color.WHITE);
 		_buttons.get(3).setBackground(Color.BLACK);
+		_buttons.get(4).setBackground(Color.WHITE);
 		_buttons.get(5).setBackground(Color.BLACK);
+		_buttons.get(6).setBackground(Color.WHITE);
 		_buttons.get(7).setBackground(Color.BLACK);
 		_buttons.get(8).setBackground(Color.BLACK);
+		_buttons.get(9).setBackground(Color.WHITE);
 		_buttons.get(10).setBackground(Color.BLACK);
+		_buttons.get(11).setBackground(Color.WHITE);
 		_buttons.get(12).setBackground(Color.BLACK);
+		_buttons.get(13).setBackground(Color.WHITE);
 		_buttons.get(14).setBackground(Color.BLACK);
+		_buttons.get(15).setBackground(Color.WHITE);
+		_buttons.get(16).setBackground(Color.WHITE);
 		_buttons.get(17).setBackground(Color.BLACK);
+		_buttons.get(18).setBackground(Color.WHITE);
 		_buttons.get(19).setBackground(Color.BLACK);
+		_buttons.get(20).setBackground(Color.WHITE);
 		_buttons.get(21).setBackground(Color.BLACK);
+		_buttons.get(22).setBackground(Color.WHITE);
 		_buttons.get(23).setBackground(Color.BLACK);
 		_buttons.get(24).setBackground(Color.BLACK);
+		_buttons.get(25).setBackground(Color.WHITE);
 		_buttons.get(26).setBackground(Color.BLACK);
+		_buttons.get(27).setBackground(Color.WHITE);
 		_buttons.get(28).setBackground(Color.BLACK);
+		_buttons.get(29).setBackground(Color.WHITE);
 		_buttons.get(30).setBackground(Color.BLACK);
+		_buttons.get(31).setBackground(Color.WHITE);
+		_buttons.get(32).setBackground(Color.WHITE);
 		_buttons.get(33).setBackground(Color.BLACK);
+		_buttons.get(34).setBackground(Color.WHITE);
 		_buttons.get(35).setBackground(Color.BLACK);
+		_buttons.get(36).setBackground(Color.WHITE);
 		_buttons.get(37).setBackground(Color.BLACK);
+		_buttons.get(38).setBackground(Color.WHITE);
 		_buttons.get(39).setBackground(Color.BLACK);
 		_buttons.get(40).setBackground(Color.BLACK);
+		_buttons.get(41).setBackground(Color.WHITE);
 		_buttons.get(42).setBackground(Color.BLACK);
+		_buttons.get(43).setBackground(Color.WHITE);
 		_buttons.get(44).setBackground(Color.BLACK);
+		_buttons.get(45).setBackground(Color.WHITE);
 		_buttons.get(46).setBackground(Color.BLACK);
+		_buttons.get(47).setBackground(Color.WHITE);
+		_buttons.get(48).setBackground(Color.WHITE);
 		_buttons.get(49).setBackground(Color.BLACK);
+		_buttons.get(50).setBackground(Color.WHITE);
 		_buttons.get(51).setBackground(Color.BLACK);
+		_buttons.get(52).setBackground(Color.WHITE);
 		_buttons.get(53).setBackground(Color.BLACK);
+		_buttons.get(54).setBackground(Color.WHITE);
 		_buttons.get(55).setBackground(Color.BLACK);
 		_buttons.get(56).setBackground(Color.BLACK);
+		_buttons.get(57).setBackground(Color.WHITE);
 		_buttons.get(58).setBackground(Color.BLACK);
+		_buttons.get(59).setBackground(Color.WHITE);
 		_buttons.get(60).setBackground(Color.BLACK);
+		_buttons.get(61).setBackground(Color.WHITE);
 		_buttons.get(62).setBackground(Color.BLACK);
+		_buttons.get(63).setBackground(Color.WHITE);
 	}
 	
 	private void promotion(int piece)
@@ -732,7 +772,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				
 				if ((_gedrueckterButton >=56 && _blackFiguren.get((byte)_letzterGedrueckterButton) instanceof Pawn)|| (_gedrueckterButton <=7 && _whiteFiguren.get((byte)_letzterGedrueckterButton) instanceof Pawn))
 				{
-					int piece = JOptionPane.showOptionDialog(null, "W�hle eine Figur:", null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, optionen, null); 
+					int piece = JOptionPane.showOptionDialog(null, "Waehle eine Figur:", null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, optionen, null); 
 					promotion(piece);
 //					System.out.println("piece: "+piece);
 //					System.out.println("zugrecht: " +_position.getZugrecht());
@@ -754,7 +794,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			}
 		if(_tglbtnNewToggleButton.isSelected() && !(_position._zugrecht))
 		{
-			makeFelderSchwarz();
+			resetteFelder();
 			makeCyborgMove();
 		}
 	}
