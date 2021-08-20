@@ -26,7 +26,7 @@ public class BuildBook {
 
 		_fen = Fen.select("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
 		_position = new Position(_fen);
-		_cyborg = new AlphaBetaCyborg(7);
+		_cyborg = new AlphaBetaCyborg(4);
 		_positionCalc = new PositionCalc(_position);
 		
 		writeBook();
