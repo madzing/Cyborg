@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import Fachwerte.Fen;
 import Material.Position;
+import Werkzeuge.AlphaBetaCyborg;
 
 public class PositionCalcTest {
 
@@ -24,7 +25,26 @@ public class PositionCalcTest {
 		assertEquals(posCalc.getFigurenDesGegners().size(), 16);
 		assertEquals(posCalc.getCurrentPosition(), startPosition);
 	}
-	
+	@Test
+	public void TestSort() {
+		Fen startFen = Fen.select("r1b1kb1r/ppp1pppp/2n5/8/1q1P2n1/2N1BN2/PPPQBPPP/R3K2R w KQkq - 11 9");
+		Position startPosition = new Position(startFen);
+		PositionCalc posCalc = new PositionCalc(startPosition);
+		Eval eval = new Eval();
+		AlphaBetaCyborg alpha = new AlphaBetaCyborg(3);
+		ArrayList<Position> folgePosis = posCalc.getLegalFollowingPositions();
+		System.out.println(folgePosis.size());
+		for (Position pos : folgePosis) {
+			//System.out.println(""+ eval.getEval(pos));
+		}
+		System.out.println("////////////////////////////////////////////////////////////////////////////");
+		ArrayList<Position> sortedPosis = alpha.sortPositionsByEvalQuick(folgePosis);
+		System.out.println(sortedPosis.size());
+		for (Position pos : sortedPosis) {
+			//System.out.println(""+ eval.getEval(pos));
+		}
+		System.out.println(folgePosis.containsAll(sortedPosis));
+	}
 	@Test
 	public void TestgetLegalPositionsStartposition() {
 		Fen startFen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");

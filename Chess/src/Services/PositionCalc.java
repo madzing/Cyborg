@@ -38,32 +38,31 @@ public class PositionCalc {
 	// Position resultieren zurück.
 	public ArrayList<Position> getLegalFollowingPositions() {
 		ArrayList<Position> folgePositionen = new ArrayList<Position>();
-		for (Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet()) {	
+		for (Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet()) {
 			for (Byte neueFigurPos : entry.getValue().getMoves(_figurenAmZug, _figurenDesGegners, _currentPosition)) {
 
 				Position neuePos = new Position(_currentPosition);
 				neuePos.makeMove(entry.getValue().getCoordinate(), neueFigurPos);
-				if(entry.getValue() instanceof Pawn && (neueFigurPos<=8 || neueFigurPos >= 56))
-						{
-							neuePos.promotion(new Knight(neueFigurPos,entry.getValue().getColor()));
-							if (isPositionLegal(neuePos))
-							{
-								folgePositionen.add(neuePos);
-								neuePos.promotion(new Bishop(neueFigurPos,entry.getValue().getColor()));
-								folgePositionen.add(neuePos);
-								neuePos.promotion(new Rook(neueFigurPos,entry.getValue().getColor()));
-								folgePositionen.add(neuePos);
-								neuePos.promotion(new Queen(neueFigurPos,entry.getValue().getColor()));
-								folgePositionen.add(neuePos);
-							}
-						}
-				else if (isPositionLegal(neuePos)) {
+				if (entry.getValue() instanceof Pawn && (neueFigurPos <= 8 || neueFigurPos >= 56)) {
+					neuePos.promotion(new Knight(neueFigurPos, entry.getValue().getColor()));
+					if (isPositionLegal(neuePos)) {
+						folgePositionen.add(neuePos);
+						neuePos.promotion(new Bishop(neueFigurPos, entry.getValue().getColor()));
+						folgePositionen.add(neuePos);
+						neuePos.promotion(new Rook(neueFigurPos, entry.getValue().getColor()));
+						folgePositionen.add(neuePos);
+						neuePos.promotion(new Queen(neueFigurPos, entry.getValue().getColor()));
+						folgePositionen.add(neuePos);
+					}
+				} else if (isPositionLegal(neuePos)) {
 					folgePositionen.add(neuePos);
 				}
 			}
 		}
 		return folgePositionen;
 	}
+
+	
 
 	// Ist die übergebene Position legal? oder steht der König nach einem Zug der
 	// eigenen Seite im Schach?
