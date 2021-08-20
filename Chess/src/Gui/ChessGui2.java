@@ -162,7 +162,6 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	 * -gemachter Zug von Schwarz highlighten
 	 * -Schwierigkeit einstellen
 	 * -Zug reversen
-	 * -PROMOTION!!
 	 * -Zugrecht Feld displayed Gewinner
 	 */
 	
@@ -174,6 +173,43 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		setZugrechtLabel();
 		//System.out.println(_position.getFen());
 	}
+	
+	private void makeFelderSchwarz()
+	{
+		_buttons.get(1).setBackground(Color.BLACK);
+		_buttons.get(3).setBackground(Color.BLACK);
+		_buttons.get(5).setBackground(Color.BLACK);
+		_buttons.get(7).setBackground(Color.BLACK);
+		_buttons.get(8).setBackground(Color.BLACK);
+		_buttons.get(10).setBackground(Color.BLACK);
+		_buttons.get(12).setBackground(Color.BLACK);
+		_buttons.get(14).setBackground(Color.BLACK);
+		_buttons.get(17).setBackground(Color.BLACK);
+		_buttons.get(19).setBackground(Color.BLACK);
+		_buttons.get(21).setBackground(Color.BLACK);
+		_buttons.get(23).setBackground(Color.BLACK);
+		_buttons.get(24).setBackground(Color.BLACK);
+		_buttons.get(26).setBackground(Color.BLACK);
+		_buttons.get(28).setBackground(Color.BLACK);
+		_buttons.get(30).setBackground(Color.BLACK);
+		_buttons.get(33).setBackground(Color.BLACK);
+		_buttons.get(35).setBackground(Color.BLACK);
+		_buttons.get(37).setBackground(Color.BLACK);
+		_buttons.get(39).setBackground(Color.BLACK);
+		_buttons.get(40).setBackground(Color.BLACK);
+		_buttons.get(42).setBackground(Color.BLACK);
+		_buttons.get(44).setBackground(Color.BLACK);
+		_buttons.get(46).setBackground(Color.BLACK);
+		_buttons.get(49).setBackground(Color.BLACK);
+		_buttons.get(51).setBackground(Color.BLACK);
+		_buttons.get(53).setBackground(Color.BLACK);
+		_buttons.get(55).setBackground(Color.BLACK);
+		_buttons.get(56).setBackground(Color.BLACK);
+		_buttons.get(58).setBackground(Color.BLACK);
+		_buttons.get(60).setBackground(Color.BLACK);
+		_buttons.get(62).setBackground(Color.BLACK);
+	}
+	
 	private void promotion(int piece)
 	{
 		// piece = 0 wenn Queen. 1 wenn Rook. 2 wenn Bishop. 3 wenn Knight.
@@ -692,14 +728,14 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				Object[] optionen = {"Queen", "Rook", "Bishop", "Knight"};
 				
 				_positionSpeicher.makeMove((byte)_letzterGedrueckterButton, (byte)_gedrueckterButton);
-				System.out.println("positionSpeicher1: " + _positionSpeicher.getFen());
+//				System.out.println("positionSpeicher1: " + _positionSpeicher.getFen());
 				
 				if ((_gedrueckterButton >=56 && _blackFiguren.get((byte)_letzterGedrueckterButton) instanceof Pawn)|| (_gedrueckterButton <=7 && _whiteFiguren.get((byte)_letzterGedrueckterButton) instanceof Pawn))
 				{
 					int piece = JOptionPane.showOptionDialog(null, "W�hle eine Figur:", null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, optionen, null); 
 					promotion(piece);
-					System.out.println("piece: "+piece);
-					System.out.println("zugrecht: " +_position.getZugrecht());
+//					System.out.println("piece: "+piece);
+//					System.out.println("zugrecht: " +_position.getZugrecht());
 					// piece = 0 wenn Queen. 1 wenn Rook. 2 wenn Bishop. 3 wenn Knight.
 				}	
 				
@@ -713,11 +749,12 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				}
 				setFiguren();
 				setZugrechtLabel();
-				System.out.println("positionSpeicher2: " + _positionSpeicher.getFen());
-				System.out.println("_position: " + _position.getFen());
+//				System.out.println("positionSpeicher2: " + _positionSpeicher.getFen());
+//				System.out.println("_position: " + _position.getFen());
 			}
 		if(_tglbtnNewToggleButton.isSelected() && !(_position._zugrecht))
 		{
+			makeFelderSchwarz();
 			makeCyborgMove();
 		}
 	}
