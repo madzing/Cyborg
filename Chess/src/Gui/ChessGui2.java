@@ -49,11 +49,14 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	Map<Byte, Piece> _whiteFiguren;
 	Map<Byte, Piece> _blackFiguren;
 	List<JButton> _buttons;
+	List<Position> _positions;
 	int _letzterGedrueckterButton;
 	int _gedrueckterButton;
+	int _aktuellerZug;
 	JLabel _lblNewLabel;
 	JLabel _lblNewLabel_1;
 	JButton _btnNewButton_64;
+	JButton _btnNewButton_65;
 	PositionCalc _posCalc;
 	private JPanel contentPane;
 	private JButton _btnGetAktuelleFen;
@@ -93,13 +96,16 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		_whiteFiguren = position.getWhiteFiguren();
 		_blackFiguren = position.getBlackFiguren();
 		_buttons = new ArrayList<JButton>(64);
+		_positions = new ArrayList<Position>(6000);
 		_letzterGedrueckterButton = 0;
 		_gedrueckterButton = 0;
+		_aktuellerZug = 0;
 		_posCalc = new PositionCalc(position);
 		_spalte = new ArrayList<String>(8);
 		_zeile = new ArrayList<String>(8);
 		befuelleZeileSpalte();
-
+		_positions.add(position);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 800);
 
@@ -138,21 +144,27 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		_btnGetAktuelleFen.setBounds(784, 45, 190, 34);
+		_btnGetAktuelleFen.setBounds(784, 50, 190, 45);
 		getContentPane().add(_btnGetAktuelleFen);
 		_btnGetAktuelleFen.addActionListener(this);
 
 		_tglbtnNewToggleButton = new JToggleButton("Automatisch");
-		_tglbtnNewToggleButton.setBounds(784, 0, 190, 34);
+		_tglbtnNewToggleButton.setBounds(784, 0, 190, 45);
 		getContentPane().add(_tglbtnNewToggleButton);
 
 		_btnNewButton_64 = new JButton("Make Move");
-		_btnNewButton_64.setBounds(784, 679, 190, 47);
+		_btnNewButton_64.setBounds(784, 680, 190, 45);
 		getContentPane().add(_btnNewButton_64);
 		_btnNewButton_64.addActionListener(this);
-
+		
+		_btnNewButton_65 = new JButton("Reverse");
+		_btnNewButton_65.setBounds(784, 630, 190, 45);
+		getContentPane().add(_btnNewButton_65);
+		_btnNewButton_65.addActionListener(this);
+		
 		createButtons();
 		setFiguren();
+		setZugrechtLabel();
 		ButtonListenerErzeugen();
 
 	}
@@ -162,7 +174,6 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	 * W�re noch nice:
 	 * -Anzeige geschlagener Figuren
 	 * -Schwierigkeit einstellen
-	 * -Zug reversen
 	 * -Zugrecht Feld displayed Gewinner
 	 */
 
@@ -760,8 +771,18 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
 			clpbrd.setContents (stringSelection, null);
 		}
+		else if(e.getSource() == _btnNewButton_65)
+		{
+			_position = _positions.get(_aktuellerZug-1);
+			_positions.remove(_aktuellerZug);
+			_aktuellerZug--;
+			setFiguren();
+			setZugrechtLabel();
+			resetteFelder();
+		}
 		else
 			{
+				
 				_posCalc = new PositionCalc(_position);
 				ArrayList<Position> legalePositionen = _posCalc.getLegalFollowingPositions();
 				_positionSpeicher = new Position(_position);
@@ -788,12 +809,14 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				}
 				setFiguren();
 				setZugrechtLabel();
+				resetteFelder();
+				_positions.add(_position);
+				_aktuellerZug++;
 //				System.out.println("positionSpeicher2: " + _positionSpeicher.getFen());
 //				System.out.println("_position: " + _position.getFen());
 			}
 		if(_tglbtnNewToggleButton.isSelected() && !(_position._zugrecht))
 		{
-			resetteFelder();
 			makeCyborgMove();
 		}
 	}
