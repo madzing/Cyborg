@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import Material.Bishop;
+import Material.Knight;
+import Material.Pawn;
 import Material.Piece;
 import Material.Position;
+import Material.Queen;
+import Material.Rook;
 
 public class PositionsVergleicher {
 	private Position _positionNeu;
@@ -38,6 +43,8 @@ public class PositionsVergleicher {
 		_neueBlackFiguren = _positionNeu.getBlackFiguren();
 		_alteWhiteFiguren = _positionAlt.getWhiteFiguren();
 		_neueWhiteFiguren = _positionNeu.getWhiteFiguren();
+		_alteKoordinate = 0;
+		_neueKoordinate = 0;
 	}
 	
 	public int getAlteKoordinate()
@@ -48,27 +55,22 @@ public class PositionsVergleicher {
 	{
 		return _neueKoordinate;
 	}
-	public void whatMoveWasMade(Position altePosition, Position neuePosition)
+	
+	public void whatMoveWasMade()
 	{
-		Map<Byte, Piece> alteBlackFiguren = altePosition.getBlackFiguren();
-		Map<Byte, Piece> neueBlackFiguren = neuePosition.getBlackFiguren();
-		Map<Byte, Piece> alteWhiteFiguren = altePosition.getWhiteFiguren();
-		Map<Byte, Piece> neueWhiteFiguren = neuePosition.getWhiteFiguren();
-		if (!(altePosition.equals(neuePosition)))
+		if (!(_positionAlt.equals(_positionNeu)))
 		{
-			if (!(altePosition.getBlackFiguren().equals(neuePosition.getBlackFiguren())))
+			if (!(_positionAlt.getBlackFiguren().equals(_positionNeu.getBlackFiguren())) && !(_positionAlt._zugrecht))
 			{
-				for (int i = 0; i<63; i++)
+				for (int i = 0; i<64; i++)
 				{
-					if(alteBlackFiguren.containsKey((byte)i) && !(neueBlackFiguren.containsKey((byte)i)))
+					if(_alteBlackFiguren.containsKey((byte)i) && !(_neueBlackFiguren.containsKey((byte)i)))
 					{
 						_alteKoordinate = i;
-//						System.out.println(i);
 					}
-					else if(!(alteBlackFiguren.containsKey((byte)i)) && (neueBlackFiguren.containsKey((byte)i)))
+					else if(!(_alteBlackFiguren.containsKey((byte)i)) && (_neueBlackFiguren.containsKey((byte)i)))
 					{
 						_neueKoordinate = i;
-//						System.out.println(i);
 					}
 					
 				}
@@ -76,17 +78,15 @@ public class PositionsVergleicher {
 			}
 			else
 			{
-				for (int i = 0; i<63; i++)
+				for (int i = 0; i<64; i++)
 				{
-					if(alteWhiteFiguren.containsKey((byte)i) && !(neueWhiteFiguren.containsKey((byte)i)))
+					if(_alteWhiteFiguren.containsKey((byte)i) && !(_neueWhiteFiguren.containsKey((byte)i)))
 					{
 						_alteKoordinate = i;
-//						System.out.println(i);
 					}
-					else if(!(alteWhiteFiguren.containsKey((byte)i)) && (neueWhiteFiguren.containsKey((byte)i)))
+					else if(!(_alteWhiteFiguren.containsKey((byte)i)) && (_neueWhiteFiguren.containsKey((byte)i)))
 					{
 						_neueKoordinate = i;
-//						System.out.println(i);
 					}
 					
 				}
@@ -99,49 +99,56 @@ public class PositionsVergleicher {
 	}
 	public int welcheFigurWurdeGeschlagen()
 	{
-		whatMoveWasMade(_positionsListe.get(_aktuellerZug-1), _positionsListe.get(_aktuellerZug));
-		
+		whatMoveWasMade();		
 		if(_positionAlt.getZugrecht())
 		{
-//			System.out.println("weiß schlaegt schwarz");
-//			System.out.println(_alteBlackFiguren.get((byte)_neueKoordinate));
-//			System.out.println("neue Koordinate: "+ _neueKoordinate);
-//			System.out.println("alte Koordinate: "+_alteKoordinate);
-			System.out.println("PositionsListe: "+_positionsListe.size());
-			for (int i =0; i >_positionsListe.size();i++)
+			if(_alteBlackFiguren.get((byte)_neueKoordinate) instanceof Pawn)
 			{
-				System.out.println(_positionsListe.get(i).getFen());
+				return 0;
 			}
-			while(_positionsListe.size() > 1)
-				{
-					_positionsListe.remove(_aktuellerZug);
-					System.out.println(_positionsListe.get(_aktuellerZug).getFen());
-					System.out.println("aktueller Zug"+_aktuellerZug);
-					PositionsVergleicher posVergleicher = new PositionsVergleicher(_positionsListe, _aktuellerZug-1);
-					_aktuellerZug--;
-					posVergleicher.welcheFigurWurdeGeschlagen();
-				}
-//			return _alteBlackFiguren.get((byte)_alteKoordinate).getCoordinate();
-			return 0;
+			else if(_alteBlackFiguren.get((byte)_neueKoordinate) instanceof Rook)
+			{
+				return 1;
+			}
+			else if(_alteBlackFiguren.get((byte)_neueKoordinate) instanceof Knight)
+			{
+				return 2;
+			}
+			else if(_alteBlackFiguren.get((byte)_neueKoordinate) instanceof Bishop)
+			{
+				return 3;
+			}
+			else if(_alteBlackFiguren.get((byte)_neueKoordinate) instanceof Queen)
+			{
+				return 4;
+			}
 		}
 		else
 		{
-//			System.out.println("schwarz schlaegt weiß");
-//			System.out.println(_alteBlackFiguren.get((byte)_neueKoordinate));
-//			System.out.println("neue Koordinate: "+ _neueKoordinate);
-//			System.out.println("alte Koordinate: "+_alteKoordinate);
-			while(_positionsListe.size() > 1)
+			if(_alteWhiteFiguren.get((byte)_neueKoordinate) instanceof Pawn)
 			{
-				_positionsListe.remove(_aktuellerZug);
-				System.out.println(_positionsListe.get(_aktuellerZug).getFen());
-				System.out.println("aktueller Zug"+_aktuellerZug);
-				PositionsVergleicher posVergleicher = new PositionsVergleicher(_positionsListe, _aktuellerZug-1);
-				_aktuellerZug--;
-				posVergleicher.welcheFigurWurdeGeschlagen();
+				return 5;
 			}
-			return 1;
-//			return _alteWhiteFiguren.get((byte)_neueKoordinate).getCoordinate();
+			else if(_alteWhiteFiguren.get((byte)_neueKoordinate) instanceof Rook)
+			{
+				return 6;
+			}
+			else if(_alteWhiteFiguren.get((byte)_neueKoordinate) instanceof Knight)
+			{
+				return 7;
+			}
+			else if(_alteWhiteFiguren.get((byte)_neueKoordinate) instanceof Bishop)
+			{
+				return 8;
+			}
+			else if(_alteWhiteFiguren.get((byte)_neueKoordinate) instanceof Queen)
+			{
+				return 9;
+			}
 		}
+		return 10;
 	}
 }
+	
+
 

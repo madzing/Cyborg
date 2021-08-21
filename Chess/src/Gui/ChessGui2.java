@@ -67,6 +67,14 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	List <String> _spalte;
 	List <String> _zeile;
 	public static final Color LIGHT_BLUE = new Color(51,153,255);
+	int b = 0;
+	int n = 0;
+	int r = 0;
+	int p = 0;
+	int B = 0;
+	int N = 0;
+	int R = 0;
+	int P = 0;
 
 	/**
 	 * Launch the application.
@@ -189,7 +197,12 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		Position altePosition = new Position(_position);
 		_position = Ernd.getBestFollowingPosition(_position);
 		PositionsVergleicher posVergleicher = new PositionsVergleicher(altePosition, _position);
-		posVergleicher.whatMoveWasMade(altePosition, _position);
+		posVergleicher.whatMoveWasMade();
+		if(posVergleicher.wurdeFigurGeschlagen() == true)
+		{
+			int geschlageneFigur = posVergleicher.welcheFigurWurdeGeschlagen();
+			setFigurWurdeGeschlagenLabel(geschlageneFigur);
+		}
 		int alteKoordinate = posVergleicher.getAlteKoordinate();
 		int neueKoordinate = posVergleicher.getNeueKoordinate();
 		setFiguren();
@@ -795,6 +808,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		for(int i = 0; i<16;i++)
 		{
 			getContentPane().add(_geschlageneWhiteFiguren.get(i));
+			_geschlageneWhiteFiguren.get(i).setVisible(false);
 		}
 		
 		JLabel blackPawn1 = new JLabel("p");
@@ -850,6 +864,66 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		for(int i = 0; i<16;i++)
 		{
 			getContentPane().add(_geschlageneBlackFiguren.get(i));
+
+			_geschlageneBlackFiguren.get(i).setVisible(false);
+		}
+	}
+	
+	private void setFigurWurdeGeschlagenLabel(int geschlageneFigur)
+	{
+		if (geschlageneFigur <5)
+		{
+			if(geschlageneFigur ==4)
+			{
+				_geschlageneBlackFiguren.get(11).setVisible(true);
+			}
+			else if(geschlageneFigur ==3)
+			{
+				_geschlageneBlackFiguren.get(10+b).setVisible(true);
+				b = b + 3;
+			}
+			else if(geschlageneFigur ==2)
+			{
+				_geschlageneBlackFiguren.get(9+n).setVisible(true);
+				n = n + 5;
+			}
+			else if(geschlageneFigur ==1)
+			{
+				_geschlageneBlackFiguren.get(8+r).setVisible(true);
+				r = r + 7;
+			}
+			else if(geschlageneFigur ==0)
+			{
+				_geschlageneBlackFiguren.get(p).setVisible(true);
+				p++;
+			}
+		}
+		else
+		{
+			if(geschlageneFigur ==9)
+			{
+				_geschlageneWhiteFiguren.get(11).setVisible(true);
+			}
+			else if(geschlageneFigur ==8)
+			{
+				_geschlageneWhiteFiguren.get(10+B).setVisible(true);
+				B = B +3;
+			}
+			else if(geschlageneFigur ==7)
+			{
+				_geschlageneWhiteFiguren.get(9+N).setVisible(true);
+				N = N + 5;
+			}
+			else if(geschlageneFigur ==6)
+			{
+				_geschlageneWhiteFiguren.get(8+R).setVisible(true);
+				R = R + 7;
+			}
+			else if(geschlageneFigur ==5)
+			{
+				_geschlageneWhiteFiguren.get(P).setVisible(true);
+				P++;
+			}
 		}
 	}
 	
@@ -872,7 +946,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) throws NullPointerException{
 		if (_buttons.contains(e.getSource()))
 			{
 				_letzterGedrueckterButton = _gedrueckterButton;
@@ -908,18 +982,13 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				Object[] optionen = {"Queen", "Rook", "Bishop", "Knight"};
 
 				_positionSpeicher.makeMove((byte)_letzterGedrueckterButton, (byte)_gedrueckterButton);
-//				System.out.println("positionSpeicher1: " + _positionSpeicher.getFen());
 				if ((_gedrueckterButton >=56 && _blackFiguren.get((byte)_letzterGedrueckterButton) instanceof Pawn)|| (_gedrueckterButton <=7 && _whiteFiguren.get((byte)_letzterGedrueckterButton) instanceof Pawn))
 				{
 					int piece = JOptionPane.showOptionDialog(null, "Waehle eine Figur:", null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, optionen, null);
 					promotion(piece);
-//					System.out.println("piece: "+piece);
-//					System.out.println("zugrecht: " +_position.getZugrecht());
 					// piece = 0 wenn Queen. 1 wenn Rook. 2 wenn Bishop. 3 wenn Knight.
 				}
-
-				Position altePosition = new Position(_position);
-				
+			
 				for(Position p: legalePositionen)
 				{
 					if (p.getFen().equals(_positionSpeicher.getFen()))
@@ -929,21 +998,20 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				}
 				_positions.add(_position);
 				_aktuellerZug++;
-//				PositionsVergleicher posVergleicher = new PositionsVergleicher(_positions, _aktuellerZug);
-//				if(posVergleicher.wurdeFigurGeschlagen() == true)
-//				{
-//					System.out.println(posVergleicher.welcheFigurWurdeGeschlagen());
-//				}
-//				System.out.println(posVergleicher.wurdeFigurGeschlagen());
+				PositionsVergleicher posVergleicher = new PositionsVergleicher(_positions, _aktuellerZug);
+				if(posVergleicher.wurdeFigurGeschlagen() == true)
+				{
+					int geschlageneFigur = posVergleicher.welcheFigurWurdeGeschlagen();
+					setFigurWurdeGeschlagenLabel(geschlageneFigur);
+				}
 				setFiguren();
 				setZugrechtLabel();
 				resetteFelder();	
-//				System.out.println("positionSpeicher2: " + _positionSpeicher.getFen());
-//				System.out.println("_position: " + _position.getFen());
 			}
 		if(_tglbtnNewToggleButton.isSelected() && !(_position._zugrecht))
 		{
 			makeCyborgMove();
+			
 		}
 	}
 
