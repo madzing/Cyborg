@@ -38,11 +38,11 @@ public class AlphaBetaCyborg {
 		_bestPosition = null;
 
 		if (position.getZugrecht()) {
-			for (int i = 2; i <= _gewuenschtetiefe; i++) {
+			for (int i = 1; i <= _gewuenschtetiefe; i++) {
 				max(position, i, alpha, beta);
 			}
 		} else {
-			for (int i = 2; i <= _gewuenschtetiefe; i++) {
+			for (int i = 1; i <= _gewuenschtetiefe; i++) {
 				min(position, i, alpha, beta);
 			}
 		}
@@ -54,9 +54,9 @@ public class AlphaBetaCyborg {
 			_lastEval = _eval.getEval(position);
 		} else if (tiefe <= 0) {
 			double currentEval = _eval.getEval(position);
-			if (Math.abs(Math.abs(currentEval) - Math.abs(_lastEval)) < 1 || _lastEval < -9000 || _lastEval > 9000
+			if (Math.abs(Math.abs(currentEval) - Math.abs(_lastEval)) < 1 || _lastEval < -9000.0 || _lastEval > 9000.0
 					|| _lastEval == 0.0) {
-				System.out.println(tiefe);
+				//System.out.println(tiefe +" "+ position.getFen());
 				return currentEval;
 			}
 
@@ -76,7 +76,7 @@ public class AlphaBetaCyborg {
 						return -9999.0;
 					} else {
 						_lastEval = 0.0;
-						return 0;
+						return 0.0;
 					}
 				}
 			}
@@ -109,14 +109,15 @@ public class AlphaBetaCyborg {
 	}
 
 	private double min(Position position, int tiefe, double alpha, double beta) {
+		//System.out.println(tiefe +" "+ position.getFen());
 		if (tiefe == 1) {
 			_lastEval = _eval.getEval(position);
 		} else if (tiefe <= 0) {
 			double currentEval = _eval.getEval(position);
 
-			if (Math.abs(Math.abs(currentEval) - Math.abs(_lastEval)) < 1 || _lastEval < -9000 || _lastEval > 9000
+			if (Math.abs(Math.abs(currentEval) - Math.abs(_lastEval)) < 1 || _lastEval < -9000.0 || _lastEval > 9000.0
 					|| _lastEval == 0.0) {
-				// System.out.println(tiefe +" "+ position.getFen());
+				//System.out.println(tiefe +" "+ position.getFen());
 				return currentEval;
 			}
 			_lastEval = currentEval;
@@ -136,7 +137,7 @@ public class AlphaBetaCyborg {
 						return 9999.0;
 					} else {
 						_lastEval = 0.0;
-						return 0;
+						return 0.0;
 					}
 				}
 			}
@@ -174,7 +175,7 @@ public class AlphaBetaCyborg {
 			if (_guteZuege.containsKey(placement)) {
 				p.setComparator(_guteZuege.get(placement));
 				gutesArray.add(p);
-				// _guteZuege.remove(placement); // TODO warum funktioniert dies nicht, sondern
+				 //_guteZuege.remove(placement); // TODO warum funktioniert dies nicht, sondern
 				// macht das Programm langsamer
 			} else {
 				schlechtesArray.add(p);
