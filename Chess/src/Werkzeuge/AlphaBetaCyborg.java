@@ -62,7 +62,7 @@ public class AlphaBetaCyborg {
 		}
 		else if (tiefe <= 0) {
 			double currentEval = _eval.getEval(position);
-			if(Math.abs(Math.abs(currentEval)-Math.abs(_lastEval))<2||_lastEval<-9000||_lastEval>9000||_lastEval==0.0)
+			if(Math.abs(Math.abs(currentEval)-Math.abs(_lastEval))<1||_lastEval<-9000||_lastEval>9000||_lastEval==0.0)
 			{
 				//System.out.println(tiefe);
 				return currentEval;
@@ -97,19 +97,21 @@ public class AlphaBetaCyborg {
 		
 		for (Position pos : legalPositions) {
 			wert = min(pos, tiefe - 1, maxWert, beta);
-			if(_guteZuege.containsKey(pos.getPlacement()))
-			{
-				_guteZuege.put(pos.getPlacement(), wert);
-			}
+
 			if (wert > maxWert) {
 				maxWert = wert;
 				_guteZuege.put(pos.getPlacement(), wert);
 				if (tiefe == _gewuenschtetiefe) {
 					_bestPosition = pos;
+					_bestPosition.setComparator(wert);
 				}
 				if (maxWert >= beta) {
 					break;
 				}
+			}
+			else if(_guteZuege.containsKey(pos.getPlacement()))
+			{
+				_guteZuege.put(pos.getPlacement(), wert);
 			}
 
 		}
@@ -128,7 +130,7 @@ public class AlphaBetaCyborg {
 		else if (tiefe <= 0) {
 			double currentEval = _eval.getEval(position);
 			
-			if(Math.abs(Math.abs(currentEval)-Math.abs(_lastEval))<2||_lastEval<-9000||_lastEval>9000||_lastEval==0.0)
+			if(Math.abs(Math.abs(currentEval)-Math.abs(_lastEval))<1||_lastEval<-9000||_lastEval>9000||_lastEval==0.0)
 			{
 				//System.out.println(tiefe +"       "+ position.getFen());		
 				return currentEval;
@@ -164,19 +166,20 @@ public class AlphaBetaCyborg {
 		
 		for (Position pos : legalPositions) {
 			wert = max(pos, tiefe - 1, alpha, minWert);
-			if(_guteZuege.containsKey(pos.getPlacement()))
-			{
-				_guteZuege.put(pos.getPlacement(), wert);
-			}
 			if (wert < minWert) {
 				minWert = wert;
 				_guteZuege.put(pos.getPlacement(), wert);
 				if (tiefe == _gewuenschtetiefe) {
 					_bestPosition = pos;
+					_bestPosition.setComparator(wert);
 				}
 				if (minWert <= alpha) {
 					break;
 				}
+			}
+			else if(_guteZuege.containsKey(pos.getPlacement()))
+			{
+				_guteZuege.put(pos.getPlacement(), wert);
 			}
 		}
 		if(minWert < -9000)
