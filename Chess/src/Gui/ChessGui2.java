@@ -937,11 +937,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 //				System.out.println(posVergleicher.wurdeFigurGeschlagen());
 				setFiguren();
 				setZugrechtLabel();
-				resetteFelder();				
-				for(int i = 0; i < _positions.size();i++)
-				{
-					System.out.println(_positions.get(i).getFen());
-				}
+				resetteFelder();	
 //				System.out.println("positionSpeicher2: " + _positionSpeicher.getFen());
 //				System.out.println("_position: " + _position.getFen());
 			}
