@@ -16,6 +16,8 @@ public class BuildBook {
 	Position _position;
 	Fen _fen;
 	
+	
+	
 	public static void main(String[] args) {
 		BuildBook bla = new BuildBook();
 	}

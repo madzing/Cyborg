@@ -37,8 +37,8 @@ public class AlphaBetaCyborg {
 		}
 		
 		
-		double alpha = -99999999;
-		double beta = 99999999;
+		double alpha = -9999.0;
+		double beta = 9999.0;
 		_bestPosition = null;
 
 		if (position.getZugrecht()) {
@@ -84,8 +84,8 @@ public class AlphaBetaCyborg {
 					{
 						if(((King) whitePiece.getValue()).isInCheck(position))
 						{
-							_lastEval = -9999999.0;
-							return -9999999;
+							_lastEval = -9999.0;
+							return -9999.0;
 						}
 						else {
 							_lastEval = 0.0;
@@ -110,7 +110,7 @@ public class AlphaBetaCyborg {
 			}
 
 		}
-		if(maxWert > 9000000)
+		if(maxWert > 9000)
 		{
 			maxWert = maxWert-1;
 		}
@@ -147,8 +147,8 @@ public class AlphaBetaCyborg {
 				{
 					if(((King) blackPiece.getValue()).isInCheck(position))
 					{
-						_lastEval = 9999999.0;
-						return 9999999;
+						_lastEval = 9999.0;
+						return 9999.0;
 					}
 					else
 					{
@@ -173,7 +173,7 @@ public class AlphaBetaCyborg {
 				}
 			}
 		}
-		if(minWert < -9000000)
+		if(minWert < -9000)
 		{
 			minWert = minWert+1;
 		}
