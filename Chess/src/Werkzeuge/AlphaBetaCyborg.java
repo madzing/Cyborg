@@ -100,7 +100,6 @@ public class AlphaBetaCyborg {
 			} else{
 				_guteZuege.replace(pos.getPlacement(), wert);
 			}
-
 		}
 		if (maxWert > 9000) {
 			maxWert = maxWert - 1;
@@ -117,7 +116,7 @@ public class AlphaBetaCyborg {
 
 			if (Math.abs(Math.abs(currentEval) - Math.abs(_lastEval)) < 2 || _lastEval < -9000.0 || _lastEval > 9000.0
 					|| _lastEval == 0.0) {
-				//System.out.println(tiefe +" "+ position.getFen());
+				System.out.println(tiefe +" "+ position.getFen());
 				return currentEval;
 			}
 			_lastEval = currentEval;
