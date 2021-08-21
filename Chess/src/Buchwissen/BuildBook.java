@@ -28,7 +28,7 @@ public class BuildBook {
 
 		_fen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 		_position = new Position(_fen);
-		_cyborg = new AlphaBetaCyborg(5);
+		_cyborg = new AlphaBetaCyborg(8);
 		_positionCalc = new PositionCalc(_position);
 		
 		writeBook();
@@ -58,7 +58,7 @@ public class BuildBook {
 		}
 		
 		System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////");
-		System.out.println(bestPosition.getFen() +":       "+ bestPosition.getPlacement());
+		System.out.println(bestPosition.getFen());
 	}
 
 }
