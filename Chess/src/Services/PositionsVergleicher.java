@@ -48,20 +48,24 @@ public class PositionsVergleicher {
 	{
 		return _neueKoordinate;
 	}
-	public void whatMoveWasMade()
+	public void whatMoveWasMade(Position altePosition, Position neuePosition)
 	{
-		if (!(_positionAlt.equals(_positionNeu)))
+		Map<Byte, Piece> alteBlackFiguren = altePosition.getBlackFiguren();
+		Map<Byte, Piece> neueBlackFiguren = neuePosition.getBlackFiguren();
+		Map<Byte, Piece> alteWhiteFiguren = altePosition.getWhiteFiguren();
+		Map<Byte, Piece> neueWhiteFiguren = neuePosition.getWhiteFiguren();
+		if (!(altePosition.equals(neuePosition)))
 		{
-			if (!(_positionAlt.getBlackFiguren().equals(_positionNeu.getBlackFiguren())))
+			if (!(altePosition.getBlackFiguren().equals(neuePosition.getBlackFiguren())))
 			{
 				for (int i = 0; i<63; i++)
 				{
-					if(_alteBlackFiguren.containsKey((byte)i) && !(_neueBlackFiguren.containsKey((byte)i)))
+					if(alteBlackFiguren.containsKey((byte)i) && !(neueBlackFiguren.containsKey((byte)i)))
 					{
 						_alteKoordinate = i;
 //						System.out.println(i);
 					}
-					else if(!(_alteBlackFiguren.containsKey((byte)i)) && (_neueBlackFiguren.containsKey((byte)i)))
+					else if(!(alteBlackFiguren.containsKey((byte)i)) && (neueBlackFiguren.containsKey((byte)i)))
 					{
 						_neueKoordinate = i;
 //						System.out.println(i);
@@ -74,12 +78,12 @@ public class PositionsVergleicher {
 			{
 				for (int i = 0; i<63; i++)
 				{
-					if(_alteWhiteFiguren.containsKey((byte)i) && !(_neueWhiteFiguren.containsKey((byte)i)))
+					if(alteWhiteFiguren.containsKey((byte)i) && !(neueWhiteFiguren.containsKey((byte)i)))
 					{
 						_alteKoordinate = i;
 //						System.out.println(i);
 					}
-					else if(!(_alteWhiteFiguren.containsKey((byte)i)) && (_neueWhiteFiguren.containsKey((byte)i)))
+					else if(!(alteWhiteFiguren.containsKey((byte)i)) && (neueWhiteFiguren.containsKey((byte)i)))
 					{
 						_neueKoordinate = i;
 //						System.out.println(i);
@@ -95,7 +99,8 @@ public class PositionsVergleicher {
 	}
 	public int welcheFigurWurdeGeschlagen()
 	{
-		whatMoveWasMade();
+		whatMoveWasMade(_positionsListe.get(_aktuellerZug-1), _positionsListe.get(_aktuellerZug));
+		
 		if(_positionAlt.getZugrecht())
 		{
 //			System.out.println("weiß schlaegt schwarz");

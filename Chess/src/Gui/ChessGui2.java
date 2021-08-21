@@ -189,7 +189,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		Position altePosition = new Position(_position);
 		_position = Ernd.getBestFollowingPosition(_position);
 		PositionsVergleicher posVergleicher = new PositionsVergleicher(altePosition, _position);
-		posVergleicher.whatMoveWasMade();
+		posVergleicher.whatMoveWasMade(altePosition, _position);
 		int alteKoordinate = posVergleicher.getAlteKoordinate();
 		int neueKoordinate = posVergleicher.getNeueKoordinate();
 		setFiguren();
@@ -929,15 +929,19 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				}
 				_positions.add(_position);
 				_aktuellerZug++;
-				PositionsVergleicher posVergleicher = new PositionsVergleicher(_positions, _aktuellerZug);
-				if(posVergleicher.wurdeFigurGeschlagen() == true)
-				{
-					System.out.println(posVergleicher.welcheFigurWurdeGeschlagen());
-				}
-				System.out.println(posVergleicher.wurdeFigurGeschlagen());
+//				PositionsVergleicher posVergleicher = new PositionsVergleicher(_positions, _aktuellerZug);
+//				if(posVergleicher.wurdeFigurGeschlagen() == true)
+//				{
+//					System.out.println(posVergleicher.welcheFigurWurdeGeschlagen());
+//				}
+//				System.out.println(posVergleicher.wurdeFigurGeschlagen());
 				setFiguren();
 				setZugrechtLabel();
 				resetteFelder();				
+				for(int i = 0; i < _positions.size();i++)
+				{
+					System.out.println(_positions.get(i).getFen());
+				}
 //				System.out.println("positionSpeicher2: " + _positionSpeicher.getFen());
 //				System.out.println("_position: " + _position.getFen());
 			}
