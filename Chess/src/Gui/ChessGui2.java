@@ -186,7 +186,6 @@ public class ChessGui2 extends JFrame implements ActionListener{
 
 	/* TODO
 	 * W�re noch nice:
-	 * -Anzeige geschlagener Figuren
 	 * -Schwierigkeit einstellen
 	 * -Zugrecht Feld displayed Gewinner
 	 */
@@ -869,6 +868,64 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		}
 	}
 	
+	private void setFigurWurdeGeschlagenLabelReverse(int geschlageneFigur)
+	{
+		if (geschlageneFigur <5)
+		{
+			if(geschlageneFigur ==4)
+			{
+				_geschlageneBlackFiguren.get(11).setVisible(false);
+			}
+			else if(geschlageneFigur ==3)
+			{
+				b = b - 3;
+				_geschlageneBlackFiguren.get(10+b).setVisible(false);
+			}
+			else if(geschlageneFigur ==2)
+			{
+				n = n - 5;
+				_geschlageneBlackFiguren.get(9+n).setVisible(false);
+			}
+			else if(geschlageneFigur ==1)
+			{
+				r = r - 7;
+				_geschlageneBlackFiguren.get(8+r).setVisible(false);
+			}
+			else if(geschlageneFigur ==0)
+			{
+				p--;
+				_geschlageneBlackFiguren.get(p).setVisible(false);
+			}
+		}
+		else
+		{
+			if(geschlageneFigur ==9)
+			{
+				_geschlageneWhiteFiguren.get(11).setVisible(false);
+			}
+			else if(geschlageneFigur ==8)
+			{
+				B = B - 3;
+				_geschlageneWhiteFiguren.get(10+B).setVisible(false);
+			}
+			else if(geschlageneFigur ==7)
+			{
+				N = N - 5;
+				_geschlageneWhiteFiguren.get(9+N).setVisible(false);
+			}
+			else if(geschlageneFigur ==6)
+			{
+				R = R - 7;
+				_geschlageneWhiteFiguren.get(8+R).setVisible(false);
+			}
+			else if(geschlageneFigur ==5)
+			{
+				P--;
+				_geschlageneWhiteFiguren.get(P).setVisible(false);
+			}
+		}
+	}
+	
 	private void setFigurWurdeGeschlagenLabel(int geschlageneFigur)
 	{
 		if (geschlageneFigur <5)
@@ -966,16 +1023,30 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		}
 		else if(e.getSource() == _btnNewButton_65)
 		{
-			_position = _positions.get(_aktuellerZug-1);
-			_positions.remove(_aktuellerZug);
-			_aktuellerZug--;
-			setFiguren();
-			setZugrechtLabel();
-			resetteFelder();
+			PositionsVergleicher posVergleicher = new PositionsVergleicher(_positions, _aktuellerZug);
+			if(posVergleicher.wurdeFigurGeschlagen() == false)
+			{
+				_position = _positions.get(_aktuellerZug-1);
+				_positions.remove(_aktuellerZug);
+				_aktuellerZug--;
+				setFiguren();
+				setZugrechtLabel();
+				resetteFelder();
+			}
+			else
+			{
+				int geschlageneFigur = posVergleicher.welcheFigurWurdeGeschlagen();
+				setFigurWurdeGeschlagenLabelReverse(geschlageneFigur);
+				_position = _positions.get(_aktuellerZug-1);
+				_positions.remove(_aktuellerZug);
+				_aktuellerZug--;
+				setFiguren();
+				setZugrechtLabel();
+				resetteFelder();
+			}
 		}
 		else
 			{
-				
 				_posCalc = new PositionCalc(_position);
 				ArrayList<Position> legalePositionen = _posCalc.getLegalFollowingPositions();
 				_positionSpeicher = new Position(_position);
