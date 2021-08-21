@@ -49,7 +49,9 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	Map<Byte, Piece> _whiteFiguren;
 	Map<Byte, Piece> _blackFiguren;
 	List<JButton> _buttons;
-	List<Position> _positions;
+	ArrayList<Position> _positions;
+	List<JLabel> _geschlageneWhiteFiguren;
+	List<JLabel> _geschlageneBlackFiguren;
 	int _letzterGedrueckterButton;
 	int _gedrueckterButton;
 	int _aktuellerZug;
@@ -65,6 +67,14 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	List <String> _spalte;
 	List <String> _zeile;
 	public static final Color LIGHT_BLUE = new Color(51,153,255);
+	int b = 0;
+	int n = 0;
+	int r = 0;
+	int p = 0;
+	int B = 0;
+	int N = 0;
+	int R = 0;
+	int P = 0;
 
 	/**
 	 * Launch the application.
@@ -97,6 +107,8 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		_blackFiguren = position.getBlackFiguren();
 		_buttons = new ArrayList<JButton>(64);
 		_positions = new ArrayList<Position>(6000);
+		_geschlageneWhiteFiguren = new ArrayList<JLabel>(16);
+		_geschlageneBlackFiguren = new ArrayList<JLabel>(16);
 		_letzterGedrueckterButton = 0;
 		_gedrueckterButton = 0;
 		_aktuellerZug = 0;
@@ -144,12 +156,12 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		_btnGetAktuelleFen.setBounds(784, 50, 190, 45);
+		_btnGetAktuelleFen.setBounds(784, 60, 190, 45);
 		getContentPane().add(_btnGetAktuelleFen);
 		_btnGetAktuelleFen.addActionListener(this);
 
 		_tglbtnNewToggleButton = new JToggleButton("Automatisch");
-		_tglbtnNewToggleButton.setBounds(784, 0, 190, 45);
+		_tglbtnNewToggleButton.setBounds(784, 10, 190, 45);
 		getContentPane().add(_tglbtnNewToggleButton);
 
 		_btnNewButton_64 = new JButton("Make Move");
@@ -162,17 +174,18 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		getContentPane().add(_btnNewButton_65);
 		_btnNewButton_65.addActionListener(this);
 		
+				
 		createButtons();
 		setFiguren();
 		setZugrechtLabel();
 		ButtonListenerErzeugen();
+		createGeschlageneFigurLabels();
 
 	}
 
 
 	/* TODO
 	 * W�re noch nice:
-	 * -Anzeige geschlagener Figuren
 	 * -Schwierigkeit einstellen
 	 * -Zugrecht Feld displayed Gewinner
 	 */
@@ -184,12 +197,17 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		_position = Ernd.getBestFollowingPosition(_position);
 		PositionsVergleicher posVergleicher = new PositionsVergleicher(altePosition, _position);
 		posVergleicher.whatMoveWasMade();
+		if(posVergleicher.wurdeFigurGeschlagen() == true)
+		{
+			int geschlageneFigur = posVergleicher.welcheFigurWurdeGeschlagen();
+			setFigurWurdeGeschlagenLabel(geschlageneFigur);
+		}
 		int alteKoordinate = posVergleicher.getAlteKoordinate();
 		int neueKoordinate = posVergleicher.getNeueKoordinate();
 		setFiguren();
 		setZugrechtLabel();
 		_buttons.get(alteKoordinate).setBackground(LIGHT_BLUE);
-		_buttons.get(neueKoordinate).setBackground(LIGHT_BLUE);
+		_buttons.get(neueKoordinate).setBackground(Color.RED);
 		//System.out.println(_position.getFen());
 	}
 
@@ -734,6 +752,238 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		_buttons.add(btnNewButton_63);
 	}
 
+	private void createGeschlageneFigurLabels()
+	{
+		JLabel whitePawn1 = new JLabel("P");
+		whitePawn1.setBounds(790, 550, 23, 25);
+		_geschlageneWhiteFiguren.add(whitePawn1);
+		JLabel whitePawn2 = new JLabel("P");
+		whitePawn2.setBounds(813, 550, 23, 25);
+		_geschlageneWhiteFiguren.add(whitePawn2);
+		JLabel whitePawn3 = new JLabel("P");
+		whitePawn3.setBounds(836, 550, 23, 25);
+		_geschlageneWhiteFiguren.add(whitePawn3);
+		JLabel whitePawn4 = new JLabel("P");
+		whitePawn4.setBounds(859, 550, 23, 25);
+		_geschlageneWhiteFiguren.add(whitePawn4);
+		JLabel whitePawn5 = new JLabel("P");
+		whitePawn5.setBounds(882, 550, 23, 25);
+		_geschlageneWhiteFiguren.add(whitePawn5);
+		JLabel whitePawn6 = new JLabel("P");
+		whitePawn6.setBounds(905, 550, 23, 25);
+		_geschlageneWhiteFiguren.add(whitePawn6);
+		JLabel whitePawn7 = new JLabel("P");
+		whitePawn7.setBounds(928, 550, 23, 25);
+		_geschlageneWhiteFiguren.add(whitePawn7);
+		JLabel whitePawn8 = new JLabel("P");
+		whitePawn8.setBounds(951, 550, 23, 25);
+		_geschlageneWhiteFiguren.add(whitePawn8);
+		
+		JLabel whiteRook1 = new JLabel("R");
+		whiteRook1.setBounds(790, 575, 23, 25);
+		_geschlageneWhiteFiguren.add(whiteRook1);
+		JLabel whiteKnight1 = new JLabel("N");
+		whiteKnight1.setBounds(813, 575, 23, 25);
+		_geschlageneWhiteFiguren.add(whiteKnight1);
+		JLabel whiteBishop1 = new JLabel("B");
+		whiteBishop1.setBounds(836, 575, 23, 25);
+		_geschlageneWhiteFiguren.add(whiteBishop1);
+		JLabel whiteQueen = new JLabel("Q");
+		whiteQueen.setBounds(859, 575, 23, 25);
+		_geschlageneWhiteFiguren.add(whiteQueen);
+		JLabel whiteKing = new JLabel("K");
+		whiteKing.setBounds(882, 575, 23, 25);
+		_geschlageneWhiteFiguren.add(whiteKing);
+		JLabel whiteBishop2 = new JLabel("B");
+		whiteBishop2.setBounds(905, 575, 23, 25);
+		_geschlageneWhiteFiguren.add(whiteBishop2);
+		JLabel whiteKnight2 = new JLabel("N");
+		whiteKnight2.setBounds(928, 575, 23, 25);
+		_geschlageneWhiteFiguren.add(whiteKnight2);
+		JLabel whiteRook2 = new JLabel("R");
+		whiteRook2.setBounds(951, 575, 23, 25);
+		_geschlageneWhiteFiguren.add(whiteRook2);
+		
+		for(int i = 0; i<16;i++)
+		{
+			getContentPane().add(_geschlageneWhiteFiguren.get(i));
+			_geschlageneWhiteFiguren.get(i).setVisible(false);
+		}
+		
+		JLabel blackPawn1 = new JLabel("p");
+		blackPawn1.setBounds(790, 160, 23, 25);
+		_geschlageneBlackFiguren.add(blackPawn1);
+		JLabel blackPawn2 = new JLabel("p");
+		blackPawn2.setBounds(813, 160, 23, 25);
+		_geschlageneBlackFiguren.add(blackPawn2);
+		JLabel blackPawn3 = new JLabel("p");
+		blackPawn3.setBounds(836, 160, 23, 25);
+		_geschlageneBlackFiguren.add(blackPawn3);
+		JLabel blackPawn4 = new JLabel("p");
+		blackPawn4.setBounds(859, 160, 23, 25);
+		_geschlageneBlackFiguren.add(blackPawn4);
+		JLabel blackPawn5 = new JLabel("p");
+		blackPawn5.setBounds(882, 160, 23, 25);
+		_geschlageneBlackFiguren.add(blackPawn5);
+		JLabel blackPawn6 = new JLabel("p");
+		blackPawn6.setBounds(905, 160, 23, 25);
+		_geschlageneBlackFiguren.add(blackPawn6);
+		JLabel blackPawn7 = new JLabel("p");
+		blackPawn7.setBounds(928, 160, 23, 25);
+		_geschlageneBlackFiguren.add(blackPawn7);
+		JLabel blackPawn8 = new JLabel("p");
+		blackPawn8.setBounds(951, 160, 23, 25);
+		_geschlageneBlackFiguren.add(blackPawn8);
+		
+		JLabel blackRook1 = new JLabel("r");
+		blackRook1.setBounds(790, 135, 23, 25);
+		_geschlageneBlackFiguren.add(blackRook1);
+		JLabel blackKnight1 = new JLabel("n");
+		blackKnight1.setBounds(813, 135, 23, 25);
+		_geschlageneBlackFiguren.add(blackKnight1);
+		JLabel blackBishop1 = new JLabel("b");
+		blackBishop1.setBounds(836, 135, 23, 25);
+		_geschlageneBlackFiguren.add(blackBishop1);
+		JLabel blackQueen = new JLabel("q");
+		blackQueen.setBounds(859, 135, 23, 25);
+		_geschlageneBlackFiguren.add(blackQueen);
+		JLabel blackKing = new JLabel("k");
+		blackKing.setBounds(882, 135, 23, 25);
+		_geschlageneBlackFiguren.add(blackKing);
+		JLabel blackBishop2 = new JLabel("b");
+		blackBishop2.setBounds(908, 135, 23, 25);
+		_geschlageneBlackFiguren.add(blackBishop2);
+		JLabel blackKnight2 = new JLabel("n");
+		blackKnight2.setBounds(928, 135, 23, 25);
+		_geschlageneBlackFiguren.add(blackKnight2);
+		JLabel blackRook2 = new JLabel("r");
+		blackRook2.setBounds(951, 135, 23, 25);
+		_geschlageneBlackFiguren.add(blackRook2);		
+		
+		for(int i = 0; i<16;i++)
+		{
+			getContentPane().add(_geschlageneBlackFiguren.get(i));
+
+			_geschlageneBlackFiguren.get(i).setVisible(false);
+		}
+	}
+	
+	private void setFigurWurdeGeschlagenLabelReverse(int geschlageneFigur)
+	{
+		if (geschlageneFigur <5)
+		{
+			if(geschlageneFigur ==4)
+			{
+				_geschlageneBlackFiguren.get(11).setVisible(false);
+			}
+			else if(geschlageneFigur ==3)
+			{
+				b = b - 3;
+				_geschlageneBlackFiguren.get(10+b).setVisible(false);
+			}
+			else if(geschlageneFigur ==2)
+			{
+				n = n - 5;
+				_geschlageneBlackFiguren.get(9+n).setVisible(false);
+			}
+			else if(geschlageneFigur ==1)
+			{
+				r = r - 7;
+				_geschlageneBlackFiguren.get(8+r).setVisible(false);
+			}
+			else if(geschlageneFigur ==0)
+			{
+				p--;
+				_geschlageneBlackFiguren.get(p).setVisible(false);
+			}
+		}
+		else
+		{
+			if(geschlageneFigur ==9)
+			{
+				_geschlageneWhiteFiguren.get(11).setVisible(false);
+			}
+			else if(geschlageneFigur ==8)
+			{
+				B = B - 3;
+				_geschlageneWhiteFiguren.get(10+B).setVisible(false);
+			}
+			else if(geschlageneFigur ==7)
+			{
+				N = N - 5;
+				_geschlageneWhiteFiguren.get(9+N).setVisible(false);
+			}
+			else if(geschlageneFigur ==6)
+			{
+				R = R - 7;
+				_geschlageneWhiteFiguren.get(8+R).setVisible(false);
+			}
+			else if(geschlageneFigur ==5)
+			{
+				P--;
+				_geschlageneWhiteFiguren.get(P).setVisible(false);
+			}
+		}
+	}
+	
+	private void setFigurWurdeGeschlagenLabel(int geschlageneFigur)
+	{
+		if (geschlageneFigur <5)
+		{
+			if(geschlageneFigur ==4)
+			{
+				_geschlageneBlackFiguren.get(11).setVisible(true);
+			}
+			else if(geschlageneFigur ==3)
+			{
+				_geschlageneBlackFiguren.get(10+b).setVisible(true);
+				b = b + 3;
+			}
+			else if(geschlageneFigur ==2)
+			{
+				_geschlageneBlackFiguren.get(9+n).setVisible(true);
+				n = n + 5;
+			}
+			else if(geschlageneFigur ==1)
+			{
+				_geschlageneBlackFiguren.get(8+r).setVisible(true);
+				r = r + 7;
+			}
+			else if(geschlageneFigur ==0)
+			{
+				_geschlageneBlackFiguren.get(p).setVisible(true);
+				p++;
+			}
+		}
+		else
+		{
+			if(geschlageneFigur ==9)
+			{
+				_geschlageneWhiteFiguren.get(11).setVisible(true);
+			}
+			else if(geschlageneFigur ==8)
+			{
+				_geschlageneWhiteFiguren.get(10+B).setVisible(true);
+				B = B +3;
+			}
+			else if(geschlageneFigur ==7)
+			{
+				_geschlageneWhiteFiguren.get(9+N).setVisible(true);
+				N = N + 5;
+			}
+			else if(geschlageneFigur ==6)
+			{
+				_geschlageneWhiteFiguren.get(8+R).setVisible(true);
+				R = R + 7;
+			}
+			else if(geschlageneFigur ==5)
+			{
+				_geschlageneWhiteFiguren.get(P).setVisible(true);
+				P++;
+			}
+		}
+	}
+	
 	private void befuelleZeileSpalte()
 	{
 		_spalte.add("a"); _spalte.add("b"); _spalte.add("c"); _spalte.add("d"); _spalte.add("e"); _spalte.add("f"); _spalte.add("g"); _spalte.add("h");
@@ -753,7 +1003,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) throws NullPointerException{
 		if (_buttons.contains(e.getSource()))
 			{
 				_letzterGedrueckterButton = _gedrueckterButton;
@@ -773,33 +1023,43 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		}
 		else if(e.getSource() == _btnNewButton_65)
 		{
-			_position = _positions.get(_aktuellerZug-1);
-			_positions.remove(_aktuellerZug);
-			_aktuellerZug--;
-			setFiguren();
-			setZugrechtLabel();
-			resetteFelder();
+			PositionsVergleicher posVergleicher = new PositionsVergleicher(_positions, _aktuellerZug);
+			if(posVergleicher.wurdeFigurGeschlagen() == false)
+			{
+				_position = _positions.get(_aktuellerZug-1);
+				_positions.remove(_aktuellerZug);
+				_aktuellerZug--;
+				setFiguren();
+				setZugrechtLabel();
+				resetteFelder();
+			}
+			else
+			{
+				int geschlageneFigur = posVergleicher.welcheFigurWurdeGeschlagen();
+				setFigurWurdeGeschlagenLabelReverse(geschlageneFigur);
+				_position = _positions.get(_aktuellerZug-1);
+				_positions.remove(_aktuellerZug);
+				_aktuellerZug--;
+				setFiguren();
+				setZugrechtLabel();
+				resetteFelder();
+			}
 		}
 		else
 			{
-				
 				_posCalc = new PositionCalc(_position);
 				ArrayList<Position> legalePositionen = _posCalc.getLegalFollowingPositions();
 				_positionSpeicher = new Position(_position);
 				Object[] optionen = {"Queen", "Rook", "Bishop", "Knight"};
 
 				_positionSpeicher.makeMove((byte)_letzterGedrueckterButton, (byte)_gedrueckterButton);
-//				System.out.println("positionSpeicher1: " + _positionSpeicher.getFen());
 				if ((_gedrueckterButton >=56 && _blackFiguren.get((byte)_letzterGedrueckterButton) instanceof Pawn)|| (_gedrueckterButton <=7 && _whiteFiguren.get((byte)_letzterGedrueckterButton) instanceof Pawn))
 				{
 					int piece = JOptionPane.showOptionDialog(null, "Waehle eine Figur:", null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, optionen, null);
 					promotion(piece);
-//					System.out.println("piece: "+piece);
-//					System.out.println("zugrecht: " +_position.getZugrecht());
 					// piece = 0 wenn Queen. 1 wenn Rook. 2 wenn Bishop. 3 wenn Knight.
 				}
-
-
+			
 				for(Position p: legalePositionen)
 				{
 					if (p.getFen().equals(_positionSpeicher.getFen()))
@@ -807,17 +1067,22 @@ public class ChessGui2 extends JFrame implements ActionListener{
 						_position = _positionSpeicher;
 					}
 				}
-				setFiguren();
-				setZugrechtLabel();
-				resetteFelder();
 				_positions.add(_position);
 				_aktuellerZug++;
-//				System.out.println("positionSpeicher2: " + _positionSpeicher.getFen());
-//				System.out.println("_position: " + _position.getFen());
+				PositionsVergleicher posVergleicher = new PositionsVergleicher(_positions, _aktuellerZug);
+				if(posVergleicher.wurdeFigurGeschlagen() == true)
+				{
+					int geschlageneFigur = posVergleicher.welcheFigurWurdeGeschlagen();
+					setFigurWurdeGeschlagenLabel(geschlageneFigur);
+				}
+				setFiguren();
+				setZugrechtLabel();
+				resetteFelder();	
 			}
 		if(_tglbtnNewToggleButton.isSelected() && !(_position._zugrecht))
 		{
 			makeCyborgMove();
+			
 		}
 	}
 
