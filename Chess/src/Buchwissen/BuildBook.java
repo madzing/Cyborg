@@ -26,9 +26,9 @@ public class BuildBook {
 		// "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"				StartPosition
 		// "rnbqkbnr/pppppppp/8/8/2PPP3/1PN2NP1/PB1Q1PBP/3RR1K1 w kq - 0 1"             sollte gut für weiß sein
 
-		_fen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1");
+		_fen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 		_position = new Position(_fen);
-		_cyborg = new AlphaBetaCyborg(4);
+		_cyborg = new AlphaBetaCyborg(5);
 		_positionCalc = new PositionCalc(_position);
 		
 		writeBook();
@@ -36,7 +36,7 @@ public class BuildBook {
 	
 	public void writeBook()
 	{
-		_cyborg.getBestFollowingPosition(_position);
+		Position bestPosition = _cyborg.getBestFollowingPosition(_position);
 		ArrayList<Position> positions = _positionCalc.getLegalFollowingPositions();
 		
 		for (Position position : positions)
@@ -44,14 +44,21 @@ public class BuildBook {
 			if(_cyborg.getGuteZuege().containsKey(position.getPlacement()))
 			{
 				position.setComparator(_cyborg.getGuteZuege().get(position.getPlacement()));
+				
 			}
 		}
-		positions.sort(null);
 		
-		for(Position position : positions)
+		positions.sort(null);
+		for (Position position : positions)
 		{
-			System.out.println(position.getFen()+"    ///    "+ position.getComparator());
+			if(_cyborg.getGuteZuege().containsKey(position.getPlacement()))
+			{
+				System.out.println(position.getFen()+"    ///    "+ position.getComparator());
+			}
 		}
+		
+		System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////");
+		System.out.println(bestPosition.getFen() +":       "+ bestPosition.getPlacement());
 	}
 
 }

@@ -42,12 +42,12 @@ public class AlphaBetaCyborg {
 		_bestPosition = null;
 
 		if (position.getZugrecht()) {
-			for(int i = 1; i <=_gewuenschtetiefe;i++)
+			for(int i = 2; i <=_gewuenschtetiefe;i++)
 			{
 				max(position, i, alpha, beta);
 			}
 		} else {
-			for(int i = 1; i <=_gewuenschtetiefe;i++)
+			for(int i = 2; i <=_gewuenschtetiefe;i++)
 			{
 			min(position, i, alpha, beta);
 			}
