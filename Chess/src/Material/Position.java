@@ -538,6 +538,7 @@ public class Position implements Comparable<Object>{
 		}
 
 		placement = new String(array);
+		placement = placement+_zugrecht+_enpassant+_whiteCanCastle[0]+_whiteCanCastle[1]+_blackCanCastle[0]+_blackCanCastle[1];
 		//System.out.println(placement);
 		return placement;
 	}
