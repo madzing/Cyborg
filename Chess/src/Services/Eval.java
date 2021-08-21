@@ -135,7 +135,7 @@ public class Eval {
 				}
 				else 
 				{
-					blackPoints = (double) (blackPoints + (blackPiece.getValue().getValue()+_kingFelder[blackPiece.getValue().getCoordinate()]));
+					blackPoints = (double) (blackPoints + (blackPiece.getValue().getValue()*_kingFelder[blackPiece.getValue().getCoordinate()]));
 				}
 			}
 			
