@@ -21,6 +21,7 @@ public class Cyborg {
 	Eval _eval;
 	Position _bestPosition;
 	int _gewuenschtetiefe;
+	boolean _finalDurchlauf;
 
 	public Cyborg(int tiefe) {
 		// Ist eine Position im Buch enhalten sollte diese zurückgegeben werden
@@ -42,6 +43,9 @@ public class Cyborg {
 		// so wird weitergerechnet, da wir nicht inmitten eines Schlagabtausches stoppen
 		// wollen.
 		_gewuenschtetiefe = tiefe;
+		
+		// Handelt es sich um den Durchlauf mit der gewünschen Tiefe oder vorherige?
+		_finalDurchlauf = false;
 	}
 
 	/*
@@ -70,6 +74,7 @@ public class Cyborg {
 		_bestPosition = null;
 		double lastEval = 0.0;
 		_guteZuege = new HashMap<String, Double>();
+		_finalDurchlauf = false;
 
 		// Ist eine Position im Buch enhalten sollte diese zurückgegeben werden
 		if (_buch.istEnthalten(position)) {
@@ -97,6 +102,10 @@ public class Cyborg {
 			spieler = -1;
 		}
 		for (int i = 1; i <= _gewuenschtetiefe; i++) {
+			if(i == _gewuenschtetiefe )
+			{
+				_finalDurchlauf = true;
+			}
 			miniMax(spieler,lastEval, position, i, alpha, beta);
 		}
 
@@ -119,6 +128,9 @@ public class Cyborg {
 		// abgebrochen werden, solage eine "Ruheposition" erreicht ist.
 		else if (tiefe <= 0) {
 			double currentEval = _eval.getEval(position) * spieler;
+			
+			// TODO Möglicherweise zusätzlich auf finalDurchlauf überprüfen bei ersten Tests sind die Ergebnisse von Speedtest sehr ähnlich.
+			// (!_finalDurchlauf ||Math.abs(Math.abs(currentEval) - Math.abs(lastEval)) < 2)
 			if (Math.abs(Math.abs(currentEval) - Math.abs(lastEval)) < 2) {
 				//System.out.println(tiefe +" "+ position.getFen());
 				return currentEval;
@@ -136,7 +148,7 @@ public class Cyborg {
 		if (legalPositions.size() == 0) {
 
 			if (schachmatt(position)) {
-				return -9999.0 *spieler ;
+				return -9999.0 ; //*spieler
 			} else {
 				return 0.0;
 			}
