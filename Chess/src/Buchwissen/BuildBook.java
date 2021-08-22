@@ -7,11 +7,11 @@ import Fachwerte.Fen;
 import Gui.ChessGui2;
 import Material.Position;
 import Services.PositionCalc;
-import Werkzeuge.newCyborg;
+import Werkzeuge.Cyborg;
 
 public class BuildBook {
 
-	newCyborg _cyborg;
+	Cyborg _cyborg;
 	PositionCalc _positionCalc;
 	Position _position;
 	Fen _fen;
@@ -28,7 +28,7 @@ public class BuildBook {
 
 		_fen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 		_position = new Position(_fen);
-		_cyborg = new newCyborg(8);
+		_cyborg = new Cyborg(8);
 		_positionCalc = new PositionCalc(_position);
 		
 		writeBook();

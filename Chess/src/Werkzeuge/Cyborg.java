@@ -14,7 +14,7 @@ import Services.PositionCalc;
 /*
  * Der Cyborg 
  */
-public class newCyborg {
+public class Cyborg {
 
 	HashMap<String, Double> _guteZuege;
 	BookReader _buch;
@@ -22,7 +22,7 @@ public class newCyborg {
 	Position _bestPosition;
 	int _gewuenschtetiefe;
 
-	public newCyborg(int tiefe) {
+	public Cyborg(int tiefe) {
 		// Ist eine Position im Buch enhalten sollte diese zurückgegeben werden
 		_buch = new BookReader();
 
@@ -78,10 +78,10 @@ public class newCyborg {
 
 		// schlechtester Wert, den weiß mindestens erreichen wird. (Weiß steht bei
 		// positiven Zahlen besser)
-		double alpha = -9999.0;
+		double alpha = -9000.0;
 
 		// schlechtester Wert, den schwarz mindestens erreichen wird.
-		double beta = 9999.0;
+		double beta = 9000.0;
 
 		/*
 		 * Die Methode wird wiederholt und mit steigender Tiefe aufgerufen, sodass gute
