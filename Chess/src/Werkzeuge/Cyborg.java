@@ -148,7 +148,7 @@ public class Cyborg {
 		if (legalPositions.size() == 0) {
 
 			if (schachmatt(position)) {
-				return -9999.0 *spieler ;
+				return -9999.0 ; //*spieler
 			} else {
 				return 0.0;
 			}

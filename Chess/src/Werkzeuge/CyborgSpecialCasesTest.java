@@ -31,26 +31,5 @@ public class CyborgSpecialCasesTest {
 		assertEquals(1,zaehler);
 	}
 	
-	/*
-	 * 
-	 */
-	@Test
-	public void testMattin3() {
-		Cyborg anton = new Cyborg(5);
-
-		Fen startFen = Fen.select("k5rr/8/8/8/8/8/8/K7 w - - 0 1");
-		Position startPosition = new Position(startFen);
-		
-		int zaehler = 0;
-		Position besteFolgePos = anton.getBestFollowingPosition(startPosition);
-		
-		while(besteFolgePos != null)
-		{
-			zaehler++;
-			besteFolgePos = anton.getBestFollowingPosition(besteFolgePos);
-		}
-		assertEquals(null,besteFolgePos);
-		assertEquals(3,zaehler);
-	}
 
 }
