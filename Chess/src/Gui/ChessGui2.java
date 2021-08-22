@@ -34,7 +34,6 @@ import Material.Queen;
 import Material.Rook;
 import Services.PositionCalc;
 import Services.PositionsVergleicher;
-import Werkzeuge.AlphaBetaCyborg;
 import Werkzeuge.RekursiverCyborg;
 import Werkzeuge.newCyborg;
 

@@ -7,7 +7,6 @@ import Fachwerte.Fen;
 import Gui.ChessGui2;
 import Material.Position;
 import Services.PositionCalc;
-import Werkzeuge.AlphaBetaCyborg;
 import Werkzeuge.newCyborg;
 
 public class BuildBook {
