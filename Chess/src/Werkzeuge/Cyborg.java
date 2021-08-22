@@ -78,10 +78,10 @@ public class Cyborg {
 
 		// schlechtester Wert, den weiß mindestens erreichen wird. (Weiß steht bei
 		// positiven Zahlen besser)
-		double alpha = -9000.0;
+		double alpha = -9999.0;
 
 		// schlechtester Wert, den schwarz mindestens erreichen wird.
-		double beta = 9000.0;
+		double beta = 9999.0;
 
 		/*
 		 * Die Methode wird wiederholt und mit steigender Tiefe aufgerufen, sodass gute
@@ -136,14 +136,14 @@ public class Cyborg {
 		if (legalPositions.size() == 0) {
 
 			if (schachmatt(position)) {
-				return 9999.0;
+				return -9999.0 *spieler ;
 			} else {
 				return 0.0;
 			}
 
 		}
 
-		//
+		// Über alle legalen Zuege iterieren und minimax aufrufen
 		for (Position pos : legalPositions) {
 			double wert = -miniMax(-spieler,-lastEval, pos, tiefe - 1, -beta, -alpha);
 
@@ -163,11 +163,12 @@ public class Cyborg {
 				_guteZuege.replace(pos.getPlacement(), wert);
 			}
 		}
-
-		if (alpha > 9000) {
+		
+		// Dafür sorgen, dass der Cyborg für das schnellste Schachmatt spielt!
+		if (alpha > 9000.0) {
 			alpha = alpha - 1;
 		}
-		else if (alpha < -9000)
+		else if (alpha < -9000.0)
 		{
 			alpha = alpha + 1;
 		}
@@ -221,7 +222,7 @@ public class Cyborg {
 	}
 	
 	/*
-	 * returned _guteZuege
+	 * Gibt _guteZuege zurueck!
 	 */
 	public HashMap<String, Double> getGuteZuege() {
 		return _guteZuege;
