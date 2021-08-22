@@ -112,7 +112,7 @@ public class Cyborg {
 		// Wenn die Suchtiefe 1 ist, also die vorletzte tiefe erreicht ist sollte
 		// _lastEval abgespeichert werden.
 		if (tiefe == 1) {
-			lastEval = _eval.getEval(position);
+			lastEval = _eval.getEval(position)* spieler;
 		}
 
 		// Wenn die Tiefe kleiner oder gleich null ist, also die kann die Suche
@@ -145,7 +145,7 @@ public class Cyborg {
 
 		//
 		for (Position pos : legalPositions) {
-			double wert = -miniMax(-spieler,lastEval, pos, tiefe - 1, -beta, -alpha);
+			double wert = -miniMax(-spieler,-lastEval, pos, tiefe - 1, -beta, -alpha);
 
 			if (wert > alpha) {
 				alpha = wert;
