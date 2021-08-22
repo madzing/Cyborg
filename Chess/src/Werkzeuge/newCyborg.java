@@ -2,10 +2,14 @@ package Werkzeuge;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import Buchwissen.BookReader;
+import Material.King;
+import Material.Piece;
 import Material.Position;
 import Services.Eval;
+import Services.PositionCalc;
 
 /*
  * Der Cyborg 
@@ -17,7 +21,6 @@ public class newCyborg {
 	Eval _eval;
 	Position _bestPosition;
 	int _gewuenschtetiefe;
-	Double _lastEval;
 
 	public newCyborg(int tiefe) {
 		// Ist eine Position im Buch enhalten sollte diese zurückgegeben werden
@@ -39,13 +42,10 @@ public class newCyborg {
 		// so wird weitergerechnet, da wir nicht inmitten eines Schlagabtausches stoppen
 		// wollen.
 		_gewuenschtetiefe = tiefe;
-
-		// Speichert die Evaluation der letzten Position.
-		_lastEval = 0.0;
 	}
 
 	/*
-	 * Diese Methode soll von "ausserhalb" aufgerufen werden um die beste
+	 * Wikipedia: Diese Methode soll von "ausserhalb" aufgerufen werden um die beste
 	 * Folgeposition einer gegebenen Position zu finden. Hierzu wird Der Minimax
 	 * Algorithmus in Kombination mit dem sogenannten Alpha-Beta-Pruning verwendet.
 	 * 
@@ -68,7 +68,7 @@ public class newCyborg {
 		// Resetten der Variablen, welche von einem vorherigen durchlauf noch belegt
 		// sein könnten.
 		_bestPosition = null;
-		_lastEval = 0.0;
+		double lastEval = 0.0;
 		_guteZuege = new HashMap<String, Double>();
 
 		// Ist eine Position im Buch enhalten sollte diese zurückgegeben werden
@@ -84,35 +84,94 @@ public class newCyborg {
 		double beta = 9999.0;
 
 		/*
-		 * Wenn weiß dran ist sollte die Methode Max aufgerufen werden.
-		 * 
 		 * Die Methode wird wiederholt und mit steigender Tiefe aufgerufen, sodass gute
 		 * Zuege aus den vorigen Durchläufen gespeichert werden können und das Pruning
 		 * effektiver ist. Zudem kann die Berechnung so theoretisch jederzeit
 		 * abgebrochen werden und auf die Ergebnisse des letzten Durchlaufes
 		 * zurückgegriffen werden.
 		 */
+		int spieler;
 		if (position.getZugrecht()) {
-			for (int i = 1; i <= _gewuenschtetiefe; i++) {
-				max(position, i, alpha, beta);
-			}
-			// Wenn schwarz dran ist sollte die Methode Min aufgerufen werden.
+			spieler = 1;
 		} else {
-			for (int i = 1; i <= _gewuenschtetiefe; i++) {
-				min(position, i, alpha, beta);
-			}
+			spieler = -1;
 		}
+		for (int i = 1; i <= _gewuenschtetiefe; i++) {
+			miniMax(spieler,lastEval, position, i, alpha, beta);
+		}
+
 		return _bestPosition;
 	}
 
-	private double max(Position position, int tiefe, double alpha, double beta) {
+	/*
+	 * Die eigentliche rekursive Funktion. Das Herz von Cyborg! Gibt die Eval einer
+	 * Position zurück. Belegt das Feld _bestePosition.
+	 */
+	private double miniMax(int spieler, double lastEval, Position position, int tiefe, double alpha, double beta) {
 
-		return 0.0;
-	}
+		// Wenn die Suchtiefe 1 ist, also die vorletzte tiefe erreicht ist sollte
+		// _lastEval abgespeichert werden.
+		if (tiefe == 1) {
+			lastEval = _eval.getEval(position);
+		}
 
-	private double min(Position position, int tiefe, double alpha, double beta) {
+		// Wenn die Tiefe kleiner oder gleich null ist, also die kann die Suche
+		// abgebrochen werden, solage eine "Ruheposition" erreicht ist.
+		else if (tiefe <= 0) {
+			double currentEval = _eval.getEval(position) * spieler;
+			if (Math.abs(Math.abs(currentEval) - Math.abs(lastEval)) < 2) {
+				//System.out.println(tiefe +" "+ position.getFen());
+				return currentEval;
+			}
+			lastEval = currentEval;
+		}
 
-		return 0.0;
+		// Alle Legalen Folgepositionen berechnen
+		ArrayList<Position> legalPositions = new PositionCalc(position).getLegalFollowingPositions();
+
+		// die Positionen sortieren
+		legalPositions = guteZuegeZuerst(legalPositions);
+
+		// wenn keine legalen Zuege moglich sind
+		if (legalPositions.size() == 0) {
+
+			if (schachmatt(position)) {
+				return 9999.0;
+			} else {
+				return 0.0;
+			}
+
+		}
+
+		//
+		for (Position pos : legalPositions) {
+			double wert = -miniMax(-spieler,lastEval, pos, tiefe - 1, -beta, -alpha);
+
+			if (wert > alpha) {
+				alpha = wert;
+
+				_guteZuege.put(pos.getPlacement(), wert);
+
+				if (tiefe == _gewuenschtetiefe) {
+					_bestPosition = pos;
+					_bestPosition.setComparator(wert);
+				}
+				if (alpha >= beta) {
+					break;
+				}
+			} else {
+				_guteZuege.replace(pos.getPlacement(), wert);
+			}
+		}
+
+		if (alpha > 9000) {
+			alpha = alpha - 1;
+		}
+		else if (alpha < -9000)
+		{
+			alpha = alpha + 1;
+		}
+		return alpha;
 	}
 
 	/*
@@ -136,4 +195,36 @@ public class newCyborg {
 		gutesArray.addAll(schlechtesArray);
 		return gutesArray;
 	}
+
+	/* 
+	 * Hilfsmethode um herauszufinden, ob der sich am Zug befindliche im Schachmatt steht
+	 */
+	private boolean schachmatt(Position position) {
+		if (position.getZugrecht()) {
+			for (Map.Entry<Byte, Piece> whitePiece : position.getWhiteFiguren().entrySet()) {
+				if (whitePiece.getValue() instanceof King) {
+					if (((King) whitePiece.getValue()).isInCheck(position)) {
+						return true;
+					}
+				}
+			}
+		} else {
+			for (Map.Entry<Byte, Piece> blackPiece : position.getBlackFiguren().entrySet()) {
+				if (blackPiece.getValue() instanceof King) {
+					if (((King) blackPiece.getValue()).isInCheck(position)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	/*
+	 * returned _guteZuege
+	 */
+	public HashMap<String, Double> getGuteZuege() {
+		return _guteZuege;
+	}
+
 }
