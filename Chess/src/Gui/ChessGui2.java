@@ -1024,6 +1024,9 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		else if(e.getSource() == _btnNewButton_65)
 		{
 			PositionsVergleicher posVergleicher = new PositionsVergleicher(_positions, _aktuellerZug);
+			ArrayList<Position> CyborgPositions = _positions;
+			CyborgPositions.remove(_aktuellerZug);
+			PositionsVergleicher posVergleicherCyborg = new PositionsVergleicher(CyborgPositions,_aktuellerZug-1);
 			if(posVergleicher.wurdeFigurGeschlagen() == false)
 			{
 				_position = _positions.get(_aktuellerZug-1);
@@ -1033,6 +1036,17 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				setZugrechtLabel();
 				resetteFelder();
 			}
+//			else if (_tglbtnNewToggleButton.isSelected() && posVergleicherCyborg.wurdeFigurGeschlagen())
+//			{
+//				int geschlageneFigur = posVergleicherCyborg.welcheFigurWurdeGeschlagen();
+//				setFigurWurdeGeschlagenLabelReverse(geschlageneFigur);
+//				_position = _positions.get(_aktuellerZug-1);
+//				_positions.remove(_aktuellerZug);
+//				_aktuellerZug--;
+//				setFiguren();
+//				setZugrechtLabel();
+//				resetteFelder();
+//			}
 			else
 			{
 				int geschlageneFigur = posVergleicher.welcheFigurWurdeGeschlagen();
@@ -1082,7 +1096,6 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		if(_tglbtnNewToggleButton.isSelected() && !(_position._zugrecht))
 		{
 			makeCyborgMove();
-			
 		}
 	}
 
