@@ -36,6 +36,7 @@ import Services.PositionCalc;
 import Services.PositionsVergleicher;
 import Werkzeuge.AlphaBetaCyborg;
 import Werkzeuge.RekursiverCyborg;
+import Werkzeuge.newCyborg;
 
 import java.awt.BorderLayout;
 import javax.swing.JCheckBox;
@@ -192,7 +193,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 
 	public void makeCyborgMove()
 	{
-		AlphaBetaCyborg Ernd = new AlphaBetaCyborg(5);
+		newCyborg Ernd = new newCyborg(5);
 		Position altePosition = new Position(_position);
 		_position = Ernd.getBestFollowingPosition(_position);
 		PositionsVergleicher posVergleicher = new PositionsVergleicher(altePosition, _position);
