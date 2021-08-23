@@ -26,9 +26,9 @@ public class BuildBook {
 		// "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"				StartPosition
 		// "rnbqkbnr/pppppppp/8/8/2PPP3/1PN2NP1/PB1Q1PBP/3RR1K1 w kq - 0 1"             sollte gut für weiß sein
 
-		_fen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+		_fen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1");
 		_position = new Position(_fen);
-		_cyborg = new Cyborg(5);
+		_cyborg = new Cyborg(1);
 		_positionCalc = new PositionCalc(_position);
 		
 		writeBook();

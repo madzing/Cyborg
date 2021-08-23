@@ -94,4 +94,20 @@ public class CyborgSpeedTest {
 			System.out.println(besteFolgePos.getFen());
 		}
 	}
+	
+	@Test
+	public void testSpeed6() {
+		Cyborg anton = new Cyborg(5);
+
+		Fen startFen = Fen.select("1r4k1/pb2Qpb1/1p1p3p/n1pP1P2/2P3B1/1PN4P/P4qP1/B5RK b - - 1 26");
+		Position startPosition = new Position(startFen);
+
+		Position besteFolgePos = anton.getBestFollowingPosition(startPosition);
+
+		if (besteFolgePos == null) {
+			System.out.println("Das Spiel ist vorbei!");
+		} else {
+			System.out.println(besteFolgePos.getFen());
+		}
+	}
 }
