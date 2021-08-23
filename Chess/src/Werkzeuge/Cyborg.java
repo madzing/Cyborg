@@ -158,12 +158,12 @@ public class Cyborg {
 		// Über alle legalen Zuege iterieren und minimax aufrufen
 		for (Position pos : legalPositions) {
 			double wert = -miniMax(-spieler,-lastEval, pos, tiefe - 1, -beta, -alpha);
-			
+
 			if (wert > alpha) {
 				alpha = wert;
 				
 				_guteZuege.put(pos.getPlacement(), wert);
-
+				
 				if (tiefe == _gewuenschtetiefe) {
 					_bestPosition = pos;
 					_bestPosition.setComparator(wert);
@@ -171,9 +171,10 @@ public class Cyborg {
 				if (alpha >= beta) {
 					break;
 				}
-			} 
-			else {
-				_guteZuege.replace(pos.getPlacement(), wert);
+			}
+
+			else if (_guteZuege.containsKey(pos.getPlacement())){
+				_guteZuege.put(pos.getPlacement(), wert);
 			}
 		}
 		
