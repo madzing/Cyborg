@@ -174,7 +174,6 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		getContentPane().add(_reverseButton);
 		_reverseButton.addActionListener(this);
 		
-				
 		createButtons();
 		setFiguren();
 		setZugrechtLabel();
@@ -193,6 +192,12 @@ public class ChessGui2 extends JFrame implements ActionListener{
 
 	public void makeCyborgMove()
 	{
+		/*
+		 * Methode mit der ein Cyborg einen Zug auf dem GUI darstellen kann. 
+		 * Es wird einfach eine neue Position aus dem Cyborg erzeugt und diese wird der Positions Liste hinzugefuegt, sowie der aktuelle Zug um einen erhoeht.
+		 * Zusaetzlich wird ein Positions Vergleicher erzeugt, dessen Klassen Variablen AlteKoordinate und NeueKoordinate
+		 * nun gehighlighted werden koennen.
+		 */
 		Cyborg Ernd = new Cyborg(5);
 		Position altePosition = new Position(_position);
 		_position = Ernd.getBestFollowingPosition(_position);
@@ -200,7 +205,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		posVergleicher.whatMoveWasMade();
 		_positions.add(_position);
 		_aktuellerZug++;
-		setFigurWurdeGeschlagenLabel(); // Führt zu Fehlern ?!
+		setFigurWurdeGeschlagenLabel(); 
 		int alteKoordinate = posVergleicher.getAlteKoordinate();
 		int neueKoordinate = posVergleicher.getNeueKoordinate();
 		setFiguren();
@@ -1106,8 +1111,87 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		clpbrd.setContents (stringSelection, null);
 	}
 	
+	private void reverseZug()
+	{
+		/*
+		 * Methode in der entweder die letzte oder beim Spielen gegen den Cyborg die vorletzte Position aufgerufen wird
+		 * Es wird unterschieden zwischen:
+		 * 1. Cyborg spielt NICHT und es wurde KEINE Figur geschlagen
+		 * 2. Cyborg spielt und es wurde KEINE Figur geschlagen
+		 * 3. Cyborg spielt und es wurde eine Figur geschlagen
+		 * 4. Cyborg spielt NICHT und es wurde eine Figur geschlagen
+		 * 
+		 * Wenn der Cyborg nicht spielt muss nur die alte Position geladen, die aktuelle geloescht und der aktuelle Zug um ein subtrahiert werden
+		 * Sowie das Geschlagene Figuren Label, insofern eine Figur geschlagen wurde.
+		 * 
+		 * Wenn der Cyborg spielt laueft es genauso ab, aber zusaetzlich wird eine Position geladen.
+		 */
+		PositionsVergleicher posVergleicher = new PositionsVergleicher(_positions, _aktuellerZug);
+		if(_CyborgButton.isSelected() == false && posVergleicher.wurdeFigurGeschlagen() == false) // Es wurde keine Figur vom Spieler geschlagen
+		{
+			_position = _positions.get(_aktuellerZug-1);
+			_positions.remove(_aktuellerZug);
+			_aktuellerZug--;
+			
+		}
+		else if (_CyborgButton.isSelected() == true && posVergleicher.wurdeFigurGeschlagen() == false) // Es wurde keine Figur vom Cyborg geschlagen
+		{
+			_position = _positions.get(_aktuellerZug-1);
+			_positions.remove(_aktuellerZug);
+			_aktuellerZug--;
+			_position = _positions.get(_aktuellerZug-1);
+			_positions.remove(_aktuellerZug);
+			_aktuellerZug--;
+		}
+		else if (_CyborgButton.isSelected() == true && posVergleicher.wurdeFigurGeschlagen() == true) // Es wurde eine Figur vom Cyborg geschlagen
+		{
+			int geschlageneFigur = posVergleicher.welcheFigurWurdeGeschlagen();
+			setFigurWurdeGeschlagenLabelReverse(geschlageneFigur);
+			_position = _positions.get(_aktuellerZug-1);
+			_positions.remove(_aktuellerZug);
+			_aktuellerZug--;
+			_position = _positions.get(_aktuellerZug-1);
+			_positions.remove(_aktuellerZug);
+			_aktuellerZug--;
+		}
+		else // Es wurde eine Figur vom Spieler geschlagen
+		{
+			int geschlageneFigur = posVergleicher.welcheFigurWurdeGeschlagen();
+			setFigurWurdeGeschlagenLabelReverse(geschlageneFigur);
+			_position = _positions.get(_aktuellerZug-1);
+			_positions.remove(_aktuellerZug);
+			_aktuellerZug--;
+		}
+		setFiguren();
+		setZugrechtLabel();
+		resetteFelder();
+	}
+	
+	private void makeMove()
+	{
+		_posCalc = new PositionCalc(_position);
+		ArrayList<Position> legalePositionen = _posCalc.getLegalFollowingPositions();
+		_positionSpeicher = new Position(_position);
+		_positionSpeicher.makeMove((byte)_letzterGedrueckterButton, (byte)_gedrueckterButton);
+		promotion();
+		for(Position p: legalePositionen)
+		{
+			if (p.getFen().equals(_positionSpeicher.getFen()))
+			{
+				_position = _positionSpeicher;
+				_aktuellerZug++;
+			}
+		}
+		_positions.add(_position);
+		
+		setFigurWurdeGeschlagenLabel();
+		setFiguren();
+		setZugrechtLabel();
+		resetteFelder();	
+	}
+	
 	@Override
-	public void actionPerformed(ActionEvent e) throws NullPointerException{
+	public void actionPerformed(ActionEvent e){
 		/*
 		 * ActionListener der GUI
 		 */
@@ -1122,69 +1206,32 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		}
 		else if(e.getSource() == _reverseButton) // der Reverse Knopf wurde gedrueckt
 		{
-			PositionsVergleicher posVergleicher = new PositionsVergleicher(_positions, _aktuellerZug);
-			if(_CyborgButton.isSelected() == false && posVergleicher.wurdeFigurGeschlagen() == false) // Es wurde keine Figur vom Spieler geschlagen
+			try
 			{
-				_position = _positions.get(_aktuellerZug-1);
-				_positions.remove(_aktuellerZug);
-				_aktuellerZug--;
-				
+				reverseZug();
 			}
-			else if (_CyborgButton.isSelected() == true && posVergleicher.wurdeFigurGeschlagen() == false) // Es wurde keine Figur vom Cyborg geschlagen
+			catch(IndexOutOfBoundsException i)
 			{
-				_position = _positions.get(_aktuellerZug-1);
-				_positions.remove(_aktuellerZug);
-				_aktuellerZug--;
-				_position = _positions.get(_aktuellerZug-1);
-				_positions.remove(_aktuellerZug);
-				_aktuellerZug--;
+				JOptionPane.showMessageDialog(null, "Du bist schon am Start des Spiels");
 			}
-			else if (_CyborgButton.isSelected() == true && posVergleicher.wurdeFigurGeschlagen() == true) // Es wurde eine Figur vom Cyborg geschlagen
-			{
-				int geschlageneFigur = posVergleicher.welcheFigurWurdeGeschlagen();
-				setFigurWurdeGeschlagenLabelReverse(geschlageneFigur);
-				_position = _positions.get(_aktuellerZug-1);
-				_positions.remove(_aktuellerZug);
-				_aktuellerZug--;
-				_position = _positions.get(_aktuellerZug-1);
-				_positions.remove(_aktuellerZug);
-				_aktuellerZug--;
-			}
-			else // Es wurde eine Figur vom Spieler geschlagen
-			{
-				int geschlageneFigur = posVergleicher.welcheFigurWurdeGeschlagen();
-				setFigurWurdeGeschlagenLabelReverse(geschlageneFigur);
-				_position = _positions.get(_aktuellerZug-1);
-				_positions.remove(_aktuellerZug);
-				_aktuellerZug--;
-			}
-			setFiguren();
-			setZugrechtLabel();
-			resetteFelder();
 		}
 		else // der MakeMove Button wurde gedrueckt
 			{
-				_posCalc = new PositionCalc(_position);
-				ArrayList<Position> legalePositionen = _posCalc.getLegalFollowingPositions();
-				_positionSpeicher = new Position(_position);
-				_positionSpeicher.makeMove((byte)_letzterGedrueckterButton, (byte)_gedrueckterButton);
-				promotion();
-			
-				for(Position p: legalePositionen)
-				{
-					if (p.getFen().equals(_positionSpeicher.getFen()))
-					{
-						_position = _positionSpeicher;
-					}
+				try
+				{	
+					makeMove();
 				}
-				_positions.add(_position);
-				_aktuellerZug++;
-				setFigurWurdeGeschlagenLabel();
-				setFiguren();
-				setZugrechtLabel();
-				resetteFelder();	
+				catch(NullPointerException n)
+				{
+					JOptionPane.showMessageDialog(null, "An der alten Koordinate steht keine Figur deiner Farbe");
+				}
+				catch(IndexOutOfBoundsException i)
+				{
+					JOptionPane.showMessageDialog(null, "Das ist ein illegaler Zug");
+				}
+				
 			}
-		if(_CyborgButton.isSelected() && !(_position._zugrecht))
+		if(_CyborgButton.isSelected() && !(_position._zugrecht)) //Prüft bei jedem Klick auf ein Knopf ob der Cyborg eingeschaltet ist und Schwarz an der Reihe ist
 		{
 			makeCyborgMove();
 		}
