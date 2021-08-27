@@ -1,9 +1,10 @@
 package Services;
 
 import java.util.ArrayList;
-
+import java.util.Iterator;
 import java.util.Map;
 
+import Fachwerte.Zug;
 import Material.King;
 import Material.Bishop;
 import Material.Rook;
@@ -36,33 +37,25 @@ public class PositionCalc {
 
 	// Diese Methode gibt alle legalen Positionen, welche aus der derzeitigen
 	// Position resultieren zurück.
-	public ArrayList<Position> getLegalFollowingPositions() {
-		ArrayList<Position> folgePositionen = new ArrayList<Position>();
-		for (Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet()) {
-			for (Byte neueFigurPos : entry.getValue().getMoves(_figurenAmZug, _figurenDesGegners, _currentPosition)) {
-
-				Position neuePos = new Position(_currentPosition);
-				neuePos.makeMove(entry.getValue().getCoordinate(), neueFigurPos);
-				if(entry.getValue() instanceof Pawn && (neueFigurPos<=8 || neueFigurPos >= 56))
-						{
-							neuePos.promotion(new Knight(neueFigurPos,entry.getValue().getColor()));
-							if (isPositionLegal(neuePos))
-							{
-								folgePositionen.add(neuePos);
-								neuePos.promotion(new Bishop(neueFigurPos,entry.getValue().getColor()));
-								folgePositionen.add(neuePos);
-								neuePos.promotion(new Rook(neueFigurPos,entry.getValue().getColor()));
-								folgePositionen.add(neuePos);
-								neuePos.promotion(new Queen(neueFigurPos,entry.getValue().getColor()));
-								folgePositionen.add(neuePos);
-							}
-						}
-				else if (isPositionLegal(neuePos)) {
-					folgePositionen.add(neuePos);
+	public ArrayList<Zug> getLegalFollowingPositions() {
+		ArrayList<Zug> folgeZuege = new ArrayList<Zug>();
+		Iterator entryIterator = _figurenAmZug.entrySet().iterator();
+		while(entryIterator.hasNext()) {
+			Map.Entry piece = (Map.Entry)(entryIterator.next());
+			ArrayList<Byte> moves = ((Piece) piece.getValue()).getMoves(_figurenAmZug, _figurenDesGegners,
+					_currentPosition);
+			for (Byte neueFigurPos : moves) {
+				_currentPosition.makeMove(((Piece) (piece.getValue())).getCoordinate(), neueFigurPos);
+				
+				if (isPositionLegal(_currentPosition)) {
+					folgeZuege.add(_currentPosition.undoLastMove());
+				} else {
+					_currentPosition.undoLastMove();
 				}
 			}
 		}
-		return folgePositionen;
+		
+		return folgeZuege;
 	}
 
 	// Ist die übergebene Position legal? oder steht der König nach einem Zug der

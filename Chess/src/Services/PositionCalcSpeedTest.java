@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import Fachwerte.Fen;
+import Fachwerte.Zug;
 import Material.Position;
 
 public class PositionCalcSpeedTest {
@@ -29,13 +30,16 @@ public class PositionCalcSpeedTest {
 			return 1;
 		}
 
-		List<Position> nodes = posCalc.getLegalFollowingPositions();
+		List<Zug> nodes = posCalc.getLegalFollowingPositions();
 
-		for(Position p : nodes)
+		for(Zug p : nodes)
 		{
-			numPositions += MoveGenerationTest(depth-1,p);
+			position.makeMove(p.getAlteFigurPosition(), p.getNeueFigurPosition());
+			numPositions += MoveGenerationTest(depth-1, position);
+			position.undoLastMove();
 		}
 
+		position.undoLastMove();
 		return numPositions;
 	}
 }

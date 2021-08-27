@@ -201,7 +201,7 @@ public class Position {
 
 	}
 
-	public void undoLastMove() {
+	public Zug undoLastMove() {
 		Zug lastMove = _zugfolge.pop();
 		_whiteCanCastle = lastMove.getWhiteCanCastle();
 		_blackCanCastle = lastMove.getBlackCanCastle();
@@ -268,6 +268,8 @@ public class Position {
 				}
 			}
 		}
+		
+		return lastMove;
 	}
 
 	public Piece pieceRepresentationOfChar(char charPiece, byte coordinate, boolean color) {
