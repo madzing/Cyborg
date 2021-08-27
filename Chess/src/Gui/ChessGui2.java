@@ -57,7 +57,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	int _aktuellerZug;
 	JLabel _alteKoordinateLabel;
 	JLabel _neueKoordinateLabel;
-	JButton _makeMoveButton_64;
+	JButton _makeMoveButton;
 	JButton _reverseButton;
 	PositionCalc _posCalc;
 	private JPanel contentPane;
@@ -164,10 +164,10 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		_CyborgButton.setBounds(784, 10, 190, 45);
 		getContentPane().add(_CyborgButton);
 
-		_makeMoveButton_64 = new JButton("Make Move");
-		_makeMoveButton_64.setBounds(784, 680, 190, 45);
-		getContentPane().add(_makeMoveButton_64);
-		_makeMoveButton_64.addActionListener(this);
+		_makeMoveButton = new JButton("Make Move");
+		_makeMoveButton.setBounds(784, 680, 190, 45);
+		getContentPane().add(_makeMoveButton);
+		_makeMoveButton.addActionListener(this);
 		
 		_reverseButton = new JButton("Reverse");
 		_reverseButton.setBounds(784, 630, 190, 45);
@@ -1123,9 +1123,9 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			System.out.println(_aktuellerZug);
 			System.out.println(_positions.get(_aktuellerZug -1).getFen());
 			PositionsVergleicher posVergleicher = new PositionsVergleicher(_positions, _aktuellerZug);
-			ArrayList<Position> CyborgPositions = _positions;
-			CyborgPositions.remove(_aktuellerZug);
-			PositionsVergleicher posVergleicherCyborg = new PositionsVergleicher(CyborgPositions,_aktuellerZug-1);
+//			ArrayList<Position> CyborgPositions = _positions;
+//			CyborgPositions.remove(_aktuellerZug);
+//			PositionsVergleicher posVergleicherCyborg = new PositionsVergleicher(CyborgPositions,_aktuellerZug-1);
 			if(posVergleicher.wurdeFigurGeschlagen() == false) // Keine Figur wurde im letzten Zug geschlagen, es wird also einfach die alte Position geladen.
 			{
 				System.out.println("keine Figur geschlagen");
