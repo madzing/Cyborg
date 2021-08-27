@@ -51,5 +51,5 @@ public class PositionCalcSpeedTest {
 
 // Kai depth 5 beide Fachwert gelï¿½scht: 26,8 / 26,657 / 26,787
 
-// Pär depth 5 ~25,5s
+// Pär depth 5 ~25,5s nach neuem KingIsInCheck ~17,7s
 
