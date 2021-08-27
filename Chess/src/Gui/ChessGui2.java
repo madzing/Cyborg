@@ -198,7 +198,9 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		_position = Ernd.getBestFollowingPosition(_position);
 		PositionsVergleicher posVergleicher = new PositionsVergleicher(altePosition, _position);
 		posVergleicher.whatMoveWasMade();
-		setFigurWurdeGeschlagenLabel();
+		_positions.add(_position);
+		_aktuellerZug++;
+		setFigurWurdeGeschlagenLabel(); // Führt zu Fehlern ?!
 		int alteKoordinate = posVergleicher.getAlteKoordinate();
 		int neueKoordinate = posVergleicher.getNeueKoordinate();
 		setFiguren();
@@ -974,20 +976,20 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		 * Methode um die Labels der geschlagenen Figuren sichtbar zu machen. 
 		 * Die Methode wird nach jedem Make Move und in jedem Cyborg Move aufgerufen.
 		 * Wenn eine Figur geschlagen wurde returnt die Funktion welcheFigurWurdeGeschlagen() ints wie folgt:
-		 * SCHWARZ-> 0 = Bauer | 1 = Rook | 2 = Knight | 3 = Bishop | 4 = Queen
-		 * WEIï¿½   -> 5 = Bauer | 6 = Rook | 7 = Knight | 8 = Bishop | 9 = Queen
+		 * SCHWARZ -> 0 = Bauer | 1 = Rook | 2 = Knight | 3 = Bishop | 4 = Queen
+		 * WEISS   -> 5 = Bauer | 6 = Rook | 7 = Knight | 8 = Bishop | 9 = Queen
 		 * Aktuell wird dabei nicht nachvollzogen ob es z.B. der linke oder rechte Turm ist, der geschlagen wurde. 
-		 * Es wird dabei immer von links aufgefï¿½llt.
+		 * Es wird dabei immer von links aufgefuellt.
 		 * 
-		 * Benï¿½tigt werden 8 int Klassen Variablen b, n, r, p, B, N, R, P, da diese nicht in der Methode jedes mal neu initialisiert werden dï¿½rfen.
+		 * Benoetigt werden 8 int Klassen Variablen b, n, r, p, B, N, R, P, da diese nicht in der Methode jedes mal neu initialisiert werden duerfen.
 		 * Alle werden mit 0 im Konstruktor initialisiert.
 		 * Beispiel:
 		 * posVergleicher.welcheFigurWurdeGeschlagen(); returned 3 
 		 * int geschlageneFigur = 3;
 		 * Erste Fallunterscheidung guckt ob geschlageneFigur <5 ist
-		 * Ist der Fall. Also nï¿½chste Fallunterscheidung zwischen 4 | 3 | 2 | 1 | 0
+		 * Ist der Fall. Also naechste Fallunterscheidung zwischen 4 | 3 | 2 | 1 | 0
 		 * 3 ist es, also wird _geschlageneBackFiguren an der Stelle 10 aufgerufen, da dies der RuhePlatz eines Bishop ist.
-		 * Dieses Label wird sichtbar gemacht und die Klassenvariable b um 3 erhï¿½ht, da dort der nï¿½chste Ruheplatz eines Bishops ist. 
+		 * Dieses Label wird sichtbar gemacht und die Klassenvariable b um 3 erhoeht, da dort der naechste Ruheplatz eines Bishops ist. 
 		 * 
 		 * TODO Keine Ahnung was passiert, wenn durch Promotion beispielsweise ein dritter Bishop geschlagen wird. 
 		 */
@@ -1052,7 +1054,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			}
 		}
 	}
-		
+	
 	private void befuelleZeileSpalte()
 	{
 		/*
@@ -1120,32 +1122,36 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		}
 		else if(e.getSource() == _reverseButton) // der Reverse Knopf wurde gedrueckt
 		{
-			System.out.println(_aktuellerZug);
-			System.out.println(_positions.get(_aktuellerZug -1).getFen());
 			PositionsVergleicher posVergleicher = new PositionsVergleicher(_positions, _aktuellerZug);
-//			ArrayList<Position> CyborgPositions = _positions;
-//			CyborgPositions.remove(_aktuellerZug);
-//			PositionsVergleicher posVergleicherCyborg = new PositionsVergleicher(CyborgPositions,_aktuellerZug-1);
-			if(posVergleicher.wurdeFigurGeschlagen() == false) // Keine Figur wurde im letzten Zug geschlagen, es wird also einfach die alte Position geladen.
+			if(_CyborgButton.isSelected() == false && posVergleicher.wurdeFigurGeschlagen() == false) // Es wurde keine Figur vom Spieler geschlagen
 			{
-				System.out.println("keine Figur geschlagen");
 				_position = _positions.get(_aktuellerZug-1);
 				_positions.remove(_aktuellerZug);
 				_aktuellerZug--;
 				
 			}
-//			else if (_CyborgButton.isSelected() && posVergleicherCyborg.wurdeFigurGeschlagen() == true) // Der Cyborg spielt und es wurde eine Figur im letzten Zug geschlagen
-//			{
-//				System.out.println(_aktuellerZug);
-//				int geschlageneFigur = posVergleicherCyborg.welcheFigurWurdeGeschlagen();
-//				setFigurWurdeGeschlagenLabelReverse(geschlageneFigur);
-//				_position = _positions.get(_aktuellerZug-1);
-//				_positions.remove(_aktuellerZug);
-//				_aktuellerZug--;
-//			}
-			else // Es wurde eine Figur im letzten Zug geschlagen, aber nicht vom Cyborg
+			else if (_CyborgButton.isSelected() == true && posVergleicher.wurdeFigurGeschlagen() == false) // Es wurde keine Figur vom Cyborg geschlagen
 			{
-				System.out.println("Figur wurde geschlagen");
+				_position = _positions.get(_aktuellerZug-1);
+				_positions.remove(_aktuellerZug);
+				_aktuellerZug--;
+				_position = _positions.get(_aktuellerZug-1);
+				_positions.remove(_aktuellerZug);
+				_aktuellerZug--;
+			}
+			else if (_CyborgButton.isSelected() == true && posVergleicher.wurdeFigurGeschlagen() == true) // Es wurde eine Figur vom Cyborg geschlagen
+			{
+				int geschlageneFigur = posVergleicher.welcheFigurWurdeGeschlagen();
+				setFigurWurdeGeschlagenLabelReverse(geschlageneFigur);
+				_position = _positions.get(_aktuellerZug-1);
+				_positions.remove(_aktuellerZug);
+				_aktuellerZug--;
+				_position = _positions.get(_aktuellerZug-1);
+				_positions.remove(_aktuellerZug);
+				_aktuellerZug--;
+			}
+			else // Es wurde eine Figur vom Spieler geschlagen
+			{
 				int geschlageneFigur = posVergleicher.welcheFigurWurdeGeschlagen();
 				setFigurWurdeGeschlagenLabelReverse(geschlageneFigur);
 				_position = _positions.get(_aktuellerZug-1);
@@ -1174,7 +1180,6 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				_positions.add(_position);
 				_aktuellerZug++;
 				setFigurWurdeGeschlagenLabel();
-				
 				setFiguren();
 				setZugrechtLabel();
 				resetteFelder();	
