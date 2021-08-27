@@ -7,7 +7,6 @@ import java.util.Stack;
 import Fachwerte.Fen;
 import Fachwerte.Zug;
 
-
 public class Position {
 	private Map<Byte, Piece> _whiteFiguren = new HashMap<>(16, (float) 1.0);
 	private Map<Byte, Piece> _blackFiguren = new HashMap<>(16, (float) 1.0);
@@ -43,28 +42,22 @@ public class Position {
 		{
 			Piece figur = piece.getValue();
 			if (figur instanceof Pawn) {
-				neueMap.put(figur.getCoordinate(),
-						(Pawn) new Pawn(figur.getCoordinate(), figur.getColor()));
+				neueMap.put(figur.getCoordinate(), (Pawn) new Pawn(figur.getCoordinate(), figur.getColor()));
 			}
 			if (figur instanceof Knight) {
-				neueMap.put(figur.getCoordinate(),
-						(Knight) new Knight(figur.getCoordinate(), figur.getColor()));
+				neueMap.put(figur.getCoordinate(), (Knight) new Knight(figur.getCoordinate(), figur.getColor()));
 			}
 			if (figur instanceof Bishop) {
-				neueMap.put(figur.getCoordinate(),
-						(Bishop) new Bishop(figur.getCoordinate(), figur.getColor()));
+				neueMap.put(figur.getCoordinate(), (Bishop) new Bishop(figur.getCoordinate(), figur.getColor()));
 			}
 			if (figur instanceof Rook) {
-				neueMap.put(figur.getCoordinate(),
-						(Rook) new Rook(figur.getCoordinate(), figur.getColor()));
+				neueMap.put(figur.getCoordinate(), (Rook) new Rook(figur.getCoordinate(), figur.getColor()));
 			}
 			if (figur instanceof Queen) {
-				neueMap.put(figur.getCoordinate(),
-						(Queen) new Queen(figur.getCoordinate(), figur.getColor()));
+				neueMap.put(figur.getCoordinate(), (Queen) new Queen(figur.getCoordinate(), figur.getColor()));
 			}
 			if (figur instanceof King) {
-				neueMap.put(figur.getCoordinate(),
-						(King) new King(figur.getCoordinate(), figur.getColor()));
+				neueMap.put(figur.getCoordinate(), (King) new King(figur.getCoordinate(), figur.getColor()));
 			}
 		}
 		return neueMap;
@@ -194,7 +187,6 @@ public class Position {
 
 			_zugrecht = true;
 
-
 			Piece capturedPiece = _whiteFiguren.remove(neuePos);
 			if (capturedPiece instanceof Rook) {
 				if (capturedPiece.getCoordinate() == 63) {
@@ -217,35 +209,34 @@ public class Position {
 		_zuegeKleiner50 = lastMove.getZuegeKleiner50();
 		_zugrecht = !_zugrecht;
 
-
 		if (_zugrecht) {
 			_whiteFiguren.get(lastMove.getNeueFigurPosition()).setCoordinate(lastMove.getAlteFigurPosition());
 			_whiteFiguren.put(lastMove.getAlteFigurPosition(), _whiteFiguren.remove(lastMove.getNeueFigurPosition()));
 
-			if(_whiteFiguren.get(lastMove.getAlteFigurPosition()) instanceof King && Math.abs(lastMove.getAlteFigurPosition()-lastMove.getNeueFigurPosition())==2 ) // wenn der König bewegt wurde / castling
+			if (_whiteFiguren.get(lastMove.getAlteFigurPosition()) instanceof King
+					&& Math.abs(lastMove.getAlteFigurPosition() - lastMove.getNeueFigurPosition()) == 2) // wenn der
+																											// König
+																											// bewegt
+																											// wurde /
+																											// castling
 			{
-				if(lastMove.getNeueFigurPosition()==62)
-				{
-					_whiteFiguren.get((byte)61).setCoordinate((byte)63);
-					_whiteFiguren.put((byte)63, _whiteFiguren.remove((byte)61));
-				}
-				else
-				{
-					_whiteFiguren.get((byte)59).setCoordinate((byte)56);
-					_whiteFiguren.put((byte)56, _whiteFiguren.remove((byte)59));
+				if (lastMove.getNeueFigurPosition() == 62) {
+					_whiteFiguren.get((byte) 61).setCoordinate((byte) 63);
+					_whiteFiguren.put((byte) 63, _whiteFiguren.remove((byte) 61));
+				} else {
+					_whiteFiguren.get((byte) 59).setCoordinate((byte) 56);
+					_whiteFiguren.put((byte) 56, _whiteFiguren.remove((byte) 59));
 				}
 			}
 
-			if(lastMove.getGeschlageneFigur()!='-')
-			{
-				//wenn enpassant geschlagen wurde
-				if (lastMove.getenPassant() == lastMove.getNeueFigurPosition()+8)
-				{
-					_blackFiguren.put(lastMove.getenPassant(), pieceRepresentationOfChar(lastMove.getGeschlageneFigur(),lastMove.getenPassant(),false));
-				}
-				else
-				{
-					_blackFiguren.put(lastMove.getNeueFigurPosition(), pieceRepresentationOfChar(lastMove.getGeschlageneFigur(),lastMove.getNeueFigurPosition(),false));
+			if (lastMove.getGeschlageneFigur() != '-') {
+				// wenn enpassant geschlagen wurde
+				if (lastMove.getenPassant() == lastMove.getNeueFigurPosition()) {
+					_blackFiguren.put((byte) (lastMove.getenPassant() + 8),
+							pieceRepresentationOfChar(lastMove.getGeschlageneFigur(), lastMove.getenPassant(), false));
+				} else {
+					_blackFiguren.put(lastMove.getNeueFigurPosition(), pieceRepresentationOfChar(
+							lastMove.getGeschlageneFigur(), lastMove.getNeueFigurPosition(), false));
 				}
 			}
 
@@ -254,30 +245,26 @@ public class Position {
 			_blackFiguren.put(lastMove.getAlteFigurPosition(), _blackFiguren.remove(lastMove.getNeueFigurPosition()));
 			_zuegeGesamt--;
 
-			if(_blackFiguren.get(lastMove.getAlteFigurPosition()) instanceof King && Math.abs(lastMove.getAlteFigurPosition()-lastMove.getNeueFigurPosition())==2 ) // wenn der König bewegt wurde / castling
+			if (_blackFiguren.get(lastMove.getAlteFigurPosition()) instanceof King
+					&& Math.abs(lastMove.getAlteFigurPosition() - lastMove.getNeueFigurPosition()) == 2) // wenn der Koenig bewegt wurde/casteling																					
 			{
-				if(lastMove.getNeueFigurPosition()==6)
-				{
-					_blackFiguren.get((byte)5).setCoordinate((byte)7);
-					_blackFiguren.put((byte)7, _blackFiguren.remove((byte)5));
-				}
-				else
-				{
-					_blackFiguren.get((byte)3).setCoordinate((byte)0);
-					_blackFiguren.put((byte)0, _blackFiguren.remove((byte)3));
+				if (lastMove.getNeueFigurPosition() == 6) {
+					_blackFiguren.get((byte) 5).setCoordinate((byte) 7);
+					_blackFiguren.put((byte) 7, _blackFiguren.remove((byte) 5));
+				} else {
+					_blackFiguren.get((byte) 3).setCoordinate((byte) 0);
+					_blackFiguren.put((byte) 0, _blackFiguren.remove((byte) 3));
 				}
 			}
 
-			if(lastMove.getGeschlageneFigur()!='-')
-			{
-				//wenn enpassant geschlagen wurde
-				if (lastMove.getenPassant() == lastMove.getNeueFigurPosition()-8)
-				{
-					_whiteFiguren.put(lastMove.getenPassant(), pieceRepresentationOfChar(lastMove.getGeschlageneFigur(),lastMove.getenPassant(),true));
-				}
-				else
-				{
-					_whiteFiguren.put(lastMove.getNeueFigurPosition(), pieceRepresentationOfChar(lastMove.getGeschlageneFigur(),lastMove.getNeueFigurPosition(),true));
+			if (lastMove.getGeschlageneFigur() != '-') {
+				// wenn enpassant geschlagen wurde
+				if (lastMove.getenPassant() == lastMove.getNeueFigurPosition()) {
+					_whiteFiguren.put((byte) (lastMove.getenPassant() - 8),
+							pieceRepresentationOfChar(lastMove.getGeschlageneFigur(), lastMove.getenPassant(), true));
+				} else {
+					_whiteFiguren.put(lastMove.getNeueFigurPosition(), pieceRepresentationOfChar(
+							lastMove.getGeschlageneFigur(), lastMove.getNeueFigurPosition(), true));
 				}
 			}
 		}
