@@ -30,5 +30,5 @@ public class KingIsInCheckSpeedTest {
 		}
 	}
 
-	//Paer: 7,8 / 7,1 / 7,7
+	//Paer: 7,8 / 7,1 / 7,7 nach Aenderungen 2,2 / 2,7 / 2,2
 }

@@ -77,6 +77,9 @@ public class King extends Piece {
 		return pieceFelder;
 	}
 
+	/*
+	 * Gibt eine ArrayList mit allen vom König begehbaren Feldern aus
+	 */
 	public ArrayList<Byte> kingHitsKing(Map<Byte, Piece> figurenAmZug, Map<Byte, Piece> figurenDesGegners,
 			Position position) {
 		ArrayList<Byte> pieceFelder = new ArrayList<Byte>();
@@ -95,11 +98,14 @@ public class King extends Piece {
 		}
 		return pieceFelder;
 	}
-
-	// TODO ineffiziente Methode
+	
+	/*
+	 * 
+	 */
 	public boolean isInCheck(Position position) {
 		Map<Byte, Piece> figurenDesGegners;
 		Map<Byte, Piece> figurenDesKoenigs;
+		
 		if (super.getColor()) {
 			figurenDesKoenigs = position.getWhiteFiguren();
 			figurenDesGegners = position.getBlackFiguren();
@@ -107,25 +113,103 @@ public class King extends Piece {
 			figurenDesKoenigs = position.getBlackFiguren();
 			figurenDesGegners = position.getWhiteFiguren();
 		}
-
-		for (Map.Entry<Byte, Piece> entry : figurenDesGegners.entrySet()) {
-			if (entry.getValue() instanceof King) {
-				King k = (King) (entry.getValue());
-				if (k.kingHitsKing(figurenDesGegners, figurenDesKoenigs, position).contains(super.getCoordinate())) {
-					return true;
-				}
-			}
-
-			else {
-
-				if (entry.getValue().getMoves(figurenDesGegners, figurenDesKoenigs, position)
-						.contains(super.getCoordinate())) {
-					return true;
-				}
+		byte kingPosition = super.getCoordinate();
+		
+		//Test auf gegnerischen Koenig:
+		ArrayList<Byte> felder = this.kingHitsKing(figurenDesKoenigs, figurenDesGegners, position);
+		for(int i = 0;i < felder.size();i++)
+		{
+			if(figurenDesGegners.containsKey(felder.get(i)) &&
+				figurenDesGegners.get(felder.get(i)) instanceof King)
+			{
+				return true;
 			}
 		}
-
+		
+		//Test auf gegnerisches Pferd:
+		Knight knight = new Knight(kingPosition, this.getColor());
+		felder = knight.getMoves(figurenDesKoenigs, figurenDesGegners, position);
+		for(int i = 0;i < felder.size();i++)
+		{
+			if(figurenDesGegners.containsKey(felder.get(i)) &&
+				figurenDesGegners.get(felder.get(i)) instanceof Knight)
+			{
+				return true;
+			}
+		}
+		
+		//Test auf gegnerisches Bishop und Queen:
+		Bishop bishop = new Bishop(kingPosition, this.getColor());
+		felder = bishop.getMoves(figurenDesKoenigs, figurenDesGegners, position);
+		for(int i = 0;i < felder.size();i++)
+		{
+			if(figurenDesGegners.containsKey(felder.get(i)) &&
+				(figurenDesGegners.get(felder.get(i)) instanceof Bishop ||
+				figurenDesGegners.get(felder.get(i)) instanceof Queen))
+			{
+				return true;
+			}
+		}
+		
+		//Test auf gegnerischen Rook und Queen:
+		Rook rook = new Rook(kingPosition, this.getColor());
+		felder = rook.getMoves(figurenDesKoenigs, figurenDesGegners, position);
+		for(int i = 0;i < felder.size();i++)
+		{
+//			Piece piece = figurenDesGegners.get(felder.get(i));
+			if(figurenDesGegners.containsKey(felder.get(i)) &&
+				(figurenDesGegners.get(felder.get(i)) instanceof Rook ||
+				figurenDesGegners.get(felder.get(i)) instanceof Queen))
+			{
+				return true;
+			}
+		}
+		
+		//Test auf gegnerischen Pawn:
+		Pawn pawn = new Pawn(kingPosition, this.getColor());
+		felder = pawn.getMoves(figurenDesKoenigs, figurenDesGegners, position);
+		for(int i = 0;i < felder.size();i++)
+		{
+			if(figurenDesGegners.containsKey(felder.get(i)) &&
+				figurenDesGegners.get(felder.get(i)) instanceof Pawn)
+			{
+				return true;
+			}
+		}
+			
 		return false;
 	}
+
+//	// TODO ineffiziente Methode
+//	public boolean isInCheck(Position position) {
+//		Map<Byte, Piece> figurenDesGegners;
+//		Map<Byte, Piece> figurenDesKoenigs;
+//		if (super.getColor()) {
+//			figurenDesKoenigs = position.getWhiteFiguren();
+//			figurenDesGegners = position.getBlackFiguren();
+//		} else {
+//			figurenDesKoenigs = position.getBlackFiguren();
+//			figurenDesGegners = position.getWhiteFiguren();
+//		}
+//
+//		for (Map.Entry<Byte, Piece> entry : figurenDesGegners.entrySet()) {
+//			if (entry.getValue() instanceof King) {
+//				King k = (King) (entry.getValue());
+//				if (k.kingHitsKing(figurenDesGegners, figurenDesKoenigs, position).contains(super.getCoordinate())) {
+//					return true;
+//				}
+//			}
+//
+//			else {
+//
+//				if (entry.getValue().getMoves(figurenDesGegners, figurenDesKoenigs, position)
+//						.contains(super.getCoordinate())) {
+//					return true;
+//				}
+//			}
+//		}
+//
+//		return false;
+//	}
 
 }
