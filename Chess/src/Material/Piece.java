@@ -4,19 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
-
-
+/* Diese Klasse ist eine Blaupause für alle weitern von ihr erbenden "FigurenKlassen
+ * 
+ */
 public abstract class Piece {
 	boolean _color;
 	private byte _value;
 	private byte _coordinate; 
 
+	/*
+	 * Konstruktor
+	 */
 	public Piece (byte coordinate, boolean color) {
 		_coordinate = coordinate;
 		_color = color;
 	}
 	
+	/*
+	 * Gibt den Wert der Figur zurueck
+	 */
 	public byte getValue() {
 		return _value;
 	}
