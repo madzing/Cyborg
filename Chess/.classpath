@@ -7,15 +7,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="C:/Users/janme/.m2/repository/org/tensorflow/libtensorflow/1.13.1/libtensorflow-1.13.1.jar" sourcepath="C:/Users/janme/.m2/repository/org/tensorflow/libtensorflow/1.13.1/libtensorflow-1.13.1-sources.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="maven.groupId" value="org.tensorflow"/>
-			<attribute name="maven.artifactId" value="libtensorflow"/>
-			<attribute name="maven.version" value="1.13.1"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="/tensorflow-keras-java"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
