@@ -42,30 +42,94 @@ public class King extends Piece {
 		if(position.getZugrecht()&& getCoordinate()==60)
 		{
 			// Kann Weiss kingside castlen?
+<<<<<<< Updated upstream
 			if(position.getWhiteCastleRights()[0]==true&&!isInCheck(position)&&!new King((byte)(super.getCoordinate()+1),true).isInCheck(position)&&!new King((byte)(super.getCoordinate()+2),true).isInCheck(position) &&!figurenAmZug.containsKey((byte)61)&&!figurenAmZug.containsKey((byte)62)&&!figurenDesGegners.containsKey((byte)61)&&!figurenDesGegners.containsKey((byte)62))
 			{
 				pieceFelder.add((byte)62);
+=======
+			if (position.getWhiteCastleRights()[0] == true 
+					&& !figurenAmZug.containsKey((byte) 61) && !figurenAmZug.containsKey((byte) 62)
+					&& !figurenDesGegners.containsKey((byte) 61) && !figurenDesGegners.containsKey((byte) 62)
+					&& !isInCheck(position)
+					&& !new King((byte) (super.getCoordinate() + 1), true).isInCheck(position)
+					&& !new King((byte) (super.getCoordinate() + 2), true).isInCheck(position)) {
+				pieceFelder.add((byte) 62);
+>>>>>>> Stashed changes
 			}
 			
 			// Kann Weiss queenside castlen?
+<<<<<<< Updated upstream
 			if(position.getWhiteCastleRights()[1]==true&&!isInCheck(position)&&!new King((byte)(super.getCoordinate()-1),true).isInCheck(position)&&!new King((byte)(super.getCoordinate()-2),true).isInCheck(position)&&!figurenAmZug.containsKey((byte)59)&&!figurenAmZug.containsKey((byte)58)&&!figurenAmZug.containsKey((byte)57)&&!figurenDesGegners.containsKey((byte)59)&&!figurenDesGegners.containsKey((byte)58)&&!figurenDesGegners.containsKey((byte)57))
 			{
 				pieceFelder.add((byte)58);
+=======
+			if (position.getWhiteCastleRights()[1] == true 
+					&& !figurenAmZug.containsKey((byte) 59) && !figurenAmZug.containsKey((byte) 58)
+					&& !figurenAmZug.containsKey((byte) 57) && !figurenDesGegners.containsKey((byte) 59)
+					&& !figurenDesGegners.containsKey((byte) 58) && !figurenDesGegners.containsKey((byte) 57)
+					&& !isInCheck(position)
+					&& !new King((byte) (super.getCoordinate() - 1), true).isInCheck(position)
+					&& !new King((byte) (super.getCoordinate() - 2), true).isInCheck(position)) {
+				pieceFelder.add((byte) 58);
+>>>>>>> Stashed changes
 			}
 		}
 		
 		else
 		{
 			// Kann Schwarz kingside castlen?
+<<<<<<< Updated upstream
 			if(position.getBlackCastleRights()[0]==true&&!isInCheck(position)&&!new King((byte)(super.getCoordinate()+1),false).isInCheck(position)&&!new King((byte)(super.getCoordinate()+2),false).isInCheck(position)&&!figurenAmZug.containsKey((byte)5)&&!figurenAmZug.containsKey((byte)6)&&!figurenDesGegners.containsKey((byte)5)&&!figurenDesGegners.containsKey((byte)6))
 			{
 				pieceFelder.add((byte)6);
+=======
+			if (position.getBlackCastleRights()[0] == true 
+					&& !figurenAmZug.containsKey((byte) 5) && !figurenAmZug.containsKey((byte) 6)
+					&& !figurenDesGegners.containsKey((byte) 5) && !figurenDesGegners.containsKey((byte) 6)
+					&& !isInCheck(position)
+					&& !new King((byte) (super.getCoordinate() + 1), false).isInCheck(position)
+					&& !new King((byte) (super.getCoordinate() + 2), false).isInCheck(position)) {
+				pieceFelder.add((byte) 6);
+>>>>>>> Stashed changes
 			}
 			new King((byte)(super.getCoordinate()-1),false).isInCheck(position);
 			// Kann Weiss queenside castlen?
+<<<<<<< Updated upstream
 			if(position.getBlackCastleRights()[1]==true&&!isInCheck(position)&&!new King((byte)(super.getCoordinate()-1),false).isInCheck(position)&&!new King((byte)(super.getCoordinate()-2),false).isInCheck(position)&&!figurenAmZug.containsKey((byte)3)&&!figurenAmZug.containsKey((byte)2)&&!figurenAmZug.containsKey((byte)1)&&!figurenDesGegners.containsKey((byte)3)&&!figurenDesGegners.containsKey((byte)2)&&!figurenDesGegners.containsKey((byte)1))
 			{
 				pieceFelder.add((byte)2);
+=======
+			if (position.getBlackCastleRights()[1] == true 
+					&& !figurenAmZug.containsKey((byte) 3) && !figurenAmZug.containsKey((byte) 2)
+					&& !figurenAmZug.containsKey((byte) 1) && !figurenDesGegners.containsKey((byte) 3)
+					&& !figurenDesGegners.containsKey((byte) 2) && !figurenDesGegners.containsKey((byte) 1)
+					&& !isInCheck(position)
+					&& !new King((byte) (super.getCoordinate() - 1), false).isInCheck(position)
+					&& !new King((byte) (super.getCoordinate() - 2), false).isInCheck(position)) {
+				pieceFelder.add((byte) 2);
+			}
+		}
+		return pieceFelder;
+	}
+
+	/*
+	 * Gibt eine ArrayList mit allen vom K�nig begehbaren Feldern aus
+	 */
+	public ArrayList<Byte> kingHitsKing(Map<Byte, Piece> figurenAmZug, Map<Byte, Piece> figurenDesGegners,
+			Position position) {
+		ArrayList<Byte> pieceFelder = new ArrayList<Byte>();
+		;
+
+		for (int i = 0; i < getMovement().length; i++) {
+			if (getCoordinate() + getMovement()[i] >= 0 && getCoordinate() + getMovement()[i] <= 63) {
+				if (SprungUeberKante(getCoordinate(), getCoordinate() + getMovement()[i])) {
+					// tue nichts
+				} else if (figurenAmZug.containsKey((byte) (getCoordinate() + getMovement()[i]))) {
+					// tue nichts
+				} else {
+					pieceFelder.add((byte) (getCoordinate() + getMovement()[i]));
+				}
+>>>>>>> Stashed changes
 			}
 		}
 		return pieceFelder;
