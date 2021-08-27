@@ -211,8 +211,8 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	private void resetteFelder()
 	{
 		/*
-		 * Methode um die Spiel Feld Knöpfe 0 bis 63 ihre original Farben zuzuweisen.
-		 * Nützlich für das schnelle Resetten, nachdem ein Zug (z.B. vom Cyborg) highlighted wurde.
+		 * Methode um die Spiel Feld Knï¿½pfe 0 bis 63 ihre original Farben zuzuweisen.
+		 * Nï¿½tzlich fï¿½r das schnelle Resetten, nachdem ein Zug (z.B. vom Cyborg) highlighted wurde.
 		 */
 		_spielButtons.get(0).setBackground(Color.WHITE);
 		_spielButtons.get(1).setBackground(Color.BLACK);
@@ -283,10 +283,10 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	private void promotion()
 	{
 		/*
-		 * Methode um einen Bauern auf einem Endfeld zu befördern.
-		 * Wird bei jedem MakeMove im GUI aufgerufen, aber nur funktionstüchtig, wenn ein Scharzer Bauer ein Feld >= 56
-		 * oder ein weißer Bauer ein Feld <=7 betritt, oder dorthin schlägt.
-		 * Im Gui gibt es eine Auswahl von 4 Knöpfen, die bei Betätigen die untenstehenden ints returnen.
+		 * Methode um einen Bauern auf einem Endfeld zu befï¿½rdern.
+		 * Wird bei jedem MakeMove im GUI aufgerufen, aber nur funktionstï¿½chtig, wenn ein Scharzer Bauer ein Feld >= 56
+		 * oder ein weiï¿½er Bauer ein Feld <=7 betritt, oder dorthin schlï¿½gt.
+		 * Im Gui gibt es eine Auswahl von 4 Knï¿½pfen, die bei Betï¿½tigen die untenstehenden ints returnen.
 		 * piece = 0 wenn Queen. 1 wenn Rook. 2 wenn Bishop. 3 wenn Knight.
 		 */
 		Object[] optionen = {"Queen", "Rook", "Bishop", "Knight"};
@@ -341,7 +341,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	private void ButtonListenerErzeugen()
 	{
 		/*
-		 * Methode um den 64 Spiel Feld Knöpfen 0 bis 63 ActionListener hinzuzufügen, anstatt dies händisch zu machen.
+		 * Methode um den 64 Spiel Feld Knï¿½pfen 0 bis 63 ActionListener hinzuzufï¿½gen, anstatt dies hï¿½ndisch zu machen.
 		 */
 		for (int i = 0; i <64; i++)
 		{
@@ -353,9 +353,9 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		/*
 		 * Methode die im Konstruktor und nach jedem Spielzug aufgerufen wird.
 		 * Die Spiel Feld Buttons werden zuerst alle von Icons gecleart um dann alle Icons neu zu setzen.
-		 * Danach werden die weißen Spielfiguren aus der Position nacheinander durchgegangen und auf ihre Piece Zugehörigkeit überprüft, danach an die entsprechende
+		 * Danach werden die weiï¿½en Spielfiguren aus der Position nacheinander durchgegangen und auf ihre Piece Zugehï¿½rigkeit ï¿½berprï¿½ft, danach an die entsprechende
 		 * Koordinate gesetzt.
-		 * Äquivalent für Schwarz.
+		 * ï¿½quivalent fï¿½r Schwarz.
 		 */
 		for (JButton b: _spielButtons)
 		{
@@ -425,7 +425,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	private void createButtons() {
 		/*
 		 * Methode um _spielButtons als Spiel Feld Buttons zu initialisieren.
-		 * Bisher alles händisch.
+		 * Bisher alles hï¿½ndisch.
 		 */
 		JButton btnNewButton = new JButton("a8");
 		btnNewButton.setBackground(Color.WHITE);
@@ -783,10 +783,10 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	private void createGeschlageneFigurLabels()
 	{
 		/*
-		 * Methode um die kleinen Labels an der Seite für die geschlagenen Figuren zu initialisieren.
-		 * Die Werte sind alle händisch eingetragen und händisch ermittelt, sowie auf addiert.
-		 * Zusätzlich werden die Labels zu beginn alle Unsichtbar eingetragen, so dass sie nurnoch sichtbar
-		 * geschaltet werden müssen, wenn eine Figur geschlagen wurde.
+		 * Methode um die kleinen Labels an der Seite fï¿½r die geschlagenen Figuren zu initialisieren.
+		 * Die Werte sind alle hï¿½ndisch eingetragen und hï¿½ndisch ermittelt, sowie auf addiert.
+		 * Zusï¿½tzlich werden die Labels zu beginn alle Unsichtbar eingetragen, so dass sie nurnoch sichtbar
+		 * geschaltet werden mï¿½ssen, wenn eine Figur geschlagen wurde.
 		 * 
 		 * Die Labels werden dabei in zwei Listen gespeichert:
 		 * _geschlageneWhiteFiguren und
@@ -975,19 +975,19 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		 * Die Methode wird nach jedem Make Move und in jedem Cyborg Move aufgerufen.
 		 * Wenn eine Figur geschlagen wurde returnt die Funktion welcheFigurWurdeGeschlagen() ints wie folgt:
 		 * SCHWARZ-> 0 = Bauer | 1 = Rook | 2 = Knight | 3 = Bishop | 4 = Queen
-		 * WEIß   -> 5 = Bauer | 6 = Rook | 7 = Knight | 8 = Bishop | 9 = Queen
+		 * WEIï¿½   -> 5 = Bauer | 6 = Rook | 7 = Knight | 8 = Bishop | 9 = Queen
 		 * Aktuell wird dabei nicht nachvollzogen ob es z.B. der linke oder rechte Turm ist, der geschlagen wurde. 
-		 * Es wird dabei immer von links aufgefüllt.
+		 * Es wird dabei immer von links aufgefï¿½llt.
 		 * 
-		 * Benötigt werden 8 int Klassen Variablen b, n, r, p, B, N, R, P, da diese nicht in der Methode jedes mal neu initialisiert werden dürfen.
+		 * Benï¿½tigt werden 8 int Klassen Variablen b, n, r, p, B, N, R, P, da diese nicht in der Methode jedes mal neu initialisiert werden dï¿½rfen.
 		 * Alle werden mit 0 im Konstruktor initialisiert.
 		 * Beispiel:
 		 * posVergleicher.welcheFigurWurdeGeschlagen(); returned 3 
 		 * int geschlageneFigur = 3;
 		 * Erste Fallunterscheidung guckt ob geschlageneFigur <5 ist
-		 * Ist der Fall. Also nächste Fallunterscheidung zwischen 4 | 3 | 2 | 1 | 0
+		 * Ist der Fall. Also nï¿½chste Fallunterscheidung zwischen 4 | 3 | 2 | 1 | 0
 		 * 3 ist es, also wird _geschlageneBackFiguren an der Stelle 10 aufgerufen, da dies der RuhePlatz eines Bishop ist.
-		 * Dieses Label wird sichtbar gemacht und die Klassenvariable b um 3 erhöht, da dort der nächste Ruheplatz eines Bishops ist. 
+		 * Dieses Label wird sichtbar gemacht und die Klassenvariable b um 3 erhï¿½ht, da dort der nï¿½chste Ruheplatz eines Bishops ist. 
 		 * 
 		 * TODO Keine Ahnung was passiert, wenn durch Promotion beispielsweise ein dritter Bishop geschlagen wird. 
 		 */
@@ -1056,8 +1056,8 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	private void befuelleZeileSpalte()
 	{
 		/*
-		 * Methode um die String Listen _spalte und _zeile zu befüllen.
-		 * Die Listen sind für das befüllen der alten und neuen Koordinate Labels notwendig und werden in actionPerformed genutzt.
+		 * Methode um die String Listen _spalte und _zeile zu befï¿½llen.
+		 * Die Listen sind fï¿½r das befï¿½llen der alten und neuen Koordinate Labels notwendig und werden in actionPerformed genutzt.
 		 */
 		_spalte.add("a"); _spalte.add("b"); _spalte.add("c"); _spalte.add("d"); _spalte.add("e"); _spalte.add("f"); _spalte.add("g"); _spalte.add("h");
 		_zeile.add("8"); _zeile.add("7"); _zeile.add("6"); _zeile.add("5"); _zeile.add("4"); _zeile.add("3"); _zeile.add("2"); _zeile.add("1");
@@ -1079,8 +1079,8 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	{
 		/*
 		 * Methode, die jedes mal aufgerufen wird, wenn ein Spiel Feld Button gedrueckt wurde.
-		 * Es werden die Klassen Variablen _letzterGedrueckterButton und _gedrueckterButton überschrieben.
-		 * Durch die Listen _spalte und _zeile ist es möglich durch den vom Spielfeld returnten int,  
+		 * Es werden die Klassen Variablen _letzterGedrueckterButton und _gedrueckterButton ï¿½berschrieben.
+		 * Durch die Listen _spalte und _zeile ist es mï¿½glich durch den vom Spielfeld returnten int,  
 		 * die Koordinate auf den entsprechenden Labels auszugeben. 
 		 */
 		_letzterGedrueckterButton = _gedrueckterButton;
@@ -1097,7 +1097,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	{
 		/*
 		 * Methode die aufgerufen werden kann wenn der Button Get Aktuelle Fen gedrueckt wird.
-		 * Es wird die Aktuelle Fen auf das Windows ClipBoard kopiert und loescht damit natürlich alles was vorhin im ClipBoard stand.
+		 * Es wird die Aktuelle Fen auf das Windows ClipBoard kopiert und loescht damit natï¿½rlich alles was vorhin im ClipBoard stand.
 		 */
 		StringSelection stringSelection = new StringSelection (_position.getFen());
 		Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
