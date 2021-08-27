@@ -47,9 +47,9 @@ public class PositionCalcSpeedTest {
 // 20,5 / 20,2 / 20,2 sekunden nachdem Fachwerte gelÃ¶scht! gute arbeit
 // 
 
-
+// Nikolai depth 5 17,34s / 17,2s / 17,5s
 
 // Kai depth 5 beide Fachwert gelï¿½scht: 26,8 / 26,657 / 26,787
 
-//
+// Pär depth 5 ~25,5s
 
