@@ -78,7 +78,7 @@ public class King extends Piece {
 	}
 
 	/*
-	 * Gibt eine ArrayList mit allen vom König begehbaren Feldern aus
+	 * Gibt eine ArrayList mit allen vom Kï¿½nig begehbaren Feldern aus
 	 */
 	public ArrayList<Byte> kingHitsKing(Map<Byte, Piece> figurenAmZug, Map<Byte, Piece> figurenDesGegners,
 			Position position) {
@@ -179,37 +179,4 @@ public class King extends Piece {
 			
 		return false;
 	}
-
-//	// TODO ineffiziente Methode
-//	public boolean isInCheck(Position position) {
-//		Map<Byte, Piece> figurenDesGegners;
-//		Map<Byte, Piece> figurenDesKoenigs;
-//		if (super.getColor()) {
-//			figurenDesKoenigs = position.getWhiteFiguren();
-//			figurenDesGegners = position.getBlackFiguren();
-//		} else {
-//			figurenDesKoenigs = position.getBlackFiguren();
-//			figurenDesGegners = position.getWhiteFiguren();
-//		}
-//
-//		for (Map.Entry<Byte, Piece> entry : figurenDesGegners.entrySet()) {
-//			if (entry.getValue() instanceof King) {
-//				King k = (King) (entry.getValue());
-//				if (k.kingHitsKing(figurenDesGegners, figurenDesKoenigs, position).contains(super.getCoordinate())) {
-//					return true;
-//				}
-//			}
-//
-//			else {
-//
-//				if (entry.getValue().getMoves(figurenDesGegners, figurenDesKoenigs, position)
-//						.contains(super.getCoordinate())) {
-//					return true;
-//				}
-//			}
-//		}
-//
-//		return false;
-//	}
-
 }
