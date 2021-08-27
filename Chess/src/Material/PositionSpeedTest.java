@@ -16,7 +16,7 @@ public class PositionSpeedTest {
 		for(int i = 0; i < 4865609; i++)
 		{
 //			Position pos = new Position(_startPosition);
-//			_startPosition = pos;
+//		_startPosition = pos;
 			_startPosition.makeMove((byte)52,(byte) 36);
 			_startPosition.undoLastMove();
 		}
@@ -25,5 +25,5 @@ public class PositionSpeedTest {
 	// ohne make move 9,2
 	// mit make move 9,0   <--- make move ist irrelevant! Positionen neu erzeugen dauert hingegen ewig!
 	
-
+//
 }

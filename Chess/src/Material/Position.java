@@ -99,14 +99,14 @@ public class Position {
 					neuePos = (byte) (neuePos + 8);
 				}
 				_zuegeKleiner50 = 0;
-				_zugfolge.push(Zug.select(alteFigurPosition, neueFigurPosition,
+				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
 						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
 						copyArray(_blackCanCastle), _zuegeKleiner50));
 
 			}
 
 			else if (_whiteFiguren.get(alteFigurPosition) instanceof King) {
-				_zugfolge.push(Zug.select(alteFigurPosition, neueFigurPosition,
+				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
 						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
 						copyArray(_blackCanCastle), _zuegeKleiner50));
 				_whiteCanCastle[0] = false;
@@ -121,7 +121,7 @@ public class Position {
 					_whiteFiguren.put((byte) 59, _whiteFiguren.remove((byte) 56));
 				}
 			} else if (_whiteFiguren.get(alteFigurPosition) instanceof Rook) {
-				_zugfolge.push(Zug.select(alteFigurPosition, neueFigurPosition,
+				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
 						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
 						copyArray(_blackCanCastle), _zuegeKleiner50));
 				if (alteFigurPosition == 56) {
@@ -130,7 +130,7 @@ public class Position {
 					_whiteCanCastle[0] = false;
 				}
 			} else {
-				_zugfolge.push(Zug.select(alteFigurPosition, neueFigurPosition,
+				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
 						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
 						copyArray(_blackCanCastle), _zuegeKleiner50));
 			}
@@ -157,12 +157,12 @@ public class Position {
 				} else if (neuePos == enpassant) {
 					neuePos = (byte) (neuePos - 8);
 				}
-				_zugfolge.push(Zug.select(alteFigurPosition, neueFigurPosition,
+				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
 						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
 						copyArray(_blackCanCastle), _zuegeKleiner50));
 				_zuegeKleiner50 = 0;
 			} else if (_blackFiguren.get(alteFigurPosition) instanceof King) {
-				_zugfolge.push(Zug.select(alteFigurPosition, neueFigurPosition,
+				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
 						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
 						copyArray(_blackCanCastle), _zuegeKleiner50));
 				_blackCanCastle[0] = false;
@@ -175,7 +175,7 @@ public class Position {
 					_blackFiguren.put((byte) 3, _blackFiguren.remove((byte) 0));
 				}
 			} else if (_blackFiguren.get(alteFigurPosition) instanceof Rook) {
-				_zugfolge.push(Zug.select(alteFigurPosition, neueFigurPosition,
+				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
 						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
 						copyArray(_blackCanCastle), _zuegeKleiner50));
 				if (alteFigurPosition == 0) {
@@ -185,7 +185,7 @@ public class Position {
 					_blackCanCastle[0] = false;
 				}
 			} else {
-				_zugfolge.push(Zug.select(alteFigurPosition, neueFigurPosition,
+				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
 						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
 						copyArray(_blackCanCastle), _zuegeKleiner50));
 			}

@@ -1,11 +1,10 @@
 package Fachwerte;
 
-import java.util.HashMap;
-import java.util.Map;
+;
 
 public class Zug {
 
-	private static Map<String, Zug> _zugMap = new HashMap<String, Zug>();
+
 	private final byte _alteFigurPosition;
 	private final byte _neueFigurPosition;
 	private final char _geschlageneFigur;
@@ -14,7 +13,7 @@ public class Zug {
 	private final boolean[] _blackCanCastle;
 	private final byte _zuegeKleiner50;
 
-	private Zug(byte alteFigurPosition, byte neueFigurPosition, char geschlageneFigur, byte enPassant,boolean[] whiteCanCastle,boolean[] blackCanCastle,byte zuegeKleiner50)
+	public Zug(byte alteFigurPosition, byte neueFigurPosition, char geschlageneFigur, byte enPassant,boolean[] whiteCanCastle,boolean[] blackCanCastle,byte zuegeKleiner50)
 	{
 		_alteFigurPosition = alteFigurPosition;
 		_neueFigurPosition = neueFigurPosition;
@@ -24,20 +23,6 @@ public class Zug {
 		_blackCanCastle = blackCanCastle;
 		_zuegeKleiner50 = zuegeKleiner50;
 	}
-
-	public static Zug select (byte alteFigurPosition, byte neueFigurPosition, char geschlageneFigur,byte enPassant,boolean[] whiteCanCastle,boolean[] blackCanCastle,byte zuegeKleiner50) {
-		String Key = generateKey(alteFigurPosition,neueFigurPosition,geschlageneFigur,enPassant,whiteCanCastle,blackCanCastle,zuegeKleiner50);
-
-		if (!_zugMap.containsKey(Key)) {
-			_zugMap.put(Key, new Zug(alteFigurPosition,neueFigurPosition, geschlageneFigur, enPassant, whiteCanCastle, blackCanCastle, zuegeKleiner50));
-		}
-		return _zugMap.get(Key);
-	}
-	private static String generateKey(byte alteFigurPosition, byte neueFigurPosition, char geschlageneFigur,byte enPassant, boolean[] whiteCanCastle,boolean[] blackCanCastle,byte zuegeKleiner50)
-	{
-		return alteFigurPosition+"/"+neueFigurPosition+"/"+geschlageneFigur+"/"+enPassant+"/"+whiteCanCastle+"/"+blackCanCastle+"/"+zuegeKleiner50;
-	}
-
 
 	public byte getAlteFigurPosition()
 	{
