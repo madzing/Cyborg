@@ -15,11 +15,70 @@ public class PositionCalcSpeedTest {
 
 	@Test
 	public void TestgetLegalPositionsStartposition() {
+		int depth = 1;
 		Fen startFen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 		Position startPosition = new Position(startFen);
-		int positions = MoveGenerationTest(5,startPosition);
+		int positions = MoveGenerationTest(depth,startPosition);
 		System.out.println(""+positions);
+
+		if (depth ==2) {
+			assertEquals(400, positions);
+		}
+		if (depth ==3) {
+			assertEquals(8902, positions);
+		}
+		if (depth ==4) {
+			assertEquals(197281, positions);
+		}
+		if (depth ==5) {
+			assertEquals(4865609, positions);
+		}
 	}
+	
+	@Test
+	public void TestgetLegalPositionsPosition2() {
+		int depth = 1;
+		Fen startFen = Fen.select("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1");
+		Position startPosition = new Position(startFen);
+		int positions = MoveGenerationTest(depth,startPosition);
+		System.out.println(""+positions);
+
+		if (depth ==2) {
+			assertEquals(2039, positions);
+		}
+		if (depth ==3) {
+			assertEquals(97862, positions);
+		}
+		if (depth ==4) {
+			assertEquals(4085603, positions);
+		}
+		if (depth ==5) {
+			assertEquals(193690690 , positions);
+		}
+	}
+	
+	@Test
+	public void TestgetLegalPositionsPosition3() {
+		int depth = 4;
+		Fen startFen = Fen.select("8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - - 0 1");
+		Position startPosition = new Position(startFen);
+		int positions = MoveGenerationTest(depth,startPosition);
+		System.out.println(""+positions);
+
+		if (depth ==2) {
+		assertEquals(191, positions);
+		}
+		if (depth ==3) {
+			assertEquals(2812, positions);
+		}
+		if (depth ==4) {
+			assertEquals(43238, positions);
+		}
+		if (depth ==5) {
+			assertEquals(674624, positions);
+		}
+	}
+	
 	public int MoveGenerationTest(int depth, Position position)
 	{
 		int numPositions = 0;
@@ -30,8 +89,8 @@ public class PositionCalcSpeedTest {
 			return 1;
 		}
 
-		List<Zug> nodes = posCalc.getLegalFollowingPositions();
-
+		List<Zug> nodes = posCalc.getLegalFollowingMoves();
+		
 		for(Zug p : nodes)
 		{
 			position.makeMove(p.getAlteFigurPosition(), p.getNeueFigurPosition());
@@ -39,7 +98,6 @@ public class PositionCalcSpeedTest {
 			position.undoLastMove();
 		}
 
-		position.undoLastMove();
 		return numPositions;
 	}
 }

@@ -79,6 +79,10 @@ public class Position {
 		fenToZuegeGesamt(fenPosition);
 	}
 
+	public void makeMove(Zug zug) {
+		makeMove(zug.getAlteFigurPosition(), zug.getNeueFigurPosition());
+	}
+	
 	public void makeMove(byte alteFigurPosition, byte neueFigurPosition) {
 		byte enpassant = _enpassant;
 		_enpassant = -1;

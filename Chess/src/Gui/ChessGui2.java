@@ -639,7 +639,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		else
 			{
 				_posCalc = new PositionCalc(_position);
-				ArrayList<Position> legalePositionen = _posCalc.getLegalFollowingPositions();
+				ArrayList<Position> legalePositionen = _posCalc.getLegalFollowingMoves();
 				Position positionSpeicher = new Position(_position);
 				positionSpeicher.makeMove((byte)_letzterGedrueckterButton, (byte)_gedrueckterButton);
 				for(Position p: legalePositionen)

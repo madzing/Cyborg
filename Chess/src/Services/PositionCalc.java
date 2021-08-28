@@ -21,7 +21,7 @@ public class PositionCalc {
 	private Map<Byte, Piece> _figurenDesGegners;
 
 	public PositionCalc(Position currentPosition) {
-		_currentPosition = new Position(currentPosition);
+		_currentPosition = currentPosition;
 
 		// wenn weiß am Zug ist
 		if (_currentPosition.getZugrecht()) {
@@ -37,20 +37,21 @@ public class PositionCalc {
 
 	// Diese Methode gibt alle legalen Positionen, welche aus der derzeitigen
 	// Position resultieren zurück.
-	public ArrayList<Zug> getLegalFollowingPositions() {
+	public ArrayList<Zug> getLegalFollowingMoves() {
 		ArrayList<Zug> folgeZuege = new ArrayList<Zug>();
-		Iterator entryIterator = _figurenAmZug.entrySet().iterator();
-		while(entryIterator.hasNext()) {
-			Map.Entry piece = (Map.Entry)(entryIterator.next());
-			ArrayList<Byte> moves = ((Piece) piece.getValue()).getMoves(_figurenAmZug, _figurenDesGegners,
-					_currentPosition);
-			for (Byte neueFigurPos : moves) {
-				_currentPosition.makeMove(((Piece) (piece.getValue())).getCoordinate(), neueFigurPos);
+		Position position = new Position(_currentPosition);
+		
+		for(Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet()) {
+			Piece piece = entry.getValue();
+		
+			for(Byte einByte : piece.getMoves(_figurenAmZug, _figurenDesGegners, _currentPosition))
+			{
+				position.makeMove(piece.getCoordinate(), einByte);
 				
-				if (isPositionLegal(_currentPosition)) {
-					folgeZuege.add(_currentPosition.undoLastMove());
+				if(isPositionLegal(position)) {
+					folgeZuege.add(position.undoLastMove());
 				} else {
-					_currentPosition.undoLastMove();
+					position.undoLastMove();
 				}
 			}
 		}

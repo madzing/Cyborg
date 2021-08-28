@@ -25,7 +25,7 @@ public class RekursiverCyborg
     {
 		Position bestPosition = null;
 		double bestEval = 0;
-		ArrayList<Position> legalPositions = new PositionCalc(position).getLegalFollowingPositions();
+		ArrayList<Position> legalPositions = new PositionCalc(position).getLegalFollowingMoves();
 		for(Position pos : legalPositions)
 		{
 			if(bestPosition == null)
@@ -60,7 +60,7 @@ public class RekursiverCyborg
     	{
     		
     		PositionCalc posCalc = new PositionCalc(position);
-    		ArrayList<Position> legalPositions = posCalc.getLegalFollowingPositions();
+    		ArrayList<Position> legalPositions = posCalc.getLegalFollowingMoves();
     		if(legalPositions.size()==0)
     		{
     			if(position.getZugrecht())
