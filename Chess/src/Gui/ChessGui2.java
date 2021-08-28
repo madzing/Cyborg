@@ -195,7 +195,6 @@ public class ChessGui2 extends JFrame implements ActionListener{
 
 	/* TODO
 	 * Waere noch nice:
-	 * -Schwierigkeit einstellen
 	 * -Zugrecht Feld displayed Gewinner
 	 * -Steht im Schach 
 	 */
