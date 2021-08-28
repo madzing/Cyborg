@@ -63,9 +63,9 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	PositionCalc _posCalc;
 	private JPanel contentPane;
 	private JButton _btnGetAktuelleFen;
-	private JButton _schwierigkeitButton;
 	private JLabel _zugrechtLabel;
 	private JToggleButton _CyborgButton;
+	private JComboBox _schwierigkeitComboBox; 
 	List <String> _spalte;
 	List <String> _zeile;
 	public static final Color LIGHT_BLUE = new Color(51,153,255);
@@ -79,6 +79,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	int P = 0;
 	int _cyborgSchwierigkeit;
 	Stack<int[]> _cyborgHighlightStack = new Stack<int[]>();
+	String _comboBoxListe[];
 	
 	/**
 	 * Launch the application.
@@ -120,6 +121,9 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		_spalte = new ArrayList<String>(8);
 		_zeile = new ArrayList<String>(8);
 		_cyborgSchwierigkeit = 5;
+		_comboBoxListe = new String[]{"Schwierigkeit: 1", "Schwierigkeit: 2", "Schwierigkeit: 3", 
+		"Schwierigkeit: 4", "Schwierigkeit: 5", "Schwierigkeit: 6 Koennte laenger dauern", "Schwierigkeit: 7 Lieber nicht",
+		"Schwierigkeit: 8 Auf eigene Gefahr", "Schwierigkeit: 9 You'll die of old age", "Schwierigkeit: 10 NOPE"};		
 		befuelleZeileSpalte();
 		_positions.add(position);
 		
@@ -141,8 +145,11 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		Component verticalStrut_1 = Box.createVerticalStrut(20);
 		menuBar.add(verticalStrut_1);
 
-		JComboBox comboBox = new JComboBox();
-		menuBar.add(comboBox);
+		_schwierigkeitComboBox = new JComboBox(_comboBoxListe);
+		menuBar.add(_schwierigkeitComboBox);
+		_schwierigkeitComboBox.setSelectedIndex(4);
+		_schwierigkeitComboBox.addActionListener(this);
+		
 		getContentPane().setLayout(null);
 		
 		contentPane = new JPanel();
@@ -157,10 +164,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		getContentPane().add(_zugrechtLabel);
 
 		_btnGetAktuelleFen = new JButton("Get Aktuelle Fen");
-		_btnGetAktuelleFen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		_btnGetAktuelleFen.addActionListener(this);
 		_btnGetAktuelleFen.setBounds(784, 60, 190, 45);
 		getContentPane().add(_btnGetAktuelleFen);
 		_btnGetAktuelleFen.addActionListener(this);
@@ -179,10 +183,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		getContentPane().add(_reverseButton);
 		_reverseButton.addActionListener(this);
 		
-		_schwierigkeitButton = new JButton("Schwierigkeit");
-		_schwierigkeitButton.setBackground(Color.WHITE);
-		comboBox.add(_schwierigkeitButton);
-		
+						
 		createButtons();
 		setFiguren();
 		setZugrechtLabel();
@@ -1244,6 +1245,34 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			{
 				JOptionPane.showMessageDialog(null, "Du bist schon am Start des Spiels");
 			}
+		}
+		else if (e.getSource() == _schwierigkeitComboBox) // Die ComboBox der Schwierigkeit wurde gedrueckt
+		{
+			JComboBox cb = (JComboBox)e.getSource();
+			String msg = (String)cb.getSelectedItem();
+			switch(msg)
+			{
+				case "Schwierigkeit: 1" : _cyborgSchwierigkeit = 1;
+					break;
+				case "Schwierigkeit: 2" : _cyborgSchwierigkeit = 2;
+					break;
+				case "Schwierigkeit: 3" : _cyborgSchwierigkeit = 3;
+					break;
+				case "Schwierigkeit: 4" : _cyborgSchwierigkeit = 4;
+					break;
+				case "Schwierigkeit: 5" : _cyborgSchwierigkeit = 5;
+					break;
+				case "Schwierigkeit: 6 Koennte laenger dauern" : _cyborgSchwierigkeit = 6;
+					break;
+				case "Schwierigkeit: 7 Lieber nicht" : _cyborgSchwierigkeit = 7;
+					break;
+				case "Schwierigkeit: 8 Auf eigene Gefahr" : _cyborgSchwierigkeit = 8;
+					break;
+				case "Schwierigkeit: 9 You'll die of old age" : _cyborgSchwierigkeit = 9;
+					break;
+				case "Schwierigkeit: 10 NOPE" : _cyborgSchwierigkeit = 10;
+					break;
+				}
 		}
 		else // der MakeMove Button wurde gedrueckt
 			{
