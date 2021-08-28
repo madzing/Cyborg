@@ -3,6 +3,7 @@ package Material;
 import java.util.HashMap;
 import java.util.Map;
 import Fachwerte.Fen;
+import Fachwerte.Zug;
 
 public class Position implements Comparable<Object>{
 	private Map<Byte, Piece> _whiteFiguren = new HashMap<>(16, (float) 1.0);
