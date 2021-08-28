@@ -183,6 +183,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		getContentPane().add(_reverseButton);
 		_reverseButton.addActionListener(this);
 		
+		
 						
 		createButtons();
 		setFiguren();
@@ -190,6 +191,8 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		ButtonListenerErzeugen();
 		createGeschlageneFigurLabels();
 
+		System.out.println(_spielButtons.get(0).getBounds());
+		System.out.println(_spielButtons.get(0).getBounds(getBounds()));
 	}
 
 
@@ -370,9 +373,9 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		/*
 		 * Methode die im Konstruktor und nach jedem Spielzug aufgerufen wird.
 		 * Die Spiel Feld Buttons werden zuerst alle von Icons gecleart um dann alle Icons neu zu setzen.
-		 * Danach werden die wei�en Spielfiguren aus der Position nacheinander durchgegangen und auf ihre Piece Zugeh�rigkeit �berpr�ft, danach an die entsprechende
-		 * Koordinate gesetzt.
-		 * �quivalent f�r Schwarz.
+		 * Danach werden die weissen Spielfiguren aus der Position nacheinander durchgegangen und auf ihre Piece Zugehoerigkeit ueberprueft, danach
+		 * an die entsprechende Koordinate gesetzt.
+		 * Aequivalent fuerr Schwarz.
 		 */
 		for (JButton b: _spielButtons)
 		{
