@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -64,6 +65,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	private JButton _btnGetAktuelleFen;
 	private JLabel _zugrechtLabel;
 	private JToggleButton _CyborgButton;
+	private JComboBox _schwierigkeitComboBox; 
 	List <String> _spalte;
 	List <String> _zeile;
 	public static final Color LIGHT_BLUE = new Color(51,153,255);
@@ -75,7 +77,10 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	int N = 0;
 	int R = 0;
 	int P = 0;
-
+	int _cyborgSchwierigkeit;
+	Stack<int[]> _cyborgHighlightStack = new Stack<int[]>();
+	String _comboBoxListe[];
+	
 	/**
 	 * Launch the application.
 	 */
@@ -115,6 +120,10 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		_posCalc = new PositionCalc(position);
 		_spalte = new ArrayList<String>(8);
 		_zeile = new ArrayList<String>(8);
+		_cyborgSchwierigkeit = 5;
+		_comboBoxListe = new String[]{"Schwierigkeit: 1", "Schwierigkeit: 2", "Schwierigkeit: 3", 
+		"Schwierigkeit: 4", "Schwierigkeit: 5", "Schwierigkeit: 6 Koennte laenger dauern", "Schwierigkeit: 7 Lieber nicht",
+		"Schwierigkeit: 8 Auf eigene Gefahr", "Schwierigkeit: 9 You'll die of old age", "Schwierigkeit: 10 NOPE"};		
 		befuelleZeileSpalte();
 		_positions.add(position);
 		
@@ -136,10 +145,13 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		Component verticalStrut_1 = Box.createVerticalStrut(20);
 		menuBar.add(verticalStrut_1);
 
-		JComboBox comboBox = new JComboBox();
-		menuBar.add(comboBox);
+		_schwierigkeitComboBox = new JComboBox(_comboBoxListe);
+		menuBar.add(_schwierigkeitComboBox);
+		_schwierigkeitComboBox.setSelectedIndex(4);
+		_schwierigkeitComboBox.addActionListener(this);
+		
 		getContentPane().setLayout(null);
-
+		
 		contentPane = new JPanel();
 		contentPane.setBounds(10, 0, 764, 736);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -152,10 +164,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		getContentPane().add(_zugrechtLabel);
 
 		_btnGetAktuelleFen = new JButton("Get Aktuelle Fen");
-		_btnGetAktuelleFen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		_btnGetAktuelleFen.addActionListener(this);
 		_btnGetAktuelleFen.setBounds(784, 60, 190, 45);
 		getContentPane().add(_btnGetAktuelleFen);
 		_btnGetAktuelleFen.addActionListener(this);
@@ -174,18 +183,21 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		getContentPane().add(_reverseButton);
 		_reverseButton.addActionListener(this);
 		
+		
+						
 		createButtons();
 		setFiguren();
 		setZugrechtLabel();
 		ButtonListenerErzeugen();
 		createGeschlageneFigurLabels();
 
+		System.out.println(_spielButtons.get(0).getBounds());
+		System.out.println(_spielButtons.get(0).getBounds(getBounds()));
 	}
 
 
 	/* TODO
-	 * W�re noch nice:
-	 * -Schwierigkeit einstellen
+	 * Waere noch nice:
 	 * -Zugrecht Feld displayed Gewinner
 	 * -Steht im Schach 
 	 */
@@ -198,7 +210,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		 * Zusaetzlich wird ein Positions Vergleicher erzeugt, dessen Klassen Variablen AlteKoordinate und NeueKoordinate
 		 * nun gehighlighted werden koennen.
 		 */
-		Cyborg Ernd = new Cyborg(5);
+		Cyborg Ernd = new Cyborg(_cyborgSchwierigkeit);
 		Position altePosition = new Position(_position);
 		_position = Ernd.getBestFollowingPosition(_position);
 		PositionsVergleicher posVergleicher = new PositionsVergleicher(altePosition, _position);
@@ -210,6 +222,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		int neueKoordinate = posVergleicher.getNeueKoordinate();
 		setFiguren();
 		setZugrechtLabel();
+		_cyborgHighlightStack.push(new int[]{alteKoordinate, neueKoordinate});
 		_spielButtons.get(alteKoordinate).setBackground(LIGHT_BLUE);
 		_spielButtons.get(neueKoordinate).setBackground(Color.RED);
 		//System.out.println(_position.getFen());
@@ -218,8 +231,8 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	private void resetteFelder()
 	{
 		/*
-		 * Methode um die Spiel Feld Kn�pfe 0 bis 63 ihre original Farben zuzuweisen.
-		 * N�tzlich f�r das schnelle Resetten, nachdem ein Zug (z.B. vom Cyborg) highlighted wurde.
+		 * Methode um die Spiel Feld Knoepfe 0 bis 63 ihre original Farben zuzuweisen.
+		 * Nuetzlich fuer das schnelle Resetten, nachdem ein Zug (z.B. vom Cyborg) highlighted wurde.
 		 */
 		_spielButtons.get(0).setBackground(Color.WHITE);
 		_spielButtons.get(1).setBackground(Color.BLACK);
@@ -291,9 +304,9 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	{
 		/*
 		 * Methode um einen Bauern auf einem Endfeld zu bef�rdern.
-		 * Wird bei jedem MakeMove im GUI aufgerufen, aber nur funktionst�chtig, wenn ein Scharzer Bauer ein Feld >= 56
-		 * oder ein wei�er Bauer ein Feld <=7 betritt, oder dorthin schl�gt.
-		 * Im Gui gibt es eine Auswahl von 4 Kn�pfen, die bei Bet�tigen die untenstehenden ints returnen.
+		 * Wird bei jedem MakeMove im GUI aufgerufen, aber nur funktionstuechtig, wenn ein Scharzer Bauer ein Feld >= 56
+		 * oder ein weisser Bauer ein Feld <=7 betritt, oder dorthin schlaegt.
+		 * Im Gui gibt es eine Auswahl von 4 Knoepfen, die bei Betaetigen die untenstehenden ints returnen.
 		 * piece = 0 wenn Queen. 1 wenn Rook. 2 wenn Bishop. 3 wenn Knight.
 		 */
 		Object[] optionen = {"Queen", "Rook", "Bishop", "Knight"};
@@ -360,9 +373,9 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		/*
 		 * Methode die im Konstruktor und nach jedem Spielzug aufgerufen wird.
 		 * Die Spiel Feld Buttons werden zuerst alle von Icons gecleart um dann alle Icons neu zu setzen.
-		 * Danach werden die wei�en Spielfiguren aus der Position nacheinander durchgegangen und auf ihre Piece Zugeh�rigkeit �berpr�ft, danach an die entsprechende
-		 * Koordinate gesetzt.
-		 * �quivalent f�r Schwarz.
+		 * Danach werden die weissen Spielfiguren aus der Position nacheinander durchgegangen und auf ihre Piece Zugehoerigkeit ueberprueft, danach
+		 * an die entsprechende Koordinate gesetzt.
+		 * Aequivalent fuerr Schwarz.
 		 */
 		for (JButton b: _spielButtons)
 		{
@@ -432,7 +445,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	private void createButtons() {
 		/*
 		 * Methode um _spielButtons als Spiel Feld Buttons zu initialisieren.
-		 * Bisher alles h�ndisch.
+		 * Bisher alles haenndisch.
 		 */
 		JButton btnNewButton = new JButton("a8");
 		btnNewButton.setBackground(Color.WHITE);
@@ -1002,6 +1015,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		int geschlageneFigur = 999;
 		if(posVergleicher.wurdeFigurGeschlagen() == true)
 		{
+			posVergleicher.whatMoveWasMade();
 			geschlageneFigur = posVergleicher.welcheFigurWurdeGeschlagen();
 		}
 		if (geschlageneFigur <5)
@@ -1063,8 +1077,8 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	private void befuelleZeileSpalte()
 	{
 		/*
-		 * Methode um die String Listen _spalte und _zeile zu bef�llen.
-		 * Die Listen sind f�r das bef�llen der alten und neuen Koordinate Labels notwendig und werden in actionPerformed genutzt.
+		 * Methode um die String Listen _spalte und _zeile zu befuellen.
+		 * Die Listen sind fuer das befuellen der alten und neuen Koordinate Labels notwendig und werden in actionPerformed genutzt.
 		 */
 		_spalte.add("a"); _spalte.add("b"); _spalte.add("c"); _spalte.add("d"); _spalte.add("e"); _spalte.add("f"); _spalte.add("g"); _spalte.add("h");
 		_zeile.add("8"); _zeile.add("7"); _zeile.add("6"); _zeile.add("5"); _zeile.add("4"); _zeile.add("3"); _zeile.add("2"); _zeile.add("1");
@@ -1086,8 +1100,8 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	{
 		/*
 		 * Methode, die jedes mal aufgerufen wird, wenn ein Spiel Feld Button gedrueckt wurde.
-		 * Es werden die Klassen Variablen _letzterGedrueckterButton und _gedrueckterButton �berschrieben.
-		 * Durch die Listen _spalte und _zeile ist es m�glich durch den vom Spielfeld returnten int,  
+		 * Es werden die Klassen Variablen _letzterGedrueckterButton und _gedrueckterButton ueberschrieben.
+		 * Durch die Listen _spalte und _zeile ist es moeglich durch den vom Spielfeld returnten int,  
 		 * die Koordinate auf den entsprechenden Labels auszugeben. 
 		 */
 		_letzterGedrueckterButton = _gedrueckterButton;
@@ -1104,7 +1118,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	{
 		/*
 		 * Methode die aufgerufen werden kann wenn der Button Get Aktuelle Fen gedrueckt wird.
-		 * Es wird die Aktuelle Fen auf das Windows ClipBoard kopiert und loescht damit nat�rlich alles was vorhin im ClipBoard stand.
+		 * Es wird die Aktuelle Fen auf das Windows ClipBoard kopiert und loescht damit natuerlich alles was vorhin im ClipBoard stand.
 		 */
 		StringSelection stringSelection = new StringSelection (_position.getFen());
 		Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
@@ -1132,19 +1146,28 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			_position = _positions.get(_aktuellerZug-1);
 			_positions.remove(_aktuellerZug);
 			_aktuellerZug--;
+			resetteFelder();
 			
 		}
 		else if (_CyborgButton.isSelected() == true && posVergleicher.wurdeFigurGeschlagen() == false) // Es wurde keine Figur vom Cyborg geschlagen
 		{
+			System.out.println("Keine Figur vom Cyborg geschlagen");
 			_position = _positions.get(_aktuellerZug-1);
 			_positions.remove(_aktuellerZug);
 			_aktuellerZug--;
 			_position = _positions.get(_aktuellerZug-1);
 			_positions.remove(_aktuellerZug);
 			_aktuellerZug--;
+			resetteFelder();
+			_cyborgHighlightStack.pop();
+			int neueKoordinate = _cyborgHighlightStack.peek()[1];
+			int alteKoordinate = _cyborgHighlightStack.peek()[0];
+			_spielButtons.get(alteKoordinate).setBackground(LIGHT_BLUE);
+			_spielButtons.get(neueKoordinate).setBackground(Color.RED);
 		}
 		else if (_CyborgButton.isSelected() == true && posVergleicher.wurdeFigurGeschlagen() == true) // Es wurde eine Figur vom Cyborg geschlagen
 		{
+			System.out.println("Figur vom Cyborg geschlagen");
 			int geschlageneFigur = posVergleicher.welcheFigurWurdeGeschlagen();
 			setFigurWurdeGeschlagenLabelReverse(geschlageneFigur);
 			_position = _positions.get(_aktuellerZug-1);
@@ -1153,6 +1176,12 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			_position = _positions.get(_aktuellerZug-1);
 			_positions.remove(_aktuellerZug);
 			_aktuellerZug--;
+			resetteFelder();
+			_cyborgHighlightStack.pop();
+			int neueKoordinate = _cyborgHighlightStack.peek()[1];
+			int alteKoordinate = _cyborgHighlightStack.peek()[0];
+			_spielButtons.get(alteKoordinate).setBackground(LIGHT_BLUE);
+			_spielButtons.get(neueKoordinate).setBackground(Color.RED);
 		}
 		else // Es wurde eine Figur vom Spieler geschlagen
 		{
@@ -1161,13 +1190,14 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			_position = _positions.get(_aktuellerZug-1);
 			_positions.remove(_aktuellerZug);
 			_aktuellerZug--;
+
+			resetteFelder();
 		}
 		setFiguren();
 		setZugrechtLabel();
-		resetteFelder();
 	}
 	
-	private void makeMove()
+	private void makeMove() throws IllegalMoveException
 	{
 		_posCalc = new PositionCalc(_position);
 		ArrayList<Position> legalePositionen = _posCalc.getLegalFollowingPositions();
@@ -1180,10 +1210,13 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			{
 				_position = _positionSpeicher;
 				_aktuellerZug++;
+				_positions.add(_position);
 			}
 		}
-		_positions.add(_position);
-		
+		if(!(_positionSpeicher.equals(_position)))
+		{
+			throw new IllegalMoveException();
+		}
 		setFigurWurdeGeschlagenLabel();
 		setFiguren();
 		setZugrechtLabel();
@@ -1215,6 +1248,34 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				JOptionPane.showMessageDialog(null, "Du bist schon am Start des Spiels");
 			}
 		}
+		else if (e.getSource() == _schwierigkeitComboBox) // Die ComboBox der Schwierigkeit wurde gedrueckt
+		{
+			JComboBox cb = (JComboBox)e.getSource();
+			String msg = (String)cb.getSelectedItem();
+			switch(msg)
+			{
+				case "Schwierigkeit: 1" : _cyborgSchwierigkeit = 1;
+					break;
+				case "Schwierigkeit: 2" : _cyborgSchwierigkeit = 2;
+					break;
+				case "Schwierigkeit: 3" : _cyborgSchwierigkeit = 3;
+					break;
+				case "Schwierigkeit: 4" : _cyborgSchwierigkeit = 4;
+					break;
+				case "Schwierigkeit: 5" : _cyborgSchwierigkeit = 5;
+					break;
+				case "Schwierigkeit: 6 Koennte laenger dauern" : _cyborgSchwierigkeit = 6;
+					break;
+				case "Schwierigkeit: 7 Lieber nicht" : _cyborgSchwierigkeit = 7;
+					break;
+				case "Schwierigkeit: 8 Auf eigene Gefahr" : _cyborgSchwierigkeit = 8;
+					break;
+				case "Schwierigkeit: 9 You'll die of old age" : _cyborgSchwierigkeit = 9;
+					break;
+				case "Schwierigkeit: 10 NOPE" : _cyborgSchwierigkeit = 10;
+					break;
+				}
+		}
 		else // der MakeMove Button wurde gedrueckt
 			{
 				try
@@ -1226,6 +1287,10 @@ public class ChessGui2 extends JFrame implements ActionListener{
 					JOptionPane.showMessageDialog(null, "An der alten Koordinate steht keine Figur deiner Farbe");
 				}
 				catch(IndexOutOfBoundsException i)
+				{
+					JOptionPane.showMessageDialog(null, "Das ist ein illegaler Zug");
+				}
+				catch(IllegalMoveException ix)
 				{
 					JOptionPane.showMessageDialog(null, "Das ist ein illegaler Zug");
 				}
