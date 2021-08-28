@@ -99,7 +99,9 @@ public class PositionsVergleicher {
 	}
 	public int welcheFigurWurdeGeschlagen()
 	{
-		whatMoveWasMade();		
+		whatMoveWasMade();	
+//		System.out.println("neue Koordinate " +_neueKoordinate);
+//		System.out.println("alte Koordinate " + _alteKoordinate);
 		if(_positionAlt.getZugrecht())
 		{
 			if(_alteBlackFiguren.get((byte)_neueKoordinate) instanceof Pawn)
