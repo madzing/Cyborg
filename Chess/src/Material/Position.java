@@ -2,12 +2,15 @@ package Material;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
+
 import Fachwerte.Fen;
 import Fachwerte.Zug;
 
 public class Position implements Comparable<Object>{
 	private Map<Byte, Piece> _whiteFiguren = new HashMap<>(16, (float) 1.0);
 	private Map<Byte, Piece> _blackFiguren = new HashMap<>(16, (float) 1.0);
+	Stack<Zug> _zugfolge = new Stack<>();
 	public boolean _zugrecht;
 	private boolean _whiteCanCastle[] = { false, false };
 	private boolean _blackCanCastle[] = { false, false };
@@ -97,14 +100,14 @@ public class Position implements Comparable<Object>{
 				}
 				_zuegeKleiner50 = 0;
 				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
-						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
+						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enPassant, copyArray(_whiteCanCastle),
 						copyArray(_blackCanCastle), _zuegeKleiner50));
 
 			}
 
 			else if (_whiteFiguren.get(alteFigurPosition) instanceof King) {
 				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
-						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
+						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enPassant, copyArray(_whiteCanCastle),
 						copyArray(_blackCanCastle), _zuegeKleiner50));
 				_whiteCanCastle[0] = false;
 				_whiteCanCastle[1] = false;
@@ -119,7 +122,7 @@ public class Position implements Comparable<Object>{
 				}
 			} else if (_whiteFiguren.get(alteFigurPosition) instanceof Rook) {
 				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
-						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
+						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enPassant, copyArray(_whiteCanCastle),
 						copyArray(_blackCanCastle), _zuegeKleiner50));
 				if (alteFigurPosition == 56) {
 					_whiteCanCastle[1] = false;
@@ -128,7 +131,7 @@ public class Position implements Comparable<Object>{
 				}
 			} else {
 				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
-						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
+						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enPassant, copyArray(_whiteCanCastle),
 						copyArray(_blackCanCastle), _zuegeKleiner50));
 			}
 
@@ -155,12 +158,12 @@ public class Position implements Comparable<Object>{
 					neuePos = (byte) (neuePos - 8);
 				}
 				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
-						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
+						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enPassant, copyArray(_whiteCanCastle),
 						copyArray(_blackCanCastle), _zuegeKleiner50));
 				_zuegeKleiner50 = 0;
 			} else if (_blackFiguren.get(alteFigurPosition) instanceof King) {
 				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
-						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
+						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enPassant, copyArray(_whiteCanCastle),
 						copyArray(_blackCanCastle), _zuegeKleiner50));
 				_blackCanCastle[0] = false;
 				_blackCanCastle[1] = false;
@@ -173,7 +176,7 @@ public class Position implements Comparable<Object>{
 				}
 			} else if (_blackFiguren.get(alteFigurPosition) instanceof Rook) {
 				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
-						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
+						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enPassant, copyArray(_whiteCanCastle),
 						copyArray(_blackCanCastle), _zuegeKleiner50));
 				if (alteFigurPosition == 0) {
 					_blackCanCastle[1] = false;
@@ -183,7 +186,7 @@ public class Position implements Comparable<Object>{
 				}
 			} else {
 				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
-						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enpassant, copyArray(_whiteCanCastle),
+						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enPassant, copyArray(_whiteCanCastle),
 						copyArray(_blackCanCastle), _zuegeKleiner50));
 			}
 
