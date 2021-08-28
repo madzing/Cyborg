@@ -44,11 +44,28 @@ public class PositionCalc {
 		for(Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet()) {
 			Piece piece = entry.getValue();
 
-			for(Byte einByte : piece.getMoves(_figurenAmZug, _figurenDesGegners, _currentPosition))
+			for(Byte neuePosition : piece.getMoves(_figurenAmZug, _figurenDesGegners,
+					_currentPosition))
 			{
-				position.makeMove(piece.getCoordinate(), einByte);
+				position.makeMove(piece.getCoordinate(), neuePosition);
 
-				if(isPositionLegal(position)) {
+				if(piece instanceof Pawn && (neuePosition < 8 || neuePosition > 55) &&
+						isPositionLegal(position)) {
+					
+					Zug zug = position.undoLastMove();
+					zug.setPromotion(new Knight(zug.getNeueFigurPosition(), _currentPosition.getZugrecht()));
+					folgeZuege.add(zug);
+					
+					zug.setPromotion(new Bishop(zug.getNeueFigurPosition(), _currentPosition.getZugrecht()));
+					folgeZuege.add(zug);
+					
+					zug.setPromotion(new Rook(zug.getNeueFigurPosition(), _currentPosition.getZugrecht()));
+					folgeZuege.add(zug);
+					
+					zug.setPromotion(new Queen(zug.getNeueFigurPosition(), _currentPosition.getZugrecht()));
+					folgeZuege.add(zug);
+					 
+				} else if(isPositionLegal(position)) {
 					folgeZuege.add(position.undoLastMove());
 				} else {
 					position.undoLastMove();

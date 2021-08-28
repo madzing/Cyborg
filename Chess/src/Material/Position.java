@@ -101,14 +101,14 @@ public class Position implements Comparable<Object>{
 				_zuegeKleiner50 = 0;
 				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
 						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enPassant, copyArray(_whiteCanCastle),
-						copyArray(_blackCanCastle), _zuegeKleiner50));
+						copyArray(_blackCanCastle), _zuegeKleiner50, null));
 
 			}
 
 			else if (_whiteFiguren.get(alteFigurPosition) instanceof King) {
 				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
 						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enPassant, copyArray(_whiteCanCastle),
-						copyArray(_blackCanCastle), _zuegeKleiner50));
+						copyArray(_blackCanCastle), _zuegeKleiner50, null));
 				_whiteCanCastle[0] = false;
 				_whiteCanCastle[1] = false;
 				if (alteFigurPosition == 60 && neueFigurPosition == 62) {
@@ -123,7 +123,7 @@ public class Position implements Comparable<Object>{
 			} else if (_whiteFiguren.get(alteFigurPosition) instanceof Rook) {
 				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
 						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enPassant, copyArray(_whiteCanCastle),
-						copyArray(_blackCanCastle), _zuegeKleiner50));
+						copyArray(_blackCanCastle), _zuegeKleiner50, null));
 				if (alteFigurPosition == 56) {
 					_whiteCanCastle[1] = false;
 				} else if (alteFigurPosition == 63) {
@@ -132,7 +132,7 @@ public class Position implements Comparable<Object>{
 			} else {
 				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
 						charRepresentationOfPiece(_blackFiguren.remove(neuePos)), enPassant, copyArray(_whiteCanCastle),
-						copyArray(_blackCanCastle), _zuegeKleiner50));
+						copyArray(_blackCanCastle), _zuegeKleiner50, null));
 			}
 
 			_whiteFiguren.get(alteFigurPosition).setCoordinate(neueFigurPosition);
@@ -159,12 +159,12 @@ public class Position implements Comparable<Object>{
 				}
 				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
 						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enPassant, copyArray(_whiteCanCastle),
-						copyArray(_blackCanCastle), _zuegeKleiner50));
+						copyArray(_blackCanCastle), _zuegeKleiner50, null));
 				_zuegeKleiner50 = 0;
 			} else if (_blackFiguren.get(alteFigurPosition) instanceof King) {
 				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
 						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enPassant, copyArray(_whiteCanCastle),
-						copyArray(_blackCanCastle), _zuegeKleiner50));
+						copyArray(_blackCanCastle), _zuegeKleiner50, null));
 				_blackCanCastle[0] = false;
 				_blackCanCastle[1] = false;
 				if (alteFigurPosition == 4 && neueFigurPosition == 6) {
@@ -177,7 +177,7 @@ public class Position implements Comparable<Object>{
 			} else if (_blackFiguren.get(alteFigurPosition) instanceof Rook) {
 				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
 						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enPassant, copyArray(_whiteCanCastle),
-						copyArray(_blackCanCastle), _zuegeKleiner50));
+						copyArray(_blackCanCastle), _zuegeKleiner50, null));
 				if (alteFigurPosition == 0) {
 					_blackCanCastle[1] = false;
 				}
@@ -187,7 +187,7 @@ public class Position implements Comparable<Object>{
 			} else {
 				_zugfolge.push(new Zug(alteFigurPosition, neueFigurPosition,
 						charRepresentationOfPiece(_whiteFiguren.remove(neuePos)), enPassant, copyArray(_whiteCanCastle),
-						copyArray(_blackCanCastle), _zuegeKleiner50));
+						copyArray(_blackCanCastle), _zuegeKleiner50, null));
 			}
 
 			_blackFiguren.get(alteFigurPosition).setCoordinate(neueFigurPosition);
@@ -240,12 +240,17 @@ public class Position implements Comparable<Object>{
 				// wenn enpassant geschlagen wurde
 				if (lastMove.getenPassant() == lastMove.getNeueFigurPosition()) {
 					_blackFiguren.put((byte) (lastMove.getenPassant() + 8),
-							pieceRepresentationOfChar(lastMove.getGeschlageneFigur(), lastMove.getenPassant(), false));
+							pieceRepresentationOfChar(lastMove.getGeschlageneFigur(), (byte)(lastMove.getenPassant() + 8), false));
 				} else {
 					_blackFiguren.put(lastMove.getNeueFigurPosition(), pieceRepresentationOfChar(
 							lastMove.getGeschlageneFigur(), lastMove.getNeueFigurPosition(), false));
 				}
 			}
+			
+			if(lastMove.getPromoteteFigur() != null) {
+				promotion(new Pawn(lastMove.getAlteFigurPosition(), _zugrecht));
+			}
+			
 
 		} else {
 			_blackFiguren.get(lastMove.getNeueFigurPosition()).setCoordinate(lastMove.getAlteFigurPosition());
@@ -268,11 +273,15 @@ public class Position implements Comparable<Object>{
 				// wenn enpassant geschlagen wurde
 				if (lastMove.getenPassant() == lastMove.getNeueFigurPosition()) {
 					_whiteFiguren.put((byte) (lastMove.getenPassant() - 8),
-							pieceRepresentationOfChar(lastMove.getGeschlageneFigur(), lastMove.getenPassant(), true));
+							pieceRepresentationOfChar(lastMove.getGeschlageneFigur(), (byte)(lastMove.getenPassant() - 8), true));
 				} else {
 					_whiteFiguren.put(lastMove.getNeueFigurPosition(), pieceRepresentationOfChar(
 							lastMove.getGeschlageneFigur(), lastMove.getNeueFigurPosition(), true));
 				}
+			}
+			
+			if(lastMove.getPromoteteFigur() != null) {
+				promotion(new Pawn(lastMove.getAlteFigurPosition(), _zugrecht));
 			}
 		}
 

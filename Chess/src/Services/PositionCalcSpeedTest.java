@@ -15,7 +15,7 @@ public class PositionCalcSpeedTest {
 
 	@Test
 	public void TestgetLegalPositionsStartposition() {
-		int depth = 4;
+		int depth = 1;
 		Fen startFen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 		Position startPosition = new Position(startFen);
 		int positions = MoveGenerationTest(depth,startPosition);
@@ -37,7 +37,7 @@ public class PositionCalcSpeedTest {
 
 	@Test
 	public void TestgetLegalPositionsPosition2() {
-		int depth = 2;
+		int depth = 3;
 		Fen startFen = Fen.select("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1");
 		Position startPosition = new Position(startFen);
 		int positions = MoveGenerationTest(depth,startPosition);
@@ -54,6 +54,66 @@ public class PositionCalcSpeedTest {
 		}
 		if (depth ==5) {
 			assertEquals(193690690 , positions);
+		}
+	}
+	
+	@Test
+	public void TestgetLegalPositionsEnPassant() {
+		int depth = 4;
+		Fen startFen = Fen.select("7k/2p5/8/3P4/3p4/8/2P5/7K w - - 0 1");
+		Position startPosition = new Position(startFen);
+		int positions = MoveGenerationTest(depth,startPosition);
+		System.out.println(""+positions);
+
+		if (depth ==1) {
+			assertEquals(5, positions);
+		}
+		if (depth ==2) {
+			assertEquals(69, positions);
+		}
+		if (depth ==4) {
+			assertEquals(4085603, positions);
+		}
+		if (depth ==5) {
+			assertEquals(193690690 , positions);
+		}
+	}
+	
+	@Test
+	public void TestgetLegalPositionsPosition4() {
+		int depth = 1;
+		Fen startFen = Fen.select("7k/2P5/8/8/8/8/8/7K w - - 0 1");
+		Position startPosition = new Position(startFen);
+		int positions = MoveGenerationTest(depth,startPosition);
+		System.out.println(""+positions);
+
+		if (depth ==1) {
+		assertEquals(7, positions);
+		}
+		if(depth == 2) {
+			assertEquals(10, positions);
+		}
+		if(depth == 3) {
+			assertEquals(114, positions);
+		}
+	}
+	
+	@Test
+	public void TestgetLegalPositionsPosition5() {
+		int depth = 1;
+		Fen startFen = Fen.select("7k/8/8/8/8/8/2p5/7K b - - 0 1");
+		Position startPosition = new Position(startFen);
+		int positions = MoveGenerationTest(depth,startPosition);
+		System.out.println(""+positions);
+
+		if (depth ==1) {
+		assertEquals(7, positions);
+		}
+		if(depth == 2) {
+			assertEquals(10, positions);
+		}
+		if(depth == 3) {
+			assertEquals(114, positions);
 		}
 	}
 
