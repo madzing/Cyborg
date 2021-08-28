@@ -108,7 +108,7 @@ public class Cyborg {
 			}
 			miniMax(spieler,lastEval, position, i, alpha, beta);
 		}
-
+		_finalDurchlauf = false;
 		return _bestPosition;
 	}
 
@@ -130,8 +130,8 @@ public class Cyborg {
 			double currentEval = _eval.getEval(position) * spieler;
 			
 			// TODO Möglicherweise zusätzlich auf finalDurchlauf überprüfen bei ersten Tests sind die Ergebnisse von Speedtest sehr ähnlich.
-			// (!_finalDurchlauf ||Math.abs(Math.abs(currentEval) - Math.abs(lastEval)) < 2)
-			if (Math.abs(Math.abs(currentEval) - Math.abs(lastEval)) < 2) {
+			 if (!_finalDurchlauf ||Math.abs(Math.abs(currentEval) - Math.abs(lastEval)) < 2) {
+			//if (Math.abs(Math.abs(currentEval) - Math.abs(lastEval)) < 2) {
 				//System.out.println(tiefe +" "+ position.getFen());
 				return currentEval;
 			}
