@@ -98,14 +98,14 @@ public class King extends Piece {
 		}
 		return pieceFelder;
 	}
-	
+
 	/*
-	 * 
+	 *
 	 */
 	public boolean isInCheck(Position position) {
 		Map<Byte, Piece> figurenDesGegners;
 		Map<Byte, Piece> figurenDesKoenigs;
-		
+
 		if (super.getColor()) {
 			figurenDesKoenigs = position.getWhiteFiguren();
 			figurenDesGegners = position.getBlackFiguren();
@@ -114,7 +114,7 @@ public class King extends Piece {
 			figurenDesGegners = position.getWhiteFiguren();
 		}
 		byte kingPosition = super.getCoordinate();
-		
+
 		//Test auf gegnerischen Koenig:
 		ArrayList<Byte> felder = this.kingHitsKing(figurenDesKoenigs, figurenDesGegners, position);
 		for(int i = 0;i < felder.size();i++)
@@ -125,7 +125,7 @@ public class King extends Piece {
 				return true;
 			}
 		}
-		
+
 		//Test auf gegnerisches Pferd:
 		Knight knight = new Knight(kingPosition, this.getColor());
 		felder = knight.getMoves(figurenDesKoenigs, figurenDesGegners, position);
@@ -137,7 +137,7 @@ public class King extends Piece {
 				return true;
 			}
 		}
-		
+
 		//Test auf gegnerisches Bishop und Queen:
 		Bishop bishop = new Bishop(kingPosition, this.getColor());
 		felder = bishop.getMoves(figurenDesKoenigs, figurenDesGegners, position);
@@ -150,7 +150,7 @@ public class King extends Piece {
 				return true;
 			}
 		}
-		
+
 		//Test auf gegnerischen Rook und Queen:
 		Rook rook = new Rook(kingPosition, this.getColor());
 		felder = rook.getMoves(figurenDesKoenigs, figurenDesGegners, position);
@@ -164,7 +164,7 @@ public class King extends Piece {
 				return true;
 			}
 		}
-		
+
 		//Test auf gegnerischen Pawn:
 		Pawn pawn = new Pawn(kingPosition, this.getColor());
 		felder = pawn.getMoves(figurenDesKoenigs, figurenDesGegners, position);
@@ -176,7 +176,7 @@ public class King extends Piece {
 				return true;
 			}
 		}
-			
+
 		return false;
 	}
 }

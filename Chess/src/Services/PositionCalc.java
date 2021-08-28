@@ -1,9 +1,10 @@
 package Services;
 
 import java.util.ArrayList;
-
+import java.util.Iterator;
 import java.util.Map;
 
+import Fachwerte.Zug;
 import Material.King;
 import Material.Bishop;
 import Material.Rook;
@@ -20,7 +21,7 @@ public class PositionCalc {
 	private Map<Byte, Piece> _figurenDesGegners;
 
 	public PositionCalc(Position currentPosition) {
-		_currentPosition = new Position(currentPosition);
+		_currentPosition = currentPosition;
 
 		// wenn weiß am Zug ist
 		if (_currentPosition.getZugrecht()) {
@@ -36,33 +37,26 @@ public class PositionCalc {
 
 	// Diese Methode gibt alle legalen Positionen, welche aus der derzeitigen
 	// Position resultieren zurück.
-	public ArrayList<Position> getLegalFollowingPositions() {
-		ArrayList<Position> folgePositionen = new ArrayList<Position>();
-		for (Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet()) {	
-			for (Byte neueFigurPos : entry.getValue().getMoves(_figurenAmZug, _figurenDesGegners, _currentPosition)) {
+	public ArrayList<Zug> getLegalFollowingMoves() {
+		ArrayList<Zug> folgeZuege = new ArrayList<Zug>();
+		Position position = new Position(_currentPosition);
 
-				Position neuePos = new Position(_currentPosition);
-				neuePos.makeMove(entry.getValue().getCoordinate(), neueFigurPos);
-				if(entry.getValue() instanceof Pawn && (neueFigurPos<=8 || neueFigurPos >= 56))
-						{
-							neuePos.promotion(new Knight(neueFigurPos,entry.getValue().getColor()));
-							if (isPositionLegal(neuePos))
-							{
-								folgePositionen.add(new Position(neuePos));
-								neuePos.promotion(new Bishop(neueFigurPos,entry.getValue().getColor()));
-								folgePositionen.add(new Position(neuePos));
-								neuePos.promotion(new Rook(neueFigurPos,entry.getValue().getColor()));
-								folgePositionen.add(new Position(neuePos));
-								neuePos.promotion(new Queen(neueFigurPos,entry.getValue().getColor()));
-								folgePositionen.add(new Position(neuePos));
-							}
-						}
-				else if (isPositionLegal(neuePos)) {
-					folgePositionen.add(neuePos);
+		for(Map.Entry<Byte, Piece> entry : _figurenAmZug.entrySet()) {
+			Piece piece = entry.getValue();
+
+			for(Byte einByte : piece.getMoves(_figurenAmZug, _figurenDesGegners, _currentPosition))
+			{
+				position.makeMove(piece.getCoordinate(), einByte);
+
+				if(isPositionLegal(position)) {
+					folgeZuege.add(position.undoLastMove());
+				} else {
+					position.undoLastMove();
 				}
 			}
 		}
-		return folgePositionen;
+
+		return folgeZuege;
 	}
 
 	// Ist die übergebene Position legal? oder steht der König nach einem Zug der

@@ -117,7 +117,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		_zeile = new ArrayList<String>(8);
 		befuelleZeileSpalte();
 		_positions.add(position);
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 800);
 
@@ -168,12 +168,12 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		_makeMoveButton.setBounds(784, 680, 190, 45);
 		getContentPane().add(_makeMoveButton);
 		_makeMoveButton.addActionListener(this);
-		
+
 		_reverseButton = new JButton("Reverse");
 		_reverseButton.setBounds(784, 630, 190, 45);
 		getContentPane().add(_reverseButton);
 		_reverseButton.addActionListener(this);
-		
+
 		createButtons();
 		setFiguren();
 		setZugrechtLabel();
@@ -187,13 +187,13 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	 * Wï¿½re noch nice:
 	 * -Schwierigkeit einstellen
 	 * -Zugrecht Feld displayed Gewinner
-	 * -Steht im Schach 
+	 * -Steht im Schach
 	 */
 
 	public void makeCyborgMove()
 	{
 		/*
-		 * Methode mit der ein Cyborg einen Zug auf dem GUI darstellen kann. 
+		 * Methode mit der ein Cyborg einen Zug auf dem GUI darstellen kann.
 		 * Es wird einfach eine neue Position aus dem Cyborg erzeugt und diese wird der Positions Liste hinzugefuegt, sowie der aktuelle Zug um einen erhoeht.
 		 * Zusaetzlich wird ein Positions Vergleicher erzeugt, dessen Klassen Variablen AlteKoordinate und NeueKoordinate
 		 * nun gehighlighted werden koennen.
@@ -205,7 +205,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		posVergleicher.whatMoveWasMade();
 		_positions.add(_position);
 		_aktuellerZug++;
-		setFigurWurdeGeschlagenLabel(); 
+		setFigurWurdeGeschlagenLabel();
 		int alteKoordinate = posVergleicher.getAlteKoordinate();
 		int neueKoordinate = posVergleicher.getNeueKoordinate();
 		setFiguren();
@@ -414,7 +414,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
        			_spielButtons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui2.class.getResource("/Piece_Images/Black_Bishop.png")));
        		}
        		if(blackFigur.getValue() instanceof Rook)
-       		{        			
+       		{
        			_spielButtons.get(blackCoordinate).setIcon(new ImageIcon(ChessGui2.class.getResource("/Piece_Images/Black_Rook.png")));
         	}
         	if(blackFigur.getValue() instanceof Queen)
@@ -794,7 +794,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		 * Die Werte sind alle hï¿½ndisch eingetragen und hï¿½ndisch ermittelt, sowie auf addiert.
 		 * Zusï¿½tzlich werden die Labels zu beginn alle Unsichtbar eingetragen, so dass sie nurnoch sichtbar
 		 * geschaltet werden mï¿½ssen, wenn eine Figur geschlagen wurde.
-		 * 
+		 *
 		 * Die Labels werden dabei in zwei Listen gespeichert:
 		 * _geschlageneWhiteFiguren und
 		 * _geschlageneBlackFiguren
@@ -823,7 +823,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		JLabel whitePawn8 = new JLabel("P");
 		whitePawn8.setBounds(951, 550, 23, 25);
 		_geschlageneWhiteFiguren.add(whitePawn8);
-		
+
 		JLabel whiteRook1 = new JLabel("R");
 		whiteRook1.setBounds(790, 575, 23, 25);
 		_geschlageneWhiteFiguren.add(whiteRook1);
@@ -848,13 +848,13 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		JLabel whiteRook2 = new JLabel("R");
 		whiteRook2.setBounds(951, 575, 23, 25);
 		_geschlageneWhiteFiguren.add(whiteRook2);
-		
+
 		for(int i = 0; i<16;i++)
 		{
 			getContentPane().add(_geschlageneWhiteFiguren.get(i));
 			_geschlageneWhiteFiguren.get(i).setVisible(false);
 		}
-		
+
 		JLabel blackPawn1 = new JLabel("p");
 		blackPawn1.setBounds(790, 160, 23, 25);
 		_geschlageneBlackFiguren.add(blackPawn1);
@@ -879,7 +879,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		JLabel blackPawn8 = new JLabel("p");
 		blackPawn8.setBounds(951, 160, 23, 25);
 		_geschlageneBlackFiguren.add(blackPawn8);
-		
+
 		JLabel blackRook1 = new JLabel("r");
 		blackRook1.setBounds(790, 135, 23, 25);
 		_geschlageneBlackFiguren.add(blackRook1);
@@ -903,8 +903,8 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		_geschlageneBlackFiguren.add(blackKnight2);
 		JLabel blackRook2 = new JLabel("r");
 		blackRook2.setBounds(951, 135, 23, 25);
-		_geschlageneBlackFiguren.add(blackRook2);		
-		
+		_geschlageneBlackFiguren.add(blackRook2);
+
 		for(int i = 0; i<16;i++)
 		{
 			getContentPane().add(_geschlageneBlackFiguren.get(i));
@@ -912,7 +912,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			_geschlageneBlackFiguren.get(i).setVisible(false);
 		}
 	}
-	
+
 	private void setFigurWurdeGeschlagenLabelReverse(int geschlageneFigur)
 	{
 		/*
@@ -974,29 +974,29 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			}
 		}
 	}
-	
+
 	private void setFigurWurdeGeschlagenLabel()
 	{
 		/*
-		 * Methode um die Labels der geschlagenen Figuren sichtbar zu machen. 
+		 * Methode um die Labels der geschlagenen Figuren sichtbar zu machen.
 		 * Die Methode wird nach jedem Make Move und in jedem Cyborg Move aufgerufen.
 		 * Wenn eine Figur geschlagen wurde returnt die Funktion welcheFigurWurdeGeschlagen() ints wie folgt:
 		 * SCHWARZ -> 0 = Bauer | 1 = Rook | 2 = Knight | 3 = Bishop | 4 = Queen
 		 * WEISS   -> 5 = Bauer | 6 = Rook | 7 = Knight | 8 = Bishop | 9 = Queen
-		 * Aktuell wird dabei nicht nachvollzogen ob es z.B. der linke oder rechte Turm ist, der geschlagen wurde. 
+		 * Aktuell wird dabei nicht nachvollzogen ob es z.B. der linke oder rechte Turm ist, der geschlagen wurde.
 		 * Es wird dabei immer von links aufgefuellt.
-		 * 
+		 *
 		 * Benoetigt werden 8 int Klassen Variablen b, n, r, p, B, N, R, P, da diese nicht in der Methode jedes mal neu initialisiert werden duerfen.
 		 * Alle werden mit 0 im Konstruktor initialisiert.
 		 * Beispiel:
-		 * posVergleicher.welcheFigurWurdeGeschlagen(); returned 3 
+		 * posVergleicher.welcheFigurWurdeGeschlagen(); returned 3
 		 * int geschlageneFigur = 3;
 		 * Erste Fallunterscheidung guckt ob geschlageneFigur <5 ist
 		 * Ist der Fall. Also naechste Fallunterscheidung zwischen 4 | 3 | 2 | 1 | 0
 		 * 3 ist es, also wird _geschlageneBackFiguren an der Stelle 10 aufgerufen, da dies der RuhePlatz eines Bishop ist.
-		 * Dieses Label wird sichtbar gemacht und die Klassenvariable b um 3 erhoeht, da dort der naechste Ruheplatz eines Bishops ist. 
-		 * 
-		 * TODO Keine Ahnung was passiert, wenn durch Promotion beispielsweise ein dritter Bishop geschlagen wird. 
+		 * Dieses Label wird sichtbar gemacht und die Klassenvariable b um 3 erhoeht, da dort der naechste Ruheplatz eines Bishops ist.
+		 *
+		 * TODO Keine Ahnung was passiert, wenn durch Promotion beispielsweise ein dritter Bishop geschlagen wird.
 		 */
 		PositionsVergleicher posVergleicher = new PositionsVergleicher(_positions, _aktuellerZug);
 		int geschlageneFigur = 999;
@@ -1059,7 +1059,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			}
 		}
 	}
-	
+
 	private void befuelleZeileSpalte()
 	{
 		/*
@@ -1087,8 +1087,8 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		/*
 		 * Methode, die jedes mal aufgerufen wird, wenn ein Spiel Feld Button gedrueckt wurde.
 		 * Es werden die Klassen Variablen _letzterGedrueckterButton und _gedrueckterButton ï¿½berschrieben.
-		 * Durch die Listen _spalte und _zeile ist es mï¿½glich durch den vom Spielfeld returnten int,  
-		 * die Koordinate auf den entsprechenden Labels auszugeben. 
+		 * Durch die Listen _spalte und _zeile ist es mï¿½glich durch den vom Spielfeld returnten int,
+		 * die Koordinate auf den entsprechenden Labels auszugeben.
 		 */
 		_letzterGedrueckterButton = _gedrueckterButton;
 		_gedrueckterButton = gedrueckterButton;
@@ -1099,7 +1099,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		_alteKoordinateLabel.setText("Alte Koordinate: " + _spalte.get(letzteSpalte) + _zeile.get(letzteZeile));
 		_neueKoordinateLabel.setText("Neue Koordinate: " + _spalte.get(spalte) + _zeile.get(zeile));
 	}
-	
+
 	private void GetAktuelleFen()
 	{
 		/*
@@ -1110,7 +1110,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
 		clpbrd.setContents (stringSelection, null);
 	}
-	
+
 	private void reverseZug()
 	{
 		/*
@@ -1120,10 +1120,10 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		 * 2. Cyborg spielt und es wurde KEINE Figur geschlagen
 		 * 3. Cyborg spielt und es wurde eine Figur geschlagen
 		 * 4. Cyborg spielt NICHT und es wurde eine Figur geschlagen
-		 * 
+		 *
 		 * Wenn der Cyborg nicht spielt muss nur die alte Position geladen, die aktuelle geloescht und der aktuelle Zug um ein subtrahiert werden
 		 * Sowie das Geschlagene Figuren Label, insofern eine Figur geschlagen wurde.
-		 * 
+		 *
 		 * Wenn der Cyborg spielt laueft es genauso ab, aber zusaetzlich wird eine Position geladen.
 		 */
 		PositionsVergleicher posVergleicher = new PositionsVergleicher(_positions, _aktuellerZug);
@@ -1132,7 +1132,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			_position = _positions.get(_aktuellerZug-1);
 			_positions.remove(_aktuellerZug);
 			_aktuellerZug--;
-			
+
 		}
 		else if (_CyborgButton.isSelected() == true && posVergleicher.wurdeFigurGeschlagen() == false) // Es wurde keine Figur vom Cyborg geschlagen
 		{
@@ -1166,7 +1166,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		setZugrechtLabel();
 		resetteFelder();
 	}
-	
+
 	private void makeMove()
 	{
 		_posCalc = new PositionCalc(_position);
@@ -1183,13 +1183,13 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			}
 		}
 		_positions.add(_position);
-		
+
 		setFigurWurdeGeschlagenLabel();
 		setFiguren();
 		setZugrechtLabel();
-		resetteFelder();	
+		resetteFelder();
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e){
 		/*
@@ -1198,7 +1198,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		if (_spielButtons.contains(e.getSource())) // ein Spiel Feld Button aus _spielButtons wurde gedrueckt
 			{
 				spielFeldButtonWurdeGedrueckt(_spielButtons.indexOf(e.getSource()));
-				
+
 			}
 		else if(e.getSource() == _btnGetAktuelleFen) // der Button Get Aktuelle Fen wurde gedrueckt
 		{
@@ -1218,7 +1218,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		else // der MakeMove Button wurde gedrueckt
 			{
 				try
-				{	
+				{
 					makeMove();
 				}
 				catch(NullPointerException n)
@@ -1229,9 +1229,9 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				{
 					JOptionPane.showMessageDialog(null, "Das ist ein illegaler Zug");
 				}
-				
+
 			}
-		if(_CyborgButton.isSelected() && !(_position._zugrecht)) //Prüft bei jedem Klick auf ein Knopf ob der Cyborg eingeschaltet ist und Schwarz an der Reihe ist
+		if(_CyborgButton.isSelected() && !(_position._zugrecht)) //Prï¿½ft bei jedem Klick auf ein Knopf ob der Cyborg eingeschaltet ist und Schwarz an der Reihe ist
 		{
 			makeCyborgMove();
 		}
