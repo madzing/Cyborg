@@ -43,7 +43,7 @@ public class Cyborg {
 		// so wird weitergerechnet, da wir nicht inmitten eines Schlagabtausches stoppen
 		// wollen.
 		_gewuenschtetiefe = tiefe;
-		
+
 		// Handelt es sich um den Durchlauf mit der gewünschen Tiefe oder vorherige?
 		_finalDurchlauf = false;
 	}
@@ -102,11 +102,10 @@ public class Cyborg {
 			spieler = -1;
 		}
 		for (int i = 1; i <= _gewuenschtetiefe; i++) {
-			if(i == _gewuenschtetiefe )
-			{
+			if (i == _gewuenschtetiefe) {
 				_finalDurchlauf = true;
 			}
-			miniMax(spieler,lastEval, position, i, alpha, beta);
+			miniMax(spieler, lastEval, position, i, alpha, beta);
 		}
 		_finalDurchlauf = false;
 		return _bestPosition;
@@ -121,18 +120,15 @@ public class Cyborg {
 		// Wenn die Suchtiefe 1 ist, also die vorletzte tiefe erreicht ist sollte
 		// _lastEval abgespeichert werden.
 		if (tiefe == 1) {
-			lastEval = _eval.getEval(position)* spieler;
+			lastEval = _eval.getEval(position) * spieler;
 		}
 
 		// Wenn die Tiefe kleiner oder gleich null ist, also die kann die Suche
 		// abgebrochen werden, solage eine "Ruheposition" erreicht ist.
 		else if (tiefe <= 0) {
 			double currentEval = _eval.getEval(position) * spieler;
-			
-			// TODO Möglicherweise zusätzlich auf finalDurchlauf überprüfen bei ersten Tests sind die Ergebnisse von Speedtest sehr ähnlich.
-			 if (!_finalDurchlauf ||Math.abs(Math.abs(currentEval) - Math.abs(lastEval)) < 2) {
-			//if (Math.abs(Math.abs(currentEval) - Math.abs(lastEval)) < 2) {
-				//System.out.println(tiefe +" "+ position.getFen());
+
+			if (!_finalDurchlauf || Math.abs(Math.abs(currentEval) - Math.abs(lastEval)) < 2) {
 				return currentEval;
 			}
 			lastEval = currentEval;
@@ -148,7 +144,7 @@ public class Cyborg {
 		if (legalPositions.size() == 0) {
 
 			if (schachmatt(position)) {
-				return -9999.0 ; //*spieler
+				return -9999.0; // *spieler
 			} else {
 				return 0.0;
 			}
@@ -157,13 +153,13 @@ public class Cyborg {
 
 		// Über alle legalen Zuege iterieren und minimax aufrufen
 		for (Position pos : legalPositions) {
-			double wert = -miniMax(-spieler,-lastEval, pos, tiefe - 1, -beta, -alpha);
+			double wert = -miniMax(-spieler, -lastEval, pos, tiefe - 1, -beta, -alpha);
 
 			if (wert > alpha) {
 				alpha = wert;
-				
+
 				_guteZuege.put(pos.getPlacement(), wert);
-				
+
 				if (tiefe == _gewuenschtetiefe) {
 					_bestPosition = pos;
 					_bestPosition.setComparator(wert);
@@ -173,17 +169,15 @@ public class Cyborg {
 				}
 			}
 
-			else if (_guteZuege.containsKey(pos.getPlacement())){
+			else if (_guteZuege.containsKey(pos.getPlacement())) {
 				_guteZuege.put(pos.getPlacement(), wert);
 			}
 		}
-		
+
 		// Dafür sorgen, dass der Cyborg für das schnellste Schachmatt spielt!
 		if (alpha > 9000.0) {
 			alpha = alpha - 1;
-		}
-		else if (alpha < -9000.0)
-		{
+		} else if (alpha < -9000.0) {
 			alpha = alpha + 1;
 		}
 		return alpha;
@@ -211,8 +205,9 @@ public class Cyborg {
 		return gutesArray;
 	}
 
-	/* 
-	 * Hilfsmethode um herauszufinden, ob der sich am Zug befindliche im Schachmatt steht
+	/*
+	 * Hilfsmethode um herauszufinden, ob der sich am Zug befindliche im Schachmatt
+	 * steht
 	 */
 	private boolean schachmatt(Position position) {
 		if (position.getZugrecht()) {
@@ -234,7 +229,7 @@ public class Cyborg {
 		}
 		return false;
 	}
-	
+
 	/*
 	 * Gibt _guteZuege zurueck!
 	 */
