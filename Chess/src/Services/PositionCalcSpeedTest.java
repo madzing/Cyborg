@@ -100,7 +100,7 @@ public class PositionCalcSpeedTest {
 	
 	@Test
 	public void TestgetLegalPositionsPosition5() {
-		int depth = 4;
+		int depth = 2;
 		Fen startFen = Fen.select("7k/8/8/8/8/8/2p5/7K b - - 0 1");
 		Position startPosition = new Position(startFen);
 		int positions = MoveGenerationTest(depth,startPosition);
