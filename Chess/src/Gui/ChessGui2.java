@@ -90,7 +90,8 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				try {
 
 					Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-//					Fen _startFen = Fen.select("rnbqkbn1/pppppppP/8/8/8/8/PPPPPPPp/RNBQKBN1 w KQkq - 0 1");
+//					Fen _startFen = Fen.select("rnbqkbn1/pppppppP/8/8/8/8/PPPPPPPp/RNBQKBN1 w KQkq - 0 1"); //promotion Test
+//					Fen _startFen = Fen.select("rnbqkb1r/ppppp2p/5p2/1n4p1/6Q1/4P3/PPPP1PPP/RNB1KBNR w KQkq - 2 7"); //Schachmatt Weiss Test
 
 					Position _startPosition = new Position(_startFen);
 					ChessGui2 window = new ChessGui2(_startPosition);
@@ -196,10 +197,9 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	/* TODO
 	 * Waere noch nice:
 	 * -Zugrecht Feld displayed Gewinner
-	 * -Steht im Schach 
 	 */
 
-	public void makeCyborgMove()
+	public void makeCyborgMove() throws SchachmattException
 	{
 		/*
 		 * Methode mit der ein Cyborg einen Zug auf dem GUI darstellen kann. 
@@ -214,6 +214,19 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		posVergleicher.whatMoveWasMade();
 		_positions.add(_position);
 		_aktuellerZug++;
+		PositionCalc neuePosCalc = new PositionCalc(_position);
+		ArrayList<Position> neuelegalePositionen = neuePosCalc.getLegalFollowingPositions();
+		for (Map.Entry<Byte, Piece> entry : _whiteFiguren.entrySet())
+		{
+			Piece piece = entry.getValue();
+			if (piece instanceof King)
+			{
+				if (((King) piece).isInCheck(_position) && neuelegalePositionen.isEmpty())
+				{
+					throw new SchachmattException();
+				}
+			}
+		}
 		setFigurWurdeGeschlagenLabel(); 
 		int alteKoordinate = posVergleicher.getAlteKoordinate();
 		int neueKoordinate = posVergleicher.getNeueKoordinate();
@@ -1093,7 +1106,6 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				{
 					if (((King) piece).isInCheck(_position))
 					{
-						System.out.println(((King) piece).isInCheck(_position));
 						_zugrechtLabel.setText("Weiss: König steht im Schach");
 					}
 				}
@@ -1111,7 +1123,6 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				{
 					if (((King) piece).isInCheck(_position))
 					{
-						System.out.println(((King) piece).isInCheck(_position));
 						_zugrechtLabel.setText("Schwarz: König steht im Schach");
 					}
 				}
@@ -1227,7 +1238,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		setZugrechtLabel();
 	}
 	
-	private void makeMove() throws IllegalMoveException
+	private void makeMove() throws IllegalMoveException, SchachmattException
 	{
 		_posCalc = new PositionCalc(_position);
 		ArrayList<Position> legalePositionen = _posCalc.getLegalFollowingPositions();
@@ -1243,6 +1254,36 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				_positions.add(_position);
 			}
 		}
+		PositionCalc neuePosCalc = new PositionCalc(_position);
+		ArrayList<Position> neuelegalePositionen = neuePosCalc.getLegalFollowingPositions();
+		if (_position._zugrecht)
+		{
+			for (Map.Entry<Byte, Piece> entry : _whiteFiguren.entrySet())
+			{
+				Piece piece = entry.getValue();
+				if (piece instanceof King)
+				{
+					if (((King) piece).isInCheck(_position) && neuelegalePositionen.isEmpty())
+					{
+						throw new SchachmattException();
+					}
+				}
+			}
+		}
+		else
+		{
+			for (Map.Entry<Byte, Piece> entry : _blackFiguren.entrySet())
+			{
+				Piece piece = entry.getValue();
+				if (piece instanceof King)
+				{
+					if (((King) piece).isInCheck(_position) && neuelegalePositionen.isEmpty())
+					{
+						throw new SchachmattException();
+					}
+				}
+			}
+		}
 		if(!(_positionSpeicher.equals(_position)))
 		{
 			throw new IllegalMoveException();
@@ -1252,6 +1293,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		setZugrechtLabel();
 		resetteFelder();	
 	}
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e){
@@ -1320,6 +1362,22 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				{
 					JOptionPane.showMessageDialog(null, "Das ist ein illegaler Zug");
 				}
+				catch(SchachmattException sx)
+				{
+					if(_position._zugrecht)
+					{
+						JOptionPane.showMessageDialog(null, "Schwarz hat gewonnen");
+					}
+					else if (_position._zugrecht && _CyborgButton.isSelected())
+					{
+						JOptionPane.showMessageDialog(null, "Der Cyborg hat gewonnen");
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Du hast gewonnen");
+					}
+					
+				}
 				catch(IllegalMoveException ix)
 				{
 					JOptionPane.showMessageDialog(null, "Das ist ein illegaler Zug");
@@ -1328,7 +1386,14 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			}
 		if(_CyborgButton.isSelected() && !(_position._zugrecht)) //Prüft bei jedem Klick auf ein Knopf ob der Cyborg eingeschaltet ist und Schwarz an der Reihe ist
 		{
-			makeCyborgMove();
+			try 
+			{
+				makeCyborgMove();
+			} 
+			catch (SchachmattException sx) 
+			{
+				JOptionPane.showMessageDialog(null, "Der Cyborg hat gewonnen");
+			}
 		}
 	}
 
