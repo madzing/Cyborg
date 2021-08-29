@@ -1160,10 +1160,13 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			_aktuellerZug--;
 			resetteFelder();
 			_cyborgHighlightStack.pop();
-			int neueKoordinate = _cyborgHighlightStack.peek()[1];
-			int alteKoordinate = _cyborgHighlightStack.peek()[0];
-			_spielButtons.get(alteKoordinate).setBackground(LIGHT_BLUE);
-			_spielButtons.get(neueKoordinate).setBackground(Color.RED);
+			if (!_cyborgHighlightStack.isEmpty())
+			{
+				int neueKoordinate = _cyborgHighlightStack.peek()[1];
+				int alteKoordinate = _cyborgHighlightStack.peek()[0];
+				_spielButtons.get(alteKoordinate).setBackground(LIGHT_BLUE);
+				_spielButtons.get(neueKoordinate).setBackground(Color.RED);
+			}
 		}
 		else if (_CyborgButton.isSelected() == true && posVergleicher.wurdeFigurGeschlagen() == true) // Es wurde eine Figur vom Cyborg geschlagen
 		{
@@ -1178,10 +1181,13 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			_aktuellerZug--;
 			resetteFelder();
 			_cyborgHighlightStack.pop();
-			int neueKoordinate = _cyborgHighlightStack.peek()[1];
-			int alteKoordinate = _cyborgHighlightStack.peek()[0];
-			_spielButtons.get(alteKoordinate).setBackground(LIGHT_BLUE);
-			_spielButtons.get(neueKoordinate).setBackground(Color.RED);
+			if (!_cyborgHighlightStack.isEmpty())
+			{
+				int neueKoordinate = _cyborgHighlightStack.peek()[1];
+				int alteKoordinate = _cyborgHighlightStack.peek()[0];
+				_spielButtons.get(alteKoordinate).setBackground(LIGHT_BLUE);
+				_spielButtons.get(neueKoordinate).setBackground(Color.RED);
+			}
 		}
 		else // Es wurde eine Figur vom Spieler geschlagen
 		{
