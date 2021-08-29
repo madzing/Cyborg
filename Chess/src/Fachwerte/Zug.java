@@ -39,10 +39,16 @@ public class Zug implements Comparable<Object> {
 		_geschlageneFigur = zug._geschlageneFigur;
 		this._promoteteFigur = zug._promoteteFigur;
 		_enPassant = zug._enPassant;
-		_whiteCanCastle = zug._whiteCanCastle;
-		_blackCanCastle = zug._blackCanCastle;
+		_whiteCanCastle = copyArray(zug._whiteCanCastle);
+		_blackCanCastle = copyArray(zug._blackCanCastle);
 		_zuegeKleiner50 = zug._zuegeKleiner50;
 		
+	}
+	private boolean[] copyArray(boolean[] copyable) {
+		boolean[] array = { false, false };
+		array[0] = copyable[0];
+		array[1] = copyable[1];
+		return array;
 	}
 
 	public byte getAlteFigurPosition()

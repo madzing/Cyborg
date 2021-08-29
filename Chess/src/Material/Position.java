@@ -86,6 +86,8 @@ public class Position implements Comparable<Object>{
 		if(zug.getPromoteteFigur() != null) {
 			promotion(zug.getPromoteteFigur());
 		}
+		_zugfolge.pop();
+		_zugfolge.push(zug);
 	}
 
 	public void makeMove(byte alteFigurPosition, byte neueFigurPosition) {
