@@ -190,9 +190,6 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		setZugrechtLabel();
 		ButtonListenerErzeugen();
 		createGeschlageneFigurLabels();
-
-		System.out.println(_spielButtons.get(0).getBounds());
-		System.out.println(_spielButtons.get(0).getBounds(getBounds()));
 	}
 
 
@@ -1088,11 +1085,38 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	{
 		if(_position.getZugrecht())
 		{
-			_zugrechtLabel.setText("Weiss ist am Zug");
+			_zugrechtLabel.setText("Weiss");
+			for (Map.Entry<Byte, Piece> entry : _whiteFiguren.entrySet())
+			{
+				Piece piece = entry.getValue();
+				if (piece instanceof King)
+				{
+					if (((King) piece).isInCheck(_position))
+					{
+						System.out.println(((King) piece).isInCheck(_position));
+						_zugrechtLabel.setText("Weiss: König steht im Schach");
+					}
+				}
+					
+			}
 		}
+		
 		else
 		{
-			_zugrechtLabel.setText("Schwarz ist am Zug");
+			_zugrechtLabel.setText("Schwarz");
+			for (Map.Entry<Byte, Piece> entry : _blackFiguren.entrySet())
+			{
+				Piece piece = entry.getValue();
+				if (piece instanceof King)
+				{
+					if (((King) piece).isInCheck(_position))
+					{
+						System.out.println(((King) piece).isInCheck(_position));
+						_zugrechtLabel.setText("Schwarz: König steht im Schach");
+					}
+				}
+					
+			}
 		}
 	}
 
