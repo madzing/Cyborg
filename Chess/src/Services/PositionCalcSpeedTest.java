@@ -15,7 +15,7 @@ public class PositionCalcSpeedTest {
 
 	@Test
 	public void TestgetLegalPositionsStartposition() {
-		int depth = 4;
+		int depth = 5;
 		Fen startFen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 		Position startPosition = new Position(startFen);
 		int positions = MoveGenerationTest(depth,startPosition);
@@ -100,7 +100,7 @@ public class PositionCalcSpeedTest {
 	
 	@Test
 	public void TestgetLegalPositionsPosition5() {
-		int depth = 2;
+		int depth = 3;
 		Fen startFen = Fen.select("7k/8/8/8/8/8/2p5/7K b - - 0 1");
 		Position startPosition = new Position(startFen);
 		int positions = MoveGenerationTest(depth,startPosition);
@@ -110,7 +110,26 @@ public class PositionCalcSpeedTest {
 		assertEquals(7, positions);
 		}
 		if(depth == 2) {
-			assertEquals(10, positions);
+			assertEquals(19, positions);
+		}
+		if(depth == 3) {
+			assertEquals(114, positions);
+		}
+	}
+	
+	@Test
+	public void TestgetLegalPositionsPosition6() {
+		int depth = 3;
+		Fen startFen = Fen.select("k7/5P2/8/8/8/8/8/K7 w - - 0 1");
+		Position startPosition = new Position(startFen);
+		int positions = MoveGenerationTest(depth,startPosition);
+		System.out.println(""+positions);
+
+		if (depth ==1) {
+		assertEquals(7, positions);
+		}
+		if(depth == 2) {
+			assertEquals(19, positions);
 		}
 		if(depth == 3) {
 			assertEquals(114, positions);
@@ -153,7 +172,7 @@ public class PositionCalcSpeedTest {
 
 		for(Zug p : nodes)
 		{
-			position.makeMove(p.getAlteFigurPosition(), p.getNeueFigurPosition());
+			position.makeMove(p);
 			numPositions += MoveGenerationTest(depth-1, position);
 			position.undoLastMove();
 		}

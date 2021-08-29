@@ -82,6 +82,10 @@ public class Position implements Comparable<Object>{
 
 	public void makeMove(Zug zug) {
 		makeMove(zug.getAlteFigurPosition(), zug.getNeueFigurPosition());
+
+		if(zug.getPromoteteFigur() != null) {
+			promotion(zug.getPromoteteFigur());
+		}
 	}
 
 	public void makeMove(byte alteFigurPosition, byte neueFigurPosition) {
@@ -332,7 +336,7 @@ public class Position implements Comparable<Object>{
 	}
 
 	public void promotion(Piece promotedFigur) {
-		if (!_zugrecht) {
+		if (promotedFigur.getColor()) {
 			_whiteFiguren.replace(promotedFigur.getCoordinate(), promotedFigur);
 		} else {
 			_blackFiguren.replace(promotedFigur.getCoordinate(), promotedFigur);
