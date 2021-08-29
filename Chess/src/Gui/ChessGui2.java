@@ -90,8 +90,9 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				try {
 
 					Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-//					Fen _startFen = Fen.select("rnbqkbn1/pppppppP/8/8/8/8/PPPPPPPp/RNBQKBN1 w KQkq - 0 1");
-
+//					Fen _startFen = Fen.select("rnbqkbn1/pppppppP/8/8/8/8/PPPPPPPp/RNBQKBN1 w KQkq - 0 1"); //promotion Test
+//					Fen _startFen = Fen.select("rnbqkb1r/ppppp2p/5p2/1n4p1/6Q1/4P3/PPPP1PPP/RNB1KBNR w KQkq - 2 7"); //Schachmatt Weiss Test
+//					Fen _startFen = Fen.select("7k/8/8/8/8/8/4q3/7K b - - 0 1");
 					Position _startPosition = new Position(_startFen);
 					ChessGui2 window = new ChessGui2(_startPosition);
 					window.setVisible(true);
@@ -190,19 +191,15 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		setZugrechtLabel();
 		ButtonListenerErzeugen();
 		createGeschlageneFigurLabels();
-
-		System.out.println(_spielButtons.get(0).getBounds());
-		System.out.println(_spielButtons.get(0).getBounds(getBounds()));
 	}
 
 
 	/* TODO
 	 * Waere noch nice:
 	 * -Zugrecht Feld displayed Gewinner
-	 * -Steht im Schach 
 	 */
 
-	public void makeCyborgMove()
+	public void makeCyborgMove() throws SchachmattException, UnentschiedenException, NullPointerException
 	{
 		/*
 		 * Methode mit der ein Cyborg einen Zug auf dem GUI darstellen kann. 
@@ -217,6 +214,23 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		posVergleicher.whatMoveWasMade();
 		_positions.add(_position);
 		_aktuellerZug++;
+		PositionCalc neuePosCalc = new PositionCalc(_position);
+		ArrayList<Position> neuelegalePositionen = neuePosCalc.getLegalFollowingPositions();
+		for (Map.Entry<Byte, Piece> entry : _whiteFiguren.entrySet())
+		{
+			Piece piece = entry.getValue();
+			if (piece instanceof King)
+			{
+				if (((King) piece).isInCheck(_position) && neuelegalePositionen.isEmpty())
+				{
+					throw new SchachmattException();
+				}
+			}
+		}
+		if(neuelegalePositionen.isEmpty())
+		{
+			throw new UnentschiedenException();
+		}
 		setFigurWurdeGeschlagenLabel(); 
 		int alteKoordinate = posVergleicher.getAlteKoordinate();
 		int neueKoordinate = posVergleicher.getNeueKoordinate();
@@ -1088,11 +1102,36 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	{
 		if(_position.getZugrecht())
 		{
-			_zugrechtLabel.setText("Weiss ist am Zug");
+			_zugrechtLabel.setText("Weiss");
+			for (Map.Entry<Byte, Piece> entry : _whiteFiguren.entrySet())
+			{
+				Piece piece = entry.getValue();
+				if (piece instanceof King)
+				{
+					if (((King) piece).isInCheck(_position))
+					{
+						_zugrechtLabel.setText("Weiss: König steht im Schach");
+					}
+				}
+					
+			}
 		}
+		
 		else
 		{
-			_zugrechtLabel.setText("Schwarz ist am Zug");
+			_zugrechtLabel.setText("Schwarz");
+			for (Map.Entry<Byte, Piece> entry : _blackFiguren.entrySet())
+			{
+				Piece piece = entry.getValue();
+				if (piece instanceof King)
+				{
+					if (((King) piece).isInCheck(_position))
+					{
+						_zugrechtLabel.setText("Schwarz: König steht im Schach");
+					}
+				}
+					
+			}
 		}
 	}
 
@@ -1203,7 +1242,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		setZugrechtLabel();
 	}
 	
-	private void makeMove() throws IllegalMoveException
+	private void makeMove() throws IllegalMoveException, SchachmattException, UnentschiedenException
 	{
 		_posCalc = new PositionCalc(_position);
 		ArrayList<Position> legalePositionen = _posCalc.getLegalFollowingPositions();
@@ -1219,6 +1258,40 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				_positions.add(_position);
 			}
 		}
+		PositionCalc neuePosCalc = new PositionCalc(_position);
+		ArrayList<Position> neuelegalePositionen = neuePosCalc.getLegalFollowingPositions();
+		if (_position._zugrecht)
+		{
+			for (Map.Entry<Byte, Piece> entry : _whiteFiguren.entrySet())
+			{
+				Piece piece = entry.getValue();
+				if (piece instanceof King)
+				{
+					if (((King) piece).isInCheck(_position) && neuelegalePositionen.isEmpty())
+					{
+						throw new SchachmattException();
+					}
+				}
+			}
+		}
+		else
+		{
+			for (Map.Entry<Byte, Piece> entry : _blackFiguren.entrySet())
+			{
+				Piece piece = entry.getValue();
+				if (piece instanceof King)
+				{
+					if (((King) piece).isInCheck(_position) && neuelegalePositionen.isEmpty())
+					{
+						throw new SchachmattException();
+					}
+				}
+			}
+		}
+		if(neuelegalePositionen.isEmpty())
+		{
+			throw new UnentschiedenException();
+		}
 		if(!(_positionSpeicher.equals(_position)))
 		{
 			throw new IllegalMoveException();
@@ -1228,6 +1301,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		setZugrechtLabel();
 		resetteFelder();	
 	}
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e){
@@ -1296,6 +1370,100 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				{
 					JOptionPane.showMessageDialog(null, "Das ist ein illegaler Zug");
 				}
+				catch(SchachmattException sx)
+				{
+					Object[] options = {"Spiel beenden", "Alle Fens"};
+					if(_position._zugrecht)
+					{
+						int i = JOptionPane.showOptionDialog(null, "Schwarz hat gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
+								JOptionPane.PLAIN_MESSAGE, null, options, null);
+						if (i == 0)
+						{
+							dispose();
+						}
+						else if (i == 1)
+						{
+							String leererString = "";
+							for(int j = 0; j < _aktuellerZug; j++)
+							{
+								String fen = _positions.get(j).getFen();
+								leererString = leererString + "\r\n" +fen;
+								StringSelection stringSelection = new StringSelection (leererString);
+								Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+								clpbrd.setContents (stringSelection, null);
+							}
+							dispose();
+						}
+					}
+					else if (_position._zugrecht && _CyborgButton.isSelected())
+					{
+						int i = JOptionPane.showOptionDialog(null, "Der Cyborg hat gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
+								JOptionPane.PLAIN_MESSAGE, null, options, null);
+						if (i == 0)
+						{
+							dispose();
+						}
+						else if (i == 1)
+						{
+							String leererString = "";
+							for(int j = 0; j < _aktuellerZug; j++)
+							{
+								String fen = _positions.get(j).getFen();
+								leererString = leererString + "\r\n" +fen;
+								StringSelection stringSelection = new StringSelection (leererString);
+								Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+								clpbrd.setContents (stringSelection, null);
+							}
+							dispose();
+						}
+					}
+					else
+					{
+						int i = JOptionPane.showOptionDialog(null, "Du hast gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
+								JOptionPane.PLAIN_MESSAGE, null, options, null);
+						if (i == 0)
+						{
+							dispose();
+						}
+						else if (i == 1)
+						{
+							String leererString = "";
+							for(int j = 0; j < _aktuellerZug; j++)
+							{
+								String fen = _positions.get(j).getFen();
+								leererString = leererString + "\r\n" +fen;
+								StringSelection stringSelection = new StringSelection (leererString);
+								Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+								clpbrd.setContents (stringSelection, null);
+							}
+							dispose();
+						}
+					}
+					
+				}
+				catch(UnentschiedenException ux)
+				{
+					Object[] options = {"Spiel beenden", "Alle Fens"};
+					int i = JOptionPane.showOptionDialog(null, "Unentschieden", "Kein Gewinner", JOptionPane.DEFAULT_OPTION,
+							JOptionPane.PLAIN_MESSAGE, null, options, null);
+					if (i == 0)
+					{
+						dispose();
+					}
+					else if (i == 1)
+					{
+						String leererString = "";
+						for(int j = 0; j < _aktuellerZug; j++)
+						{
+							String fen = _positions.get(j).getFen();
+							leererString = leererString + "\r\n" +fen;
+							StringSelection stringSelection = new StringSelection (leererString);
+							Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+							clpbrd.setContents (stringSelection, null);
+							dispose();
+						}
+					}
+				}
 				catch(IllegalMoveException ix)
 				{
 					JOptionPane.showMessageDialog(null, "Das ist ein illegaler Zug");
@@ -1304,7 +1472,60 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			}
 		if(_CyborgButton.isSelected() && !(_position._zugrecht)) //Prüft bei jedem Klick auf ein Knopf ob der Cyborg eingeschaltet ist und Schwarz an der Reihe ist
 		{
-			makeCyborgMove();
+			try 
+			{
+				makeCyborgMove();
+			} 
+			catch (SchachmattException sx) 
+			{
+				Object[] options = {"Spiel beenden", "Alle Fens"};
+				int i = JOptionPane.showOptionDialog(null, "Der Cyborg hat gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
+						JOptionPane.PLAIN_MESSAGE, null, options, null);
+				if (i == 0)
+				{
+					dispose();
+				}
+				else if (i == 1)
+				{
+					String leererString = "";
+					for(int j = 0; j < _aktuellerZug; j++)
+					{
+						String fen = _positions.get(j).getFen();
+						leererString = leererString + "\r\n" +fen;
+						StringSelection stringSelection = new StringSelection (leererString);
+						Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+						clpbrd.setContents (stringSelection, null);
+						dispose();
+					}
+				}
+			}
+			catch(UnentschiedenException ux)
+			{
+				Object[] options = {"Spiel beenden", "Alle Fens"};
+				int i = JOptionPane.showOptionDialog(null, "Unentschieden", "Kein Gewinner", JOptionPane.DEFAULT_OPTION,
+						JOptionPane.PLAIN_MESSAGE, null, options, null);
+				if (i == 0)
+				{
+					dispose();
+				}
+				else if (i == 1)
+				{
+					String leererString = "";
+					for(int j = 0; j < _aktuellerZug; j++)
+					{
+						String fen = _positions.get(j).getFen();
+						leererString = leererString + "\r\n" +fen;
+						StringSelection stringSelection = new StringSelection (leererString);
+						Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+						clpbrd.setContents (stringSelection, null);
+						dispose();
+					}
+				}
+			}
+			catch(NullPointerException ne)
+			{
+				ne.printStackTrace();
+			}
 		}
 	}
 
