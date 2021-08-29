@@ -85,7 +85,9 @@ public class Zug implements Comparable<Object> {
 	{
 		_comparator = (int) (d*10000);
 	}
+
 	// sortiert für schwarz gut aber für weiß nicht?
+	@Override
 	public int compareTo(Object comparable) {
 //		if(_zugrecht)
 //		{

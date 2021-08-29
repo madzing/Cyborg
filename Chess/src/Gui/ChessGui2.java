@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Fachwerte.Fen;
+import Fachwerte.Zug;
 import Material.Bishop;
 import Material.King;
 import Material.Knight;
@@ -34,7 +35,6 @@ import Material.Queen;
 import Material.Rook;
 import Services.PositionCalc;
 import Services.PositionsVergleicher;
-import Werkzeuge.RekursiverCyborg;
 import Werkzeuge.Cyborg;
 
 import java.awt.BorderLayout;
@@ -200,7 +200,10 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		 */
 		Cyborg Ernd = new Cyborg(5);
 		Position altePosition = new Position(_position);
-		_position = Ernd.getBestFollowingPosition(_position);
+		Zug besterZug = Ernd.getBestFollowingZug(_position);
+		altePosition.makeMove(besterZug);
+		_position = new Position(altePosition);
+		altePosition.undoLastMove();
 		PositionsVergleicher posVergleicher = new PositionsVergleicher(altePosition, _position);
 		posVergleicher.whatMoveWasMade();
 		_positions.add(_position);
@@ -1170,10 +1173,22 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	private void makeMove()
 	{
 		_posCalc = new PositionCalc(_position);
-		ArrayList<Position> legalePositionen = _posCalc.getLegalFollowingPositions();
+		ArrayList<Zug> legaleZuege = _posCalc.getLegalFollowingMoves();
+		ArrayList<Position> legalePositionen = new ArrayList<Position>();
 		_positionSpeicher = new Position(_position);
+		for(Zug zug: legaleZuege)
+		{
+			_positionSpeicher.makeMove(zug);
+			legalePositionen.add(new Position(_positionSpeicher));
+			_positionSpeicher.undoLastMove();
+			
+		}
+		
 		_positionSpeicher.makeMove((byte)_letzterGedrueckterButton, (byte)_gedrueckterButton);
+
+		
 		promotion();
+		
 		for(Position p: legalePositionen)
 		{
 			if (p.getFen().equals(_positionSpeicher.getFen()))
