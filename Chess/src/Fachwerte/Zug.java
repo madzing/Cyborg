@@ -1,10 +1,11 @@
 package Fachwerte;
 
 import Material.Piece;
+import Material.Position;
 
 ;
 
-public class Zug {
+public class Zug implements Comparable<Object> {
 
 
 	private final byte _alteFigurPosition;
@@ -15,6 +16,7 @@ public class Zug {
 	private final boolean[] _whiteCanCastle;
 	private final boolean[] _blackCanCastle;
 	private final byte _zuegeKleiner50;
+	private int _comparator =0;
 
 	public Zug(byte alteFigurPosition, byte neueFigurPosition, char geschlageneFigur,
 			byte enPassant,boolean[] whiteCanCastle,boolean[] blackCanCastle,byte zuegeKleiner50,
@@ -73,5 +75,27 @@ public class Zug {
 	public void setPromotion(Piece piece)
 	{
 		_promoteteFigur = piece;
+	}
+	public int getComparator()
+	{
+		return _comparator;
+	}
+
+	public void setComparator(double d)
+	{
+		_comparator = (int) (d*10000);
+	}
+	// sortiert für schwarz gut aber für weiß nicht?
+	public int compareTo(Object comparable) {
+//		if(_zugrecht)
+//		{
+//			return getComparator() - ((Position) comparable).getComparator();
+//
+//		}
+//		else
+//		{
+			return ((Zug) comparable).getComparator()-getComparator();
+//		}
+
 	}
 }
