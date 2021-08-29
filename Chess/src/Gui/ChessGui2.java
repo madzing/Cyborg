@@ -92,7 +92,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 					Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 //					Fen _startFen = Fen.select("rnbqkbn1/pppppppP/8/8/8/8/PPPPPPPp/RNBQKBN1 w KQkq - 0 1"); //promotion Test
 //					Fen _startFen = Fen.select("rnbqkb1r/ppppp2p/5p2/1n4p1/6Q1/4P3/PPPP1PPP/RNB1KBNR w KQkq - 2 7"); //Schachmatt Weiss Test
-
+//					Fen _startFen = Fen.select("7k/8/8/8/8/8/4q3/7K b - - 0 1");
 					Position _startPosition = new Position(_startFen);
 					ChessGui2 window = new ChessGui2(_startPosition);
 					window.setVisible(true);
@@ -199,7 +199,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 	 * -Zugrecht Feld displayed Gewinner
 	 */
 
-	public void makeCyborgMove() throws SchachmattException
+	public void makeCyborgMove() throws SchachmattException, UnentschiedenException, NullPointerException
 	{
 		/*
 		 * Methode mit der ein Cyborg einen Zug auf dem GUI darstellen kann. 
@@ -226,6 +226,10 @@ public class ChessGui2 extends JFrame implements ActionListener{
 					throw new SchachmattException();
 				}
 			}
+		}
+		if(neuelegalePositionen.isEmpty())
+		{
+			throw new UnentschiedenException();
 		}
 		setFigurWurdeGeschlagenLabel(); 
 		int alteKoordinate = posVergleicher.getAlteKoordinate();
@@ -1238,7 +1242,7 @@ public class ChessGui2 extends JFrame implements ActionListener{
 		setZugrechtLabel();
 	}
 	
-	private void makeMove() throws IllegalMoveException, SchachmattException
+	private void makeMove() throws IllegalMoveException, SchachmattException, UnentschiedenException
 	{
 		_posCalc = new PositionCalc(_position);
 		ArrayList<Position> legalePositionen = _posCalc.getLegalFollowingPositions();
@@ -1283,6 +1287,10 @@ public class ChessGui2 extends JFrame implements ActionListener{
 					}
 				}
 			}
+		}
+		if(neuelegalePositionen.isEmpty())
+		{
+			throw new UnentschiedenException();
 		}
 		if(!(_positionSpeicher.equals(_position)))
 		{
@@ -1364,19 +1372,97 @@ public class ChessGui2 extends JFrame implements ActionListener{
 				}
 				catch(SchachmattException sx)
 				{
+					Object[] options = {"Spiel beenden", "Alle Fens"};
 					if(_position._zugrecht)
 					{
-						JOptionPane.showMessageDialog(null, "Schwarz hat gewonnen");
+						int i = JOptionPane.showOptionDialog(null, "Schwarz hat gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
+								JOptionPane.PLAIN_MESSAGE, null, options, null);
+						if (i == 0)
+						{
+							dispose();
+						}
+						else if (i == 1)
+						{
+							String leererString = "";
+							for(int j = 0; j < _aktuellerZug; j++)
+							{
+								String fen = _positions.get(j).getFen();
+								leererString = leererString + "\r\n" +fen;
+								StringSelection stringSelection = new StringSelection (leererString);
+								Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+								clpbrd.setContents (stringSelection, null);
+							}
+							dispose();
+						}
 					}
 					else if (_position._zugrecht && _CyborgButton.isSelected())
 					{
-						JOptionPane.showMessageDialog(null, "Der Cyborg hat gewonnen");
+						int i = JOptionPane.showOptionDialog(null, "Der Cyborg hat gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
+								JOptionPane.PLAIN_MESSAGE, null, options, null);
+						if (i == 0)
+						{
+							dispose();
+						}
+						else if (i == 1)
+						{
+							String leererString = "";
+							for(int j = 0; j < _aktuellerZug; j++)
+							{
+								String fen = _positions.get(j).getFen();
+								leererString = leererString + "\r\n" +fen;
+								StringSelection stringSelection = new StringSelection (leererString);
+								Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+								clpbrd.setContents (stringSelection, null);
+							}
+							dispose();
+						}
 					}
 					else
 					{
-						JOptionPane.showMessageDialog(null, "Du hast gewonnen");
+						int i = JOptionPane.showOptionDialog(null, "Du hast gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
+								JOptionPane.PLAIN_MESSAGE, null, options, null);
+						if (i == 0)
+						{
+							dispose();
+						}
+						else if (i == 1)
+						{
+							String leererString = "";
+							for(int j = 0; j < _aktuellerZug; j++)
+							{
+								String fen = _positions.get(j).getFen();
+								leererString = leererString + "\r\n" +fen;
+								StringSelection stringSelection = new StringSelection (leererString);
+								Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+								clpbrd.setContents (stringSelection, null);
+							}
+							dispose();
+						}
 					}
 					
+				}
+				catch(UnentschiedenException ux)
+				{
+					Object[] options = {"Spiel beenden", "Alle Fens"};
+					int i = JOptionPane.showOptionDialog(null, "Unentschieden", "Kein Gewinner", JOptionPane.DEFAULT_OPTION,
+							JOptionPane.PLAIN_MESSAGE, null, options, null);
+					if (i == 0)
+					{
+						dispose();
+					}
+					else if (i == 1)
+					{
+						String leererString = "";
+						for(int j = 0; j < _aktuellerZug; j++)
+						{
+							String fen = _positions.get(j).getFen();
+							leererString = leererString + "\r\n" +fen;
+							StringSelection stringSelection = new StringSelection (leererString);
+							Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+							clpbrd.setContents (stringSelection, null);
+							dispose();
+						}
+					}
 				}
 				catch(IllegalMoveException ix)
 				{
@@ -1392,7 +1478,53 @@ public class ChessGui2 extends JFrame implements ActionListener{
 			} 
 			catch (SchachmattException sx) 
 			{
-				JOptionPane.showMessageDialog(null, "Der Cyborg hat gewonnen");
+				Object[] options = {"Spiel beenden", "Alle Fens"};
+				int i = JOptionPane.showOptionDialog(null, "Der Cyborg hat gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
+						JOptionPane.PLAIN_MESSAGE, null, options, null);
+				if (i == 0)
+				{
+					dispose();
+				}
+				else if (i == 1)
+				{
+					String leererString = "";
+					for(int j = 0; j < _aktuellerZug; j++)
+					{
+						String fen = _positions.get(j).getFen();
+						leererString = leererString + "\r\n" +fen;
+						StringSelection stringSelection = new StringSelection (leererString);
+						Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+						clpbrd.setContents (stringSelection, null);
+						dispose();
+					}
+				}
+			}
+			catch(UnentschiedenException ux)
+			{
+				Object[] options = {"Spiel beenden", "Alle Fens"};
+				int i = JOptionPane.showOptionDialog(null, "Unentschieden", "Kein Gewinner", JOptionPane.DEFAULT_OPTION,
+						JOptionPane.PLAIN_MESSAGE, null, options, null);
+				if (i == 0)
+				{
+					dispose();
+				}
+				else if (i == 1)
+				{
+					String leererString = "";
+					for(int j = 0; j < _aktuellerZug; j++)
+					{
+						String fen = _positions.get(j).getFen();
+						leererString = leererString + "\r\n" +fen;
+						StringSelection stringSelection = new StringSelection (leererString);
+						Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+						clpbrd.setContents (stringSelection, null);
+						dispose();
+					}
+				}
+			}
+			catch(NullPointerException ne)
+			{
+				ne.printStackTrace();
 			}
 		}
 	}
