@@ -113,7 +113,7 @@ public class PositionCalcSpeedTest {
 			assertEquals(19, positions);
 		}
 		if(depth == 3) {
-			assertEquals(114, positions);
+			assertEquals(223, positions);
 		}
 	}
 	
@@ -132,7 +132,7 @@ public class PositionCalcSpeedTest {
 			assertEquals(19, positions);
 		}
 		if(depth == 3) {
-			assertEquals(114, positions);
+			assertEquals(223, positions);
 		}
 	}
 	
