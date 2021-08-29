@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Buchwissen.BookReader;
-import Fachwerte.Zug;
 import Material.King;
 import Material.Piece;
 import Material.Position;
@@ -20,7 +19,7 @@ public class Cyborg {
 	HashMap<String, Double> _guteZuege;
 	BookReader _buch;
 	Eval _eval;
-	Zug _besterZug;
+	Position _bestPosition;
 	int _gewuenschtetiefe;
 	boolean _finalDurchlauf;
 
@@ -37,7 +36,7 @@ public class Cyborg {
 		_guteZuege = new HashMap<String, Double>();
 
 		// Dient dazu die beste Position abzuspeichern
-		_besterZug = null;
+		_bestPosition = null;
 
 		// Gibt an, wie Tief mindestens gerechnet werden muss. Ist Evaluation der zuvor
 		// betrachteten Position stark unterschiedlich,
@@ -68,16 +67,19 @@ public class Cyborg {
 	 * der Zug stattdessen ein Ergebnis, das den momentanen Alpha-Wert übersteigt,
 	 * wird dieser entsprechend nach oben angehoben.
 	 */
-	public Zug getBestFollowingZug(Position position) {
+	public Position getBestFollowingPosition(Position position) {
 
 		// Resetten der Variablen, welche von einem vorherigen durchlauf noch belegt
 		// sein könnten.
-		_besterZug = null;
+		_bestPosition = null;
 		double lastEval = 0.0;
 		_guteZuege = new HashMap<String, Double>();
 		_finalDurchlauf = false;
 
-
+		// Ist eine Position im Buch enhalten sollte diese zurückgegeben werden
+		if (_buch.istEnthalten(position)) {
+			return _buch.folgePos(position);
+		}
 
 		// schlechtester Wert, den weiß mindestens erreichen wird. (Weiß steht bei
 		// positiven Zahlen besser)
@@ -106,7 +108,7 @@ public class Cyborg {
 			miniMax(spieler, lastEval, position, i, alpha, beta);
 		}
 		_finalDurchlauf = false;
-		return _besterZug;
+		return _bestPosition;
 	}
 
 	/*
@@ -133,10 +135,10 @@ public class Cyborg {
 		}
 
 		// Alle Legalen Folgepositionen berechnen
-		ArrayList<Zug> legalPositions = new PositionCalc(position).getLegalFollowingMoves();
+		ArrayList<Position> legalPositions = new PositionCalc(position).getLegalFollowingPositions();
 
 		// die Positionen sortieren
-		legalPositions = guteZuegeZuerst(legalPositions,position);
+		legalPositions = guteZuegeZuerst(legalPositions);
 
 		// wenn keine legalen Zuege moglich sind
 		if (legalPositions.size() == 0) {
@@ -150,30 +152,26 @@ public class Cyborg {
 		}
 
 		// Über alle legalen Zuege iterieren und minimax aufrufen
-		for (Zug zug : legalPositions) {
-			position.makeMove(zug);
-			double wert = -miniMax(-spieler, -lastEval, position, tiefe - 1, -beta, -alpha);
-			String placement = position.getPlacement();
-			position.undoLastMove();
-			
+		for (Position pos : legalPositions) {
+			double wert = -miniMax(-spieler, -lastEval, pos, tiefe - 1, -beta, -alpha);
+
 			if (wert > alpha) {
 				alpha = wert;
 
-				_guteZuege.put(placement, wert);
+				_guteZuege.put(pos.getPlacement(), wert);
 
 				if (tiefe == _gewuenschtetiefe) {
-					_besterZug = zug;
-					_besterZug.setComparator(wert);
+					_bestPosition = pos;
+					_bestPosition.setComparator(wert);
 				}
 				if (alpha >= beta) {
 					break;
 				}
 			}
 
-			else if (_guteZuege.containsKey(placement)) {
-				_guteZuege.put(placement, wert);
+			else if (_guteZuege.containsKey(pos.getPlacement())) {
+				_guteZuege.put(pos.getPlacement(), wert);
 			}
-			
 		}
 
 		// Dafür sorgen, dass der Cyborg für das schnellste Schachmatt spielt!
@@ -190,19 +188,17 @@ public class Cyborg {
 	 * _gutenZuege zu sortieren. Jede Position kann, muss aber nicht in _guteZuege
 	 * enthalten sein.
 	 */
-	private ArrayList<Zug> guteZuegeZuerst(ArrayList<Zug> legalPositions, Position position) {
-		ArrayList<Zug> gutesArray = new ArrayList<Zug>();
-		ArrayList<Zug> schlechtesArray = new ArrayList<Zug>();
-		for (Zug p : legalPositions) {
-			position.makeMove(p);
-			String placement = position.getPlacement();
+	private ArrayList<Position> guteZuegeZuerst(ArrayList<Position> legalPositions) {
+		ArrayList<Position> gutesArray = new ArrayList<Position>();
+		ArrayList<Position> schlechtesArray = new ArrayList<Position>();
+		for (Position p : legalPositions) {
+			String placement = p.getPlacement();
 			if (_guteZuege.containsKey(placement)) {
 				p.setComparator(_guteZuege.get(placement));
 				gutesArray.add(p);
 			} else {
 				schlechtesArray.add(p);
 			}
-			position.undoLastMove();
 		}
 		gutesArray.sort(null);
 		gutesArray.addAll(schlechtesArray);
