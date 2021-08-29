@@ -31,6 +31,19 @@ public class Zug implements Comparable<Object> {
 		_blackCanCastle = blackCanCastle;
 		_zuegeKleiner50 = zuegeKleiner50;
 	}
+	
+	public Zug(Zug zug)
+	{
+		_alteFigurPosition = zug._alteFigurPosition;
+		_neueFigurPosition = zug._neueFigurPosition;
+		_geschlageneFigur = zug._geschlageneFigur;
+		this._promoteteFigur = zug._promoteteFigur;
+		_enPassant = zug._enPassant;
+		_whiteCanCastle = zug._whiteCanCastle;
+		_blackCanCastle = zug._blackCanCastle;
+		_zuegeKleiner50 = zug._zuegeKleiner50;
+		
+	}
 
 	public byte getAlteFigurPosition()
 	{

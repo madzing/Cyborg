@@ -53,17 +53,17 @@ public class PositionCalc {
 						isPositionLegal(position)) {
 					
 					Zug zug = position.undoLastMove();
-					zug.setPromotion(new Knight(zug.getNeueFigurPosition(), _currentPosition.getZugrecht()));
-					folgeZuege.add(zug);
+					zug.setPromotion(new Knight(zug.getNeueFigurPosition(), piece.getColor()));
+					folgeZuege.add(new Zug(zug));
 					
-					zug.setPromotion(new Bishop(zug.getNeueFigurPosition(), _currentPosition.getZugrecht()));
-					folgeZuege.add(zug);
+					zug.setPromotion(new Bishop(zug.getNeueFigurPosition(), piece.getColor()));
+					folgeZuege.add(new Zug(zug));
 					
-					zug.setPromotion(new Rook(zug.getNeueFigurPosition(), _currentPosition.getZugrecht()));
-					folgeZuege.add(zug);
+					zug.setPromotion(new Rook(zug.getNeueFigurPosition(), piece.getColor()));
+					folgeZuege.add(new Zug(zug));
 					
-					zug.setPromotion(new Queen(zug.getNeueFigurPosition(), _currentPosition.getZugrecht()));
-					folgeZuege.add(zug);
+					zug.setPromotion(new Queen(zug.getNeueFigurPosition(), piece.getColor()));
+					folgeZuege.add(new Zug(zug));
 					 
 				} else if(isPositionLegal(position)) {
 					folgeZuege.add(position.undoLastMove());

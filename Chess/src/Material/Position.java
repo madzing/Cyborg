@@ -223,13 +223,10 @@ public class Position implements Comparable<Object>{
 		if (_zugrecht) {
 			_whiteFiguren.get(lastMove.getNeueFigurPosition()).setCoordinate(lastMove.getAlteFigurPosition());
 			_whiteFiguren.put(lastMove.getAlteFigurPosition(), _whiteFiguren.remove(lastMove.getNeueFigurPosition()));
-
+			
+			// wenn der  König bewegtwurde / castling
 			if (_whiteFiguren.get(lastMove.getAlteFigurPosition()) instanceof King
-					&& Math.abs(lastMove.getAlteFigurPosition() - lastMove.getNeueFigurPosition()) == 2) // wenn der
-																											// König
-																											// bewegt
-																											// wurde /
-																											// castling
+					&& Math.abs(lastMove.getAlteFigurPosition() - lastMove.getNeueFigurPosition()) == 2) 
 			{
 				if (lastMove.getNeueFigurPosition() == 62) {
 					_whiteFiguren.get((byte) 61).setCoordinate((byte) 63);
@@ -285,7 +282,7 @@ public class Position implements Comparable<Object>{
 			}
 			
 			if(lastMove.getPromoteteFigur() != null) {
-				promotion(new Pawn(lastMove.getAlteFigurPosition(), _zugrecht));
+				promotion(new Pawn(lastMove.getAlteFigurPosition(), lastMove.getPromoteteFigur().getColor()));
 			}
 		}
 
