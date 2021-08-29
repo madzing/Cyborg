@@ -45,11 +45,11 @@ public class PositionCalcSpeedTest {
 // Jan
 // depth 5 35,4 sekunden! Viel zu lange! Es muss jedes mal eine neue Position und ein neuer Poscalc erzeugt werden das ist kacke!
 // 20,5 / 20,2 / 20,2 sekunden nachdem Fachwerte gelöscht! gute arbeit
-// 
+// 13,983 sekunden nachdem kingIsInCheck überarbeitet
 
 // Nikolai depth 5 17,34s / 17,2s / 17,5s
 
 // Kai depth 5 beide Fachwert gel�scht: 26,8 / 26,657 / 26,787
 
-// P�r depth 5 ~25,5s nach neuem KingIsInCheck ~17,7s
+// P�r depth 5 ~25,5s nach neuem KingIsInCheck ~17,7s
 
