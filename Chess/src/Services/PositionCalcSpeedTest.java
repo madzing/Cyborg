@@ -15,7 +15,7 @@ public class PositionCalcSpeedTest {
 
 	@Test
 	public void TestgetLegalPositionsStartposition() {
-		int depth = 5;
+		int depth = 4;
 		Fen startFen = Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 		Position startPosition = new Position(startFen);
 		int positions = MoveGenerationTest(depth,startPosition);
@@ -37,7 +37,7 @@ public class PositionCalcSpeedTest {
 
 	@Test
 	public void TestgetLegalPositionsPosition2() {
-		int depth = 3;
+		int depth = 4;
 		Fen startFen = Fen.select("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1");
 		Position startPosition = new Position(startFen);
 		int positions = MoveGenerationTest(depth,startPosition);
@@ -59,7 +59,7 @@ public class PositionCalcSpeedTest {
 
 	@Test
 	public void TestgetLegalPositionsPosition3() {
-		int depth = 5;
+		int depth = 4;
 		Fen startFen = Fen.select("8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - - 0 1");
 		Position startPosition = new Position(startFen);
 		int positions = MoveGenerationTest(depth,startPosition);
@@ -81,7 +81,7 @@ public class PositionCalcSpeedTest {
 	
 	@Test
 	public void TestgetLegalPositionsPosition4() {
-		int depth = 3;
+		int depth = 4;
 		Fen startFen = Fen.select("7k/2P5/8/8/8/8/8/7K w - - 0 1");
 		Position startPosition = new Position(startFen);
 		int positions = MoveGenerationTest(depth,startPosition);
@@ -100,7 +100,7 @@ public class PositionCalcSpeedTest {
 	
 	@Test
 	public void TestgetLegalPositionsPosition5() {
-		int depth = 3;
+		int depth = 4;
 		Fen startFen = Fen.select("7k/8/8/8/8/8/2p5/7K b - - 0 1");
 		Position startPosition = new Position(startFen);
 		int positions = MoveGenerationTest(depth,startPosition);
