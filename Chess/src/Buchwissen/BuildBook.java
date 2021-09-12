@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 import java.util.ArrayList;
 
 import Fachwerte.Fen;
-import Gui.ChessGui2;
+//import Gui.ChessGui2;
 import Material.Position;
 import Services.PositionCalc;
 import Werkzeuge.Cyborg;

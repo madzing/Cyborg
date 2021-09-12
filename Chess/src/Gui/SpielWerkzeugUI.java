@@ -36,6 +36,7 @@ import Material.Rook;
 import Services.PositionCalc;
 import Services.PositionsVergleicher;
 import Werkzeuge.RekursiverCyborg;
+import Werkzeuge.SpielWerkzeug;
 import Werkzeuge.Cyborg;
 
 import java.awt.BorderLayout;
@@ -44,31 +45,28 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 
-public class SpielWerkzeugUI extends JFrame implements ActionListener{
+public class SpielWerkzeugUI extends JFrame{
 	Position _position;
-	Position _positionSpeicher;
 	Map<Byte, Piece> _whiteFiguren;
 	Map<Byte, Piece> _blackFiguren;
-	List<JButton> _spielButtons;
+	public List<JButton> _spielButtons;
 	ArrayList<Position> _positions;
 	List<JLabel> _geschlageneWhiteFiguren;
 	List<JLabel> _geschlageneBlackFiguren;
-	int _letzterGedrueckterButton;
-	int _gedrueckterButton;
+	public int _letzterGedrueckterButton;
+	public int _gedrueckterButton;
 	int _aktuellerZug;
 	JLabel _alteKoordinateLabel;
 	JLabel _neueKoordinateLabel;
-	JButton _makeMoveButton;
-	JButton _reverseButton;
-	PositionCalc _posCalc;
+	public JButton _makeMoveButton;
+	public JButton _reverseButton;
 	private JPanel contentPane;
-	private JButton _btnGetAktuelleFen;
+	public JButton _btnGetAktuelleFen;
 	private JLabel _zugrechtLabel;
 	private JToggleButton _CyborgButton;
-	private JComboBox _schwierigkeitComboBox; 
+	public JComboBox _schwierigkeitComboBox; 
 	List <String> _spalte;
 	List <String> _zeile;
-	public static final Color LIGHT_BLUE = new Color(51,153,255);
 	int b = 0;
 	int n = 0;
 	int r = 0;
@@ -78,47 +76,22 @@ public class SpielWerkzeugUI extends JFrame implements ActionListener{
 	int R = 0;
 	int P = 0;
 	int _cyborgSchwierigkeit;
-	Stack<int[]> _cyborgHighlightStack = new Stack<int[]>();
+	public Stack<int[]> _cyborgHighlightStack = new Stack<int[]>();
 	String _comboBoxListe[];
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-
-					Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-//					Fen _startFen = Fen.select("rnbqkbn1/pppppppP/8/8/8/8/PPPPPPPp/RNBQKBN1 w KQkq - 0 1"); //promotion Test
-//					Fen _startFen = Fen.select("rnbqkb1r/ppppp2p/5p2/1n4p1/6Q1/4P3/PPPP1PPP/RNB1KBNR w KQkq - 2 7"); //Schachmatt Weiss Test
-//					Fen _startFen = Fen.select("7k/8/8/8/8/8/4q3/7K b - - 0 1");
-					Position _startPosition = new Position(_startFen);
-					SpielWerkzeugUI window = new SpielWerkzeugUI(_startPosition);
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
 	public SpielWerkzeugUI(Position position) {
 		_position = position;
-		_positionSpeicher = new Position(_position);
 		_whiteFiguren = position.getWhiteFiguren();
 		_blackFiguren = position.getBlackFiguren();
 		_spielButtons = new ArrayList<JButton>(64);
-		_positions = new ArrayList<Position>(6000);
 		_geschlageneWhiteFiguren = new ArrayList<JLabel>(16);
 		_geschlageneBlackFiguren = new ArrayList<JLabel>(16);
 		_letzterGedrueckterButton = 0;
 		_gedrueckterButton = 0;
-		_aktuellerZug = 0;
-		_posCalc = new PositionCalc(position);
 		_spalte = new ArrayList<String>(8);
 		_zeile = new ArrayList<String>(8);
 		_cyborgSchwierigkeit = 5;
@@ -126,7 +99,6 @@ public class SpielWerkzeugUI extends JFrame implements ActionListener{
 		"Schwierigkeit: 4", "Schwierigkeit: 5", "Schwierigkeit: 6 Koennte laenger dauern", "Schwierigkeit: 7 Lieber nicht",
 		"Schwierigkeit: 8 Auf eigene Gefahr", "Schwierigkeit: 9 You'll die of old age", "Schwierigkeit: 10 NOPE"};		
 		befuelleZeileSpalte();
-		_positions.add(position);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 800);
@@ -149,7 +121,6 @@ public class SpielWerkzeugUI extends JFrame implements ActionListener{
 		_schwierigkeitComboBox = new JComboBox(_comboBoxListe);
 		menuBar.add(_schwierigkeitComboBox);
 		_schwierigkeitComboBox.setSelectedIndex(4);
-		_schwierigkeitComboBox.addActionListener(this);
 		
 		getContentPane().setLayout(null);
 		
@@ -165,10 +136,8 @@ public class SpielWerkzeugUI extends JFrame implements ActionListener{
 		getContentPane().add(_zugrechtLabel);
 
 		_btnGetAktuelleFen = new JButton("Get Aktuelle Fen");
-		_btnGetAktuelleFen.addActionListener(this);
 		_btnGetAktuelleFen.setBounds(784, 60, 190, 45);
 		getContentPane().add(_btnGetAktuelleFen);
-		_btnGetAktuelleFen.addActionListener(this);
 
 		_CyborgButton = new JToggleButton("Automatisch");
 		_CyborgButton.setBounds(784, 10, 190, 45);
@@ -177,19 +146,14 @@ public class SpielWerkzeugUI extends JFrame implements ActionListener{
 		_makeMoveButton = new JButton("Make Move");
 		_makeMoveButton.setBounds(784, 680, 190, 45);
 		getContentPane().add(_makeMoveButton);
-		_makeMoveButton.addActionListener(this);
 		
 		_reverseButton = new JButton("Reverse");
 		_reverseButton.setBounds(784, 630, 190, 45);
-		getContentPane().add(_reverseButton);
-		_reverseButton.addActionListener(this);
-		
-		
+		getContentPane().add(_reverseButton);		
 						
 		createButtons();
-		setFiguren();
+		setFiguren(_whiteFiguren, _blackFiguren);
 		setZugrechtLabel();
-		ButtonListenerErzeugen();
 		createGeschlageneFigurLabels();
 	}
 
@@ -199,50 +163,22 @@ public class SpielWerkzeugUI extends JFrame implements ActionListener{
 	 * -Zugrecht Feld displayed Gewinner
 	 */
 
-	public void makeCyborgMove() throws SchachmattException, UnentschiedenException, NullPointerException
+	public void setPosition(Position position)
 	{
-		/*
-		 * Methode mit der ein Cyborg einen Zug auf dem GUI darstellen kann. 
-		 * Es wird einfach eine neue Position aus dem Cyborg erzeugt und diese wird der Positions Liste hinzugefuegt, sowie der aktuelle Zug um einen erhoeht.
-		 * Zusaetzlich wird ein Positions Vergleicher erzeugt, dessen Klassen Variablen AlteKoordinate und NeueKoordinate
-		 * nun gehighlighted werden koennen.
-		 */
-		Cyborg Ernd = new Cyborg(_cyborgSchwierigkeit);
-		Position altePosition = new Position(_position);
-		_position = Ernd.getBestFollowingPosition(_position);
-		PositionsVergleicher posVergleicher = new PositionsVergleicher(altePosition, _position);
-		posVergleicher.whatMoveWasMade();
-		_positions.add(_position);
-		_aktuellerZug++;
-		PositionCalc neuePosCalc = new PositionCalc(_position);
-		ArrayList<Position> neuelegalePositionen = neuePosCalc.getLegalFollowingPositions();
-		for (Map.Entry<Byte, Piece> entry : _whiteFiguren.entrySet())
-		{
-			Piece piece = entry.getValue();
-			if (piece instanceof King)
-			{
-				if (((King) piece).isInCheck(_position) && neuelegalePositionen.isEmpty())
-				{
-					throw new SchachmattException();
-				}
-			}
-		}
-		if(neuelegalePositionen.isEmpty())
-		{
-			throw new UnentschiedenException();
-		}
-		setFigurWurdeGeschlagenLabel(); 
-		int alteKoordinate = posVergleicher.getAlteKoordinate();
-		int neueKoordinate = posVergleicher.getNeueKoordinate();
-		setFiguren();
-		setZugrechtLabel();
-		_cyborgHighlightStack.push(new int[]{alteKoordinate, neueKoordinate});
-		_spielButtons.get(alteKoordinate).setBackground(LIGHT_BLUE);
-		_spielButtons.get(neueKoordinate).setBackground(Color.RED);
-		//System.out.println(_position.getFen());
+		_position = position;
+	}
+	
+	public void setPositions(ArrayList<Position> positions)
+	{
+		_positions = positions;
+	}
+	
+	public void setAktuellerZug(int aktuellerZug) 
+	{
+		_aktuellerZug = aktuellerZug;		
 	}
 
-	private void resetteFelder()
+	public void resetteFelder()
 	{
 		/*
 		 * Methode um die Spiel Feld Knoepfe 0 bis 63 ihre original Farben zuzuweisen.
@@ -314,90 +250,20 @@ public class SpielWerkzeugUI extends JFrame implements ActionListener{
 		_spielButtons.get(63).setBackground(Color.WHITE);
 	}
 
-	private void promotion()
+	public void setFiguren(Map<Byte, Piece> whiteFiguren, Map<Byte, Piece> blackFiguren) 
 	{
-		/*
-		 * Methode um einen Bauern auf einem Endfeld zu befï¿½rdern.
-		 * Wird bei jedem MakeMove im GUI aufgerufen, aber nur funktionstuechtig, wenn ein Scharzer Bauer ein Feld >= 56
-		 * oder ein weisser Bauer ein Feld <=7 betritt, oder dorthin schlaegt.
-		 * Im Gui gibt es eine Auswahl von 4 Knoepfen, die bei Betaetigen die untenstehenden ints returnen.
-		 * piece = 0 wenn Queen. 1 wenn Rook. 2 wenn Bishop. 3 wenn Knight.
-		 */
-		Object[] optionen = {"Queen", "Rook", "Bishop", "Knight"};
-		int piece = 999;
-		if ((_gedrueckterButton >=56 && _blackFiguren.get((byte)_letzterGedrueckterButton) instanceof Pawn)|| (_gedrueckterButton <=7 && _whiteFiguren.get((byte)_letzterGedrueckterButton) instanceof Pawn))
-		{
-			piece = JOptionPane.showOptionDialog(null, "Waehle eine Figur:", null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, optionen, null);
-			// piece = 0 wenn Queen. 1 wenn Rook. 2 wenn Bishop. 3 wenn Knight.
-		}
-		if (! _position.getZugrecht())
-		{
-			if (piece == 0)
-			{
-				_positionSpeicher.promotion(new Queen((byte)_gedrueckterButton, false));
-			}
-			if (piece == 1)
-			{
-				_positionSpeicher.promotion(new Rook((byte)_gedrueckterButton, false));
-			}
-			if (piece == 2)
-			{
-				_positionSpeicher.promotion(new Bishop((byte)_gedrueckterButton, false));
-			}
-			if (piece == 3)
-			{
-				_positionSpeicher.promotion(new Knight((byte)_gedrueckterButton, false));
-			}
-
-		}
-		else
-		{
-			if (piece == 0)
-			{
-				_positionSpeicher.promotion(new Queen((byte)_gedrueckterButton, true));
-			}
-			if (piece == 1)
-			{
-				_positionSpeicher.promotion(new Rook((byte)_gedrueckterButton, true));
-			}
-			if (piece == 2)
-			{
-				_positionSpeicher.promotion(new Bishop((byte)_gedrueckterButton, true));
-			}
-			if (piece == 3)
-			{
-				_positionSpeicher.promotion(new Knight((byte)_gedrueckterButton, true));
-			}
-
-		}
-	}
-
-	private void ButtonListenerErzeugen()
-	{
-		/*
-		 * Methode um den 64 Spiel Feld Knï¿½pfen 0 bis 63 ActionListener hinzuzufï¿½gen, anstatt dies hï¿½ndisch zu machen.
-		 */
-		for (int i = 0; i <64; i++)
-		{
-			_spielButtons.get(i).addActionListener(this);
-		}
-	}
-
-	private void setFiguren() {
 		/*
 		 * Methode die im Konstruktor und nach jedem Spielzug aufgerufen wird.
 		 * Die Spiel Feld Buttons werden zuerst alle von Icons gecleart um dann alle Icons neu zu setzen.
 		 * Danach werden die weissen Spielfiguren aus der Position nacheinander durchgegangen und auf ihre Piece Zugehoerigkeit ueberprueft, danach
 		 * an die entsprechende Koordinate gesetzt.
-		 * Aequivalent fuerr Schwarz.
+		 * Aequivalent fuer Schwarz.
 		 */
 		for (JButton b: _spielButtons)
 		{
 			b.setIcon(null);
 		}
-		_whiteFiguren = _position.getWhiteFiguren();
-		_blackFiguren = _position.getBlackFiguren();
-		for (Map.Entry<Byte, Piece> whiteFigur : _whiteFiguren.entrySet())
+		for (Map.Entry<Byte, Piece> whiteFigur : whiteFiguren.entrySet())
 		{
 			int whiteCoordinate= (int) whiteFigur.getValue().getCoordinate();
 			if(whiteFigur.getValue() instanceof Pawn)
@@ -425,7 +291,7 @@ public class SpielWerkzeugUI extends JFrame implements ActionListener{
     			_spielButtons.get(whiteCoordinate).setIcon(new ImageIcon(SpielWerkzeugUI.class.getResource("/Piece_Images/White_King.png")));
     		}
 
-    	for (Map.Entry<Byte, Piece> blackFigur : _blackFiguren.entrySet())
+    	for (Map.Entry<Byte, Piece> blackFigur : blackFiguren.entrySet())
     	{
     		int blackCoordinate= (int) blackFigur.getValue().getCoordinate();
     		if(blackFigur.getValue() instanceof Pawn)
@@ -459,7 +325,7 @@ public class SpielWerkzeugUI extends JFrame implements ActionListener{
 	private void createButtons() {
 		/*
 		 * Methode um _spielButtons als Spiel Feld Buttons zu initialisieren.
-		 * Bisher alles haenndisch.
+		 * Bisher alles haendisch.
 		 */
 		JButton btnNewButton = new JButton("a8");
 		btnNewButton.setBackground(Color.WHITE);
@@ -940,7 +806,7 @@ public class SpielWerkzeugUI extends JFrame implements ActionListener{
 		}
 	}
 	
-	private void setFigurWurdeGeschlagenLabelReverse(int geschlageneFigur)
+	public void setFigurWurdeGeschlagenLabelReverse(int geschlageneFigur)
 	{
 		/*
 		 * Methode, die die Labels der geschlagenen Figuren einen Zug reversed.
@@ -1002,7 +868,7 @@ public class SpielWerkzeugUI extends JFrame implements ActionListener{
 		}
 	}
 	
-	private void setFigurWurdeGeschlagenLabel()
+	public void setFigurWurdeGeschlagenLabel()
 	{
 		/*
 		 * Methode um die Labels der geschlagenen Figuren sichtbar zu machen. 
@@ -1098,7 +964,7 @@ public class SpielWerkzeugUI extends JFrame implements ActionListener{
 		_zeile.add("8"); _zeile.add("7"); _zeile.add("6"); _zeile.add("5"); _zeile.add("4"); _zeile.add("3"); _zeile.add("2"); _zeile.add("1");
 	}
 
-	private void setZugrechtLabel()
+	public void setZugrechtLabel()
 	{
 		if(_position.getZugrecht())
 		{
@@ -1135,7 +1001,7 @@ public class SpielWerkzeugUI extends JFrame implements ActionListener{
 		}
 	}
 
-	private void spielFeldButtonWurdeGedrueckt(int gedrueckterButton)
+	public void spielFeldButtonWurdeGedrueckt(int gedrueckterButton)
 	{
 		/*
 		 * Methode, die jedes mal aufgerufen wird, wenn ein Spiel Feld Button gedrueckt wurde.
@@ -1151,382 +1017,6 @@ public class SpielWerkzeugUI extends JFrame implements ActionListener{
 		int letzteZeile = Math.abs(_letzterGedrueckterButton / 8);
 		_alteKoordinateLabel.setText("Alte Koordinate: " + _spalte.get(letzteSpalte) + _zeile.get(letzteZeile));
 		_neueKoordinateLabel.setText("Neue Koordinate: " + _spalte.get(spalte) + _zeile.get(zeile));
-	}
-	
-	private void GetAktuelleFen()
-	{
-		/*
-		 * Methode die aufgerufen werden kann wenn der Button Get Aktuelle Fen gedrueckt wird.
-		 * Es wird die Aktuelle Fen auf das Windows ClipBoard kopiert und loescht damit natuerlich alles was vorhin im ClipBoard stand.
-		 */
-		StringSelection stringSelection = new StringSelection (_position.getFen());
-		Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
-		clpbrd.setContents (stringSelection, null);
-	}
-	
-	private void reverseZug()
-	{
-		/*
-		 * Methode in der entweder die letzte oder beim Spielen gegen den Cyborg die vorletzte Position aufgerufen wird
-		 * Es wird unterschieden zwischen:
-		 * 1. Cyborg spielt NICHT und es wurde KEINE Figur geschlagen
-		 * 2. Cyborg spielt und es wurde KEINE Figur geschlagen
-		 * 3. Cyborg spielt und es wurde eine Figur geschlagen
-		 * 4. Cyborg spielt NICHT und es wurde eine Figur geschlagen
-		 * 
-		 * Wenn der Cyborg nicht spielt muss nur die alte Position geladen, die aktuelle geloescht und der aktuelle Zug um ein subtrahiert werden
-		 * Sowie das Geschlagene Figuren Label, insofern eine Figur geschlagen wurde.
-		 * 
-		 * Wenn der Cyborg spielt laueft es genauso ab, aber zusaetzlich wird eine Position geladen.
-		 */
-		PositionsVergleicher posVergleicher = new PositionsVergleicher(_positions, _aktuellerZug);
-		if(_CyborgButton.isSelected() == false && posVergleicher.wurdeFigurGeschlagen() == false) // Es wurde keine Figur vom Spieler geschlagen
-		{
-			_position = _positions.get(_aktuellerZug-1);
-			_positions.remove(_aktuellerZug);
-			_aktuellerZug--;
-			resetteFelder();
-			
-		}
-		else if (_CyborgButton.isSelected() == true && posVergleicher.wurdeFigurGeschlagen() == false) // Es wurde keine Figur vom Cyborg geschlagen
-		{
-			System.out.println("Keine Figur vom Cyborg geschlagen");
-			_position = _positions.get(_aktuellerZug-1);
-			_positions.remove(_aktuellerZug);
-			_aktuellerZug--;
-			_position = _positions.get(_aktuellerZug-1);
-			_positions.remove(_aktuellerZug);
-			_aktuellerZug--;
-			resetteFelder();
-			_cyborgHighlightStack.pop();
-			if (!_cyborgHighlightStack.isEmpty())
-			{
-				int neueKoordinate = _cyborgHighlightStack.peek()[1];
-				int alteKoordinate = _cyborgHighlightStack.peek()[0];
-				_spielButtons.get(alteKoordinate).setBackground(LIGHT_BLUE);
-				_spielButtons.get(neueKoordinate).setBackground(Color.RED);
-			}
-		}
-		else if (_CyborgButton.isSelected() == true && posVergleicher.wurdeFigurGeschlagen() == true) // Es wurde eine Figur vom Cyborg geschlagen
-		{
-			System.out.println("Figur vom Cyborg geschlagen");
-			int geschlageneFigur = posVergleicher.welcheFigurWurdeGeschlagen();
-			setFigurWurdeGeschlagenLabelReverse(geschlageneFigur);
-			_position = _positions.get(_aktuellerZug-1);
-			_positions.remove(_aktuellerZug);
-			_aktuellerZug--;
-			_position = _positions.get(_aktuellerZug-1);
-			_positions.remove(_aktuellerZug);
-			_aktuellerZug--;
-			resetteFelder();
-			_cyborgHighlightStack.pop();
-			if (!_cyborgHighlightStack.isEmpty())
-			{
-				int neueKoordinate = _cyborgHighlightStack.peek()[1];
-				int alteKoordinate = _cyborgHighlightStack.peek()[0];
-				_spielButtons.get(alteKoordinate).setBackground(LIGHT_BLUE);
-				_spielButtons.get(neueKoordinate).setBackground(Color.RED);
-			}
-		}
-		else // Es wurde eine Figur vom Spieler geschlagen
-		{
-			int geschlageneFigur = posVergleicher.welcheFigurWurdeGeschlagen();
-			setFigurWurdeGeschlagenLabelReverse(geschlageneFigur);
-			_position = _positions.get(_aktuellerZug-1);
-			_positions.remove(_aktuellerZug);
-			_aktuellerZug--;
-
-			resetteFelder();
-		}
-		setFiguren();
-		setZugrechtLabel();
-	}
-	
-	private void makeMove() throws IllegalMoveException, SchachmattException, UnentschiedenException
-	{
-		_posCalc = new PositionCalc(_position);
-		ArrayList<Position> legalePositionen = _posCalc.getLegalFollowingPositions();
-		_positionSpeicher = new Position(_position);
-		_positionSpeicher.makeMove((byte)_letzterGedrueckterButton, (byte)_gedrueckterButton);
-		promotion();
-		for(Position p: legalePositionen)
-		{
-			if (p.getFen().equals(_positionSpeicher.getFen()))
-			{
-				_position = _positionSpeicher;
-				_aktuellerZug++;
-				_positions.add(_position);
-			}
-		}
-		PositionCalc neuePosCalc = new PositionCalc(_position);
-		ArrayList<Position> neuelegalePositionen = neuePosCalc.getLegalFollowingPositions();
-		if (_position._zugrecht)
-		{
-			for (Map.Entry<Byte, Piece> entry : _whiteFiguren.entrySet())
-			{
-				Piece piece = entry.getValue();
-				if (piece instanceof King)
-				{
-					if (((King) piece).isInCheck(_position) && neuelegalePositionen.isEmpty())
-					{
-						throw new SchachmattException();
-					}
-				}
-			}
-		}
-		else
-		{
-			for (Map.Entry<Byte, Piece> entry : _blackFiguren.entrySet())
-			{
-				Piece piece = entry.getValue();
-				if (piece instanceof King)
-				{
-					if (((King) piece).isInCheck(_position) && neuelegalePositionen.isEmpty())
-					{
-						throw new SchachmattException();
-					}
-				}
-			}
-		}
-		if(neuelegalePositionen.isEmpty())
-		{
-			throw new UnentschiedenException();
-		}
-		if(!(_positionSpeicher.equals(_position)))
-		{
-			throw new IllegalMoveException();
-		}
-		setFigurWurdeGeschlagenLabel();
-		setFiguren();
-		setZugrechtLabel();
-		resetteFelder();	
-	}
-	
-	
-	@Override
-	public void actionPerformed(ActionEvent e){
-		/*
-		 * ActionListener der GUI
-		 */
-		if (_spielButtons.contains(e.getSource())) // ein Spiel Feld Button aus _spielButtons wurde gedrueckt
-			{
-				spielFeldButtonWurdeGedrueckt(_spielButtons.indexOf(e.getSource()));
-				
-			}
-		else if(e.getSource() == _btnGetAktuelleFen) // der Button Get Aktuelle Fen wurde gedrueckt
-		{
-			GetAktuelleFen();
-		}
-		else if(e.getSource() == _reverseButton) // der Reverse Knopf wurde gedrueckt
-		{
-			try
-			{
-				reverseZug();
-			}
-			catch(IndexOutOfBoundsException i)
-			{
-				JOptionPane.showMessageDialog(null, "Du bist schon am Start des Spiels");
-			}
-		}
-		else if (e.getSource() == _schwierigkeitComboBox) // Die ComboBox der Schwierigkeit wurde gedrueckt
-		{
-			JComboBox cb = (JComboBox)e.getSource();
-			String msg = (String)cb.getSelectedItem();
-			switch(msg)
-			{
-				case "Schwierigkeit: 1" : _cyborgSchwierigkeit = 1;
-					break;
-				case "Schwierigkeit: 2" : _cyborgSchwierigkeit = 2;
-					break;
-				case "Schwierigkeit: 3" : _cyborgSchwierigkeit = 3;
-					break;
-				case "Schwierigkeit: 4" : _cyborgSchwierigkeit = 4;
-					break;
-				case "Schwierigkeit: 5" : _cyborgSchwierigkeit = 5;
-					break;
-				case "Schwierigkeit: 6 Koennte laenger dauern" : _cyborgSchwierigkeit = 6;
-					break;
-				case "Schwierigkeit: 7 Lieber nicht" : _cyborgSchwierigkeit = 7;
-					break;
-				case "Schwierigkeit: 8 Auf eigene Gefahr" : _cyborgSchwierigkeit = 8;
-					break;
-				case "Schwierigkeit: 9 You'll die of old age" : _cyborgSchwierigkeit = 9;
-					break;
-				case "Schwierigkeit: 10 NOPE" : _cyborgSchwierigkeit = 10;
-					break;
-				}
-		}
-		else // der MakeMove Button wurde gedrueckt
-			{
-				try
-				{	
-					makeMove();
-				}
-				catch(NullPointerException n)
-				{
-					JOptionPane.showMessageDialog(null, "An der alten Koordinate steht keine Figur deiner Farbe");
-				}
-				catch(IndexOutOfBoundsException i)
-				{
-					JOptionPane.showMessageDialog(null, "Das ist ein illegaler Zug");
-				}
-				catch(SchachmattException sx)
-				{
-					Object[] options = {"Spiel beenden", "Alle Fens"};
-					if(_position._zugrecht)
-					{
-						int i = JOptionPane.showOptionDialog(null, "Schwarz hat gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
-								JOptionPane.PLAIN_MESSAGE, null, options, null);
-						if (i == 0)
-						{
-							dispose();
-						}
-						else if (i == 1)
-						{
-							String leererString = "";
-							for(int j = 0; j < _aktuellerZug; j++)
-							{
-								String fen = _positions.get(j).getFen();
-								leererString = leererString + "\r\n" +fen;
-								StringSelection stringSelection = new StringSelection (leererString);
-								Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
-								clpbrd.setContents (stringSelection, null);
-							}
-							dispose();
-						}
-					}
-					else if (_position._zugrecht && _CyborgButton.isSelected())
-					{
-						int i = JOptionPane.showOptionDialog(null, "Der Cyborg hat gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
-								JOptionPane.PLAIN_MESSAGE, null, options, null);
-						if (i == 0)
-						{
-							dispose();
-						}
-						else if (i == 1)
-						{
-							String leererString = "";
-							for(int j = 0; j < _aktuellerZug; j++)
-							{
-								String fen = _positions.get(j).getFen();
-								leererString = leererString + "\r\n" +fen;
-								StringSelection stringSelection = new StringSelection (leererString);
-								Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
-								clpbrd.setContents (stringSelection, null);
-							}
-							dispose();
-						}
-					}
-					else
-					{
-						int i = JOptionPane.showOptionDialog(null, "Du hast gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
-								JOptionPane.PLAIN_MESSAGE, null, options, null);
-						if (i == 0)
-						{
-							dispose();
-						}
-						else if (i == 1)
-						{
-							String leererString = "";
-							for(int j = 0; j < _aktuellerZug; j++)
-							{
-								String fen = _positions.get(j).getFen();
-								leererString = leererString + "\r\n" +fen;
-								StringSelection stringSelection = new StringSelection (leererString);
-								Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
-								clpbrd.setContents (stringSelection, null);
-							}
-							dispose();
-						}
-					}
-					
-				}
-				catch(UnentschiedenException ux)
-				{
-					Object[] options = {"Spiel beenden", "Alle Fens"};
-					int i = JOptionPane.showOptionDialog(null, "Unentschieden", "Kein Gewinner", JOptionPane.DEFAULT_OPTION,
-							JOptionPane.PLAIN_MESSAGE, null, options, null);
-					if (i == 0)
-					{
-						dispose();
-					}
-					else if (i == 1)
-					{
-						String leererString = "";
-						for(int j = 0; j < _aktuellerZug; j++)
-						{
-							String fen = _positions.get(j).getFen();
-							leererString = leererString + "\r\n" +fen;
-							StringSelection stringSelection = new StringSelection (leererString);
-							Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
-							clpbrd.setContents (stringSelection, null);
-							dispose();
-						}
-					}
-				}
-				catch(IllegalMoveException ix)
-				{
-					JOptionPane.showMessageDialog(null, "Das ist ein illegaler Zug");
-				}
-				
-			}
-		if(_CyborgButton.isSelected() && !(_position._zugrecht)) //Prüft bei jedem Klick auf ein Knopf ob der Cyborg eingeschaltet ist und Schwarz an der Reihe ist
-		{
-			try 
-			{
-				makeCyborgMove();
-			} 
-			catch (SchachmattException sx) 
-			{
-				Object[] options = {"Spiel beenden", "Alle Fens"};
-				int i = JOptionPane.showOptionDialog(null, "Der Cyborg hat gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
-						JOptionPane.PLAIN_MESSAGE, null, options, null);
-				if (i == 0)
-				{
-					dispose();
-				}
-				else if (i == 1)
-				{
-					String leererString = "";
-					for(int j = 0; j < _aktuellerZug; j++)
-					{
-						String fen = _positions.get(j).getFen();
-						leererString = leererString + "\r\n" +fen;
-						StringSelection stringSelection = new StringSelection (leererString);
-						Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
-						clpbrd.setContents (stringSelection, null);
-						dispose();
-					}
-				}
-			}
-			catch(UnentschiedenException ux)
-			{
-				Object[] options = {"Spiel beenden", "Alle Fens"};
-				int i = JOptionPane.showOptionDialog(null, "Unentschieden", "Kein Gewinner", JOptionPane.DEFAULT_OPTION,
-						JOptionPane.PLAIN_MESSAGE, null, options, null);
-				if (i == 0)
-				{
-					dispose();
-				}
-				else if (i == 1)
-				{
-					String leererString = "";
-					for(int j = 0; j < _aktuellerZug; j++)
-					{
-						String fen = _positions.get(j).getFen();
-						leererString = leererString + "\r\n" +fen;
-						StringSelection stringSelection = new StringSelection (leererString);
-						Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
-						clpbrd.setContents (stringSelection, null);
-						dispose();
-					}
-				}
-			}
-			catch(NullPointerException ne)
-			{
-				ne.printStackTrace();
-			}
-		}
 	}
 
 
