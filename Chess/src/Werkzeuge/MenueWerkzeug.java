@@ -63,7 +63,7 @@ public class MenueWerkzeug implements BeobachtendesWerkzeug{
 
 			});
 			//TODO Everything 
-			ui._versusButton.addActionListener(new ActionListener()
+			ui._loadFenButton.addActionListener(new ActionListener()
 			{
 				@Override
 				public void actionPerformed(ActionEvent e) {
