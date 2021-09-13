@@ -63,8 +63,6 @@ public class SpielWerkzeugUI extends JFrame{
 	private JPanel contentPane;
 	public JButton _btnGetAktuelleFen;
 	private JLabel _zugrechtLabel;
-	private JToggleButton _CyborgButton;
-	public JComboBox _schwierigkeitComboBox; 
 	List <String> _spalte;
 	List <String> _zeile;
 	int b = 0;
@@ -117,10 +115,6 @@ public class SpielWerkzeugUI extends JFrame{
 
 		Component verticalStrut_1 = Box.createVerticalStrut(20);
 		menuBar.add(verticalStrut_1);
-
-		_schwierigkeitComboBox = new JComboBox(_comboBoxListe);
-		menuBar.add(_schwierigkeitComboBox);
-		_schwierigkeitComboBox.setSelectedIndex(4);
 		
 		getContentPane().setLayout(null);
 		
@@ -136,12 +130,8 @@ public class SpielWerkzeugUI extends JFrame{
 		getContentPane().add(_zugrechtLabel);
 
 		_btnGetAktuelleFen = new JButton("Get Aktuelle Fen");
-		_btnGetAktuelleFen.setBounds(784, 60, 190, 45);
+		_btnGetAktuelleFen.setBounds(784, 10, 190, 45);
 		getContentPane().add(_btnGetAktuelleFen);
-
-		_CyborgButton = new JToggleButton("Automatisch");
-		_CyborgButton.setBounds(784, 10, 190, 45);
-		getContentPane().add(_CyborgButton);
 
 		_makeMoveButton = new JButton("Make Move");
 		_makeMoveButton.setBounds(784, 680, 190, 45);
