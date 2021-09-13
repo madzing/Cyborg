@@ -43,5 +43,15 @@ public class MenueWerkzeugUI extends JFrame {
 		SpielButton.setText(s);
 	}
 	
+	public void setEinstellungButton(String s)
+	{
+		EinstellungButton.setText(s);
+	}
+	
+	public void setBeendeteSpieleButton(String s)
+	{
+		BeendeteSpieleButton.setText(s);
+	}
+	
 
 }

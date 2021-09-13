@@ -3,7 +3,10 @@ package Werkzeuge;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import Fachwerte.Fen;
 import Gui.MenueWerkzeugUI;
+import Gui.SpielMenueWerkzeugUI;
+import Material.Position;
 
 public class MenueWerkzeug implements BeobachtendesWerkzeug{
 
@@ -32,9 +35,55 @@ public class MenueWerkzeug implements BeobachtendesWerkzeug{
 	
 	private void SpielButtonWurdeGedrueckt() 
 	{
-		_ui.setSpielButton("Cyborg Schach");
-		System.out.println("Test");
-		
+			SpielMenueWerkzeugUI ui = new SpielMenueWerkzeugUI();
+			ui.setVisible(true);
+			_ui.setVisible(false);
+			ui._cyborgButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+					Position _startPosition = new Position(_startFen);
+					SpielWerkzeug spielui = new SpielWerkzeug(_startPosition, true);
+					spielui.machSichtbar();
+					ui.dispose();
+				}
+
+			});
+			ui._versusButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+					Position _startPosition = new Position(_startFen);
+					SpielWerkzeug spielui = new SpielWerkzeug(_startPosition, false);
+					spielui.machSichtbar();
+					ui.dispose();
+				}
+
+			});
+			//TODO Everything 
+			ui._versusButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+					Position _startPosition = new Position(_startFen);
+					SpielWerkzeug spielui = new SpielWerkzeug(_startPosition, false);
+					spielui.machSichtbar();
+					ui.dispose();
+				}
+
+			});
+			ui._zurueckButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					ui.dispose();
+					_ui.setVisible(true);
+				}
+
+			});
 	}
 	
 	@Override

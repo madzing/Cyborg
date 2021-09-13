@@ -147,12 +147,6 @@ public class SpielWerkzeugUI extends JFrame{
 		createGeschlageneFigurLabels();
 	}
 
-
-	/* TODO
-	 * Waere noch nice:
-	 * -Zugrecht Feld displayed Gewinner
-	 */
-
 	public void setPosition(Position position)
 	{
 		_position = position;
