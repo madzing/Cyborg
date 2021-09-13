@@ -1,6 +1,7 @@
 package Werkzeuge;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -45,7 +46,7 @@ public class SpielWerkzeug extends BeobachtbaresSubwerkzeug{
 	
 	public static final Color LIGHT_BLUE = new Color(51,153,255);
 	
-	public SpielWerkzeug(Position position, boolean isCyborgGame)
+	public SpielWerkzeug(Position position, boolean isCyborgGame, int cyborgSchwierigkeit)
 	{
 		_position = position;
 		_positionZwischenSpeicher = new Position(_position);
@@ -55,15 +56,17 @@ public class SpielWerkzeug extends BeobachtbaresSubwerkzeug{
 		
 		_ui = new SpielWerkzeugUI(_position);
 		_ui.setVisible(true);
+		_ui.setResizable(false);
 		
 		_whiteFiguren = position.getWhiteFiguren();
 		_blackFiguren = position.getBlackFiguren();
 		
 		_posCalc = new PositionCalc(position);
 		
-		_cyborgSchwierigkeit = 5;
+		_cyborgSchwierigkeit = cyborgSchwierigkeit;
 		_isCyborgGame = isCyborgGame;
 		
+		centreWindow(_ui);
 		registriereUIAktionen();
 	}
 	
@@ -105,6 +108,16 @@ public class SpielWerkzeug extends BeobachtbaresSubwerkzeug{
 						}
 					}
 				});
+		//TODO
+		_ui._zurueckButton.addActionListener(new ActionListener()
+				{
+					@Override
+					public void actionPerformed(ActionEvent e)
+					{
+						_ui.dispose();
+					}
+				});
+		
 		if (!_isCyborgGame)
 		{
 		_ui._makeMoveButton.addActionListener(new ActionListener() //Dem MakeMove Button wird ein Listener hinzugefuegt
@@ -346,6 +359,8 @@ public class SpielWerkzeug extends BeobachtbaresSubwerkzeug{
 						}
 					});
 		}
+		
+		
 	}
 
 	public void makeCyborgMove() throws SchachmattException, UnentschiedenException, NullPointerException
@@ -624,6 +639,12 @@ public class SpielWerkzeug extends BeobachtbaresSubwerkzeug{
 		_ui.setVisible(true);
 	}
 
+	public static void centreWindow(SpielWerkzeugUI frame) {
+	    Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+	    int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+	    int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+	    frame.setLocation(x, y);
+	}
 	
 
 	

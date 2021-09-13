@@ -2,13 +2,7 @@ package Gui;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,11 +14,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Fachwerte.Fen;
 import Material.Bishop;
 import Material.King;
 import Material.Knight;
@@ -33,17 +25,9 @@ import Material.Piece;
 import Material.Position;
 import Material.Queen;
 import Material.Rook;
-import Services.PositionCalc;
 import Services.PositionsVergleicher;
-import Werkzeuge.RekursiverCyborg;
-import Werkzeuge.SpielWerkzeug;
-import Werkzeuge.Cyborg;
 
-import java.awt.BorderLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
-import javax.swing.JComboBox;
 
 public class SpielWerkzeugUI extends JFrame{
 	Position _position;
@@ -63,6 +47,7 @@ public class SpielWerkzeugUI extends JFrame{
 	private JPanel contentPane;
 	public JButton _btnGetAktuelleFen;
 	private JLabel _zugrechtLabel;
+	public JButton _zurueckButton;
 	List <String> _spalte;
 	List <String> _zeile;
 	int b = 0;
@@ -75,7 +60,6 @@ public class SpielWerkzeugUI extends JFrame{
 	int P = 0;
 	int _cyborgSchwierigkeit;
 	public Stack<int[]> _cyborgHighlightStack = new Stack<int[]>();
-	String _comboBoxListe[];
 	
 
 	/**
@@ -93,9 +77,6 @@ public class SpielWerkzeugUI extends JFrame{
 		_spalte = new ArrayList<String>(8);
 		_zeile = new ArrayList<String>(8);
 		_cyborgSchwierigkeit = 5;
-		_comboBoxListe = new String[]{"Schwierigkeit: 1", "Schwierigkeit: 2", "Schwierigkeit: 3", 
-		"Schwierigkeit: 4", "Schwierigkeit: 5", "Schwierigkeit: 6 Koennte laenger dauern", "Schwierigkeit: 7 Lieber nicht",
-		"Schwierigkeit: 8 Auf eigene Gefahr", "Schwierigkeit: 9 You'll die of old age", "Schwierigkeit: 10 NOPE"};		
 		befuelleZeileSpalte();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -103,18 +84,16 @@ public class SpielWerkzeugUI extends JFrame{
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-
 		_alteKoordinateLabel = new JLabel("Alte Koordinate");
 		menuBar.add(_alteKoordinateLabel);
-
 		Component verticalStrut = Box.createVerticalStrut(20);
 		menuBar.add(verticalStrut);
-
 		_neueKoordinateLabel = new JLabel("Neue Koordinate");
 		menuBar.add(_neueKoordinateLabel);
-
 		Component verticalStrut_1 = Box.createVerticalStrut(20);
 		menuBar.add(verticalStrut_1);
+		_zurueckButton = new JButton("Zurueck");
+		menuBar.add(_zurueckButton);
 		
 		getContentPane().setLayout(null);
 		
@@ -140,13 +119,18 @@ public class SpielWerkzeugUI extends JFrame{
 		_reverseButton = new JButton("Reverse");
 		_reverseButton.setBounds(784, 630, 190, 45);
 		getContentPane().add(_reverseButton);		
-						
+		
 		createButtons();
 		setFiguren(_whiteFiguren, _blackFiguren);
 		setZugrechtLabel();
 		createGeschlageneFigurLabels();
 	}
 
+	public void setCyborgSchwierigkeit(int schwierigkeit)
+	{
+		_cyborgSchwierigkeit = schwierigkeit;
+	}
+	
 	public void setPosition(Position position)
 	{
 		_position = position;

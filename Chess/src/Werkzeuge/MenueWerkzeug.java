@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import Fachwerte.Fen;
+import Gui.EinstellungMenueWerkzeugUI;
 import Gui.MenueWerkzeugUI;
 import Gui.SpielMenueWerkzeugUI;
 import Material.Position;
@@ -11,13 +12,14 @@ import Material.Position;
 public class MenueWerkzeug implements BeobachtendesWerkzeug{
 
 	private MenueWerkzeugUI _ui;
+	private int _cyborgSchwierigkeit;
 	
 	
 	public MenueWerkzeug()
 	{
 		_ui = new MenueWerkzeugUI();
 		_ui.setVisible(true);
-		
+		_cyborgSchwierigkeit = 5;
 		registriereUIAktionen();
 	}
 	
@@ -31,6 +33,14 @@ public class MenueWerkzeug implements BeobachtendesWerkzeug{
 				}
 
 			});
+		_ui.EinstellungButton.addActionListener(new ActionListener()
+			{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				EinstellungButtonWurdeGedrueckt();
+			}
+			}
+		);
 	}
 	
 	private void SpielButtonWurdeGedrueckt() 
@@ -44,7 +54,7 @@ public class MenueWerkzeug implements BeobachtendesWerkzeug{
 				public void actionPerformed(ActionEvent e) {
 					Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 					Position _startPosition = new Position(_startFen);
-					SpielWerkzeug spielui = new SpielWerkzeug(_startPosition, true);
+					SpielWerkzeug spielui = new SpielWerkzeug(_startPosition, true, _cyborgSchwierigkeit);
 					spielui.machSichtbar();
 					ui.dispose();
 				}
@@ -56,7 +66,7 @@ public class MenueWerkzeug implements BeobachtendesWerkzeug{
 				public void actionPerformed(ActionEvent e) {
 					Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 					Position _startPosition = new Position(_startFen);
-					SpielWerkzeug spielui = new SpielWerkzeug(_startPosition, false);
+					SpielWerkzeug spielui = new SpielWerkzeug(_startPosition, false, _cyborgSchwierigkeit);
 					spielui.machSichtbar();
 					ui.dispose();
 				}
@@ -69,7 +79,7 @@ public class MenueWerkzeug implements BeobachtendesWerkzeug{
 				public void actionPerformed(ActionEvent e) {
 					Fen _startFen= Fen.select("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 					Position _startPosition = new Position(_startFen);
-					SpielWerkzeug spielui = new SpielWerkzeug(_startPosition, false);
+					SpielWerkzeug spielui = new SpielWerkzeug(_startPosition, false, _cyborgSchwierigkeit);
 					spielui.machSichtbar();
 					ui.dispose();
 				}
@@ -84,6 +94,31 @@ public class MenueWerkzeug implements BeobachtendesWerkzeug{
 				}
 
 			});
+	}
+
+	private void EinstellungButtonWurdeGedrueckt()
+	{
+		EinstellungMenueWerkzeugUI ui = new EinstellungMenueWerkzeugUI();
+		ui.setVisible(true);
+		_ui.setVisible(false);
+		ui._zurueckButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ui.dispose();
+				_ui.setVisible(true);
+			}
+
+		});
+		ui._cyborgSchwierigkeitBox.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_cyborgSchwierigkeit = ui._cyborgSchwierigkeitBox.getSelectedIndex() + 1;
+				System.out.println(_cyborgSchwierigkeit);
+			}
+
+		});
 	}
 	
 	@Override
