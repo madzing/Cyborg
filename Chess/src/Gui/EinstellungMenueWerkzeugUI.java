@@ -18,13 +18,14 @@ public class EinstellungMenueWerkzeugUI extends JFrame{
 
 	private JPanel contentPane;
 	public JButton _zurueckButton;
-	private String[] _cyborgSchwierigkeit;
+	private int _cyborgSchwierigkeit;
+	private String[] _cyborgSchwierigkeitString;
 	public JComboBox _cyborgSchwierigkeitBox;
 	
 	/**
 	 * Create the frame.
 	 */
-	public EinstellungMenueWerkzeugUI() {
+	public EinstellungMenueWerkzeugUI(int cyborgSchwierigkeit) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 800);
 		contentPane = new JPanel();
@@ -33,6 +34,7 @@ public class EinstellungMenueWerkzeugUI extends JFrame{
 		setContentPane(contentPane);
 		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
+		_cyborgSchwierigkeit = cyborgSchwierigkeit;
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		JLabel spielLabel = new JLabel("Einstellungen", SwingConstants.CENTER);
@@ -44,10 +46,11 @@ public class EinstellungMenueWerkzeugUI extends JFrame{
 		menuBar.add(verticalStrut_1);
 		menuBar.add(_zurueckButton);
 		
-		_cyborgSchwierigkeit = new String[]{"Schwierigkeit: 1 Computer Dumm", "Schwierigkeit: 2 EZ", "Schwierigkeit: 3 I'm 3 steps ahead of you", 
+		_cyborgSchwierigkeitString = new String[]{"Schwierigkeit: 1 Computer Dumm", "Schwierigkeit: 2 EZ", "Schwierigkeit: 3 I'm 3 steps ahead of you", 
 				"Schwierigkeit: 4 Für den angetrunkenen Abend", "Schwierigkeit: 5 Normal", "Schwierigkeit: 6 Koennte laenger dauern", "Schwierigkeit: 7 Lieber nicht",
 				"Schwierigkeit: 8 Auf eigene Gefahr", "Schwierigkeit: 9 You'll die of old age", "Schwierigkeit: 10 NOPE"};	
-		_cyborgSchwierigkeitBox = new JComboBox(_cyborgSchwierigkeit);
+		_cyborgSchwierigkeitBox = new JComboBox(_cyborgSchwierigkeitString);
+		_cyborgSchwierigkeitBox.setSelectedIndex(_cyborgSchwierigkeit);
 		contentPane.add(_cyborgSchwierigkeitBox);
 	}
 		

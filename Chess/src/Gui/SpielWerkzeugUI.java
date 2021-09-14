@@ -47,7 +47,7 @@ public class SpielWerkzeugUI extends JFrame{
 	private JPanel contentPane;
 	public JButton _btnGetAktuelleFen;
 	private JLabel _zugrechtLabel;
-	public JButton _zurueckButton;
+	public JButton _menueButton;
 	List <String> _spalte;
 	List <String> _zeile;
 	int b = 0;
@@ -92,8 +92,8 @@ public class SpielWerkzeugUI extends JFrame{
 		menuBar.add(_neueKoordinateLabel);
 		Component verticalStrut_1 = Box.createVerticalStrut(20);
 		menuBar.add(verticalStrut_1);
-		_zurueckButton = new JButton("Zurueck");
-		menuBar.add(_zurueckButton);
+		_menueButton = new JButton("Menue");
+		menuBar.add(_menueButton);
 		
 		getContentPane().setLayout(null);
 		

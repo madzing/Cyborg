@@ -53,21 +53,205 @@ public class SpielWerkzeug extends BeobachtbaresSubwerkzeug{
 		_positions = new ArrayList<Position>(6000);
 		_positions.add(position);
 		_aktuellerZug = 0;
+		_whiteFiguren = position.getWhiteFiguren();
+		_blackFiguren = position.getBlackFiguren();		
+		_posCalc = new PositionCalc(position);
 		
 		_ui = new SpielWerkzeugUI(_position);
 		_ui.setVisible(true);
-		_ui.setResizable(false);
-		
-		_whiteFiguren = position.getWhiteFiguren();
-		_blackFiguren = position.getBlackFiguren();
-		
-		_posCalc = new PositionCalc(position);
+		_ui.setResizable(false);		
 		
 		_cyborgSchwierigkeit = cyborgSchwierigkeit;
 		_isCyborgGame = isCyborgGame;
 		
 		centreWindow(_ui);
+		registriereUIAktionenCyborgGame();
+	}
+	
+	public SpielWerkzeug(Position position)
+	{
+		_position = position;
+		_positionZwischenSpeicher = new Position(_position);
+		_positions = new ArrayList<Position>(6000);
+		_positions.add(position);
+		_aktuellerZug = 0;
+		_whiteFiguren = position.getWhiteFiguren();
+		_blackFiguren = position.getBlackFiguren();
+		_posCalc = new PositionCalc(position);
+		
+		_ui = new SpielWerkzeugUI(_position);
+		_ui.setVisible(true);
+		_ui.setResizable(false);
+		
+		centreWindow(_ui);
 		registriereUIAktionen();
+	}
+	
+	private void registriereUIAktionenCyborgGame() 
+	{
+		for (int i = 0; i <64; i++) //Den Spiel Feld Knoepfen werden die Listener hinzugefuegt
+		{
+			_ui._spielButtons.get(i).addActionListener(new ActionListener()
+					{
+						@Override
+						public void actionPerformed(ActionEvent e)
+						{
+							_ui.spielFeldButtonWurdeGedrueckt(_ui._spielButtons.indexOf(e.getSource()));
+						}
+					});
+		}
+			_ui._btnGetAktuelleFen.addActionListener(new ActionListener() //Dem GetAktuelleFen Button wird ein Listener hinzugefuegt
+					{
+						@Override
+						public void actionPerformed(ActionEvent e)
+						{
+							GetAktuelleFen();
+						}
+					});
+		
+		_ui._reverseButton.addActionListener(new ActionListener() //Dem Reverse Button wird ein Listener hinzugefuegt
+				{
+					@Override
+					public void actionPerformed(ActionEvent e)
+					{
+						try
+						{
+							reverseZug();
+						}
+						catch(IndexOutOfBoundsException i)
+						{
+							JOptionPane.showMessageDialog(null, "Du bist schon am Start des Spiels");
+						}
+					}
+				});
+		//TODO
+		_ui._menueButton.addActionListener(new ActionListener()
+				{
+					@Override
+					public void actionPerformed(ActionEvent e)
+					{
+						_ui.dispose();
+					}
+				});
+		
+		_ui._makeMoveButton.addActionListener(new ActionListener() //Dem MakeMove Button wird ein Listener hinzugefuegt
+				{
+					@Override
+					public void actionPerformed(ActionEvent e)
+					{
+						try
+						{	
+							makeMove();
+							makeCyborgMove();
+						}
+						catch(NullPointerException n)
+						{
+							JOptionPane.showMessageDialog(null, "An der alten Koordinate steht keine Figur deiner Farbe");
+						}
+						catch(IndexOutOfBoundsException i)
+						{
+							JOptionPane.showMessageDialog(null, "Das ist ein illegaler Zug");
+						}
+						catch(SchachmattException sx)
+						{
+							Object[] options = {"Spiel beenden", "Alle Fens"};
+							if(_position._zugrecht)
+							{
+								int i = JOptionPane.showOptionDialog(null, "Schwarz hat gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
+								JOptionPane.PLAIN_MESSAGE, null, options, null);
+								if (i == 0)
+								{
+									_ui.dispose();
+								}
+								else if (i == 1)
+								{
+									String leererString = "";
+									for(int j = 0; j < _aktuellerZug; j++)
+									{
+										String fen = _positions.get(j).getFen();
+										leererString = leererString + "\r\n" +fen;
+										StringSelection stringSelection = new StringSelection (leererString);
+										Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+										clpbrd.setContents (stringSelection, null);
+									}
+									_ui.dispose();
+								}
+							}	
+							else if (_position._zugrecht && _isCyborgGame)
+							{
+								int i = JOptionPane.showOptionDialog(null, "Der Cyborg hat gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
+								JOptionPane.PLAIN_MESSAGE, null, options, null);
+								if (i == 0)
+								{
+									_ui.dispose();
+								}
+								else if (i == 1)
+								{
+									String leererString = "";
+									for(int j = 0; j < _aktuellerZug; j++)
+									{
+										String fen = _positions.get(j).getFen();
+										leererString = leererString + "\r\n" +fen;
+										StringSelection stringSelection = new StringSelection (leererString);
+										Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+										clpbrd.setContents (stringSelection, null);
+									}
+									_ui.dispose();
+								}
+							}
+							else
+							{
+								int i = JOptionPane.showOptionDialog(null, "Du hast gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
+								JOptionPane.PLAIN_MESSAGE, null, options, null);
+								if (i == 0)
+								{
+									_ui.dispose();
+								}
+								else if (i == 1)
+								{
+									String leererString = "";
+									for(int j = 0; j < _aktuellerZug; j++)
+									{
+										String fen = _positions.get(j).getFen();
+										leererString = leererString + "\r\n" +fen;
+										StringSelection stringSelection = new StringSelection (leererString);
+										Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+										clpbrd.setContents (stringSelection, null);
+									}
+									_ui.dispose();
+								}
+							}
+					
+						}
+						catch(UnentschiedenException ux)
+						{
+							Object[] options = {"Spiel beenden", "Alle Fens"};
+							int i = JOptionPane.showOptionDialog(null, "Unentschieden", "Kein Gewinner", JOptionPane.DEFAULT_OPTION,
+							JOptionPane.PLAIN_MESSAGE, null, options, null);
+							if (i == 0)
+							{
+								_ui.dispose();
+							}
+							else if (i == 1)
+							{
+								String leererString = "";
+								for(int j = 0; j < _aktuellerZug; j++)
+								{
+									String fen = _positions.get(j).getFen();
+									leererString = leererString + "\r\n" +fen;
+									StringSelection stringSelection = new StringSelection (leererString);
+									Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+									clpbrd.setContents (stringSelection, null);
+									_ui.dispose();
+								}
+							}
+						}
+						catch(IllegalMoveException ix)
+						{
+							JOptionPane.showMessageDialog(null, "Das ist ein illegaler Zug");
+						}
+					}
+				});
 	}
 	
 	private void registriereUIAktionen() 
@@ -109,7 +293,7 @@ public class SpielWerkzeug extends BeobachtbaresSubwerkzeug{
 					}
 				});
 		//TODO
-		_ui._zurueckButton.addActionListener(new ActionListener()
+		_ui._menueButton.addActionListener(new ActionListener()
 				{
 					@Override
 					public void actionPerformed(ActionEvent e)
@@ -118,8 +302,6 @@ public class SpielWerkzeug extends BeobachtbaresSubwerkzeug{
 					}
 				});
 		
-		if (!_isCyborgGame)
-		{
 		_ui._makeMoveButton.addActionListener(new ActionListener() //Dem MakeMove Button wird ein Listener hinzugefuegt
 				{
 					@Override
@@ -238,130 +420,6 @@ public class SpielWerkzeug extends BeobachtbaresSubwerkzeug{
 					}
 				});
 		}
-		else
-		{
-			_ui._makeMoveButton.addActionListener(new ActionListener() //Dem MakeMove Button wird ein Listener hinzugefuegt
-					{
-						@Override
-						public void actionPerformed(ActionEvent e)
-						{
-							try
-							{	
-								makeMove();
-								makeCyborgMove();
-							}
-							catch(NullPointerException n)
-							{
-								JOptionPane.showMessageDialog(null, "An der alten Koordinate steht keine Figur deiner Farbe");
-							}
-							catch(IndexOutOfBoundsException i)
-							{
-								JOptionPane.showMessageDialog(null, "Das ist ein illegaler Zug");
-							}
-							catch(SchachmattException sx)
-							{
-								Object[] options = {"Spiel beenden", "Alle Fens"};
-								if(_position._zugrecht)
-								{
-									int i = JOptionPane.showOptionDialog(null, "Schwarz hat gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
-									JOptionPane.PLAIN_MESSAGE, null, options, null);
-									if (i == 0)
-									{
-										_ui.dispose();
-									}
-									else if (i == 1)
-									{
-										String leererString = "";
-										for(int j = 0; j < _aktuellerZug; j++)
-										{
-											String fen = _positions.get(j).getFen();
-											leererString = leererString + "\r\n" +fen;
-											StringSelection stringSelection = new StringSelection (leererString);
-											Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
-											clpbrd.setContents (stringSelection, null);
-										}
-										_ui.dispose();
-									}
-								}	
-								else if (_position._zugrecht && _isCyborgGame)
-								{
-									int i = JOptionPane.showOptionDialog(null, "Der Cyborg hat gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
-									JOptionPane.PLAIN_MESSAGE, null, options, null);
-									if (i == 0)
-									{
-										_ui.dispose();
-									}
-									else if (i == 1)
-									{
-										String leererString = "";
-										for(int j = 0; j < _aktuellerZug; j++)
-										{
-											String fen = _positions.get(j).getFen();
-											leererString = leererString + "\r\n" +fen;
-											StringSelection stringSelection = new StringSelection (leererString);
-											Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
-											clpbrd.setContents (stringSelection, null);
-										}
-										_ui.dispose();
-									}
-								}
-								else
-								{
-									int i = JOptionPane.showOptionDialog(null, "Du hast gewonnen", "Gewinner", JOptionPane.DEFAULT_OPTION,
-									JOptionPane.PLAIN_MESSAGE, null, options, null);
-									if (i == 0)
-									{
-										_ui.dispose();
-									}
-									else if (i == 1)
-									{
-										String leererString = "";
-										for(int j = 0; j < _aktuellerZug; j++)
-										{
-											String fen = _positions.get(j).getFen();
-											leererString = leererString + "\r\n" +fen;
-											StringSelection stringSelection = new StringSelection (leererString);
-											Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
-											clpbrd.setContents (stringSelection, null);
-										}
-										_ui.dispose();
-									}
-								}
-						
-							}
-							catch(UnentschiedenException ux)
-							{
-								Object[] options = {"Spiel beenden", "Alle Fens"};
-								int i = JOptionPane.showOptionDialog(null, "Unentschieden", "Kein Gewinner", JOptionPane.DEFAULT_OPTION,
-								JOptionPane.PLAIN_MESSAGE, null, options, null);
-								if (i == 0)
-								{
-									_ui.dispose();
-								}
-								else if (i == 1)
-								{
-									String leererString = "";
-									for(int j = 0; j < _aktuellerZug; j++)
-									{
-										String fen = _positions.get(j).getFen();
-										leererString = leererString + "\r\n" +fen;
-										StringSelection stringSelection = new StringSelection (leererString);
-										Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
-										clpbrd.setContents (stringSelection, null);
-										_ui.dispose();
-									}
-								}
-							}
-							catch(IllegalMoveException ix)
-							{
-								JOptionPane.showMessageDialog(null, "Das ist ein illegaler Zug");
-							}
-						}
-					});
-		}
-		
-		
-	}
 
 	public void makeCyborgMove() throws SchachmattException, UnentschiedenException, NullPointerException
 	{
@@ -537,6 +595,11 @@ public class SpielWerkzeug extends BeobachtbaresSubwerkzeug{
 		_ui.setFiguren(_whiteFiguren, _blackFiguren);
 		_ui.setZugrechtLabel();
 		_ui.resetteFelder();	
+	}
+	
+	private void reverseCyborgZug()
+	{
+		PositionsVergleicher posVergleicher = new PositionsVergleicher(_positions, _aktuellerZug);
 	}
 	
 	private void reverseZug()

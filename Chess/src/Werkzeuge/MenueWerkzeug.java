@@ -98,7 +98,7 @@ public class MenueWerkzeug implements BeobachtendesWerkzeug{
 
 	private void EinstellungButtonWurdeGedrueckt()
 	{
-		EinstellungMenueWerkzeugUI ui = new EinstellungMenueWerkzeugUI();
+		EinstellungMenueWerkzeugUI ui = new EinstellungMenueWerkzeugUI(_cyborgSchwierigkeit -1);
 		ui.setVisible(true);
 		_ui.setVisible(false);
 		ui._zurueckButton.addActionListener(new ActionListener()
@@ -115,7 +115,6 @@ public class MenueWerkzeug implements BeobachtendesWerkzeug{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				_cyborgSchwierigkeit = ui._cyborgSchwierigkeitBox.getSelectedIndex() + 1;
-				System.out.println(_cyborgSchwierigkeit);
 			}
 
 		});
